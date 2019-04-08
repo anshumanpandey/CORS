@@ -1,0 +1,404 @@
+/* Add here all your css styles (customizations) */
+@font-face {
+    font-family: 'Oranienbaum';
+    src: url('/assets/css/Oranienbaum.ttf');
+}
+
+@font-face {
+    font-family: 'Josefin Sans';
+    src: url('/assets/css/JosefinSans-Regular.ttf');
+}
+
+
+.one-page-inner h1 {
+    margin-top: 0px;
+}
+
+.one-page-inner.one-blue h4, .one-page-inner.one-blue small {
+    color: #fff;
+}
+
+.one-page-inner .content {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.loginbar {
+    margin-right: 15px !important;
+}
+
+/*Image Wrapper*/
+.wrapper-image_16_9, .wrapper-image_1_1, .wrapper-image_4_3 {
+    position: relative !important;
+    width: 100% !important; /* desired width */
+    clear: both;
+}
+
+    .wrapper-image_16_9:before {
+        content: "";
+        display: block;
+        /*padding-top: 75%;*/ /*4:3*/
+        /*padding-top: 100%;*/ /*1:1*/
+        padding-top: 56.25%; /*16:9*/
+    }
+
+    .wrapper-image_1_1:before {
+        content: "";
+        display: block;
+        /*padding-top: 75%;*/ /*4:3*/
+        padding-top: 100%; /*1:1*/
+        /*padding-top: 56.25%;*/ /*16:9*/
+    }
+
+    .wrapper-image_4_3:before {
+        content: "";
+        display: block;
+        padding-top: 75%; /*4:3*/
+        /*padding-top: 100%;*/ /*1:1*/
+        /*padding-top: 56.25%;*/ /*16:9*/
+    }
+
+    .wrapper-image_16_9 img, .wrapper-image_1_1 img, .wrapper-image_4_3 img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        height: 100%;
+        min-width: 100% !important;
+    }
+
+.header {
+    /*background-color: #eee;*/
+    background-color: #222;
+}
+
+.loginbar a, .loginbar li {
+    /*color: #555 !important;*/
+    color: #fff !important;
+}
+
+.breadcrumb {
+    padding: 0px;
+}
+
+.text-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.navbar-header .navbar-brand img {
+    width: 150px;
+}
+
+.additional-image ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+    .additional-image ul li {
+        list-style: inherit;
+        float: left;
+        width: 50px;
+    }
+
+.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
+    color: #fff;
+}
+
+
+/*sticky footer*/
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+#container {
+    min-height: 100%;
+    position: relative;
+}
+
+.main {
+    /*padding: 10px;*/
+    padding-bottom: 200px; /* Height of the footer */
+}
+
+#footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 200px; /* Height of the footer */
+}
+
+/*end sticky footer*/
+
+
+.header .dropdown-menu .active > a, .header .dropdown-menu li > a:hover {
+    color: #687074 !important;
+    background-color: initial !important;
+}
+
+#header-shoppingcart-wrapper .dropdown-menu > li > a {
+    line-height: 1;
+}
+
+.header .navbar-default .navbar-nav > li > a {
+    font-family: "Oranienbaum",Georgia,"Times New Roman",Times,serif;
+    color: #fff;
+    font-size: 1.3em;
+    font-weight: 300;
+}
+
+
+@media (min-width: 992px) {
+    .header .navbar-default .navbar-nav > li > a {
+        bottom: -2px;
+        position: relative;
+        padding: 9px 10px 9px 15px;
+    }
+}
+
+
+.bottom-navbar-nav > li > a {
+    padding: 0px 10px !important;
+}
+
+#header-shoppingcart-wrapper a:after {
+    content: "";
+}
+
+
+.ajax-loader {
+    display: none;
+    height: 300px;
+    left: 0;
+    padding-top: 110px;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 100%;
+}
+
+.container.content {
+    padding-top: 15px;
+}
+
+.breadcrumb li.active, .breadcrumb li a:hover, .header .navbar-default .navbar-nav > .active > a, .header .navbar-default .navbar-nav > li:hover > a, a:hover {
+    color: rgb(12, 164, 156) !important;
+}
+
+.header .dropdown-menu {
+    border-top: solid 2px rgb(12, 164, 156);
+}
+
+.tag-box.tag-box-v3, .tag-box.tag-box-v3 .devider.devider-dotted {
+    border-color: rgb(12, 164, 156) !important;
+}
+
+
+.header .navbar-default .navbar-nav > li > a:hover, .header .navbar-default .navbar-nav > .active > a {
+    border-bottom: solid 2px rgb(12, 164, 156);
+}
+
+
+.navbar-header .navbar-brand {
+    color: #fff !important;
+    /*padding-top: 20px;*/
+    padding-top: 10px;
+    top: 0px;
+}
+
+a.btn-u.btn-u-dark {
+    color: #fff !important;
+}
+
+.copyright a {
+    color: rgb(12, 164, 156);
+}
+
+@media only screen and (max-width: 980px) {
+    .navbar-header {
+        width: 100%;
+    }
+
+    .navbar.navbar-default.mega-menu .navbar-collapse {
+        margin-top: 10%;
+    }
+}
+
+
+@media (max-width: 980px) {
+    .navbar-collapse.navbar-responsive-collapse {
+        background: #000;
+    }
+}
+
+@media (max-width: 593px) {
+    /*.image-category {
+        margin-right:0px;
+    }*/
+}
+
+@media (max-width: 550px) {
+    .navbar-collapse.navbar-responsive-collapse {
+        margin-top: 20% !important;
+    }
+
+    .navbar-header {
+        top: -13px !important;
+    }
+
+        .navbar-header .navbar-brand {
+            padding-top: 5px;
+            top: 0px;
+            font-size: 14px;
+        }
+
+    .navbar-brand #logo-header {
+        width: 100px;
+    }
+}
+
+.datepicker td, .datepicker th {
+    border-color: #ccc !important;
+}
+
+.panel-error:not(.btn-next) {
+    background: #f2dede !important;
+    border: 1px solid #E6BAC1 !important;
+    color: #a94442 !important;
+}
+
+
+.footer-v1 .copyright {
+    background: #fff;
+}
+
+    .footer-v1 .copyright p {
+        font-family: "Josefin Sans",Arial,Helvetica,sans-serif;
+        font-size: 16px;
+        letter-spacing: 0.05em;
+        font-weight: 400;
+        color: #222;
+    }
+
+.header {
+    background: url("/assets/img/crossword.png") repeat scroll 0 0 rgba(255,255,255,0.9);
+}
+
+    .header .navbar-default .navbar-nav > li > a {
+        color: #000;
+    }
+
+.loginbar a, .loginbar li {
+    color: #000 !important;
+}
+
+@media only screen and (max-width: 360px) {
+    .navbar-header .navbar-brand {
+        top: 0px;
+    }
+
+    .navbar-brand #logo-header {
+        width: 100px;
+    }
+}
+
+.footer-v1 .footer {
+    background: none;
+    padding: 0px;
+}
+
+.footer .container {
+    /*border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;*/
+    /*padding: 40px 0;*/
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.footer-v1 address, .footer-v1 .link-list a, .footer-v1 .link-list i {
+    /*color: rgb(12, 164, 156) !important;*/
+    color: #222;
+    font-size: 15px;
+    font-family: "Josefin Sans",Arial,Helvetica,sans-serif !important;
+}
+
+.footer-v1 .link-list i {
+    display: none;
+}
+
+.footer-v1 .link-list li {
+    border: none;
+}
+
+hr {
+    margin: 25px 0;
+    padding: 0;
+    width: 100%;
+    height: 1px;
+    border: none;
+    background: #000000;
+    background: -moz-linear-gradient(left,#ffffff,#000000 35%,#000000 50%,#000000 65%,#ffffff);
+    background: -webkit-linear-gradient(left,#ffffff,#000000 35%,#000000 50%,#000000 65%,#ffffff);
+    background: linear-gradient(to right,#ffffff,#999 35%,#333 50%,#999 65%,#ffffff);
+    color: #000000;
+}
+
+/*.breadcrumb a, .breadcrumb li, .image-category h2, .popover {
+    font-family: "Oranienbaum",Georgia,"Times New Roman",Times,serif;
+    font-size: 17px;
+    font-weight: 300;
+}
+
+.headline h2, .headline h3, .headline h4, .info-blocks h3,
+.service-detail h1, .service-detail h4, .service-detail h2, 
+.service-detail small, .service-detail strong, .service-detail .item-status {
+    font-family: "Oranienbaum",Georgia,"Times New Roman",Times,serif !important;
+}
+
+.info-blocks p, .product-description, .info-blocks .btn-u-dark, .service-detail p, .service-detail .btn-u-dark, .service-detail label, .accordion-toggle, .control-label {
+    font-family: "Oranienbaum",Georgia,"Times New Roman",Times,serif !important;
+    font-size: 14px !important;
+}*/
+
+body {
+    font-family: "Oranienbaum",Georgia,"Times New Roman",Times,serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Oranienbaum",Georgia,"Times New Roman",Times,serif;
+}
+
+p {
+    font-size: 15px !important;
+}
+
+.sky-form {
+    font-family: "Oranienbaum",Georgia,"Times New Roman",Times,serif !important;
+}
+
+.footer-v1 .footer-socials li a {
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 50% !important;
+    background-color: #000;
+    color: #fff;
+}
+
+.copyright a {
+    color: #222;
+}
+
+.footer-v1 .copyright {
+    border-top: solid 2px #eee;
+}
+
+#opc_dropdown {
+    margin-top:10px;
+}

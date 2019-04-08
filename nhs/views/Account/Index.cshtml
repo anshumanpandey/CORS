@@ -1,0 +1,79 @@
+﻿@model NHS.Common.AppUsers
+@{
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+@{
+    ViewBag.Title = "Index";
+    NHS.Common.Alert alertMessage = (NHS.Common.Alert)ViewBag.AlertMessage;
+}
+
+@section MetaTags{
+<title>Sign In</title>
+}
+
+@section PageCss{
+<link href="@Url.Content("~/assets/plugins/sky-forms/version-2.0.1/css/custom-sky-forms.css")" rel="stylesheet" />
+
+
+<style>
+    .sky-form {
+        border: 1px solid #eee !important;
+    }
+</style>
+}
+
+<div class="container content">
+    <div class="row margin-bottom-40">
+        <div class="col-md-6 col-md-offset-3">
+            <span style="color:red">@TempData["AlertMessage"]</span>
+            <form action="@Url.Action("Login", "Account")" id="login-form" class="sky-form" method="post" novalidate="novalidate">
+                <header style="color:black">Login</header>
+                <fieldset>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-5" style="color:black; font-size:medium">Username</label>
+                            <div class="col col-7">
+                                <label class="input">
+                                    <i class="icon-append fa fa-user"></i>
+                                    <input type="email" name="Email" id="Email" />
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <div class="row">
+                            <label class="label col col-5" style="color:black; font-size:medium">Password</label>
+                            <div class="col col-7">
+                                <label class="input">
+                                    <i class="icon-append fa fa-lock"></i>
+                                    <input type="password" name="Password" id="Password" />
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                </fieldset>
+                <footer align="right">
+                    <button type="submit" id="btnLogin" class="btn btn-primary">Log in</button>
+                </footer>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section PageScript{
+
+<script src="@Url.Content("~/assets/js/jquery.validate.min.js")"></script>
+<script>
+    $(document).ready(function () {
+        InitializeLoginValidation();
+
+        $('#btnLogin').click(function () {
+            if ($("#login-form").valid())
+                $("#login-form")[0].submit();
+        });
+    });
+
+</script>
+}
