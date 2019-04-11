@@ -30,3 +30,12 @@ C:\NHS\NHS.Data\bin\Debug\NHS.Common.pdb
 C:\NHS\NHS.Data\obj\Debug\NHS.Data.csprojResolveAssemblyReference.cache
 C:\NHS\NHS.Data\obj\Debug\NHS.Data.dll
 C:\NHS\NHS.Data\obj\Debug\NHS.Data.pdb
+C:\Users\pujas\source\repos\cors-rbh\NHS.Data\bin\Debug\NHS.Data.dll
+C:\Users\pujas\source\repos\cors-rbh\NHS.Data\bin\Debug\NHS.Data.pdb
+C:\Users\pujas\source\repos\cors-rbh\NHS.Data\bin\Debug\NHS.Common.dll
+C:\Users\pujas\source\repos\cors-rbh\NHS.Data\bin\Debug\NHS.Common.pdb
+C:\Users\pujas\source\repos\cors-rbh\NHS.Data\obj\Debug\NHS.Data.csprojAssemblyReference.cache
+C:\Users\pujas\source\repos\cors-rbh\NHS.Data\obj\Debug\NHS.Data.csproj.CoreCompileInputs.cache
+C:\Users\pujas\source\repos\cors-rbh\NHS.Data\obj\Debug\NHS.Data.csproj.CopyComplete
+C:\Users\pujas\source\repos\cors-rbh\NHS.Data\obj\Debug\NHS.Data.dll
+C:\Users\pujas\source\repos\cors-rbh\NHS.Data\obj\Debug\NHS.Data.pdb

@@ -38,9 +38,9 @@ namespace NHS.Data
         {
             var connection = GetConnection();
             SqlDataReader dbReader = null;
-            List <clsPatientDetails> lstPatientDetails = new List<clsPatientDetails>();
+            List<clsPatientDetails> lstPatientDetails = new List<clsPatientDetails>();
             try
-            {   
+            {
                 SqlCommand dbCmd = new SqlCommand("usp_GetPatientDashboardDetails", connection);
                 dbCmd.CommandType = CommandType.StoredProcedure;
                 if (patientID != null)
@@ -105,7 +105,7 @@ namespace NHS.Data
                         patientDashboard.SJR1 = 0;
                     else
                         patientDashboard.SJR1 = Convert.ToInt32(dbReader["SJR1"]);
-                    if(string.IsNullOrEmpty(dbReader["SJR2"].ToString()))
+                    if (string.IsNullOrEmpty(dbReader["SJR2"].ToString()))
                         patientDashboard.SJR2 = 0;
                     else
                         patientDashboard.SJR2 = Convert.ToInt32(dbReader["SJR2"]);
@@ -149,7 +149,7 @@ namespace NHS.Data
                         patientDashboard.DischargeSpecialtyCode = "0";
                     else
                         patientDashboard.DischargeSpecialtyCode = Convert.ToString(dbReader["DischargeSpecialityCode"]);
-                    if(string.IsNullOrEmpty(dbReader["DischargeSpeciality"].ToString()))
+                    if (string.IsNullOrEmpty(dbReader["DischargeSpeciality"].ToString()))
                         patientDashboard.DischargeSpeciality = "";
                     else
                         patientDashboard.DischargeSpeciality = Convert.ToString(dbReader["DischargeSpeciality"]);
@@ -628,9 +628,9 @@ namespace NHS.Data
                 dbCmd.Parameters.AddWithValue("@UserID", userID);
 
                 dbReader = dbCmd.ExecuteReader();
-                
+
                 while (dbReader.Read())
-                {                    
+                {
                     if (string.IsNullOrEmpty(dbReader["ID"].ToString()))
                         patientDashboard.ID = 0;
                     else
@@ -746,11 +746,11 @@ namespace NHS.Data
                     //if (!string.IsNullOrEmpty(dbReader["DiagnosisCount"].ToString()))
                     //    patientDashboard.DiagnosisCount = 0;
                     //else
-                        patientDashboard.DiagnosisCount = Convert.ToInt32(dbReader["DiagnosisCount"]);
+                    patientDashboard.DiagnosisCount = Convert.ToInt32(dbReader["DiagnosisCount"]);
                     //if (!string.IsNullOrEmpty(dbReader["ProcedureCount"].ToString()))
                     //    patientDashboard.ProcedureCount = 0;
                     //else
-                        patientDashboard.ProcedureCount = Convert.ToInt32(dbReader["ProcedureCount"]);
+                    patientDashboard.ProcedureCount = Convert.ToInt32(dbReader["ProcedureCount"]);
                     if (string.IsNullOrEmpty(dbReader["IsFullSJRRequired"].ToString()))
                         patientDashboard.IsFullSJRRequired = false;
                     else
@@ -843,7 +843,7 @@ namespace NHS.Data
         /// <param name="id">int</param>
         /// <returns>int</returns>
         public int UpdateMedicalExaminerDecision(bool isMCCDissue, bool isCoronerReferral, bool isHospitalPostMortem, bool isDeathCertificate, bool isCornerReferralComplete, bool isCoronerDecisionInquest, bool isCoronerDecisionPostMortem,
-            bool isCoronerDecision100A, bool isCoronerDecisionGPissue, string Reason, string CauseOfDeath1, string CauseOfDeath2, string CauseOfDeath3, 
+            bool isCoronerDecision100A, bool isCoronerDecisionGPissue, string Reason, string CauseOfDeath1, string CauseOfDeath2, string CauseOfDeath3,
             string CauseOfDeath4, DateTime? DeathCertificateDate, string DeathCertificateTime, string TimeType, int id)
         {
             var connection = GetConnection();
@@ -970,7 +970,7 @@ namespace NHS.Data
                 dataReader = dbCommand.ExecuteReader();
 
                 while (dataReader.Read())
-                {                    
+                {
                     feedback.Patient_ID = Convert.ToInt32(dataReader["Patient_ID"]);
                     feedback.FormCompleted = Convert.ToBoolean(dataReader["FormCompleted"]);
                     feedback.ComplementsFedBack = Convert.ToBoolean(dataReader["ComplementsFedBack"]);
@@ -1046,7 +1046,7 @@ namespace NHS.Data
                     if (dataReader["InitialManagement"] != null) InitialManagement = Convert.ToString(dataReader["InitialManagement"]);
                     sjrFormInitial.InitialManagement = InitialManagement;
                     int InitialManagementCareRatingID = 0;
-                    if(dataReader["InitialManagementCareRatingID"] != null) InitialManagementCareRatingID = Convert.ToInt32(dataReader["InitialManagementCareRatingID"]);
+                    if (dataReader["InitialManagementCareRatingID"] != null) InitialManagementCareRatingID = Convert.ToInt32(dataReader["InitialManagementCareRatingID"]);
                     sjrFormInitial.InitialManagementCareRatingID = InitialManagementCareRatingID;
                     string OngoingCare = "";
                     if (dataReader["OngoingCare"] != null) OngoingCare = Convert.ToString(dataReader["OngoingCare"]);
@@ -1654,7 +1654,7 @@ namespace NHS.Data
                         diagnosis.FCENumber = 0;
                     else
                         diagnosis.FCENumber = Convert.ToInt32(dataReader["FCENumber"]);
-                   
+
                     if (string.IsNullOrEmpty(dataReader["DischargeConsultantName"].ToString()))
                         diagnosis.DischargeConsultantName = "";
                     else
@@ -1686,7 +1686,7 @@ namespace NHS.Data
                     if (string.IsNullOrEmpty(dataReader["DiagnosisDescription"].ToString()))
                         diagnosis.DiagnosisDescription = "";
                     else
-                        diagnosis.DiagnosisDescription = Convert.ToString(dataReader["DiagnosisDescription"]);                    
+                        diagnosis.DiagnosisDescription = Convert.ToString(dataReader["DiagnosisDescription"]);
                     diagnoses.Add(diagnosis);
                 }
             }
@@ -1795,7 +1795,7 @@ namespace NHS.Data
                     if (!string.IsNullOrEmpty(dataReader["UserID"].ToString()))
                         comment.UserID = Convert.ToInt32(dataReader["UserID"]);
                     else
-                        comment.UserID = 0;                    
+                        comment.UserID = 0;
                     if (!string.IsNullOrEmpty(dataReader["Name"].ToString()))
                         comment.Name = Convert.ToString(dataReader["Name"]);
                     else
@@ -1809,10 +1809,19 @@ namespace NHS.Data
                     else
                         comment.CreatedDate = "";
                     if (!string.IsNullOrEmpty(dataReader["CreatedDate"].ToString()))
-                        comment.CreatedTime = Convert.ToDateTime(dataReader["CreatedDate"]).TimeOfDay.ToString().Substring(0,5);
+                        comment.CreatedTime = Convert.ToDateTime(dataReader["CreatedDate"]).TimeOfDay.ToString().Substring(0, 5);
                     else
                         comment.CreatedTime = "";
-                    comments.Add(comment); 
+                    if (!string.IsNullOrEmpty(dataReader["CommentTypeID"].ToString()))
+                        comment.CommentTypeID = Convert.ToInt32(dataReader["CommentTypeID"]);
+                    else
+                        comment.CommentTypeID = 0;
+                    if (!string.IsNullOrEmpty(dataReader["Role"].ToString()))
+                        comment.Role = Convert.ToString(dataReader["Role"]);
+                    else
+                        comment.Role = "";
+
+                    comments.Add(comment);
                 }
             }
             catch (Exception ex)
@@ -1827,6 +1836,46 @@ namespace NHS.Data
             return comments;
         }
 
+        public int insertKin(NextOfKin nextofkin)
+        {
+
+
+            var connection = GetConnection();
+            int retVal = 0;
+            SqlCommand dbCommand = new SqlCommand("usp_InsertNextOfKinDetails", connection);
+            SqlDataReader dataReader = null;
+
+            try
+            {
+                dbCommand.CommandType = CommandType.StoredProcedure;
+                dbCommand.Parameters.AddWithValue("@PatientID", nextofkin.PatientID);
+                dbCommand.Parameters.AddWithValue("@RelativeName", nextofkin.RelativeName);
+                dbCommand.Parameters.AddWithValue("@RelativeTelNo", nextofkin.RelativeTelNo);
+                dbCommand.Parameters.AddWithValue("@Relationship", nextofkin.Relationship);
+                dbCommand.Parameters.AddWithValue("@PresentAtDeath", nextofkin.PresentAtDeath);
+                dbCommand.Parameters.AddWithValue("@IsInformed", nextofkin.IsInformed);
+
+
+                dataReader = dbCommand.ExecuteReader();
+                while (dataReader.Read())
+                {
+
+
+                    retVal = Convert.ToInt32(dataReader["KINId"]);
+                  
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
+            }
+            if (!dataReader.IsClosed)
+                dataReader.Close();
+            return retVal;
+          
+        }
         public clsQAPReview GetQAPReview(int? id)
         {
             var connection = GetConnection();
@@ -1955,7 +2004,7 @@ namespace NHS.Data
         /// <param name="comments">string</param>
         /// <param name="id">int</param>
         /// <returns>int</returns>
-        public int UpdatePatientDetails(bool isDataQualityIssuesIdentified, string dataqualitycomments, bool isCodingIssueIdentified, string comments, string occupation, bool isUrgentMEReview, 
+        public int UpdatePatientDetails(bool isDataQualityIssuesIdentified, string dataqualitycomments, bool isCodingIssueIdentified, string comments, string occupation, bool isUrgentMEReview,
             string UrgentMEReviewComments, string RelativeName, string RelativeTelNo, string Relationship, string GPSurgery, int? id)
         {
             var connection = GetConnection();
@@ -1996,7 +2045,7 @@ namespace NHS.Data
         /// <param name="comments"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public int UpdateMedicalExaminerReview(bool isQAP_Discussion, bool isNotes_Review, bool isNok_Discussion, int med_id, string qapname, string comments, int? id, int userID)
+        public int UpdateMedicalExaminerReview(bool isQAP_Discussion, bool isNotes_Review, bool isNok_Discussion, int med_id, string qapname, string comments, int? id, int userID, int commentTypeID)
         {
             var connection = GetConnection();
             int retVal = 0;
@@ -2008,8 +2057,9 @@ namespace NHS.Data
                 dbCommand.Parameters.AddWithValue("@NotesReview", isNotes_Review);
                 dbCommand.Parameters.AddWithValue("@NoKDiscussion", isNok_Discussion);
                 dbCommand.Parameters.AddWithValue("@MedID", med_id);
-                dbCommand.Parameters.AddWithValue("@QAPName", qapname);
+                dbCommand.Parameters.AddWithValue("@QAPName", "");
                 dbCommand.Parameters.AddWithValue("@Comments", comments);
+                dbCommand.Parameters.AddWithValue("@CommentTypeID", commentTypeID);
                 dbCommand.Parameters.AddWithValue("@UserID", userID);
                 dbCommand.Parameters.AddWithValue("@ID", id);
                 retVal = dbCommand.ExecuteNonQuery();
@@ -2230,7 +2280,7 @@ namespace NHS.Data
 
         public int UpdateSJR1ProblemType(int AssessmentResponseID, int AssessmentCarePhaseID, int MedicationResponseID, int MedicationCarePhaseID,
             int TreatmentResponseID, int TreatmentCarePhaseID, int InfectionResponseID, int InfectionCarePhaseID, int ProcedureResponseID,
-            int ProcedureCarePhaseID, int MonitoringResponseID, int ResuscitationResponseID, int OthertypeResponseID, int OthertypeCarePhaseID, int AvoidabilityScoreID, 
+            int ProcedureCarePhaseID, int MonitoringResponseID, int ResuscitationResponseID, int OthertypeResponseID, int OthertypeCarePhaseID, int AvoidabilityScoreID,
             string Comments, string SIRIComments, bool ProblemOccured, int? id)
         {
             var connection = GetConnection();
@@ -2492,7 +2542,7 @@ namespace NHS.Data
                 dbReader = dbCmd.ExecuteReader();
 
                 while (dbReader.Read())
-                {                    
+                {
                     medicalExaminerDecision.ID = Convert.ToInt32(dbReader["Patient_ID"]);
                     medicalExaminerDecision.PatientID = Convert.ToString(dbReader["PatientID"]);
                     medicalExaminerDecision.MCCDissue = Convert.ToBoolean(dbReader["MCCDissue"]);
@@ -2673,6 +2723,48 @@ namespace NHS.Data
             return medicalExaminers;
         }
 
+        //changes for getting CommentType
+
+        /// <summary>
+        /// Get list of CommentType in the system.
+        /// </summary>
+        /// <returns>List<clsMedicalExaminers></returns>
+        public List<CommentType> GetCommentType()
+        {
+            var connection = GetConnection();
+            List<CommentType> lstCommentType = new List<CommentType>();
+            SqlDataReader dataReader = null;
+
+            try
+            {
+                SqlCommand dbCommand = new SqlCommand("usp_GetCommentType", connection);
+                dbCommand.CommandType = CommandType.StoredProcedure;
+
+                dataReader = dbCommand.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    CommentType commentType = new CommentType();
+                    commentType.CommonTypeID = Convert.ToInt32(dataReader["CommonTypeID"]);
+                    commentType.Type = Convert.ToString(dataReader["Type"]);
+
+                    lstCommentType.Add(commentType);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
+            }
+            finally
+            {
+                if (!dataReader.IsClosed)
+                    dataReader.Close();
+            }
+            return lstCommentType;
+        }
+        //end changes
+
+
         /// <summary>
         /// Get All coroner referral reasons from the database
         /// </summary>
@@ -2750,7 +2842,7 @@ namespace NHS.Data
             }
             return reasonNames;
         }
-        
+
         /// <summary>
         /// Checks if the user exists
         /// </summary>
@@ -2779,6 +2871,7 @@ namespace NHS.Data
                     user.FirstName = Convert.ToString(dataReader["FirstName"]);
                     user.LastName = Convert.ToString(dataReader["LastName"]);
                     user.ID = Convert.ToInt32(dataReader["ID"]);
+                    user.Role = Convert.ToString(dataReader["Role"]);
                 }
             }
             catch (Exception ex)
@@ -2817,6 +2910,6 @@ namespace NHS.Data
             catch (Exception ex)
             {
             }
-        }        
+        }
     }
 }

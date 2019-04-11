@@ -47,4 +47,11 @@ namespace NHS.Common
         public int CommentCount { get; set; }
 
     }
+    public class CommentType
+    {
+        public int CommonTypeID { get; set; }
+        public string Type { get; set; }
+    }
+
+
 }
