@@ -19,3 +19,9 @@ C:\NHS\NHS.Common\bin\Debug\NHS.Common.dll
 C:\NHS\NHS.Common\bin\Debug\NHS.Common.pdb
 C:\NHS\NHS.Common\obj\Debug\NHS.Common.dll
 C:\NHS\NHS.Common\obj\Debug\NHS.Common.pdb
+C:\Users\pujas\source\repos\cors-rbh\NHS.Common\bin\Debug\NHS.Common.dll
+C:\Users\pujas\source\repos\cors-rbh\NHS.Common\bin\Debug\NHS.Common.pdb
+C:\Users\pujas\source\repos\cors-rbh\NHS.Common\obj\Debug\NHS.Common.csprojAssemblyReference.cache
+C:\Users\pujas\source\repos\cors-rbh\NHS.Common\obj\Debug\NHS.Common.csproj.CoreCompileInputs.cache
+C:\Users\pujas\source\repos\cors-rbh\NHS.Common\obj\Debug\NHS.Common.dll
+C:\Users\pujas\source\repos\cors-rbh\NHS.Common\obj\Debug\NHS.Common.pdb

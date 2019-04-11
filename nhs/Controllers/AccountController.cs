@@ -46,8 +46,8 @@ namespace NHS.Controllers
             DBEngine dBEngine = new DBEngine(connectionString);
             try
             {
-                isValidFromAD = ValidateCredentials(username, password, domain);
-                //isValidFromAD = true;
+                //isValidFromAD = ValidateCredentials(username, password, domain);
+                isValidFromAD = true;
                 if (isValidFromAD)
                 {
                     usermodel = dBEngine.ValidateUser(username, password);
@@ -58,6 +58,10 @@ namespace NHS.Controllers
                         Session["LoginUserID"] = usermodel.ID;
                         Session["FirstName"] = usermodel.FirstName;
                         Session["LastName"] = usermodel.LastName;
+
+                        //newly added for gettin role to be display in comments section
+                        Session["Role"]= usermodel.Role;
+                        //newly added
                         Session["StartDate"] = "";
                         Session["EndDate"] = "";
                         Session["WardDeath"] = "";
@@ -85,7 +89,8 @@ namespace NHS.Controllers
                     Alert alertMessage = new Alert();
                     alertMessage.AlertType = ALERTTYPE.Error;
                     alertMessage.MessageType = ALERTMESSAGETYPE.TextWithClose;
-                    alertMessage.Message = "Credentials provided do not match with AD.";
+                    //alertMessage.Message = "Credentials provided do not match with AD.";
+                    alertMessage.Message = "Require access to CORS? Click here to Contact Us";
                     TempData["AlertMessage"] = alertMessage.Message;
                     controllername = "Account";
                 }

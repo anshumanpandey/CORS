@@ -29,8 +29,8 @@ namespace NHS.Controllers
             Session["FullName"] = "";
             Session["TotalDeaths"] = "";
             if (Convert.ToInt32(Session["LoginUserID"]) > 0)
-            { 
-                bool isuser = GetUserDetailsFromAD(); 
+            {
+                bool isuser = GetUserDetailsFromAD();
                 return View();
             }
             else
@@ -51,8 +51,8 @@ namespace NHS.Controllers
             List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
             string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
             Session["PatientID"] = id;
-            
-            
+
+
             DBEngine dBEngine = new DBEngine(connectionString);
             dBEngine.LogException("set session id " + id.ToString(), this.ToString(), "ValidateUser", System.DateTime.Now);
             if (id == null || id == 0)
@@ -65,15 +65,15 @@ namespace NHS.Controllers
             dBEngine.LogException("after id null and 0 check", this.ToString(), "ValidateUser", System.DateTime.Now);
             try
             {
-                    patientDetails = dBEngine.GetPatientDetailsByID(id, Convert.ToInt32(Session["LoginUserID"]));
-                    dBEngine.LogException("after patient details call" + patientDetails.Count.ToString(), this.ToString(), "ValidateUser", System.DateTime.Now);
-                    if (patientDetails.Count == 0)
-                    {
-                        clsPatientDetails clsPatientDetail = new clsPatientDetails();
-                        clsPatientDetail.ID = Convert.ToInt32(id);
-                        patientDetails.Add(clsPatientDetail);
-                        dBEngine.LogException("in patient details count 0" + clsPatientDetail.ID.ToString(), this.ToString(), "ValidateUser", System.DateTime.Now);
-                    }                
+                patientDetails = dBEngine.GetPatientDetailsByID(id, Convert.ToInt32(Session["LoginUserID"]));
+                dBEngine.LogException("after patient details call" + patientDetails.Count.ToString(), this.ToString(), "ValidateUser", System.DateTime.Now);
+                if (patientDetails.Count == 0)
+                {
+                    clsPatientDetails clsPatientDetail = new clsPatientDetails();
+                    clsPatientDetail.ID = Convert.ToInt32(id);
+                    patientDetails.Add(clsPatientDetail);
+                    dBEngine.LogException("in patient details count 0" + clsPatientDetail.ID.ToString(), this.ToString(), "ValidateUser", System.DateTime.Now);
+                }
             }
             catch (Exception ex)
             {
@@ -108,7 +108,7 @@ namespace NHS.Controllers
                     {
                         ViewBag.Diagnoses = dBEngine.GetDiagnosisDetails(id);
                         ViewBag.Procedures = dBEngine.GetProcedureDetails(id);
-                        
+
                     }
                     else if (id == null || id == 0)
                     {
@@ -118,7 +118,7 @@ namespace NHS.Controllers
                             return RedirectToAction("Index", "Account");
                     }
                     if (Request.HttpMethod != "POST")
-                        patientDetails = dBEngine.GetPatientDetailsByID(id, Convert.ToInt32(Session["LoginUserID"]));                    
+                        patientDetails = dBEngine.GetPatientDetailsByID(id, Convert.ToInt32(Session["LoginUserID"]));
                 }
                 catch (Exception ex)
                 {
@@ -158,8 +158,20 @@ namespace NHS.Controllers
                 {
                     if (Request.HttpMethod != "POST")
                         qapreview = dBEngine.GetQAPReview(id);
-                    if(qapreview.Patient_ID == 0 || qapreview.Patient_ID == null)
+                    if (qapreview.Patient_ID == 0 || qapreview.Patient_ID == null)
                         qapreview.Patient_ID = Convert.ToInt32(id);
+
+                    if (qapreview.QAPReview == 3)
+                    {
+                        Session["QAPName"] = qapreview.CreatedBy;
+                    }
+                    else
+                    {
+                        if (Session["FullName"] != null)
+                        {
+                            Session["QAPName"] = Session["FullName"];
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -271,10 +283,10 @@ namespace NHS.Controllers
                     {
                         sjrOutcome = dBEngine.GetSJROutcome(id);
                     }
-                if (sjrOutcome.Patient_ID == 0 || sjrOutcome.Patient_ID == null)
-                    sjrOutcome.Patient_ID = Convert.ToInt32(id);
+                    if (sjrOutcome.Patient_ID == 0 || sjrOutcome.Patient_ID == null)
+                        sjrOutcome.Patient_ID = Convert.ToInt32(id);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     dBEngine.LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
                 }
@@ -362,23 +374,23 @@ namespace NHS.Controllers
                 //if (ApplicationSession.LoginUserID > 0)
                 //{
                 try
+                {
+                    if (Request.HttpMethod != "POST")
                     {
-                        if (Request.HttpMethod != "POST")
-                        {
-                            medicalExaminerReview = dBEngine.GetSJRFormInitial(id);
-                        }
+                        medicalExaminerReview = dBEngine.GetSJRFormInitial(id);
+                    }
                     if (medicalExaminerReview.Patient_ID == 0 || medicalExaminerReview.Patient_ID == null)
                         medicalExaminerReview.Patient_ID = Convert.ToInt32(id);
-                        ViewBag.ExcellentRatingID = dBEngine.GetRatingIDByName("Excellent");
-                        ViewBag.GoodRatingID = dBEngine.GetRatingIDByName("Good");
-                        ViewBag.AdequateRatingID = dBEngine.GetRatingIDByName("Adequate");
-                        ViewBag.PoorRatingID = dBEngine.GetRatingIDByName("Poor");
-                        ViewBag.VeryPoorRatingID = dBEngine.GetRatingIDByName("Very Poor");
-                    }
-                    catch (Exception ex)
-                    {
-                        dBEngine.LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
-                    }
+                    ViewBag.ExcellentRatingID = dBEngine.GetRatingIDByName("Excellent");
+                    ViewBag.GoodRatingID = dBEngine.GetRatingIDByName("Good");
+                    ViewBag.AdequateRatingID = dBEngine.GetRatingIDByName("Adequate");
+                    ViewBag.PoorRatingID = dBEngine.GetRatingIDByName("Poor");
+                    ViewBag.VeryPoorRatingID = dBEngine.GetRatingIDByName("Very Poor");
+                }
+                catch (Exception ex)
+                {
+                    dBEngine.LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
+                }
                 //}
                 //else
                 //{
@@ -422,13 +434,13 @@ namespace NHS.Controllers
                 //if (ApplicationSession.LoginUserID > 0)
                 //{
                 try
-                {                 
+                {
                     if (Request.HttpMethod != "POST")
                     {
                         sjrProblemType = dBEngine.GetSJRProblemType(id);
                     }
-                if (sjrProblemType.Patient_ID == 0 || sjrProblemType.Patient_ID == null)
-                    sjrProblemType.Patient_ID = Convert.ToInt32(id);
+                    if (sjrProblemType.Patient_ID == 0 || sjrProblemType.Patient_ID == null)
+                        sjrProblemType.Patient_ID = Convert.ToInt32(id);
                 }
                 catch (Exception ex)
                 {
@@ -482,8 +494,8 @@ namespace NHS.Controllers
                     {
                         sjrProblemType = dBEngine.GetSJR2ProblemType(id);
                     }
-                if (sjrProblemType.Patient_ID == 0 || sjrProblemType.Patient_ID == null)
-                    sjrProblemType.Patient_ID = Convert.ToInt32(id);
+                    if (sjrProblemType.Patient_ID == 0 || sjrProblemType.Patient_ID == null)
+                        sjrProblemType.Patient_ID = Convert.ToInt32(id);
                 }
                 catch (Exception ex)
                 {
@@ -613,11 +625,11 @@ namespace NHS.Controllers
                 //if (ApplicationSession.LoginUserID > 0)
                 //{
                 try
+                {
+                    if (Request.HttpMethod != "POST")
                     {
-                        if (Request.HttpMethod != "POST")
-                        {
-                            medicalExaminerReview = dBEngine.GetSJR2FormInitial(id);
-                        }
+                        medicalExaminerReview = dBEngine.GetSJR2FormInitial(id);
+                    }
                     if (medicalExaminerReview.Patient_ID == 0 || medicalExaminerReview.Patient_ID == null)
                         medicalExaminerReview.Patient_ID = Convert.ToInt32(id);
                     ViewBag.ExcellentRatingID = dBEngine.GetRatingIDByName("Excellent");
@@ -625,11 +637,11 @@ namespace NHS.Controllers
                     ViewBag.AdequateRatingID = dBEngine.GetRatingIDByName("Adequate");
                     ViewBag.PoorRatingID = dBEngine.GetRatingIDByName("Poor");
                     ViewBag.VeryPoorRatingID = dBEngine.GetRatingIDByName("Very Poor");
-                    }
-                    catch (Exception ex)
-                    {
-                        dBEngine.LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
-                    }
+                }
+                catch (Exception ex)
+                {
+                    dBEngine.LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
+                }
                 //}
                 //else
                 //{
@@ -747,31 +759,31 @@ namespace NHS.Controllers
             {
                 //if (ApplicationSession.LoginUserID > 0)
                 //{
-                    try
+                try
+                {
+                    if (id != null)
                     {
-                        if (id != null)
-                        {
-                            ViewBag.Diagnoses = dBEngine.GetDiagnosisDetails(id);
-                            ViewBag.Procedures = dBEngine.GetProcedureDetails(id);
-                        }
-                        else if (id == null || id == 0)
-                        {
-                            if (Session["PatientID"] != null)
-                                id = Convert.ToInt32(Session["PatientID"]);
-                            else
-                                return RedirectToAction("Index", "Account");
-                        }
-                        if (Request.HttpMethod != "POST")
-                        {
-                            patientDetails = dBEngine.GetPatientDetailsByID(id, Convert.ToInt32(Session["LoginUserID"]));
-                        }
+                        ViewBag.Diagnoses = dBEngine.GetDiagnosisDetails(id);
+                        ViewBag.Procedures = dBEngine.GetProcedureDetails(id);
                     }
-                    catch (Exception ex)
+                    else if (id == null || id == 0)
                     {
-                        dBEngine.LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
+                        if (Session["PatientID"] != null)
+                            id = Convert.ToInt32(Session["PatientID"]);
+                        else
+                            return RedirectToAction("Index", "Account");
                     }
+                    if (Request.HttpMethod != "POST")
+                    {
+                        patientDetails = dBEngine.GetPatientDetailsByID(id, Convert.ToInt32(Session["LoginUserID"]));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    dBEngine.LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -801,6 +813,7 @@ namespace NHS.Controllers
             bool isUrgentMEReview = false;
             string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
             DBEngine dbEngine = new DBEngine(connectionString);
+            NextOfKin nextOfKin;
             if (id == null || id == 0)
             {
                 if (Session["PatientID"] != null)
@@ -812,6 +825,47 @@ namespace NHS.Controllers
             {
                 if (Convert.ToString(formCollection["DataQualityIssuesIdentified"]) == "on") isDataQualityIssuesIdentified = true;
                 if (Convert.ToString(formCollection["UrgentMEReview"]) == "on") isUrgentMEReview = true;
+                nextOfKin = new NextOfKin();
+                if (formCollection["RelativeName"] != "" && formCollection["RelativeTelNo"]!="" && formCollection["Relationship"]!="")
+                {
+
+                    nextOfKin.RelativeName = (formCollection["RelativeName"]).ToString();
+                    nextOfKin.RelativeTelNo = (formCollection["RelativeTelNo"]).ToString();
+                    nextOfKin.Relationship = formCollection["Relationship"];
+                    nextOfKin.PresentAtDeath = Convert.ToBoolean(formCollection["PresentAtDeath"].Split(',')[0]);
+                    nextOfKin.IsInformed = Convert.ToBoolean(formCollection["IsInformed"].Split(',')[0]);
+                    nextOfKin.PatientID = id.ToString();
+                    nextOfKin.NextOfKinID = dbEngine.insertKin(nextOfKin);
+                    if (nextOfKin.NextOfKinID > 0)
+                    {
+                        
+                        if (formCollection["RelativeName1"] != "" && formCollection["RelativeTelNo1"] != "" && formCollection["Relationship1"] != "")
+                        {
+                            nextOfKin.RelativeName = (formCollection["RelativeName1"]).ToString();
+                            nextOfKin.RelativeTelNo = (formCollection["RelativeTelNo1"]).ToString();
+                            nextOfKin.Relationship = formCollection["Relationship1"];
+                            nextOfKin.PresentAtDeath = Convert.ToBoolean(formCollection["PresentAtDeath1"].Split(',')[0]);
+                            nextOfKin.IsInformed = Convert.ToBoolean(formCollection["IsInformed1"].Split(',')[0]);
+                            nextOfKin.PatientID = id.ToString();
+                            nextOfKin.NextOfKinID = dbEngine.insertKin(nextOfKin);
+                            if (nextOfKin.NextOfKinID > 0)
+                            {
+                                if (formCollection["RelativeName2"] != "" && formCollection["RelativeTelNo2"] != "" && formCollection["Relationship2"] != "")
+                                {
+                                    nextOfKin.RelativeName = (formCollection["RelativeName2"]).ToString();
+                                    nextOfKin.RelativeTelNo = (formCollection["RelativeTelNo2"]).ToString();
+                                    nextOfKin.Relationship = formCollection["Relationship2"];
+                                    nextOfKin.PresentAtDeath = Convert.ToBoolean(formCollection["PresentAtDeath2"].Split(',')[0]);
+                                    nextOfKin.IsInformed = Convert.ToBoolean(formCollection["IsInformed2"].Split(',')[0]);
+                                    nextOfKin.PatientID = id.ToString();
+                                    nextOfKin.NextOfKinID = dbEngine.insertKin(nextOfKin);
+                                }
+                            }
+                        }
+                    }
+
+                }
+             
                 int retVal = dbEngine.UpdatePatientDetails(isDataQualityIssuesIdentified, formCollection["DataQualityIssueComments"], false, "", formCollection["Occupation"],
                     isUrgentMEReview, formCollection["UrgentMEReviewComment"], formCollection["RelativeName"], formCollection["RelativeTelNo"], formCollection["Relationship"],
                     formCollection["GPSurgery"], id);
@@ -853,20 +907,34 @@ namespace NHS.Controllers
                 //if (ApplicationSession.LoginUserID > 0)
                 //{
                 try
+                {
+                    ViewBag.MedicalExaminers = dBEngine.GetMedicalExaminers();
+                    ViewBag.CommentType = dBEngine.GetCommentType();
+                    ViewBag.Comments = dBEngine.GetComments(id);
+                    
+                    foreach (var b in ViewBag.CommentType)
                     {
-                        ViewBag.MedicalExaminers = dBEngine.GetMedicalExaminers();
-                        ViewBag.Comments = dBEngine.GetComments(id);
-                        if (Request.HttpMethod != "POST")
+                        foreach (var a in ViewBag.Comments)
                         {
-                            medicalExaminerReview = dBEngine.GetMedicalExaminerReview(id);
+                            if (a.CommentTypeID==b.CommonTypeID)
+                            {
+                                a.CommentType = b.Type;
+                            }
                         }
+                    }
+
+                    TempData["Role"] = Session["Role"];
+                    if (Request.HttpMethod != "POST")
+                    {
+                        medicalExaminerReview = dBEngine.GetMedicalExaminerReview(id);
+                    }
                     if (medicalExaminerReview.Patient_ID == 0 || medicalExaminerReview.Patient_ID == null)
                         medicalExaminerReview.Patient_ID = Convert.ToInt32(id);
                 }
-                    catch (Exception ex)
-                    {
-                        dBEngine.LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
-                    }
+                catch (Exception ex)
+                {
+                    dBEngine.LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
+                }
             }
             catch (Exception ex)
             {
@@ -909,7 +977,7 @@ namespace NHS.Controllers
         [HttpPost]
         public ActionResult MedicalExaminerReview(FormCollection formCollection, string BtnPrevious, string BtnNext, int? id)
         {
-            if(string.IsNullOrEmpty(Session["FullName"].ToString()))
+            if (string.IsNullOrEmpty(Session["FullName"].ToString()))
                 return RedirectToAction("Index", "Account");
             string actionName = "";
             string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
@@ -936,8 +1004,19 @@ namespace NHS.Controllers
                     if (Convert.ToString(formCollection["Notes_Review"]) == "on") isNotes_Review = true;
                     if (Convert.ToString(formCollection["Nok_Discussion"]) == "on") isNok_Discussion = true;
                     if (formCollection["ddlDischargeSpeciality"] == "") formCollection["ddlDischargeSpeciality"] = "0";
-                    int retVal = dBEngine.UpdateMedicalExaminerReview(isQAP_Discussion, isNotes_Review, isNok_Discussion, 
-                        Convert.ToInt32(formCollection["ddlDischargeSpeciality"]), "", formCollection["Comments"], id, Convert.ToInt32(Session["LoginUserID"]));
+                    if (formCollection["QAPName"] == "") formCollection["QAPName"] = "0";
+
+
+                    string role = Convert.ToString(formCollection["ddlRole"]);
+                    int commentTypeID = Convert.ToInt32(formCollection["ddlCommentType"]);
+                    Console.WriteLine(role);
+                    Console.WriteLine(commentTypeID);
+
+                    //int retVal = dBEngine.UpdateMedicalExaminerReview(isQAP_Discussion, isNotes_Review, isNok_Discussion,
+                    //   Convert.ToInt32(formCollection["ddlDischargeSpeciality"]), formCollection["QAPName"], formCollection["Comments"], id, Convert.ToInt32(Session["LoginUserID"]));
+
+                    int retVal = dBEngine.UpdateMedicalExaminerReview(isQAP_Discussion, isNotes_Review, isNok_Discussion,
+                        Convert.ToInt32(formCollection["ddlDischargeSpeciality"]), formCollection["QAPName"], formCollection["Comments"], id, Convert.ToInt32(Session["LoginUserID"]), commentTypeID);
                     actionName = "MedicalExaminerDecision";
                 }
             }
@@ -1098,16 +1177,16 @@ namespace NHS.Controllers
                 //if (ApplicationSession.LoginUserID > 0)
                 //{
                 try
-                    {
-                        sJRAssement = dBEngine.GetSJRAssesmentTraige(id);
+                {
+                    sJRAssement = dBEngine.GetSJRAssesmentTraige(id);
                     if (sJRAssement.Patient_ID == 0 || sJRAssement.Patient_ID == null)
                         sJRAssement.Patient_ID = Convert.ToInt32(id);
-                        ViewBag.Specialities = dBEngine.GetSpecialitiesForDropDown();
-                    }
-                    catch(Exception ex)
-                    {
-                        dBEngine.LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
-                    }
+                    ViewBag.Specialities = dBEngine.GetSpecialitiesForDropDown();
+                }
+                catch (Exception ex)
+                {
+                    dBEngine.LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
+                }
                 //}
                 //else
                 //{
@@ -1154,30 +1233,30 @@ namespace NHS.Controllers
                 //if (ApplicationSession.LoginUserID > 0)
                 //{
                 try
+                {
+                    if (BtnPrevious != null)
                     {
-                        if (BtnPrevious != null)
-                        {
-                            actionName = "MedicalExaminerDecision";
-                        }
-                        if (BtnNext != null)
-                        {
-                            actionName = "OtherReferrals";
-                            if (Convert.ToString(formCollection["PaediatricPatient"]) == "on") isPaediatricPatient = true;
-                            if (Convert.ToString(formCollection["LearningDisabilityPatient"]) == "on") isLearningDisabilityPatient = true;
-                            if (Convert.ToString(formCollection["MentalillnessPatient"]) == "on") isMentalillnessPatient = true;
-                            if (Convert.ToString(formCollection["ElectiveAdmission"]) == "on") isElectiveAdmission = true;
-                            if (Convert.ToString(formCollection["NoKConcernsDeath"]) == "on") isNoKConcernsDeath = true;
-                            if (Convert.ToString(formCollection["OtherConcern"]) == "on") isOtherConcern = true;
-                            if (Convert.ToString(formCollection["FullSJRRequired"]) == "on") isFullSJRRequired = true;
-                            int retVal = dBEngine.UpdateSJRAssessmentTriage(isPaediatricPatient, isLearningDisabilityPatient, isMentalillnessPatient, isElectiveAdmission, isNoKConcernsDeath, isOtherConcern, isFullSJRRequired,
-                               formCollection["OtherConcernDetails"], Convert.ToInt32(formCollection["ddlCoronerReferral"]), id);
-                        }                    
+                        actionName = "MedicalExaminerDecision";
                     }
-                    catch (Exception ex)
+                    if (BtnNext != null)
                     {
-                        dBEngine.LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
+                        actionName = "OtherReferrals";
+                        if (Convert.ToString(formCollection["PaediatricPatient"]) == "on") isPaediatricPatient = true;
+                        if (Convert.ToString(formCollection["LearningDisabilityPatient"]) == "on") isLearningDisabilityPatient = true;
+                        if (Convert.ToString(formCollection["MentalillnessPatient"]) == "on") isMentalillnessPatient = true;
+                        if (Convert.ToString(formCollection["ElectiveAdmission"]) == "on") isElectiveAdmission = true;
+                        if (Convert.ToString(formCollection["NoKConcernsDeath"]) == "on") isNoKConcernsDeath = true;
+                        if (Convert.ToString(formCollection["OtherConcern"]) == "on") isOtherConcern = true;
+                        if (Convert.ToString(formCollection["FullSJRRequired"]) == "on") isFullSJRRequired = true;
+                        int retVal = dBEngine.UpdateSJRAssessmentTriage(isPaediatricPatient, isLearningDisabilityPatient, isMentalillnessPatient, isElectiveAdmission, isNoKConcernsDeath, isOtherConcern, isFullSJRRequired,
+                           formCollection["OtherConcernDetails"], Convert.ToInt32(formCollection["ddlCoronerReferral"]), id);
                     }
-                    return RedirectToAction(actionName, new { id = id });
+                }
+                catch (Exception ex)
+                {
+                    dBEngine.LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
+                }
+                return RedirectToAction(actionName, new { id = id });
                 //}
                 //else
                 //{
@@ -1220,15 +1299,15 @@ namespace NHS.Controllers
                 //if (ApplicationSession.LoginUserID > 0)
                 //{
                 try
-                    {
-                        sJRAssement = dBEngine.GetOtherReferrals(id);
+                {
+                    sJRAssement = dBEngine.GetOtherReferrals(id);
                     if (sJRAssement.Patient_ID == 0 || sJRAssement.Patient_ID == null)
                         sJRAssement.Patient_ID = Convert.ToInt32(id);
-                    }
-                    catch (Exception ex)
-                    {
-                        dBEngine.LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
-                    }
+                }
+                catch (Exception ex)
+                {
+                    dBEngine.LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
+                }
                 //}
                 //else
                 //{
@@ -1330,15 +1409,15 @@ namespace NHS.Controllers
                 //if (ApplicationSession.LoginUserID > 0)
                 //{
                 try
-                    {
-                        feedback = dBEngine.GetFeedback(id);
+                {
+                    feedback = dBEngine.GetFeedback(id);
                     if (feedback.Patient_ID == 0 || feedback.Patient_ID == null)
                         feedback.Patient_ID = Convert.ToInt32(id);
-                    }
-                    catch (Exception ex)
-                    {
-                        dBEngine.LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
-                    }
+                }
+                catch (Exception ex)
+                {
+                    dBEngine.LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
+                }
                 //}
                 //else
                 //{
@@ -1413,7 +1492,7 @@ namespace NHS.Controllers
             }
             else
                 return RedirectToAction("Index", "Account");
-           
+
 
             bool isUser = GetUserDetailsFromAD();
             List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
@@ -1459,7 +1538,7 @@ namespace NHS.Controllers
                             Session["WardDeath"] = "0";
                             Session.Timeout = 30;
                             isSession = false;
-                        }                        
+                        }
                         else if (Convert.ToString(Session["WardDeath"]) == "")
                         {
                             Session["WardDeath"] = "0";
@@ -1472,7 +1551,7 @@ namespace NHS.Controllers
                             Session.Timeout = 30;
                             isSession = false;
                         }
-                        else if(Convert.ToString(Session["PatientType"]) == "")
+                        else if (Convert.ToString(Session["PatientType"]) == "")
                         {
                             Session["PatientType"] = "0";
                             Session.Timeout = 30;
@@ -1503,8 +1582,8 @@ namespace NHS.Controllers
                             isSession = false;
                         }
 
-                        if(isSession && qapreview == false && medtriage == false)
-                        { 
+                        if (isSession && qapreview == false && medtriage == false)
+                        {
                             patientDetails = dBEngine.GetFilteredPatientDetails(DateTime.ParseExact(Session["StartDate"].ToString(), "dd/MM/yyyy", null), DateTime.ParseExact(Session["EndDate"].ToString(), "dd/MM/yyyy", null), Convert.ToString(Session["DischargeConsultant"]),
                             Convert.ToString(Session["WardDeath"]), Convert.ToString(Session["Speciality"]), Convert.ToString(Session["PatientType"]));
                             Session["TotalDeaths"] = patientDetails.Count;
@@ -1530,7 +1609,7 @@ namespace NHS.Controllers
                         if (formCollection["txtStartDate"] == "")
                             formCollection["txtStartDate"] = DateTime.Now.AddDays(-30).ToString("dd/MM/yyyy");
                         else
-                            formCollection["txtStartDate"] = formCollection["txtStartDate"].Replace("-","/");
+                            formCollection["txtStartDate"] = formCollection["txtStartDate"].Replace("-", "/");
                         if (formCollection["txtEndDate"] == "")
                             formCollection["txtEndDate"] = DateTime.Now.ToString("dd/MM/yyyy");
                         else
@@ -1638,7 +1717,7 @@ namespace NHS.Controllers
                     }
                 }
                 catch (Exception ex)
-                {                    
+                {
                     dBEngine.LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
                     throw ex;
                 }
@@ -1689,7 +1768,7 @@ namespace NHS.Controllers
                     ViewBag.LoadDischargeSpecialityDropdown = dBEngine.GetSpecialities();
                     ViewBag.wardDeathDropdown = dBEngine.GetWardOfDeaths();
                     ViewBag.dischargeConsultantDropdown = dBEngine.GetConsultants();
-                    
+
                 }
                 catch (Exception ex)
                 {
@@ -1724,7 +1803,7 @@ namespace NHS.Controllers
                     ViewBag.LoadDischargeSpecialityDropdown = dBEngine.GetSpecialities();
                     ViewBag.wardDeathDropdown = dBEngine.GetWardOfDeaths();
                     ViewBag.dischargeConsultantDropdown = dBEngine.GetConsultants();
-                    
+
                 }
                 catch (Exception ex)
                 {
@@ -1763,21 +1842,21 @@ namespace NHS.Controllers
             //{
             if (id == null || id == 0)
             {
-                if(Session["PatientID"] != null)
+                if (Session["PatientID"] != null)
                     id = Convert.ToInt32(Session["PatientID"]);
                 else
                     return RedirectToAction("Index", "Account");
             }
-                    
+
             try
-                {
-                    patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
-                    ViewBag.PatientHistoryLink = "'" + "http://rbhbedred001/#/views/R550_RBH_Mortality_Reviews/PatientHistory?MRN=" + patientDetails[0].PatientId + ":iid=" + id.ToString() + "'";
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
+            {
+                patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
+                ViewBag.PatientHistoryLink = "'" + "http://rbhbedred001/#/views/R550_RBH_Mortality_Reviews/PatientHistory?MRN=" + patientDetails[0].PatientId + ":iid=" + id.ToString() + "'";
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
             //}
             //else
             //{
@@ -1803,9 +1882,9 @@ namespace NHS.Controllers
                 //userName = Environment.GetEnvironmentVariable("USERNAME");
                 //dBEngine.LogException("before username", this.ToString(), "ValidateUser", System.DateTime.Now);
                 //if (WindowsIdentity.GetCurrent() != null)
-                    //userName = WindowsIdentity.GetCurrent().Name;
+                //userName = WindowsIdentity.GetCurrent().Name;
                 //else
-                    //userName = "Nothing found";
+                //userName = "Nothing found";
                 if (string.IsNullOrEmpty(userName))
                     userName = "Nothing found";
                 //dBEngine.LogException(userName, this.ToString(), "ValidateUser", System.DateTime.Now);

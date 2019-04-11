@@ -38,7 +38,7 @@ namespace NHS.Common
     }
 
     public class DischargeConsultants
-    { 
+    {
         public string DischargeConsultantCode { get; set; }
         public string DischargeConsultantName { get; set; }
     }
@@ -181,7 +181,33 @@ namespace NHS.Common
 
         public string Relationship { get; set; }
 
+        public bool PresentAtDeath { get; set; }
+
+        public bool IsInformed { get; set; }
+
         public string GPSurgery { get; set; }
+
+
+        public string RelativeName1 { get; set; }
+
+        public string RelativeTelNo1 { get; set; }
+
+        public string Relationship1 { get; set; }
+
+        public bool PresentAtDeath1 { get; set; }
+
+        public bool IsInformed1 { get; set; }
+
+        public string RelativeName2 { get; set; }
+
+        public string RelativeTelNo2 { get; set; }
+
+        public string Relationship2 { get; set; }
+
+        public bool PresentAtDeath2 { get; set; }
+
+        public bool IsInformed2 { get; set; }
+
     }
 
     public class Diagnosis
@@ -233,6 +259,9 @@ namespace NHS.Common
         public string CreatedTime { get; set; }
 
         public string Comments { get; set; }
+        public int CommentTypeID { get; set; }
+        public string CommentType { get; set; }
+        public string Role { get; set; }
     }
 
     public class clsMedicalExaminers
@@ -278,7 +307,7 @@ namespace NHS.Common
         public Nullable<System.DateTime> CreateDate { get; set; }
         public string UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
-        
+
 
         public Nullable<int> PatientID { get; set; }
         public string Spellnumber { get; set; }
@@ -289,7 +318,7 @@ namespace NHS.Common
         public string MortalityReview { get; set; }
         public string CodingReview { get; set; }
 
-       
+
         public Nullable<bool> FullSJRRequired { get; set; }
     }
 
@@ -341,5 +370,16 @@ namespace NHS.Common
     {
         Male,
         Female
+    }
+    public class NextOfKin
+    {
+       public int NextOfKinID { get; set; }	
+       public string PatientID	{ get; set; }	
+       
+       public string RelativeName	{get;set;}
+       public string RelativeTelNo	{get;set;}
+       public string Relationship	{get;set;}
+       public  bool PresentAtDeath{ get; set; }
+       public  bool IsInformed	{get;set;}
     }
 }
