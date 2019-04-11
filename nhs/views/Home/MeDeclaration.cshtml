@@ -1,4 +1,4 @@
-﻿@model NHS.Common.clsFeedBackModel
+﻿@model NHS.Common.clsMeDeclarationModel
 @{
     ViewBag.Title = "Positive Feedback";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -50,14 +50,14 @@
                         </h4>
                     </a>
                 </li>
-                <li class="active">
+                <li class="disabled">
                     <a href='@Url.Action("PositiveFeedback", "home", new { id = Model.Patient_ID})'>
                         <h4 class="list-group-item-heading">
                             Positive Feedback
                         </h4>
                     </a>
                 </li>
-                <li class="disabled">
+                <li class="active">
                     <a href='@Url.Action("MeDeclaration", "home", new { id = Model.Patient_ID})'>
                         <h4 class="list-group-item-heading">
                             ME Declaration
@@ -70,7 +70,7 @@
 
     <div class="row setup-content" id="step-6">
         <div class="col-xs-12 col-lg-12">
-            @using (Html.BeginForm("PositiveFeedback", "Home", FormMethod.Post, new { @id = Model.Patient_ID }))
+            @using (Html.BeginForm("MeDeclaration", "Home", FormMethod.Post, new { @id = Model.Patient_ID }))
             {
                 <div class="col-md-12 well">
                     <div class="form-section">
@@ -154,7 +154,7 @@
                         <div class="col-md-4">
                             <button type="submit" class="btn btn-primary btn-block" name="btnCloseYes" id="btnCloseYes">No</button>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -176,10 +176,10 @@ window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.
 });
 </script>
 <script>
-        $(document).ready(function () {
-            $("#btnCloseYes").click(function () {
-                $("#modelClose6").modal('hide');
-            });
+    $(document).ready(function () {
+        $("#btnCloseYes").click(function () {
+            $("#modelClose6").modal('hide');
         });
+    });
 </script>
 
