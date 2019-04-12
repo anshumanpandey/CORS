@@ -189,6 +189,8 @@ namespace NHS.Controllers
         public ActionResult MeDeclaration(int? id)
         {
             MEDeclaration meDeclaration = new MEDeclaration();
+            string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
+            DBEngine dBEngine = new DBEngine(connectionString);
             if (Session["FullName"] != null)
             {
                 if (string.IsNullOrEmpty(Session["FullName"].ToString()))
@@ -199,6 +201,8 @@ namespace NHS.Controllers
 
             if (id != null)
             {
+
+                meDeclaration = dBEngine.GetMEDeclarationByIdID(id);
                 //ViewBag.Diagnoses = dBEngine.GetDiagnosisDetails(id);
                 //ViewBag.Procedures = dBEngine.GetProcedureDetails(id);
             }
@@ -210,10 +214,10 @@ namespace NHS.Controllers
                     return RedirectToAction("Index", "Account");
             }
 
-            meDeclaration.MEName = (Session["FullName"]).ToString();
-            meDeclaration.DclartionDate = System.DateTime.Now;
-            meDeclaration.check = false;
-            meDeclaration.IsConfirmed = false;
+            //meDeclaration.MEName = (Session["FullName"]).ToString();
+            //meDeclaration.DclartionDate = System.DateTime.Now;
+            //meDeclaration.check = false;
+            //meDeclaration.IsConfirmed = false;
             if (Request.HttpMethod != "POST")
             {
             }

@@ -28,6 +28,61 @@ namespace NHS.Data
             return _connection;
         }
 
+
+        public MEDeclaration GetMEDeclarationByIdID(int? id)
+        {
+            var connection = GetConnection();
+            IDataReader dbReader = null;
+
+            MEDeclaration medec = new MEDeclaration();
+            NextOfKin nextOfkin;
+            try
+            {
+                SqlCommand dbCmd = new SqlCommand("usp_GetMEDeclaration", connection);
+                dbCmd.CommandType = CommandType.StoredProcedure;
+                if (id != null)
+                    dbCmd.Parameters.AddWithValue("@PatientID", id);
+                else
+                    dbCmd.Parameters.AddWithValue("@PatientID", null);
+                
+
+                dbReader = dbCmd.ExecuteReader();
+
+                if (!dbReader.Equals(null))
+                {
+                    using (dbReader)
+                    {
+                        while (dbReader.Read())
+                        {
+
+
+                            medec.MEDeclarationID = Convert.ToInt32(dbReader["MEDeclarationID"]);
+                            medec.IsConfirmed = Convert.ToBoolean(dbReader["IsConfirmed"]);
+                            medec.DclartionDate = Convert.ToDateTime(dbReader["DeclartionDate"]);
+                                
+                           
+                        }
+ 
+
+                    }
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
+            }
+            finally
+            {
+                if (!dbReader.IsClosed)
+                    dbReader.Close();
+            }
+
+           
+            return medec;
+        }
+
         /// <summary>
         /// This method brings in all patient lists or brings in a specific patient information based on the
         /// nhs number.
