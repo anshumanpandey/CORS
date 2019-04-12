@@ -115,7 +115,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-6" style="padding-left: 64px;">
+                        <div class="col-md-6" style="padding-left: 64px;float: right;position: absolute;top: 24px;right: -237px;z-index: 99;max-width: 75%;">
                             @{
                                 var countcomments = @Model.CommentCount.ToString();
                             }
@@ -123,7 +123,7 @@
                             <div class="clearfix" style="height:5px"></div>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <table>
+                                    <table style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;width:90%">
 
 
                                         @foreach (var item in ViewBag.CommentType)
@@ -131,8 +131,8 @@
 
                                             var count = 0;
 
-                                            <tr>
-                                                <td style="padding-left: 17px !important;">
+                                            <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:50%">
                                                     <span value="@item.CommonTypeID">@item.Type</span>
                                                 </td>
 
@@ -144,7 +144,7 @@
                                                         @*<span value="@item.CommonTypeID">@item.Type</span><br />*@
                                                     }
                                                 }
-                                                <td style="text-align: -webkit-center;cursor:pointer;">
+                                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:50%;text-align: -webkit-center;cursor:pointer;">
                                                     <span id="com" name="@item.CommonTypeID" value="@item.CommonTypeID" onclick="OpenFilterComment(@item.CommonTypeID)">@count</span>
                                                     @{
 
@@ -260,6 +260,7 @@
                                                             Time: @ViewBag.Comments[i].CreatedTime PM<br />
                                                             Comment: @ViewBag.Comments[i].Comments <br />
                                                             Role: @ViewBag.Comments[i].Role <br />
+                                                            Comment Type: @ViewBag.Comments[i].CommentType <br />
                                                         </div>
                                                         }
                                                         else
@@ -269,7 +270,8 @@
                                                             Date: @ViewBag.Comments[i].CreatedDate <br />
                                                             Time: @ViewBag.Comments[i].CreatedTime AM<br />
                                                             Comment: @ViewBag.Comments[i].Comments <br />
-                                                            Role: @ViewBag.Comments[i].Role <br />
+                                                            Role: @ViewBag.Comments[i].Role <br /> 
+                                                            Comment Type: @ViewBag.Comments[i].CommentType <br />
                                                         </div>
                                                         }
                                                     </td>
@@ -376,6 +378,7 @@
                                         Time: @item.CreatedTime PM<br />
                                         Comment: @item.Comments <br />
                                         Role:  @item.Role <br />
+                                        Comment Type: @item.CommentType <br />
                                     </div>
                                     }
                                     else
@@ -386,6 +389,7 @@
                                         Time: @item.CreatedTime AM<br />
                                         Comment: @item.Comments <br />
                                         Role:  @item.Role <br />
+                                        Comment Type: @item.CommentType <br />
                                     </div>
                                     }
                                 </td>
@@ -569,6 +573,7 @@ window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.
                             "Time:" + data[i].CreatedTime + "PM<br/>" +
                             "Comment:" + data[i].Comments + "<br/>" +
                             "Role:" + data[i].Role + "<br/>" +
+                            "Comment Type:" + data[i].CommentType + "<br/>" +
                             "</div>" +
                             "</td>" +
                             "</tr>");
@@ -582,6 +587,7 @@ window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.
                             "Time:" + data[i].CreatedTime + "AM<br/>" +
                             "Comment:" + data[i].Comments + "<br/>" +
                             "Role:" + data[i].Role + "<br/>" +
+                            "Comment Type:" + data[i].CommentType + "<br/>" +
                             "</div>" +
                             "</td>" +
                             "</tr>");
