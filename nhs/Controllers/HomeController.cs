@@ -38,7 +38,293 @@ namespace NHS.Controllers
                 return RedirectToAction("Index", "Account");
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult PositiveFeedback(int? id)
+        {
+            if (Session["FullName"] != null)
+            {
+                if (string.IsNullOrEmpty(Session["FullName"].ToString()))
+                    return RedirectToAction("Index", "Account");
+            }
+            else
+                return RedirectToAction("Index", "Account");
+            bool isUser = GetUserDetailsFromAD();
+            clsFeedBackModel feedback = new clsFeedBackModel();
+            string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
+            DBEngine dBEngine = new DBEngine(connectionString);
+            try
+            {
+                if (id == null || id == 0)
+                {
+                    if (Session["PatientID"] != null)
+                        id = Convert.ToInt32(Session["PatientID"]);
+                    else
+                        return RedirectToAction("Index", "Account");
+                }
+                //if (ApplicationSession.LoginUserID > 0)
+                //{
+                try
+                {
+                    feedback = dBEngine.GetFeedback(id);
+                    if (feedback.Patient_ID == 0 || feedback.Patient_ID == null)
+                        feedback.Patient_ID = Convert.ToInt32(id);
+                }
+                catch (Exception ex)
+                {
+                    dBEngine.LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
+                }
+                //}
+                //else
+                //{
+                //    return RedirectToAction("Index", "Account");
+                //}
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return View(feedback);
+        }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="clsFeedBackModel"></param>
+        /// <param name="BtnPrevious"></param>
+        /// <param name="BtnFinish"></param>
+        /// <param name="BtnNext"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult PositiveFeedback(FormCollection formCollection, string BtnPrevious, string BtnNext, int id)
+        {
+            string actionName = "";
+            bool isFormCompleted = false;
+            bool isComplementsFedBack = false;
+            string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
+            DBEngine dBEngine = new DBEngine(connectionString);
+
+            try
+            {
+                if (id == null || id == 0)
+                {
+                    if (Session["PatientID"] != null)
+                        id = Convert.ToInt32(Session["PatientID"]);
+                    else
+                        return RedirectToAction("Index", "Account");
+                }
+                if (BtnPrevious != null)
+                    actionName = "OtherReferrals";
+                //if (BtnSave != null)
+                //    actionName = "MortalityReview";
+
+
+                if (BtnNext != null)
+                {
+                    actionName = "MeDeclaration";
+                    if (Convert.ToString(formCollection["FormCompleted"]) == "on") isFormCompleted = true;
+                    if (Convert.ToString(formCollection["ComplementsFedBack"]) == "on") isComplementsFedBack = true;
+                    int retVal = dBEngine.UpdatePositiveFeedback(isFormCompleted, isComplementsFedBack, formCollection["Comments"], id);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return RedirectToAction(actionName, new { id = id });
+        }
+
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="clsFeedBackModel"></param>
+        ///// <param name="BtnPrevious"></param>
+        ///// <param name="BtnFinish"></param>
+        ///// <param name="BtnNext"></param>
+        ///// <returns></returns>
+        //[HttpPost]
+        //public ActionResult PositiveFeedback(FormCollection formCollection, string BtnPrevious, string BtnSave, string BtnFinish, string BtnNext, int id)
+        //{
+        //    string actionName = "";
+        //    bool isFormCompleted = false;
+        //    bool isComplementsFedBack = false;
+        //    string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
+        //    DBEngine dBEngine = new DBEngine(connectionString);
+
+        //    try
+        //    {
+        //        if (id == null || id == 0)
+        //        {
+        //            if (Session["PatientID"] != null)
+        //                id = Convert.ToInt32(Session["PatientID"]);
+        //            else
+        //                return RedirectToAction("Index", "Account");
+        //        }
+        //        if (BtnPrevious != null)
+        //            actionName = "OtherReferrals";
+        //        if (BtnSave != null)
+        //            actionName = "MortalityReview";
+
+
+        //        if (BtnFinish != null)
+        //        {
+        //            actionName = "PositiveFeedback";
+        //            if (Convert.ToString(formCollection["FormCompleted"]) == "on") isFormCompleted = true;
+        //            if (Convert.ToString(formCollection["ComplementsFedBack"]) == "on") isComplementsFedBack = true;
+        //            int retVal = dBEngine.UpdatePositiveFeedback(isFormCompleted, isComplementsFedBack, formCollection["Comments"], id);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //    return RedirectToAction(actionName, new { id = id });
+        //}
+
+
+        public ActionResult MeDeclaration(int? id)
+        {
+            MEDeclaration meDeclaration = new MEDeclaration();
+            if (Session["FullName"] != null)
+            {
+                if (string.IsNullOrEmpty(Session["FullName"].ToString()))
+                    return RedirectToAction("Index", "Account");
+            }
+            else
+                return RedirectToAction("Index", "Account");
+
+            if (id != null)
+            {
+                //ViewBag.Diagnoses = dBEngine.GetDiagnosisDetails(id);
+                //ViewBag.Procedures = dBEngine.GetProcedureDetails(id);
+            }
+            else if (id == null || id == 0)
+            {
+                if (Session["PatientID"] != null)
+                    id = Convert.ToInt32(Session["PatientID"]);
+                else
+                    return RedirectToAction("Index", "Account");
+            }
+
+            meDeclaration.MEName = (Session["FullName"]).ToString();
+            meDeclaration.DclartionDate = System.DateTime.Now;
+            meDeclaration.check = false;
+            meDeclaration.IsConfirmed = false;
+            if (Request.HttpMethod != "POST")
+            {
+            }
+            return View(meDeclaration);
+        }
+        [HttpPost]
+        public ActionResult MeDeclaration(FormCollection formCollection, string BtnPrevious, string BtnFinish, string BtnNext, int id, bool IsConfirmed = false)
+        {
+            bool checkIsConfirmed=false;
+            MEDeclaration me ;
+            string actionName = "";
+            string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
+            DBEngine dBEngine = new DBEngine(connectionString);
+
+            if (!string.IsNullOrEmpty(formCollection["IsConfirmedNo"]))
+             {
+                string checkResp = formCollection["IsConfirmedNo"];
+                if (checkResp == "on")
+                {
+                    checkIsConfirmed = true;
+                }
+                else
+                {
+                    checkIsConfirmed = true;
+                }
+                if (Session["FullName"] != null)
+                {
+                    if (string.IsNullOrEmpty(Session["FullName"].ToString()))
+                        return RedirectToAction("Index", "Account");
+                }
+                else
+                    return RedirectToAction("Index", "Account");
+                try
+                {
+                    if (id == null || id == 0)
+                    {
+                        if (Session["PatientID"] != null)
+                            id = Convert.ToInt32(Session["PatientID"]);
+                        else
+                            return RedirectToAction("Index", "Account");
+                    }
+                    if (BtnPrevious != null)
+                        actionName = "PositiveFeedback";
+                    if (BtnFinish == null|| BtnFinish == "")
+                    {
+                        actionName = "MeDeclaration";
+                        MEDeclaration mEDeclaration = new MEDeclaration();
+                        mEDeclaration.DclartionDate = System.DateTime.Now;
+                        mEDeclaration.IsConfirmed = checkIsConfirmed;
+                        mEDeclaration.Patient_ID = id.ToString(); 
+                        string retval = dBEngine.CheckMEDeclaration(mEDeclaration);
+
+                        int flag = Convert.ToInt32(retval.Split(',')[0]);
+                        if (flag == 1)
+                        {
+                            int len = retval.Split(',').Count();
+                            me = new MEDeclaration();
+                            me.check = true;
+                            me.IsConfirmed = true;
+                            //return RedirectToAction(actionName, new { id = id });
+                            return View("MeDeclaration", mEDeclaration);
+
+                        }
+                        else
+                        {
+                            int len = retval.Split(',').Count();
+                            List<string> array;
+                            array = retval.Split(',').ToList();
+
+                            me = new MEDeclaration();
+                            me.check = false;
+                            me.IsConfirmed = false;
+                            //return RedirectToAction(actionName, new { id = id });
+                            return View("MeDeclaration", me);
+                        }
+
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+            }
+            else if(!string.IsNullOrEmpty(formCollection["IsConfirmedYes"]))
+            {
+                if (BtnFinish != null)
+                {
+                    actionName = "MortalityReview";
+                    me = new MEDeclaration();
+                    me.DclartionDate = System.DateTime.Now;
+                    me.IsConfirmed = checkIsConfirmed;
+                    me.Patient_ID = id.ToString();
+                    int retval1 = dBEngine.insertMEDeclaration(me);
+
+                }
+
+            }
+           
+         
+            return RedirectToAction(actionName, new { id = id });
+
+
+
+
+            //if (Request.HttpMethod != "POST")
+            //{
+            //}
+            //return View();
+        }
         public ActionResult NotImplemented()
         {
             return View();
@@ -776,6 +1062,44 @@ namespace NHS.Controllers
                     if (Request.HttpMethod != "POST")
                     {
                         patientDetails = dBEngine.GetPatientDetailsByID(id, Convert.ToInt32(Session["LoginUserID"]));
+                        if (patientDetails.ToList()[0].lstNEXTKin.ToList().Count > 0)
+                        {
+                            for (int item = 0; item < patientDetails.ToList()[0].lstNEXTKin.ToList().Count; item++)
+                            {
+                                NextOfKin n = new NextOfKin();
+                                n = patientDetails.ToList()[0].lstNEXTKin.ToList()[item];
+                                if (item == 0)
+                                {
+                                    patientDetails.ToList()[0].RelativeName = n.RelativeName;
+                                    patientDetails.ToList()[0].RelativeTelNo = n.RelativeTelNo;
+                                    patientDetails.ToList()[0].Relationship = n.Relationship;
+                                    patientDetails.ToList()[0].PresentAtDeath = n.PresentAtDeath;
+                                    patientDetails.ToList()[0].IsInformed = n.IsInformed;
+                                    patientDetails.ToList()[0].KinId = n.NextOfKinID;
+
+                                }
+                                else if (item == 1)
+                                {
+                                    patientDetails.ToList()[0].RelativeName1 = n.RelativeName;
+                                    patientDetails.ToList()[0].RelativeTelNo1 = n.RelativeTelNo;
+                                    patientDetails.ToList()[0].Relationship1 = n.Relationship;
+                                    patientDetails.ToList()[0].PresentAtDeath1 = n.PresentAtDeath;
+                                    patientDetails.ToList()[0].IsInformed1 = n.IsInformed;
+                                    patientDetails.ToList()[0].KinId1 = n.NextOfKinID;
+                                }
+                                else if (item == 2)
+                                {
+                                    patientDetails.ToList()[0].RelativeName2 = n.RelativeName;
+                                    patientDetails.ToList()[0].RelativeTelNo2 = n.RelativeTelNo;
+                                    patientDetails.ToList()[0].Relationship2 = n.Relationship;
+                                    patientDetails.ToList()[0].PresentAtDeath2 = n.PresentAtDeath;
+                                    patientDetails.ToList()[0].IsInformed2 = n.IsInformed;
+                                    patientDetails.ToList()[0].KinId2 = n.NextOfKinID;
+                                }
+                                else
+                                { }
+                            }
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -826,9 +1150,9 @@ namespace NHS.Controllers
                 if (Convert.ToString(formCollection["DataQualityIssuesIdentified"]) == "on") isDataQualityIssuesIdentified = true;
                 if (Convert.ToString(formCollection["UrgentMEReview"]) == "on") isUrgentMEReview = true;
                 nextOfKin = new NextOfKin();
-                if (formCollection["RelativeName"] != "" && formCollection["RelativeTelNo"]!="" && formCollection["Relationship"]!="")
+                if (formCollection["RelativeName"] != "" && formCollection["RelativeTelNo"] != "" && formCollection["Relationship"] != "")
                 {
-
+                    nextOfKin.NextOfKinID = Convert.ToInt32(formCollection["KinId"]);
                     nextOfKin.RelativeName = (formCollection["RelativeName"]).ToString();
                     nextOfKin.RelativeTelNo = (formCollection["RelativeTelNo"]).ToString();
                     nextOfKin.Relationship = formCollection["Relationship"];
@@ -838,9 +1162,10 @@ namespace NHS.Controllers
                     nextOfKin.NextOfKinID = dbEngine.insertKin(nextOfKin);
                     if (nextOfKin.NextOfKinID > 0)
                     {
-                        
+                        nextOfKin = new NextOfKin();
                         if (formCollection["RelativeName1"] != "" && formCollection["RelativeTelNo1"] != "" && formCollection["Relationship1"] != "")
                         {
+                            nextOfKin.NextOfKinID = Convert.ToInt32(formCollection["KinId1"]);
                             nextOfKin.RelativeName = (formCollection["RelativeName1"]).ToString();
                             nextOfKin.RelativeTelNo = (formCollection["RelativeTelNo1"]).ToString();
                             nextOfKin.Relationship = formCollection["Relationship1"];
@@ -850,8 +1175,10 @@ namespace NHS.Controllers
                             nextOfKin.NextOfKinID = dbEngine.insertKin(nextOfKin);
                             if (nextOfKin.NextOfKinID > 0)
                             {
+                                nextOfKin = new NextOfKin();
                                 if (formCollection["RelativeName2"] != "" && formCollection["RelativeTelNo2"] != "" && formCollection["Relationship2"] != "")
                                 {
+                                    nextOfKin.NextOfKinID = Convert.ToInt32(formCollection["KinId2"]);
                                     nextOfKin.RelativeName = (formCollection["RelativeName2"]).ToString();
                                     nextOfKin.RelativeTelNo = (formCollection["RelativeTelNo2"]).ToString();
                                     nextOfKin.Relationship = formCollection["Relationship2"];
@@ -865,7 +1192,7 @@ namespace NHS.Controllers
                     }
 
                 }
-             
+
                 int retVal = dbEngine.UpdatePatientDetails(isDataQualityIssuesIdentified, formCollection["DataQualityIssueComments"], false, "", formCollection["Occupation"],
                     isUrgentMEReview, formCollection["UrgentMEReviewComment"], formCollection["RelativeName"], formCollection["RelativeTelNo"], formCollection["Relationship"],
                     formCollection["GPSurgery"], id);
@@ -911,12 +1238,12 @@ namespace NHS.Controllers
                     ViewBag.MedicalExaminers = dBEngine.GetMedicalExaminers();
                     ViewBag.CommentType = dBEngine.GetCommentType();
                     ViewBag.Comments = dBEngine.GetComments(id);
-                    
+
                     foreach (var b in ViewBag.CommentType)
                     {
                         foreach (var a in ViewBag.Comments)
                         {
-                            if (a.CommentTypeID==b.CommonTypeID)
+                            if (a.CommentTypeID == b.CommonTypeID)
                             {
                                 a.CommentType = b.Type;
                             }
@@ -977,6 +1304,7 @@ namespace NHS.Controllers
         [HttpPost]
         public ActionResult MedicalExaminerReview(FormCollection formCollection, string BtnPrevious, string BtnNext, int? id)
         {
+            int commentTypeID = 0;
             if (string.IsNullOrEmpty(Session["FullName"].ToString()))
                 return RedirectToAction("Index", "Account");
             string actionName = "";
@@ -1008,7 +1336,15 @@ namespace NHS.Controllers
 
 
                     string role = Convert.ToString(formCollection["ddlRole"]);
-                    int commentTypeID = Convert.ToInt32(formCollection["ddlCommentType"]);
+                    if (formCollection["ddlCommentType"] != "")
+                    {
+                        commentTypeID = Convert.ToInt32(formCollection["ddlCommentType"]);
+                    }
+                    else
+                    {
+                        commentTypeID = 0;
+                    }
+                    
                     Console.WriteLine(role);
                     Console.WriteLine(commentTypeID);
 
@@ -1379,102 +1715,6 @@ namespace NHS.Controllers
             return RedirectToAction(actionName, new { id = id });
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public ActionResult PositiveFeedback(int? id)
-        {
-            if (Session["FullName"] != null)
-            {
-                if (string.IsNullOrEmpty(Session["FullName"].ToString()))
-                    return RedirectToAction("Index", "Account");
-            }
-            else
-                return RedirectToAction("Index", "Account");
-            bool isUser = GetUserDetailsFromAD();
-            clsFeedBackModel feedback = new clsFeedBackModel();
-            string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
-            DBEngine dBEngine = new DBEngine(connectionString);
-            try
-            {
-                if (id == null || id == 0)
-                {
-                    if (Session["PatientID"] != null)
-                        id = Convert.ToInt32(Session["PatientID"]);
-                    else
-                        return RedirectToAction("Index", "Account");
-                }
-                //if (ApplicationSession.LoginUserID > 0)
-                //{
-                try
-                {
-                    feedback = dBEngine.GetFeedback(id);
-                    if (feedback.Patient_ID == 0 || feedback.Patient_ID == null)
-                        feedback.Patient_ID = Convert.ToInt32(id);
-                }
-                catch (Exception ex)
-                {
-                    dBEngine.LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
-                }
-                //}
-                //else
-                //{
-                //    return RedirectToAction("Index", "Account");
-                //}
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return View(feedback);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="clsFeedBackModel"></param>
-        /// <param name="BtnPrevious"></param>
-        /// <param name="BtnFinish"></param>
-        /// <param name="BtnNext"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public ActionResult PositiveFeedback(FormCollection formCollection, string BtnPrevious, string BtnSave, string BtnFinish, string BtnNext, int id)
-        {
-            string actionName = "";
-            bool isFormCompleted = false;
-            bool isComplementsFedBack = false;
-            string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
-            DBEngine dBEngine = new DBEngine(connectionString);
-
-            try
-            {
-                if (id == null || id == 0)
-                {
-                    if (Session["PatientID"] != null)
-                        id = Convert.ToInt32(Session["PatientID"]);
-                    else
-                        return RedirectToAction("Index", "Account");
-                }
-                if (BtnPrevious != null)
-                    actionName = "OtherReferrals";
-                if (BtnSave != null)
-                    actionName = "MortalityReview";
-                if (BtnFinish != null)
-                {
-                    actionName = "PositiveFeedback";
-                    if (Convert.ToString(formCollection["FormCompleted"]) == "on") isFormCompleted = true;
-                    if (Convert.ToString(formCollection["ComplementsFedBack"]) == "on") isComplementsFedBack = true;
-                    int retVal = dBEngine.UpdatePositiveFeedback(isFormCompleted, isComplementsFedBack, formCollection["Comments"], id);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return RedirectToAction(actionName, new { id = id });
-        }
 
         /// <summary>
         /// 

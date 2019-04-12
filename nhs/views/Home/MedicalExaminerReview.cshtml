@@ -241,12 +241,10 @@
                         </div>
                         <div class="col-md-12">
                             <div class="row_bar">
-                                Comments <a href="#" id="commentslink" name="commentslink">View Previous Comments (@Model.CommentCount.ToString())</a>
+                                Comments @*<a href="#" id="commentslink" name="commentslink">View Previous Comments (@Model.CommentCount.ToString())</a>*@
 
                                 <table class="table table-bordered" id="assets-data-table">
-                                    @*<tr bgcolor="#a9d7cc" style="color:black;">
-                                            <th style="text-align:center">Comments</th>
-                                        </tr>*@
+                                    
                                     <tbody bgcolor="#ffffff" style="color:black;">
                                         @for (var i = 0; i < ViewBag.Comments.Count; i++)
                                         {

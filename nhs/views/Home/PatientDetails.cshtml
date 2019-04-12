@@ -354,57 +354,63 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @Html.HiddenFor(model => model.KinId, new { @class = "form-control" })
                             <tr>
+
                                 <td>
-                                    @Html.TextBoxFor(model => model.RelativeName, "", new { @class = "form-control" })
+                                    @Html.EditorFor(model => model.RelativeName, new { @class = "form-control" })
                                 </td>
                                 <td>
-                                    @Html.TextBoxFor(model => model.Relationship, "", new { @class = "form-control" })
+                                    @Html.EditorFor(model => model.Relationship, new { @class = "form-control" })
                                 </td>
                                 <td>
-                                    @Html.TextBoxFor(model => model.RelativeTelNo, "", new { @class = "form-control" })
+                                    @Html.EditorFor(model => model.RelativeTelNo, new { @class = "form-control" })
                                 </td>
                                 <td>
-                                   
-                                    @Html.CheckBoxFor(model => model.PresentAtDeath, new { @class= "form-control" ,@id="PDeath",onclick="Callcheck(this)"})
+
+                                    @Html.CheckBoxFor(model => model.PresentAtDeath, new { @class = "form-control", @id = "PDeath", onclick = "Callcheck(this)" })
                                     @*@Html.CheckBoxFor(model=>model.PresentAtDeath,)*@
                                 </td>
                                 <td>
-                                    
-                                    @Html.CheckBoxFor(model => model.IsInformed, new { @class = "form-control" , @id = "PInforme", onclick = "Callcheck(this)" })
+
+                                    @Html.CheckBoxFor(model => model.IsInformed, new { @class = "form-control", @id = "PInforme", onclick = "Callcheck(this)" })
                                 </td>
                             </tr>
+                            @Html.HiddenFor(model => model.KinId1, new { @class = "form-control" })
                             <tr>
+
                                 <td>
-                                    @Html.TextBoxFor(model => model.RelativeName1, "", new { @class = "form-control" })
+                                    @Html.EditorFor(model => model.RelativeName1, new { @class = "form-control" })
                                 </td>
                                 <td>
-                                    @Html.TextBoxFor(model => model.Relationship1, "", new { @class = "form-control" })
+                                    @Html.EditorFor(model => model.Relationship1, new { @class = "form-control" })
                                 </td>
                                 <td>
-                                    @Html.TextBoxFor(model => model.RelativeTelNo1, "", new { @class = "form-control" })
+                                    @Html.EditorFor(model => model.RelativeTelNo1, new { @class = "form-control" })
                                 </td>
                                 <td>
-                                   
-                                    @Html.CheckBoxFor(model => model.PresentAtDeath1, new { @class = "form-control",@id = "PDeath1", onclick = "Callcheck1(this)"    })
+
+                                    @Html.CheckBoxFor(model => model.PresentAtDeath1, new { @class = "form-control", @id = "PDeath1", onclick = "Callcheck1(this)" })
                                 </td>
                                 <td>
-                                    
-                                    @Html.CheckBoxFor(model => model.IsInformed1, new { @class = "form-control"    , @id = "PInforme1", onclick = "Callcheck1(this)" })
+
+                                    @Html.CheckBoxFor(model => model.IsInformed1, new { @class = "form-control", @id = "PInforme1", onclick = "Callcheck1(this)" })
                                 </td>
                             </tr>
+                            @Html.HiddenFor(model => model.KinId2, new { @class = "form-control" })
                             <tr>
+                                
                                 <td>
-                                    @Html.TextBoxFor(model => model.RelativeName2, "", new { @class = "form-control" })
+                                    @Html.EditorFor(model => model.RelativeName2, new { @class = "form-control" })
                                 </td>
                                 <td>
-                                    @Html.TextBoxFor(model => model.Relationship2, "", new { @class = "form-control" })
+                                    @Html.EditorFor(model => model.Relationship2, new { @class = "form-control" })
                                 </td>
                                 <td>
-                                    @Html.TextBoxFor(model => model.RelativeTelNo2, "", new { @class = "form-control" })
+                                    @Html.EditorFor(model => model.RelativeTelNo2, new { @class = "form-control" })
                                 </td>
                                 <td>
-                                   
+
                                     @Html.CheckBoxFor(model => model.PresentAtDeath2, new { @class = "form-control", @id = "PDeath2", onclick = "Callcheck2(this)" })
                                 </td>
                                 <td>

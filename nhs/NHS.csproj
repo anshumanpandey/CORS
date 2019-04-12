@@ -871,6 +871,7 @@
     <Content Include="Views\Home\CodingReview.cshtml" />
     <Content Include="Views\Home\NotAuthorizedPatientDetails.cshtml" />
     <Content Include="Views\Home\QAPReviewFirstStep.cshtml" />
+    <Content Include="Views\Home\MeDeclaration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
