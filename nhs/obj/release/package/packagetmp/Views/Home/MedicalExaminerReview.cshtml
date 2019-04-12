@@ -39,10 +39,11 @@
                 <li class="active">
                     <a href='@Url.Action("MedicalExaminerReview", "home", new { id=Model.Patient_ID })'>
                         <h4 class="list-group-item-heading">
-                            Medical Examiner Review
+                            Medical Examiner Scrutiny
                         </h4>
                     </a>
                 </li>
+
                 <li class="disabled">
                     <a href='@Url.Action("MedicalExaminerDecision", "home", new { id = Model.Patient_ID})'>
                         <h4 class="list-group-item-heading">
@@ -68,6 +69,13 @@
                     <a href='@Url.Action("PositiveFeedback", "home", new { id = Model.Patient_ID})'>
                         <h4 class="list-group-item-heading">
                             Positive Feedback
+                        </h4>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href='@Url.Action("MeDeclaration", "home", new { id = Model.Patient_ID})'>
+                        <h4 class="list-group-item-heading">
+                            ME Declaration
                         </h4>
                     </a>
                 </li>
