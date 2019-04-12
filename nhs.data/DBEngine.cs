@@ -953,7 +953,7 @@ namespace NHS.Data
         /// <returns>int</returns>
         public int UpdateMedicalExaminerDecision(bool isMCCDissue, bool isCoronerReferral, bool isHospitalPostMortem, bool isDeathCertificate, bool isCornerReferralComplete, bool isCoronerDecisionInquest, bool isCoronerDecisionPostMortem,
             bool isCoronerDecision100A, bool isCoronerDecisionGPissue, string Reason, string CauseOfDeath1, string CauseOfDeath2, string CauseOfDeath3,
-            string CauseOfDeath4, DateTime? DeathCertificateDate, string DeathCertificateTime, string TimeType, int id)
+            string CauseOfDeath4, DateTime? DeathCertificateDate, string DeathCertificateTime, string TimeType, string CauseID, int id)
         {
             var connection = GetConnection();
             int retVal = 0;
@@ -978,6 +978,7 @@ namespace NHS.Data
                 dbCommand.Parameters.AddWithValue("@DeathCertificateDate", DeathCertificateDate ?? (object)DBNull.Value);
                 dbCommand.Parameters.AddWithValue("@DeathCertificateTime", DeathCertificateTime);
                 dbCommand.Parameters.AddWithValue("@TimeType", TimeType);
+                dbCommand.Parameters.AddWithValue("@CauseID", Convert.ToInt32(CauseID));
                 dbCommand.Parameters.AddWithValue("@ID", id);
                 retVal = dbCommand.ExecuteNonQuery();
             }
@@ -2772,6 +2773,7 @@ namespace NHS.Data
                     medicalExaminerDecision.CoronerDecision100A = Convert.ToBoolean(dbReader["CoronerDecision100A"]);
                     medicalExaminerDecision.CoronerDecisionGPissue = Convert.ToBoolean(dbReader["CoronerDecisionGPissue"]);
                     medicalExaminerDecision.CoronerDecisionPostMortem = Convert.ToBoolean(dbReader["CoronerDecisionPostMortem"]);
+                    medicalExaminerDecision.CauseID = Convert.ToInt32(dbReader["CauseID"]);
                     if (dbReader["DeathCertificateDate"] == null)
                         medicalExaminerDecision.DeathCertificateDate = null;
                     else

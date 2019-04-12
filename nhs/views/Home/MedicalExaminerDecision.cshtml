@@ -162,12 +162,40 @@
                                     }
                                 </div>
                             </div>
-                            <br/><br/>
+                            <br /><br />
+                            <div class="col-md-12"  style="padding: 0;">
+                                
+                                    <div class="col-md-6">
+                                        Death was
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="row_bar">
+                                                <select class="form-control" id="ddlCauseOdfDeath" name="ddlCauseOdfDeath">
+
+                                                    <option value="0" selected>Select</option>
+                                                    <option value="1">Unexpected</option>
+                                                    <option value="2">Sudden but unexpected</option>
+                                                    <option value="3">Expected</option>
+                                                    <option value="4">Individualised End of Life Care Plan</option>
+                                                </select>
+                                                @if(Model.CauseID>0)
+                                                {
+                                                <script>
+                                                    $("#ddlCauseOdfDeath").val(@Model.CauseID)
+                                                </script>
+                                                }
+                                            </div>
+                                        </div>
+                                  
+                                </div>
+                           
+
                             <div class="col-md-12">
                                 <div class="row_bar">
                                     Cause of Death
                                 </div>
                             </div>
+
                             <div class="col-md-6">
                                 <div class="row_bar">
                                     1a
@@ -183,7 +211,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="row_bar">
-                                   1c
+                                    1c
                                     @Html.EditorFor(model => model.CauseOfDeath3, new { htmlAttributes = new { @class = "form-control" } })
                                 </div>
                             </div>
@@ -205,20 +233,23 @@
                                     }
                                 </div>
                             </div>
+
+
+
                             @if (Model.DeathCertificate == true)
                             {
-                            <div id="deathdate" class="col-md-4" style="display:block;">
-                                <div class="row_bar">
-                                    @if (string.IsNullOrEmpty(Model.DeathCertificateDate))
-                                    {
-                                        <input class="form-control input_datepicker" readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="" placeholder="Select Date">
-                                    }
-                                    else
-                                    {
-                                        <input class="form-control input_datepicker" readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="@Model.DeathCertificateDate" placeholder="Select Date">
-                                    }
+                                <div id="deathdate" class="col-md-4" style="display:block;">
+                                    <div class="row_bar">
+                                        @if (string.IsNullOrEmpty(Model.DeathCertificateDate))
+                                        {
+                                            <input class="form-control input_datepicker" readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="" placeholder="Select Date">
+                                        }
+                                        else
+                                        {
+                                            <input class="form-control input_datepicker" readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="@Model.DeathCertificateDate" placeholder="Select Date">
+                                        }
+                                    </div>
                                 </div>
-                            </div>
                             }
                             else
                             {
@@ -237,12 +268,12 @@
                             }
                             @if (Model.DeathCertificate == true)
                             {
-                            <div id="deathtime" class="col-md-2" style="display:block;">
-                                <div class="row_bar">
-                                    <input  class="form-control" name="DeathCertificateTime" type="text" maxlength="5" id="txtTime" placeholder="00:00"
-                                           value="@Model.DeathCertificateTime" />
+                                <div id="deathtime" class="col-md-2" style="display:block;">
+                                    <div class="row_bar">
+                                        <input class="form-control" name="DeathCertificateTime" type="text" maxlength="5" id="txtTime" placeholder="00:00"
+                                               value="@Model.DeathCertificateTime" />
+                                    </div>
                                 </div>
-                            </div>
                             }
                             else
                             {
@@ -250,8 +281,8 @@
                                     <div class="row_bar">
                                         @if (string.IsNullOrEmpty(Model.DeathCertificateTime))
                                         {
-                                        <input class="form-control" name="DeathCertificateTime" type="text" maxlength="5" id="txtTime" placeholder="00:00"
-                                               value="" />
+                                            <input class="form-control" name="DeathCertificateTime" type="text" maxlength="5" id="txtTime" placeholder="00:00"
+                                                   value="" />
                                         }
                                         else
                                         {
@@ -296,36 +327,36 @@
                             }
                             else
                             {
-                            <div id="deathtimetype" class="col-md-2" style="display:none;">
-                                <div class="row_bar">
-                                    <select class="form-control" id="TimeType" name="TimeType">
-                                        @if (Model.TimeType == "0")
-                                        {
-                                        <option selected value="0">--Select--</option>
-                                        }
-                                        else
-                                        {
-                                            <option value="0">--Select--</option>
-                                        }
-                                        @if (Model.TimeType == "AM")
-                                        {
-                                            <option selected value="AM">AM</option>
-                                        }
-                                        else
-                                        {
-                                            <option value="AM">AM</option>
-                                        }
-                                        @if (Model.TimeType == "PM")
-                                        {
-                                            <option selected value="PM">PM</option>
-                                        }
-                                        else
-                                        {
-                                            <option value="PM">PM</option>
-                                        }
-                                    </select>
+                                <div id="deathtimetype" class="col-md-2" style="display:none;">
+                                    <div class="row_bar">
+                                        <select class="form-control" id="TimeType" name="TimeType">
+                                            @if (Model.TimeType == "0")
+                                            {
+                                                <option selected value="0">--Select--</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="0">--Select--</option>
+                                            }
+                                            @if (Model.TimeType == "AM")
+                                            {
+                                                <option selected value="AM">AM</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="AM">AM</option>
+                                            }
+                                            @if (Model.TimeType == "PM")
+                                            {
+                                                <option selected value="PM">PM</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="PM">PM</option>
+                                            }
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
                             }
                             <div class="col-md-12">
                                 <div class="row_bar">

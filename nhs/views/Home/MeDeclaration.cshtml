@@ -92,32 +92,47 @@
                         @if (Model.check == true)
                         {
 
-                            <div class="row">
+                          
                                 <div class="col-md-12">
-                                    <div class="col-md-3">Name of the medical examiner</div>
-                                    <div class="col-md-3">Model.MEName</div>
-                                    <div class="col-md-3">Office</div>
-                                    <div class="col-md-3">Royal Berkshire Hospital </div>
+                                    <div class="col-md-3"   style="float: left;">Name of the medical examiner</div>
+                                    <div class="col-md-3"   style="float: left;">@Model.MEName</div>
+                                    <div class="col-md-3"   style="float: left;">Office</div>
+                                    <div class="col-md-3"   style="float: left;">Royal Berkshire Hospital </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="col-md-3">Date</div>
-                                    <div class="col-md-3">Model.DclartionDate</div>
+                                    <div class="col-md-3"   style="float: left;">Date</div>
+                                    <div class="col-md-3"   style="float: left;">@Model.DclartionDate</div>
 
                                 </div>
-                            </div>
+                             
                         }
                         else
                         {
-                            <div class="col-md-12">
-                                Please fill the below form before submit.
-                            </div>
-
-                            foreach (var a in Model.fornames.ToList())
+                            if (Model.IsConfirmed == false)
                             {
-                              <span>a</span><br/>
-                            }
+                                <div class="col-md-12">
+                                    Please fill the below form before submit.
+                                </div>
 
-                           
+                                foreach (var a in Model.fornames.ToList())
+                                {
+                                    <span>a</span><br />
+                                }
+
+                            }
+                            else
+                            {
+                                    <div class="col-md-12">
+                                        <div class="col-md-3" style="float: left;">Name of the medical examiner</div>
+                                        <div class="col-md-3" style="float: left;">@Model.MEName</div>
+                                        <div class="col-md-3" style="float: left;">Office</div>
+                                        <div class="col-md-3" style="float: left;">Royal Berkshire Hospital </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="col-md-3" style="float: left;">Date</div>
+                                        <div class="col-md-3" style="float: left;">@Model.DclartionDate</div>
+                                    </div>
+                            }
                         }
                     </div>
 

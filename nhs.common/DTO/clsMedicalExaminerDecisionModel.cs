@@ -60,6 +60,7 @@ namespace NHS.Common
 
         public string d { get; set; }
         public string CoronerReferralReason { get; set; }
+        public int CauseID { get; set; }
     }
     public class ReasonGroups
     {

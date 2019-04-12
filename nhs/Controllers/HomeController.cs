@@ -203,6 +203,7 @@ namespace NHS.Controllers
             {
 
                 meDeclaration = dBEngine.GetMEDeclarationByIdID(id);
+                meDeclaration.MEName = Session["FullName"].ToString();
                 //ViewBag.Diagnoses = dBEngine.GetDiagnosisDetails(id);
                 //ViewBag.Procedures = dBEngine.GetProcedureDetails(id);
             }
@@ -1464,6 +1465,9 @@ namespace NHS.Controllers
                     if (Convert.ToString(formCollection["Post-Mortem"]) == "on") isCoronerDecisionPostMortem = true;
                     if (Convert.ToString(formCollection["100A"]) == "on") isCoronerDecision100A = true;
                     if (Convert.ToString(formCollection["GPIssue"]) == "on") isCoronerDecisionGPissue = true;
+                   
+                    
+
                     if (isDeathCertificate == true)
                     {
                         if (formCollection["DeathCertificateDate"] != "") deathCertificateDate = DateTime.ParseExact(Convert.ToDateTime(formCollection["DeathCertificateDate"]).ToString("dd/MM/yyyy"), "dd/MM/yyyy", null);
@@ -1477,7 +1481,7 @@ namespace NHS.Controllers
                     }
                     int retVal = dBEngine.UpdateMedicalExaminerDecision(isMCCDissue, isCoronerReferral, isHospitalPostMortem, isDeathCertificate, isCornerReferralComplete, isCoronerDecisionInquest, isCoronerDecisionPostMortem,
                        isCoronerDecision100A, isCoronerDecisionGPissue, formCollection["CoronerReferralReason"], formCollection["CauseOfDeath1"], formCollection["CauseOfDeath2"], formCollection["CauseOfDeath3"],
-                       formCollection["CauseOfDeath4"], deathCertificateDate, formCollection["DeathCertificateTime"], formCollection["TimeType"], id);
+                       formCollection["CauseOfDeath4"], deathCertificateDate, formCollection["DeathCertificateTime"], formCollection["TimeType"], formCollection["ddlCauseOdfDeath"], id);
                 }
             }
             catch (Exception ex)
