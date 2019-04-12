@@ -254,7 +254,11 @@ ul, menu, dir {
 .container-section {
     padding: 60px;
 }
-
+.next-kin {
+    border: none;
+    margin-bottom: 0 !important;
+    outline:none;
+}
 .form-control {
     margin-bottom: 20px;
 }

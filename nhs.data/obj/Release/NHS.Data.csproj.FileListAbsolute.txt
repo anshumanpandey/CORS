@@ -30,3 +30,12 @@ C:\Users\pujas\source\repos\cors-rbh\NHS.Data\obj\Release\NHS.Data.csproj.CoreCo
 C:\Users\pujas\source\repos\cors-rbh\NHS.Data\obj\Release\NHS.Data.csproj.CopyComplete
 C:\Users\pujas\source\repos\cors-rbh\NHS.Data\obj\Release\NHS.Data.dll
 C:\Users\pujas\source\repos\cors-rbh\NHS.Data\obj\Release\NHS.Data.pdb
+E:\git.projects\cors-rbh\NHS.Data\bin\Release\NHS.Data.dll
+E:\git.projects\cors-rbh\NHS.Data\bin\Release\NHS.Data.pdb
+E:\git.projects\cors-rbh\NHS.Data\bin\Release\NHS.Common.dll
+E:\git.projects\cors-rbh\NHS.Data\bin\Release\NHS.Common.pdb
+E:\git.projects\cors-rbh\NHS.Data\obj\Release\NHS.Data.csprojAssemblyReference.cache
+E:\git.projects\cors-rbh\NHS.Data\obj\Release\NHS.Data.csproj.CoreCompileInputs.cache
+E:\git.projects\cors-rbh\NHS.Data\obj\Release\NHS.Data.csproj.CopyComplete
+E:\git.projects\cors-rbh\NHS.Data\obj\Release\NHS.Data.dll
+E:\git.projects\cors-rbh\NHS.Data\obj\Release\NHS.Data.pdb

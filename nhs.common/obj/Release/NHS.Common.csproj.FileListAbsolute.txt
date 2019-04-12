@@ -20,3 +20,9 @@ C:\Users\pujas\source\repos\cors-rbh\NHS.Common\obj\Release\NHS.Common.csprojAss
 C:\Users\pujas\source\repos\cors-rbh\NHS.Common\obj\Release\NHS.Common.csproj.CoreCompileInputs.cache
 C:\Users\pujas\source\repos\cors-rbh\NHS.Common\obj\Release\NHS.Common.dll
 C:\Users\pujas\source\repos\cors-rbh\NHS.Common\obj\Release\NHS.Common.pdb
+E:\git.projects\cors-rbh\NHS.Common\bin\Release\NHS.Common.dll
+E:\git.projects\cors-rbh\NHS.Common\bin\Release\NHS.Common.pdb
+E:\git.projects\cors-rbh\NHS.Common\obj\Release\NHS.Common.csprojAssemblyReference.cache
+E:\git.projects\cors-rbh\NHS.Common\obj\Release\NHS.Common.csproj.CoreCompileInputs.cache
+E:\git.projects\cors-rbh\NHS.Common\obj\Release\NHS.Common.dll
+E:\git.projects\cors-rbh\NHS.Common\obj\Release\NHS.Common.pdb
