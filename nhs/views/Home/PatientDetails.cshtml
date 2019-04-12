@@ -346,11 +346,11 @@
                     <table style="margin-left: 17px;border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;width:90%">
                         <thead>
                             <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
-                                <th>Name</th>
-                                <th>Relationship</th>
-                                <th>Phone No</th>
-                                <th>Present at death</th>
-                                <th>informed</th>
+                                <th style="text-align: -webkit-center;">Name</th>
+                                <th style="text-align: -webkit-center;">Relationship</th>
+                                <th style="text-align: -webkit-center;">Phone No</th>
+                                <th style="text-align: -webkit-center;">Present at death</th>
+                                <th style="text-align: -webkit-center;">nformed</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -533,7 +533,7 @@ window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.
         });
     });
     function Callcheck(e) {
-        debugger;
+      
         if (e.id == "PDeath") {
             $("#PInforme").prop("checked", false)  
         }
