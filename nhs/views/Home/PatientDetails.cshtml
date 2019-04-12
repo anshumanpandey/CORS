@@ -355,17 +355,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @Html.HiddenFor(model => model.KinId, new { @class = "form-control" })
+                            @Html.HiddenFor(model => model.KinId, new { @class = "form-control next-kin" })
                             <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
 
                                 <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
-                                    @Html.EditorFor(model => model.RelativeName, new { @class = "form-control next-kin" })
+                                    @Html.TextBoxFor(model => model.RelativeName, new { @class = "form-control next-kin" })
                                 </td>
                                 <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
-                                    @Html.EditorFor(model => model.Relationship, new { @class = "form-control next-kin" })
+                                    @Html.TextBoxFor(model => model.Relationship, new { @class = "form-control next-kin" })
                                 </td>
                                 <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
-                                    @Html.EditorFor(model => model.RelativeTelNo, new { @class = "form-control next-kin" })
+                                    @Html.TextBoxFor(model => model.RelativeTelNo, new { @class = "form-control next-kin" })
                                 </td>
                                 <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
 
@@ -377,17 +377,17 @@
                                     @Html.CheckBoxFor(model => model.IsInformed, new { @class = "form-control next-kin", @id = "PInforme", onclick = "Callcheck(this)" })
                                 </td>
                             </tr>
-                            @Html.HiddenFor(model => model.KinId1, new { @class = "form-control " })
+                            @Html.HiddenFor(model => model.KinId1, new { @class = "form-control next-kin" })
                             <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
 
                                 <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
-                                    @Html.EditorFor(model => model.RelativeName1, new { @class = "form-control next-kin" })
+                                    @Html.TextBoxFor(model => model.RelativeName1, new { @class = "form-control next-kin" })
                                 </td>
                                 <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
-                                    @Html.EditorFor(model => model.Relationship1, new { @class = "form-control next-kin" })
+                                    @Html.TextBoxFor(model => model.Relationship1, new { @class = "form-control next-kin" })
                                 </td>
                                 <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
-                                    @Html.EditorFor(model => model.RelativeTelNo1, new { @class = "form-control next-kin" })
+                                    @Html.TextBoxFor(model => model.RelativeTelNo1, new { @class = "form-control next-kin" })
                                 </td>
                                 <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
 
@@ -402,13 +402,13 @@
                             <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
                                 
                                 <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
-                                    @Html.EditorFor(model => model.RelativeName2, new { @class = "form-control next-kin" })
+                                    @Html.TextBoxFor(model => model.RelativeName2, new { @class = "form-control next-kin" })
                                 </td>
                                 <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
-                                    @Html.EditorFor(model => model.Relationship2, new { @class = "form-control next-kin" })
+                                    @Html.TextBoxFor(model => model.Relationship2, new { @class = "form-control next-kin" })
                                 </td>
                                 <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
-                                    @Html.EditorFor(model => model.RelativeTelNo2, new { @class = "form-control next-kin" })
+                                    @Html.TextBoxFor(model => model.RelativeTelNo2, new { @class = "form-control next-kin" })
                                 </td>
                                 <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
 
@@ -421,7 +421,7 @@
                         </tbody>
                     </table>
                     @*CHANGES*@
-                    <div id="GPSurgery" style="display:block;" class="col-md-12">
+                    <div id="GPSurgery" style="display:block; padding-top:10px;" class="col-md-12">
                         <div class="row_bar">
                             GP Surgery
                             @Html.TextAreaFor(model => model.GPSurgery, 5, 100, new { @class = "form-control" })

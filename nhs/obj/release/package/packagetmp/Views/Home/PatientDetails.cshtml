@@ -298,16 +298,17 @@
                     }
                     <br /><br />
                     <div class="col-md-12">
-                        <h2 style="font-size:17px; color:#70a397; font-weight:600; margin-bottom:20px;">Next of Kin</h2>
-                    </div>
+                        <div class="row_bar">
+                            Next of Kin</div>
+                        </div>
                     @*<div class="col-md-3">
                             <div class="row_bar">
                                 Name
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="row_bar">
-                                @Html.EditorFor(model => model.RelativeName, new { htmlAttributes = new { @class = "form-control" } })
+                            <div class="row_bar"><div class="row_bar">
+                            GP Surgery                                @Html.EditorFor(model => model.RelativeName, new { htmlAttributes = new { @class = "form-control" } })
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -343,78 +344,78 @@
 
                     @*CHANGES*@
 
-                    <table style="margin-left: 17px;">
+                    <table style="margin-left: 17px;border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;width:90%">
                         <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>RelationShip</th>
-                                <th>Phone No</th>
-                                <th>Present at death</th>
-                                <th>informed</th>
+                            <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                <th style="text-align:center">Name</th>
+                                <th style="text-align:center">Relationship</th>
+                                <th style="text-align:center">Phone No</th>
+                                <th style="text-align:center">Present at Death</th>
+                                <th style="text-align:center">Informed</th>
                             </tr>
                         </thead>
                         <tbody>
                             @Html.HiddenFor(model => model.KinId, new { @class = "form-control" })
-                            <tr>
+                            <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
 
-                                <td>
-                                    @Html.EditorFor(model => model.RelativeName, new { @class = "form-control" })
+                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+                                    @Html.EditorFor(model => model.RelativeName, new { @class = "form-control next-kin" })
                                 </td>
-                                <td>
-                                    @Html.EditorFor(model => model.Relationship, new { @class = "form-control" })
+                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+                                    @Html.EditorFor(model => model.Relationship, new { @class = "form-control next-kin" })
                                 </td>
-                                <td>
-                                    @Html.EditorFor(model => model.RelativeTelNo, new { @class = "form-control" })
+                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+                                    @Html.EditorFor(model => model.RelativeTelNo, new { @class = "form-control next-kin" })
                                 </td>
-                                <td>
+                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
 
-                                    @Html.CheckBoxFor(model => model.PresentAtDeath, new { @class = "form-control", @id = "PDeath", onclick = "Callcheck(this)" })
+                                    @Html.CheckBoxFor(model => model.PresentAtDeath, new { @class = "form-control next-kin", @id = "PDeath", onclick = "Callcheck(this)" })
                                     @*@Html.CheckBoxFor(model=>model.PresentAtDeath,)*@
                                 </td>
-                                <td>
+                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
 
-                                    @Html.CheckBoxFor(model => model.IsInformed, new { @class = "form-control", @id = "PInforme", onclick = "Callcheck(this)" })
+                                    @Html.CheckBoxFor(model => model.IsInformed, new { @class = "form-control next-kin", @id = "PInforme", onclick = "Callcheck(this)" })
                                 </td>
                             </tr>
-                            @Html.HiddenFor(model => model.KinId1, new { @class = "form-control" })
-                            <tr>
+                            @Html.HiddenFor(model => model.KinId1, new { @class = "form-control " })
+                            <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
 
-                                <td>
-                                    @Html.EditorFor(model => model.RelativeName1, new { @class = "form-control" })
+                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+                                    @Html.EditorFor(model => model.RelativeName1, new { @class = "form-control next-kin" })
                                 </td>
-                                <td>
-                                    @Html.EditorFor(model => model.Relationship1, new { @class = "form-control" })
+                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+                                    @Html.EditorFor(model => model.Relationship1, new { @class = "form-control next-kin" })
                                 </td>
-                                <td>
-                                    @Html.EditorFor(model => model.RelativeTelNo1, new { @class = "form-control" })
+                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+                                    @Html.EditorFor(model => model.RelativeTelNo1, new { @class = "form-control next-kin" })
                                 </td>
-                                <td>
+                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
 
-                                    @Html.CheckBoxFor(model => model.PresentAtDeath1, new { @class = "form-control", @id = "PDeath1", onclick = "Callcheck1(this)" })
+                                    @Html.CheckBoxFor(model => model.PresentAtDeath1, new { @class = "form-control next-kin", @id = "PDeath1", onclick = "Callcheck1(this)" })
                                 </td>
-                                <td>
+                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
 
-                                    @Html.CheckBoxFor(model => model.IsInformed1, new { @class = "form-control", @id = "PInforme1", onclick = "Callcheck1(this)" })
+                                    @Html.CheckBoxFor(model => model.IsInformed1, new { @class = "form-control next-kin", @id = "PInforme1", onclick = "Callcheck1(this)" })
                                 </td>
                             </tr>
-                            @Html.HiddenFor(model => model.KinId2, new { @class = "form-control" })
-                            <tr>
+                            @Html.HiddenFor(model => model.KinId2, new { @class = "form-control next-kin" })
+                            <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
                                 
-                                <td>
-                                    @Html.EditorFor(model => model.RelativeName2, new { @class = "form-control" })
+                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+                                    @Html.EditorFor(model => model.RelativeName2, new { @class = "form-control next-kin" })
                                 </td>
-                                <td>
-                                    @Html.EditorFor(model => model.Relationship2, new { @class = "form-control" })
+                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+                                    @Html.EditorFor(model => model.Relationship2, new { @class = "form-control next-kin" })
                                 </td>
-                                <td>
-                                    @Html.EditorFor(model => model.RelativeTelNo2, new { @class = "form-control" })
+                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+                                    @Html.EditorFor(model => model.RelativeTelNo2, new { @class = "form-control next-kin" })
                                 </td>
-                                <td>
+                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
 
-                                    @Html.CheckBoxFor(model => model.PresentAtDeath2, new { @class = "form-control", @id = "PDeath2", onclick = "Callcheck2(this)" })
+                                    @Html.CheckBoxFor(model => model.PresentAtDeath2, new { @class = "form-control next-kin", @id = "PDeath2", onclick = "Callcheck2(this)" })
                                 </td>
-                                <td>
-                                    @Html.CheckBoxFor(model => model.IsInformed2, new { @class = "form-control", @id = "PInforme2", onclick = "Callcheck2(this)" })
+                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+                                    @Html.CheckBoxFor(model => model.IsInformed2, new { @class = "form-control next-kin", @id = "PInforme2", onclick = "Callcheck2(this)" })
                                 </td>
                             </tr>
                         </tbody>
