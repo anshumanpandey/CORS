@@ -81,7 +81,7 @@
                                 <h2>OTHER REFERRALS</h2>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="row_bar checkbox-row">
                                         @if (Model.PatientSafetySIRI == true)
                                         {
@@ -91,34 +91,37 @@
                                         {
                                             <input type="checkbox" id="PatientSafetySIRI" name="PatientSafetySIRI"><span> Referred to Patient Safety for SIRI Scoping </span>
                                         }
+                                        @if (Model.PatientSafetySIRI == true)
+                                        {
+                                            <div id="PatientSafetySIRIReasonlabel" style="display:block" class="col-md-5">
+                                                
+                                                    Reason:
+                                              
+                                            </div>
+                                            <div id="PatientSafetySIRIReason" style="display:block" class="col-md-6">
+                                                
+                                                    @Html.TextAreaFor(model => model.PatientSafetySIRIReason, 4, 55, new { @class = "form-control", style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
+                                                    @*@Html.EditorFor(model => model.PatientSafetySIRIReason, new { htmlAttributes = new { @class = "form-control" } })*@
+                                               
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div id="PatientSafetySIRIReasonlabel" style="display:none" class="col-md-5">
+                                                
+                                                    Reason:
+                                                
+                                            </div>
+                                            <div id="PatientSafetySIRIReason" style="display:none" class="col-md-6">
+                                                
+                                                    @Html.TextAreaFor(model => model.PatientSafetySIRIReason, 4, 55, new { @class = "form-control", style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
+                                                    @*@Html.EditorFor(model => model.PatientSafetySIRIReason, new { htmlAttributes = new { @class = "form-control" } })*@
+                                              
+                                            </div>
+                                        }
                                     </div>
                                 </div>
-                                @if (Model.PatientSafetySIRI == true)
-                                {
-                                    <div id="PatientSafetySIRIReasonlabel" style="display:block" class="col-md-1">
-                                        <div class="row_bar checkbox-row">
-                                            Reason:
-                                        </div>
-                                    </div>
-                                    <div id="PatientSafetySIRIReason" style="display:block" class="col-md-5">
-                                        <div class="row_bar checkbox-row">
-                                            @Html.EditorFor(model => model.PatientSafetySIRIReason, new { htmlAttributes = new { @class = "form-control" } })
-                                        </div>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div id="PatientSafetySIRIReasonlabel" style="display:none" class="col-md-1">
-                                        <div class="row_bar checkbox-row">
-                                            Reason:
-                                        </div>
-                                    </div>
-                                    <div id="PatientSafetySIRIReason" style="display:none" class="col-md-5">
-                                        <div class="row_bar checkbox-row">
-                                            @Html.EditorFor(model => model.PatientSafetySIRIReason, new { htmlAttributes = new { @class = "form-control" } })
-                                        </div>
-                                    </div>
-                                }
+                               
                                 <div class="col-md-12">
                                     <div class="row_bar checkbox-row">
                                         @if (Model.ChildDeathCoordinator == true)
@@ -143,7 +146,7 @@
                                         }
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="row_bar checkbox-row">
                                         @if (Model.HeadOfCompliance == true)
                                         {
@@ -153,40 +156,43 @@
                                         {
                                             <input type="checkbox" id="HeadOfCompliance" name="HeadOfCompliance"><span> Referred to Head of Compliance for CQC reporting  </span>
                                         }
+                                        @if (Model.HeadOfCompliance == true)
+                                        {
+                                            <div id="HeadOfComplianceReasonLabel" style="display:block" class="col-md-5">
+                                                
+                                                    Reason:
+                                              
+                                            </div>
+                                            <div id="HeadOfComplianceReason" style="display:block" class="col-md-6">
+                                                
+                                                    @*@Html.EditorFor(model => model.HeadOfComplianceReason, new { htmlAttributes = new { @class = "form-control" } })*@
+                                                    @Html.TextAreaFor(model => model.HeadOfComplianceReason, 4, 55, new { @class = "form-control", style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
+                                                </div>
+                                           
+                                        }
+                                        else
+                                        {
+                                            <div id="HOCBlank" class="col-md-6">
+                                                
+                                                    <span></span>
+                                             
+                                            </div>
+                                            <div id="HeadOfComplianceReasonLabel" style="display:none" class="col-md-5">
+                                               
+                                                    Reason:
+                                              
+                                            </div>
+                                            <div id="HeadOfComplianceReason" style="display:none" class="col-md-6">
+                                               
+                                                    @*@Html.EditorFor(model => model.HeadOfComplianceReason, new { htmlAttributes = new { @class = "form-control" } })*@
+                                                    @Html.TextAreaFor(model => model.HeadOfComplianceReason, 4, 55, new { @class = "form-control", style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
+                                                
+                                            </div>
+                                        }
                                     </div>
                                 </div>
-                                @if (Model.HeadOfCompliance == true)
-                                {
-                                    <div id="HeadOfComplianceReasonLabel" style="display:block" class="col-md-1">
-                                        <div class="row_bar checkbox-row">
-                                            Reason:
-                                        </div>
-                                    </div>
-                                    <div id="HeadOfComplianceReason" style="display:block" class="col-md-5">
-                                        <div class="row_bar checkbox-row">
-                                            @Html.EditorFor(model => model.HeadOfComplianceReason, new { htmlAttributes = new { @class = "form-control" } })
-                                        </div>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div id="HOCBlank" class="col-md-6">
-                                        <div class="row_bar checkbox-row">
-                                            <span></span>
-                                        </div>
-                                    </div>
-                                    <div id="HeadOfComplianceReasonLabel" style="display:none" class="col-md-1">
-                                        <div class="row_bar checkbox-row">
-                                            Reason:
-                                        </div>
-                                    </div>
-                                    <div id="HeadOfComplianceReason" style="display:none" class="col-md-5">
-                                        <div class="row_bar checkbox-row">
-                                            @Html.EditorFor(model => model.HeadOfComplianceReason, new { htmlAttributes = new { @class = "form-control" } })
-                                        </div>
-                                    </div>
-                                }
-                                <div class="col-md-6">
+                               
+                                <div class="col-md-12">
                                     <div class="row_bar checkbox-row">
                                         @if (Model.PALsComplaints == true)
                                         {
@@ -196,43 +202,44 @@
                                         {
                                             <input type="checkbox" id="PALsComplaints" name="PALsComplaints"><span> Referred to PALs/ Complaints  </span>
                                         }
+                                        @if (Model.PALsComplaints == true)
+                                        {
+                                            <div id="PALsComplaintsReasonLabel" style="display:block" class="col-md-5">
+                                                
+                                                    Reason:
+                                                
+                                            </div>
+                                            <div id="PALsComplaintsReason" style="display:block" class="col-md-6">
+                                                
+                                                    @*@Html.EditorFor(model => model.PALsComplaintsReason, new { htmlAttributes = new { @class = "form-control" } })*@
+                                                    @Html.TextAreaFor(model => model.PALsComplaintsReason, 4, 55, new { @class = "form-control", style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
+
+                                                
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div id="PALBlank" class="col-md-6">
+                                                
+                                                    <span></span>
+                                                
+                                            </div>
+                                            <div id="PALsComplaintsReasonLabel" style="display:none" class="col-md-5">
+                                                
+                                                    Reason:
+                                                
+                                            </div>
+                                            <div id="PALsComplaintsReason" style="display:none" class="col-md-6">
+                                                
+                                                    @*@Html.EditorFor(model => model.PALsComplaintsReason, new { htmlAttributes = new { @class = "form-control" } })*@
+                                                    @Html.TextAreaFor(model => model.PALsComplaintsReason, 4, 55, new { @class = "form-control", style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
+                                            
+                                            </div>
+                                        }
                                     </div>
                                 </div>
-                                @if (Model.PALsComplaints == true)
-                                {
-                                    <div id="PALsComplaintsReasonLabel" style="display:block" class="col-md-1">
-                                        <div class="row_bar checkbox-row">
-                                            Reason:
-                                        </div>
-                                    </div>
-                                    <div id="PALsComplaintsReason" style="display:block" class="col-md-5">
-                                        <div class="row_bar checkbox-row">
-                                            @*@Html.EditorFor(model => model.PALsComplaintsReason, new { htmlAttributes = new { @class = "form-control" } })*@
-                                            @Html.TextAreaFor(model => model.PALsComplaintsReason, 4, 55, new { @class = "form-control", style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
-
-                                        </div>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div id="PALBlank" class="col-md-6">
-                                        <div class="row_bar checkbox-row">
-                                            <span></span>
-                                        </div>
-                                    </div>
-                                    <div id="PALsComplaintsReasonLabel" style="display:none" class="col-md-1">
-                                        <div class="row_bar checkbox-row">
-                                            Reason:
-                                        </div>
-                                    </div>
-                                    <div id="PALsComplaintsReason" style="display:none" class="col-md-5">
-                                        <div class="row_bar checkbox-row">
-                                            @*@Html.EditorFor(model => model.PALsComplaintsReason, new { htmlAttributes = new { @class = "form-control" } })*@
-                                            @Html.TextAreaFor(model => model.PALsComplaintsReason, 4, 55, new { @class = "form-control", style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
-                                        </div>
-                                    </div>
-                                }
-                                <div class="col-md-6">
+                              
+                                <div class="col-md-12">
                                     <div class="row_bar checkbox-row">
                                         @if (Model.WardTeam == true)
                                         {
@@ -242,43 +249,46 @@
                                         {
                                             <input type="checkbox" id="WardTeam" name="WardTeam"><span> Referred to Ward team  </span>
                                         }
+                                        @if (Model.WardTeam == true)
+                                        {
+                                            <div id="WardTeamReasonLabel" style="display:block" class="col-md-5">
+                                               
+                                                    Reason:
+                                             
+                                            </div>
+                                            <div id="WardTeamReason" style="display:block" class="col-md-6">
+                                               
+                                                    @*@Html.EditorFor(model => model.WardTeamReason, new { htmlAttributes = new { @class = "form-control" } })*@
+                                                    @Html.TextAreaFor(model => model.WardTeamReason, 4, 55, new { @class = "form-control", style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
+                                               
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div id="WardBlank" class="col-md-6">
+                                               
+                                                    <span></span>
+                                              
+                                            </div>
+                                            <div id="WardTeamReasonLabel" style="display:none" class="col-md-5">
+                                               
+
+                                                    Reason:
+                                              
+
+                                            </div>
+                                            <div id="WardTeamReason" style="display:none" class="col-md-6">
+                                               
+                                                    @*@Html.EditorFor(model => model.WardTeamReason, new { htmlAttributes = new { @class = "form-control" } })*@
+                                                    @Html.TextAreaFor(model => model.WardTeamReason, 4, 55, new { @class = "form-control", style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
+
+                                               
+                                            </div>
+                                        }
                                     </div>
                                 </div>
-                                @if (Model.WardTeam == true)
-                                {
-                                    <div id="WardTeamReasonLabel" style="display:block" class="col-md-1">
-                                        <div class="row_bar checkbox-row">
-                                            Reason:
-                                        </div>
-                                    </div>
-                                    <div id="WardTeamReason" style="display:block" class="col-md-5">
-                                        <div class="row_bar checkbox-row">
-                                            @*@Html.EditorFor(model => model.WardTeamReason, new { htmlAttributes = new { @class = "form-control" } })*@
-                                            @Html.TextAreaFor(model => model.WardTeamReason, 4, 55, new { @class = "form-control", style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
-                                        </div>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div id="WardBlank" class="col-md-6">
-                                        <div class="row_bar checkbox-row">
-                                            <span></span>
-                                        </div>
-                                    </div>
-                                    <div id="WardTeamReasonLabel" style="display:none" class="col-md-1">
-                                        <div class="row_bar checkbox-row">
-                                            Reason:
-                                        </div>
-                                    </div>
-                                    <div id="WardTeamReason" style="display:none" class="col-md-5">
-                                        <div class="row_bar checkbox-row">
-                                            @*@Html.EditorFor(model => model.WardTeamReason, new { htmlAttributes = new { @class = "form-control" } })*@
-                                            @Html.TextAreaFor(model => model.WardTeamReason, 4, 55, new { @class = "form-control", style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
-
-                                        </div>
-                                    </div>
-                                }
-                                <div class="col-md-6">
+                               
+                                <div class="col-md-12">
                                     <div class="row_bar checkbox-row">
                                         @if (Model.SafeGuardTeamNotified == true)
                                         {
@@ -295,7 +305,7 @@
                                         <span></span>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="row_bar checkbox-row">
                                         @if (Model.Other == true)
                                         {
@@ -304,6 +314,40 @@
                                         else
                                         {
                                             <input type="checkbox" id="Other" name="Other"><span> Other  </span>
+                                        }
+                                        @if (Model.Other == true)
+                                        {
+                                            <div id="OtherReasonLabel" style="display:block" class="col-md-5">
+                                                
+                                                    Reason:
+                                               
+                                            </div>
+                                            <div id="OtherReason" style="display:block" class="col-md-6">
+                                               
+                                                    @*@Html.EditorFor(model => model.OtherReason, new { htmlAttributes = new { @class = "form-control", @rows = 10, @cols = 100 } })*@
+                                                    @Html.TextAreaFor(model => model.OtherReason, 4, 55, new { @class = "form-control", style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
+
+                                              
+
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div id="OtherBlank" class="col-md-6">
+                                              
+                                                    <span></span>
+                                               
+                                            </div>
+                                            <div id="OtherReasonLabel" style="display:none" class="col-md-5">
+                                               
+                                                    Reason:
+                                                </div>
+                                          
+                                            <div id="OtherReason" style="display:none" class="col-md-12">
+                                                
+                                                    @Html.EditorFor(model => model.OtherReason, new { htmlAttributes = new { @class = "form-control" } })
+                                               
+                                            </div>
                                         }
                                     </div>
                                 </div>
@@ -316,40 +360,7 @@
 
 
 
-                                @if (Model.Other == true)
-                                {
-                                    <div id="OtherReasonLabel" style="display:block" class="col-md-1">
-                                        <div class="row_bar checkbox-row">
-                                            Reason:
-                                        </div>
-                                    </div>
-                                    <div id="OtherReason" style="display:block" class="col-md-5">
-                                        <div class="row_bar checkbox-row">
-                                            @*@Html.EditorFor(model => model.OtherReason, new { htmlAttributes = new { @class = "form-control", @rows = 10, @cols = 100 } })*@
-                                            @Html.TextAreaFor(model => model.OtherReason, 4, 55, new  { @class = "form-control" ,style= "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; "} )
-                                            
-                                                                                </div>
-                                        
-                                                                            </div>
-                                }
-                                                        else
-                                                        {
-                                    <div id="OtherBlank" class="col-md-6">
-                                        <div class="row_bar checkbox-row">
-                                            <span></span>
-                                        </div>
-                                    </div>
-                                    <div id="OtherReasonLabel" style="display:none" class="col-md-1">
-                                        <div class="row_bar checkbox-row">
-                                            Reason:
-                                        </div>
-                                    </div>
-                                    <div id="OtherReason" style="display:none" class="col-md-5">
-                                        <div class="row_bar checkbox-row">
-                                            @Html.EditorFor(model => model.OtherReason, new { htmlAttributes = new { @class = "form-control" } })
-                                        </div>
-                                    </div>
-                                }
+                               
                             </div>
                         </div>
                     </div>
