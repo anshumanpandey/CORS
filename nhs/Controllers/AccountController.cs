@@ -46,8 +46,8 @@ namespace NHS.Controllers
             DBEngine dBEngine = new DBEngine(connectionString);
             try
             {
-                isValidFromAD = ValidateCredentials(username, password, domain);
-                //isValidFromAD = true;
+                //isValidFromAD = ValidateCredentials(username, password, domain);
+                isValidFromAD = true;
                 if (isValidFromAD)
                 {
                     usermodel = dBEngine.ValidateUser(username, password);
