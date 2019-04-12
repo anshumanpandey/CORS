@@ -115,7 +115,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-6" style="padding-left: 64px;">
+                        <div class="col-md-6" style="padding-left: 64px;float: right;position: absolute;top: 24px;right: -68px;">
                             @{
                                 var countcomments = @Model.CommentCount.ToString();
                             }
@@ -241,7 +241,7 @@
                         </div>
                         <div class="col-md-12">
                             <div class="row_bar">
-                                Comments <a href="#" id="commentslink" name="commentslink">View Previous Comments (@Model.CommentCount.ToString())</a>
+                               Latest Comment @*<a href="#" id="commentslink" name="commentslink">View Previous Comments (@Model.CommentCount.ToString())</a>*@
 
                                 <table class="table table-bordered" id="assets-data-table">
                                     @*<tr bgcolor="#a9d7cc" style="color:black;">
