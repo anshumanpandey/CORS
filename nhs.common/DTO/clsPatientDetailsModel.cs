@@ -38,7 +38,7 @@ namespace NHS.Common
     }
 
     public class DischargeConsultants
-    {
+    { 
         public string DischargeConsultantCode { get; set; }
         public string DischargeConsultantName { get; set; }
     }
@@ -98,11 +98,6 @@ namespace NHS.Common
 
     public class clsPatientDetails
     {
-
-        public clsPatientDetails()
-        {
-            lstNEXTKin = new List<NextOfKin>();
-        }
         public int ID { get; set; }
         public string PatientId { get; set; }
         public Nullable<int> SpellNumber { get; set; }
@@ -180,18 +175,17 @@ namespace NHS.Common
 
         public string UrgentMEReviewComment { get; set; }
 
-        public int KinId { get; set; }
         public string RelativeName { get; set; }
 
         public string RelativeTelNo { get; set; }
 
         public string Relationship { get; set; }
 
+        public string GPSurgery { get; set; }
+
         public bool PresentAtDeath { get; set; }
 
         public bool IsInformed { get; set; }
-
-        public string GPSurgery { get; set; }
 
         public int KinId1 { get; set; }
         public string RelativeName1 { get; set; }
@@ -203,7 +197,7 @@ namespace NHS.Common
         public bool PresentAtDeath1 { get; set; }
 
         public bool IsInformed1 { get; set; }
-
+        public int KinId { get; set; }
         public int KinId2 { get; set; }
         public string RelativeName2 { get; set; }
 
@@ -215,7 +209,18 @@ namespace NHS.Common
 
         public bool IsInformed2 { get; set; }
         public List<NextOfKin> lstNEXTKin { get; set; }
+    }
 
+    public class NextOfKin
+    {
+        public int NextOfKinID { get; set; }
+        public string PatientID { get; set; }
+
+        public string RelativeName { get; set; }
+        public string RelativeTelNo { get; set; }
+        public string Relationship { get; set; }
+        public bool PresentAtDeath { get; set; }
+        public bool IsInformed { get; set; }
     }
 
     public class Diagnosis
@@ -315,7 +320,7 @@ namespace NHS.Common
         public Nullable<System.DateTime> CreateDate { get; set; }
         public string UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
-
+        
 
         public Nullable<int> PatientID { get; set; }
         public string Spellnumber { get; set; }
@@ -326,7 +331,7 @@ namespace NHS.Common
         public string MortalityReview { get; set; }
         public string CodingReview { get; set; }
 
-
+       
         public Nullable<bool> FullSJRRequired { get; set; }
     }
 
@@ -378,33 +383,5 @@ namespace NHS.Common
     {
         Male,
         Female
-    }
-    public class NextOfKin
-    {
-       public int NextOfKinID { get; set; }	
-       public string PatientID	{ get; set; }	
-       
-       public string RelativeName	{get;set;}
-       public string RelativeTelNo	{get;set;}
-       public string Relationship	{get;set;}
-       public  bool PresentAtDeath{ get; set; }
-       public  bool IsInformed	{get;set;}
-    }
-
-    public class MEDeclaration
-    {
-        public MEDeclaration()
-        {
-            fornames = new List<string>();
-        }
-        public int MEDeclarationID { get; set; }
-        public bool IsConfirmed { get; set; }
-        public string Patient_ID { get; set; }
-        public bool check { get; set; }
-        public string office { get; set; }
-        public DateTime DclartionDate { get; set; }
-        public string MEName { get; set; }
-        public List<string> fornames { get; set; }
-
     }
 }

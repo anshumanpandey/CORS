@@ -34,7 +34,6 @@
                             Patient details
                         </h4>
                     </a>
-
                 </li>
                 <li class="active">
                     <a href='@Url.Action("MedicalExaminerReview", "home", new { id=Model.Patient_ID })'>
@@ -43,7 +42,6 @@
                         </h4>
                     </a>
                 </li>
-
                 <li class="disabled">
                     <a href='@Url.Action("MedicalExaminerDecision", "home", new { id = Model.Patient_ID})'>
                         <h4 class="list-group-item-heading">
@@ -73,16 +71,15 @@
                     </a>
                 </li>
                 <li class="disabled">
-                    <a href='@Url.Action("MeDeclaration", "home", new { id = Model.Patient_ID})'>
+                    <a href='@Url.Action("Declaration", "home", new { id = Model.Patient_ID})'>
                         <h4 class="list-group-item-heading">
-                            ME Declaration
+                            Declaration
                         </h4>
                     </a>
                 </li>
             </ul>
         </div>
     </div>
-
     <div class="row setup-content" id="step-2">
         <div class="col-xs-12 col-lg-12">
             @using (Html.BeginForm("MedicalExaminerReview", "Home", FormMethod.Post, new { @id = Model.Patient_ID }))
@@ -90,41 +87,62 @@
                 <div class="col-md-12 well">
                     @*<div class="form-section">*@
                     <div class="lable_title">
-                        <h2>MEDICAL EXAMINER REVIEW </h2>
+                        <h2>MEDICAL EXAMINER SCRUTINY </h2>
                     </div>
-
                     <div class="row">
                         <div class="col-md-6">
                             <div class="row_bar">
                                 Name of Medical Examiner
-                                <select class="form-control" id="ddlDischargeSpeciality" name="ddlDischargeSpeciality">
-                                    <option value="">
-                                        Select Medical Examiner
-                                    </option>
-                                    @foreach (var item in ViewBag.MedicalExaminers)
-                                    {
-                                        if (item.ID == Model.ME_ID)
+                                @if (Model.MedTriage == 3)
+                                {
+                                    <select disabled="disabled" class="form-control" id="ddlDischargeSpeciality" name="ddlDischargeSpeciality">
+                                        <option value="">
+                                            Select Medical Examiner
+                                        </option>
+
+                                        @foreach (var item in ViewBag.MedicalExaminers)
                                         {
-                                            <option selected value="@item.ID">@item.Name</option>
+                                            if (item.ID == Model.ME_ID)
+                                            {
+                                                <option selected value="@item.ID">@item.Name</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.ID">@item.Name</option>
+                                            }
                                         }
-                                        else
+                                    </select>
+                                }
+                                else
+                                {
+                                    <select class="form-control" id="ddlDischargeSpeciality" name="ddlDischargeSpeciality">
+                                        <option value="">
+                                            Select Medical Examiner
+                                        </option>
+                                        @foreach (var item in ViewBag.MedicalExaminers)
                                         {
-                                            <option value="@item.ID">@item.Name</option>
+                                            if (item.ID == Model.ME_ID)
+                                            {
+                                                <option selected value="@item.ID">@item.Name</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.ID">@item.Name</option>
+                                            }
                                         }
-                                    }
-                                </select>
+                                    </select>
+                                }
                             </div>
                         </div>
                         <div class="col-md-6" style="padding-left: 64px;float: right;position: absolute;top: 24px;right: -237px;z-index: 99;max-width: 75%;">
                             @{
                                 var countcomments = @Model.CommentCount.ToString();
                             }
-                            Available Comments (@countcomments)
+                            Available Comments (<span id="com" name="0" value="0" onclick="OpenFilterComment(0)" style="cursor:pointer;">@countcomments</span>)
                             <div class="clearfix" style="height:5px"></div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <table style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;width:90%">
-
 
                                         @foreach (var item in ViewBag.CommentType)
                                         {
@@ -132,10 +150,9 @@
                                             var count = 0;
 
                                             <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
-                                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:50%">
+                                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:80%">
                                                     <span value="@item.CommonTypeID">@item.Type</span>
                                                 </td>
-
                                                 @for (var i = 0; i < ViewBag.Comments.Count; i++)
                                                 {
                                                     if (ViewBag.Comments[i].CommentTypeID == item.CommonTypeID)
@@ -144,7 +161,7 @@
                                                         @*<span value="@item.CommonTypeID">@item.Type</span><br />*@
                                                     }
                                                 }
-                                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:50%;text-align: -webkit-center;cursor:pointer;">
+                                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:20%;text-align: -webkit-center;cursor:pointer;">
                                                     <span id="com" name="@item.CommonTypeID" value="@item.CommonTypeID" onclick="OpenFilterComment(@item.CommonTypeID)">@count</span>
                                                     @{
 
@@ -152,7 +169,7 @@
                                                     }
                                                 </td>
                                             </tr>
-                                        }
+                                                        }
                                         @*</tr>*@
                                     </table>
                                 </div>
@@ -180,71 +197,102 @@
                                         </tr>
                                     </tbody>
                                 </table>*@
-                        </div>
+</div>
                         <div class="col-md-12">
                             <div class="row_bar">
-                                Name of QAP
-                                @{
-                                    var fname = Session["FullName"];
-                                    var QAPName = Session["QAPName"];
-                                }
-                                @if (QAPName != null)
+                                @if (!string.IsNullOrEmpty(Model.QAPName))
                                 {
-                                    @Html.Label("lblQAP", QAPName.ToString(), new { style = "width:40%; margin: 9px;" })
+                                    <span><b>Name of QAP: </b> @Html.Label("lblQAP", Model.QAPName.ToString(), new { style = "width:40%; margin: 9px;" })</span>
                                 }
                                 else
                                 {
-                                    @Html.Label("lblQAP", fname.ToString(), new { style = "width:40%; margin: 9px;" })
+                                    <span><b>Name of QAP: </b> <i>Awaiting QAP form completion</i> </span>
                                 }
-
-                                @*@Html.EditorFor(model => model.QAPName, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.objclsMedicalExaminerReview.QAPName, "", new { @class = "text-danger" })*@
-
+                            </div>
+                        </div><br/><br />
+                        <div class="col-md-12">
+                            <div class="row_bar checkbox-row">
+                                @if (Model.MedTriage == 3)
+                                {
+                                    if (Model.QAP_Discussion == true)
+                                    {
+                                        <input type="checkbox" disabled="disabled" id="QAP_Discussion" checked name="QAP_Discussion"><span> Discussion with QAP Complete? </span>
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" disabled="disabled" id="QAP_Discussion" name="QAP_Discussion"><span> Issue MCCD </span>
+                                    }
+                                }
+                                else
+                                {
+                                    if (Model.QAP_Discussion == true)
+                                    {
+                                        <input type="checkbox" id="QAP_Discussion" checked name="QAP_Discussion"><span> Discussion with QAP Complete? </span>
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" id="QAP_Discussion" name="QAP_Discussion"><span> Issue MCCD </span>
+                                    }
+                                }
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="row_bar checkbox-row">
-                                @if (Model.QAP_Discussion == true)
+                                @if (Model.MedTriage == 3)
                                 {
-                                    <input type="checkbox" id="QAP_Discussion" checked name="QAP_Discussion"><span> Discussion with QAP Complete? </span>
+                                    if (Model.Notes_Review == true)
+                                    {
+                                    <input type="checkbox" disabled="disabled" id="Notes_Review" checked name="Notes_Review"><span> Notes review complete? </span>
+                                    }
+                                    else
+                                    {
+                                    <input type="checkbox" disabled="disabled" id="Notes_Review" name="Notes_Review"><span> Notes review complete? </span>
+                                    }
                                 }
                                 else
                                 {
-                                    <input type="checkbox" id="QAP_Discussion" name="QAP_Discussion"><span> Issue MCCD </span>
-                                }
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="row_bar checkbox-row">
-                                @if (Model.Notes_Review == true)
-                                {
-                                    <input type="checkbox" id="Notes_Review" checked name="Notes_Review"><span> Notes review complete? </span>
-                                }
-                                else
-                                {
-                                    <input type="checkbox" id="Notes_Review" name="Notes_Review"><span> Notes review complete? </span>
+                                    if (Model.Notes_Review == true)
+                                    {
+                                        <input type="checkbox" id="Notes_Review" checked name="Notes_Review"><span> Notes review complete? </span>
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" id="Notes_Review" name="Notes_Review"><span> Notes review complete? </span>
+                                    }
                                 }
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="row_bar checkbox-row mb-3">
-                                @if (Model.Nok_Discussion == true)
+                                @if (Model.MedTriage == 3)
                                 {
-                                    <input type="checkbox" id="Nok_Discussion" checked name="Nok_Discussion"><span> Discussion with NoK complete? </span>
+                                    if (Model.Nok_Discussion == true)
+                                    {
+                                    <input type="checkbox" disabled="disabled" id="Nok_Discussion" checked name="Nok_Discussion"><span> Discussion with NoK complete? </span>
+                                    }
+                                    else
+                                    {
+                                    <input type="checkbox" disabled="disabled" id="Nok_Discussion" name="Nok_Discussion"><span> Discussion with NoK complete? </span>
+                                    }
                                 }
                                 else
                                 {
-                                    <input type="checkbox" id="Nok_Discussion" name="Nok_Discussion"><span> Discussion with NoK complete? </span>
+                                    if (Model.Nok_Discussion == true)
+                                    {
+                                        <input type="checkbox" id="Nok_Discussion" checked name="Nok_Discussion"><span> Discussion with NoK complete? </span>
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" id="Nok_Discussion" name="Nok_Discussion"><span> Discussion with NoK complete? </span>
+                                    }
                                 }
-
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="row_bar">
                                 Comments @*<a href="#" id="commentslink" name="commentslink">View Previous Comments (@Model.CommentCount.ToString())</a>*@
-
                                 <table class="table table-bordered" id="assets-data-table">
-                                    
+
                                     <tbody bgcolor="#ffffff" style="color:black;">
                                         @for (var i = 0; i < ViewBag.Comments.Count; i++)
                                         {
@@ -254,25 +302,45 @@
                                                     <td>
                                                         @if (Convert.ToInt32(ViewBag.Comments[i].CreatedTime.Substring(0, 2)) >= 12)
                                                         {
-                                                        <div style="text-align:left">
-                                                            By: @ViewBag.Comments[i].Name<br />
-                                                            Date: @ViewBag.Comments[i].CreatedDate <br />
-                                                            Time: @ViewBag.Comments[i].CreatedTime PM<br />
-                                                            Comment: @ViewBag.Comments[i].Comments <br />
-                                                            Role: @ViewBag.Comments[i].Role <br />
-                                                            Comment Type: @ViewBag.Comments[i].CommentType <br />
-                                                        </div>
+                                                            <div class="pull-left col-md-6" style="padding-left:0px">
+                                                                <b>By:</b> @ViewBag.Comments[i].Name
+                                                            </div>
+                                                            <div class="pull-left col-md-6">
+                                                                <b>Role:</b>  @ViewBag.Comments[i].Role
+                                                            </div>
+                                                            <div class="pull-left col-md-6" style="padding-left:0px">
+                                                                <b>Date:</b> @ViewBag.Comments[i].CreatedDate
+                                                            </div>
+                                                            <div class="pull-left col-md-6">
+                                                                <b>Time:</b> @ViewBag.Comments[i].CreatedTime PM
+                                                            </div>
+                                                            <div class="pull-left col-md-12" style="padding-left:0px">
+                                                                <b>Comment Type:</b> @ViewBag.Comments[i].CommentType
+                                                            </div>
+                                                            <div class="pull-left col-md-12" style="padding-left:0px">
+                                                                <b>Comment:</b> @ViewBag.Comments[i].Comments
+                                                            </div>
                                                         }
                                                         else
                                                         {
-                                                        <div style="text-align:left">
-                                                            By: @ViewBag.Comments[i].Name<br />
-                                                            Date: @ViewBag.Comments[i].CreatedDate <br />
-                                                            Time: @ViewBag.Comments[i].CreatedTime AM<br />
-                                                            Comment: @ViewBag.Comments[i].Comments <br />
-                                                            Role: @ViewBag.Comments[i].Role <br /> 
-                                                            Comment Type: @ViewBag.Comments[i].CommentType <br />
-                                                        </div>
+                                                            <div class="pull-left col-md-6" style="padding-left:0px">
+                                                                <b>By:</b> @ViewBag.Comments[i].Name
+                                                            </div>
+                                                            <div class="pull-left col-md-6">
+                                                                <b>Role:</b>  @ViewBag.Comments[i].Role
+                                                            </div>
+                                                            <div class="pull-left col-md-6" style="padding-left:0px">
+                                                                <b>Date:</b> @ViewBag.Comments[i].CreatedDate
+                                                            </div>
+                                                            <div class="pull-left col-md-6">
+                                                                <b>Time:</b> @ViewBag.Comments[i].CreatedTime AM
+                                                            </div>
+                                                            <div class="pull-left col-md-12" style="padding-left:0px">
+                                                                <b>Comment Type:</b> @ViewBag.Comments[i].CommentType
+                                                            </div>
+                                                            <div class="pull-left col-md-12" style="padding-left:0px">
+                                                                <b>Comment:</b> @ViewBag.Comments[i].Comments
+                                                            </div>
                                                         }
                                                     </td>
                                                 </tr>
@@ -280,7 +348,6 @@
                                         }
                                     </tbody>
                                 </table>
-
                                 <div id="comment" style="display:none;">
                                     @*newly added for role and comment type*@
                                     <div class="row">
@@ -294,7 +361,6 @@
                                                     var role = TempData["Role"];
                                                 }
                                                 @Html.TextBox("role", role.ToString(), new { @readonly = "readonly", @class = "form-control", style = "width: 50%;cursor:not-allowed" })
-
                                                 @*</div>*@
                                             </div>
                                         </div>
@@ -302,9 +368,7 @@
                                     <div class="row">
                                         <div class="col-md-12" style="padding: 0 !important;">
                                             <div class="col-md-6" style="padding: 0 !important;">
-
                                                 <div class="col-md-6">
-
                                                     Comment Type
                                                 </div>
                                                 <div class="col-md-6">
@@ -317,17 +381,14 @@
                                                     </select>
                                                 </div>
 
-
-
                                             </div>
                                         </div>
                                     </div>
                                     @*newly added*@
-
                                     @Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control" })
                                 </div>
                                 <div class="pull-right">
-                                    <button id="BtnOpenComment" name="BtnOpenComment" class="btn btn-primary btn-lg" onclick="OpenComment(); return false;">Add Comment</button>
+                                    <button id="BtnOpenComment" name="BtnOpenComment" class="btn btn-primary btn-lg" onclick="OpenComment(); return false;">Add New Comment</button>
                                 </div>
                                 <div class="pull-right">
                                     <button id="BtnCloseComment" name="BtnCloseComment" class="btn btn-primary btn-lg" style="display:none;" onclick="CloseComment(); return false;">Close Comment</button>
@@ -336,13 +397,12 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <div class="pull-right">
                     <button id="BtnPrevious" name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
                     <button id="BtnNext" name="BtnNext" class="btn btn-primary btn-lg">Save & Next</button>
                 </div>
-            }
+                                                    }
         </div>
     </div>
     <br />
@@ -351,16 +411,13 @@
 <div class="modal fade" id="myModalComments">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Comments History</h4>
                 <button type="button" class="close" data-dismiss="modal">×</button>
             </div>
-
             <!-- Modal body -->
             <div class="modal-body">
-
                 <table class="table table-bordered" id="assets-data-table">
                     <tr bgcolor="#a9d7cc" style="color:black;">
                         <th style="text-align:center">Comments</th>
@@ -372,103 +429,111 @@
                                 <td>
                                     @if (Convert.ToInt32(item.CreatedTime.Substring(0, 2)) >= 12)
                                     {
-                                    <div style="text-align:left">
-                                        By: @item.Name<br />
-                                        Date: @item.CreatedDate <br />
-                                        Time: @item.CreatedTime PM<br />
-                                        Comment: @item.Comments <br />
-                                        Role:  @item.Role <br />
-                                        Comment Type: @item.CommentType <br />
-                                    </div>
+                                        <div class="pull-left col-md-6">
+                                            <b>By:</b> @item.Name 
+                                        </div>
+                                        <div class="pull-left col-md-6">
+                                            <b>Role:</b>  @item.Role
+                                        </div>
+                                        <div class="pull-left col-md-6">
+                                            <b>Date:</b> @item.CreatedDate                                            
+                                        </div>
+                                        <div class="pull-left col-md-6">
+                                            <b>Time:</b> @item.CreatedTime PM
+                                        </div>
+                                        <div class="pull-left col-md-12">
+                                            <b>Comment Type:</b> @item.CommentType
+                                        </div>
+                                        <div class="pull-left col-md-12">
+                                            <b>Comment:</b> @item.Comments
+                                        </div>
                                     }
                                     else
                                     {
-                                    <div style="text-align:left">
-                                        By: @item.Name<br />
-                                        Date: @item.CreatedDate <br />
-                                        Time: @item.CreatedTime AM<br />
-                                        Comment: @item.Comments <br />
-                                        Role:  @item.Role <br />
-                                        Comment Type: @item.CommentType <br />
-                                    </div>
+                                        <div class="pull-left col-md-6">
+                                            <b>By:</b> @item.Name
+                                        </div>
+                                        <div class="pull-left col-md-6">
+                                            <b>Role:</b>  @item.Role
+                                        </div>
+                                        <div class="pull-left col-md-6">
+                                            <b>Date:</b> @item.CreatedDate
+                                        </div>
+                                        <div class="pull-left col-md-6">
+                                            <b>Time:</b> @item.CreatedTime AM
+                                        </div>
+                                        <div class="pull-left col-md-12">
+                                            <b>Comment Type:</b> @item.CommentType
+                                        </div>
+                                        <div class="pull-left col-md-12">
+                                            <b>Comment:</b> @item.Comments
+                                        </div>
                                     }
                                 </td>
                             </tr>
                         }
-
                     </tbody>
                 </table>
-
             </div>
-
-
 
             <!-- Modal footer -->
             @*<div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 </div>*@
-
         </div>
     </div>
 </div>
-
 @*changes for showing filter comments based on comment type*@
-
-<div class="modal fade" id="myModalCommentsFilter">
+<div class="modal fade" id="myModalCommentsFilter" style="max-height:750px; overflow:auto">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Comments History</h4>
                 <button type="button" class="close" data-dismiss="modal">×</button>
             </div>
-
             <!-- Modal body -->
             <div class="modal-body">
-                <table class="table table-bordered" id="">
+                <table class="table table-bordered" id="FilterComment">
                     <tr bgcolor="#a9d7cc" style="color:black;">
                         <th style="text-align:center">Comments</th>
                     </tr>
-                </table>
-                <table class="table table-bordered" id="FilterComment">
-                   
-                    <tbody bgcolor="#ffffff" style="color:black;">
+                @*</table>
+                <table class="table table-bordered" id="FilterComment" style="padding-top:0px">
+                    <tbody bgcolor='#ffffff' style='color:black;'>*@
                         @*@foreach (var item in ViewBag.Comments)
-                            {
-                                if (TempData["TypeIdFilter"] != null)
-                                {
-
-                                    if (item.CommentTypeID == Convert.ToInt32(TempData["TypeIdFilter"]))
-                                    {
-                                        <tr style="color:black;" bgcolor="ffffff">
-                                            <td>
-                                                @if (Convert.ToInt32(item.CreatedTime.Substring(0, 2)) >= 12)
-                                                {
-                                                    <div style="text-align:left">
-                                                        By: @item.Name<br />
-                                                        Date: @item.CreatedDate <br />
-                                                        Time: @item.CreatedTime PM<br />
-                                                        Comment: @item.Comments <br />
-                                                    </div>
-                                                }
-                                                else
-                                                {
-                                                    <div style="text-align:left">
-                                                        By: @item.Name<br />
-                                                        Date: @item.CreatedDate <br />
-                                                        Time: @item.CreatedTime AM<br />
-                                                        Comment: @item.Comments <br />
-                                                    </div>
-                                                }
-                                            </td>
-                                        </tr>
-                                    }
-                                }
-                            }*@
-
-                    </tbody>
-                </table>
+    {
+        if (TempData["TypeIdFilter"] != null)
+        {
+            if (item.CommentTypeID == Convert.ToInt32(TempData["TypeIdFilter"]))
+            {
+                <tr style="color:black;" bgcolor="ffffff">
+                    <td>
+                        @if (Convert.ToInt32(item.CreatedTime.Substring(0, 2)) >= 12)
+                        {
+                            <div style="text-align:left">
+                                By: @item.Name<br />
+                                Date: @item.CreatedDate <br />
+                                Time: @item.CreatedTime PM<br />
+                                Comment: @item.Comments <br />
+                            </div>
+                        }
+                        else
+                        {
+                            <div style="text-align:left">
+                                By: @item.Name<br />
+                                Date: @item.CreatedDate <br />
+                                Time: @item.CreatedTime AM<br />
+                                Comment: @item.Comments <br />
+                            </div>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    }
+                </tbody>*@
+</table>
             </div>
         </div>
     </div>
@@ -477,13 +542,11 @@
 <div class="modal fade" id="modelClose2">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
-
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Message</h4>
                 <button type="button" class="close" data-dismiss="modal">×</button>
             </div>
-
             <!-- Modal body -->
             <div class="modal-body">
                 <div class="form-section" style="text-align:left">
@@ -546,7 +609,6 @@ window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.
 </script>
 <script>
     $(document).ready(function () {
-        //$('#dvPatientDetailsCimment').hide();
         $("#commentslink").click(function () {
             $("#myModalComments").modal();
         });
@@ -554,56 +616,95 @@ window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.
     function OpenFilterComment(e) {
         var tableF = document.getElementById("FilterComment");
         tableF.innerHTML = "";
-          var data = @Html.Raw(Json.Encode(@ViewBag.Comments));
-        for (var i = 0; i < @ViewBag.Comments.Count; i++) {
+        tableF.innerHTML = "<tr bgcolor='#a9d7cc' style='color:black;'><th style='text-align:center'>Comments</th></tr>";
+        var data = @Html.Raw(Json.Encode(@ViewBag.Comments));
+        var newElement = document.createElement("tr");
+        for (var i = 0; i < @ViewBag.Comments.Count; i++) 
+        {
             var typeIDFilter = e;
             var newElement = document.createElement("tr");
-            if (typeIDFilter != null) {
-
-
-              
-                if (data[i].CommentTypeID == parseInt(typeIDFilter)) {
-
-                    if (parseInt(data[i].CreatedTime.slice(0, 2)) >= 12) {
+            if (typeIDFilter != null) 
+            {
+                if (data[i].CommentTypeID == parseInt(typeIDFilter))
+                {
+                    if (parseInt(data[i].CreatedTime.slice(0, 2)) >= 12) 
+                    {
                         var div = ("<tr style = 'color:black; bgcolor = ffffff>" +
                             "<td>" +
-                            "<div style = 'text-align:left' >" +
-                            "By:" + data[i].Name + "<br/>" +
-                            "Date:" + data[i].CreatedDate + "<br/>" +
-                            "Time:" + data[i].CreatedTime + "PM<br/>" +
-                            "Comment:" + data[i].Comments + "<br/>" +
-                            "Role:" + data[i].Role + "<br/>" +
-                            "Comment Type:" + data[i].CommentType + "<br/>" +
-                            "</div>" +
+                            //"<div style = 'text-align:left' >" +
+                            "<div class='col-md-6'><b>By: </b>" + data[i].Name + "</div>" +
+                            "<div class='pull-right col-md-6'><b>Role: </b>" + data[i].Role + "</div>" +
+                            "<div class='pull-left col-md-6' style='padding-left:0px'><b>Date: </b>" + data[i].CreatedDate + "</div>" +
+                            "<div class='pull-right col-md-6'><b>Time: </b>" + data[i].CreatedTime + " PM</div>" +
+                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Comment Type:</b> " + data[i].CommentType + "</div>" +
+                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Comment: </b>" + data[i].Comments + "</div>" +
                             "</td>" +
                             "</tr>");
                     }
-                    else {
+                    else 
+                    {
                         var div = ("<tr style = 'color:black; bgcolor = ffffff>" +
                             "<td>" +
-                            "<div style = 'text-align:left' >" +
-                            "By:" + data[i].Name + "<br/>" +
-                            "Date:" + data[i].CreatedDate + "<br/>" +
-                            "Time:" + data[i].CreatedTime + "AM<br/>" +
-                            "Comment:" + data[i].Comments + "<br/>" +
-                            "Role:" + data[i].Role + "<br/>" +
-                            "Comment Type:" + data[i].CommentType + "<br/>" +
-                            "</div>" +
+                            //"<div style = 'text-align:left' >" +
+                            "<div class='col-md-6'><b>By: </b>" + data[i].Name + "</div>" +
+                            "<div class='pull-right col-md-6'><b>Role: </b>" + data[i].Role + "</div>" +
+                            "<div class='pull-left col-md-6' style='padding-left:0px'><b>Date: </b>" + data[i].CreatedDate + "</div>" +
+                            "<div class='pull-right col-md-6'><b>Time: </b>" + data[i].CreatedTime + " AM</div>" +
+                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Comment Type:</b> " + data[i].CommentType + "</div>" +
+                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Comment: </b>" + data[i].Comments + "</div>" +
                             "</td>" +
                             "</tr>");
                     }
-                     newElement.innerHTML = div;
+                    newElement.innerHTML = div;
 
-                     newElement.style.color = "black";
+                    newElement.style.color = "black";
                     newElement.style.bgcolor = "ffffff";
                     newElement.style.border = "1px solid #dee2e6";
                      
-                     tableF.appendChild(newElement);
+                    tableF.appendChild(newElement);
+                }
+                else if (parseInt(typeIDFilter) == 0) 
+                {
+                    if (parseInt(data[i].CreatedTime.slice(0, 2)) >= 12) 
+                    {
+                        var div = ("<tr style = 'color:black; bgcolor = ffffff>" +
+                            "<td>" +
+                            //"<div style = 'text-align:left' >" +
+                            "<div class='col-md-6'><b>By: </b>" + data[i].Name + "</div>" +
+                            "<div class='pull-right col-md-6'><b>Role: </b>" + data[i].Role + "</div>" +
+                            "<div class='pull-left col-md-6' style='padding-left:0px'><b>Date: </b>" + data[i].CreatedDate + "</div>" +
+                            "<div class='pull-right col-md-6'><b>Time: </b>" + data[i].CreatedTime + " PM</div>" +
+                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Comment Type:</b> " + data[i].CommentType + "</div>" +
+                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Comment: </b>" + data[i].Comments + "</div>" +
+                            "</td>" +
+                            "</tr>");
+                    }
+                    else 
+                    {
+                        var div = ("<tr style = 'color:black; bgcolor = ffffff>" +
+                            "<td>" +
+                            //"<div style = 'text-align:left' >" +
+                            "<div class='col-md-6'><b>By: </b>" + data[i].Name + "</div>" +
+                            "<div class='pull-right col-md-6'><b>Role: </b>" + data[i].Role + "</div>" +
+                            "<div class='pull-left col-md-6' style='padding-left:0px'><b>Date: </b>" + data[i].CreatedDate + "</div>" +
+                            "<div class='pull-right col-md-6'><b>Time: </b>" + data[i].CreatedTime + " AM</div>" +
+                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Comment Type:</b> " + data[i].CommentType + "</div>" +
+                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Comment: </b>" + data[i].Comments + "</div>" +
+                            "</td>" +
+                            "</tr>");
+                    }
+                    newElement.innerHTML = div;
 
-
-                 }
+                    newElement.style.color = "black";
+                    newElement.style.bgcolor = "ffffff";
+                    newElement.style.border = "1px solid #dee2e6";
+                     
+                    tableF.appendChild(newElement);
+                }                
             }
         }
+        //tableF.innerHTML = a.toString() + "</tbody>";
+        //alert(tableF.innerHTML);
         $("#myModalCommentsFilter").modal();
-}
+    }
 </script>

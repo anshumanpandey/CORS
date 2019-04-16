@@ -174,18 +174,18 @@
     <br />
     <div class="row">
         <div style="width:90%;">
-            <table class="stripe row-border" style="overflow:auto;" id="tblPatientDetails">
+            <table class="stripe row-border order-column" style="overflow:auto;" id="tblPatientDetails">
                 <thead>
                     <tr bgcolor="#a9d7cc" style="color:black;width:90%;  font-size:11px;">
                         <th align="left" width="5%">Patient ID</th>
                         <th align="left" width="5%">Name</th>
                         <th align="center" width="5%">DOB</th>
-                        <th align="center" width="3%">Date of Admission</th>
+                        <th align="center" width="5%">Date of Admission</th>
                         <th align="center" width="5%">Date of Death</th>
                         <th align="left" width="5%">Ward of Death</th>
-                        <th align="center" width="5%">Discharge Consultant</th>
-                        <th align="center" width="5%">Discharge Speciality</th>
-                        <th align="center" width="5%">Patient Type</th>
+                        <th align="center" width="10%">Discharge Consultant</th>
+                        <th align="center" width="10%">Discharge Speciality</th>
+                        <th align="center" width="10%">Patient Type</th>
                         <th align="center" width="5%">QAP Review Status</th>
                         <th align="center" width="5%">Medical Examiner Triage Review</th>
                         <th align="center" width="5%">SJR Review Status</th>
@@ -201,16 +201,15 @@
                         {
                             <tr>
                                 <td align="left" width="5%"><u>@Html.ActionLink(item.PatientId.Trim(), "MortalityReview", new { id = item.ID }, new { @style = "color:blue;" })</u></td>
-                                <td align="left" width="10%">@item.PatientName.Trim()</td>
+                                <td align="left" width="5%">@item.PatientName.Trim()</td>
                                 <td align="left" width="5%">@item.DOB.ToString("dd/MM/yyyy")</td>
-                                <td align="center" width="3%">@item.DateofAdmission.ToString("dd/MM/yyyy")</td>
+                                <td align="center" width="5%">@item.DateofAdmission.ToString("dd/MM/yyyy")</td>
                                 <td align="center" width="5%">@item.DateofDeath.ToString("dd/MM/yyyy")</td>
                                 <td align="center" width="5%">@item.WardofDeath.Trim()</td>
-                                <td align="center" width="5%">@item.DischargeConsutantName.Trim()</td>
-                                <td align="center" width="5%">@item.DischargeSpeciality.Trim()</td>
-                                <td align="center" width="5%">@item.PatientTypeLongText</td>
-                                @if (item.PatientType == "AAPC")
-                                {
+                                <td align="center" width="10%">@item.DischargeConsutantName.Trim()</td>
+                                <td align="center" width="10%">@item.DischargeSpeciality.Trim()</td>
+                                <td align="center" width="10%">@item.PatientTypeLongText</td>
+
                                     <td align="center" width="5%">
                                         @if (item.QAPReview == 0)
                                         {
@@ -339,17 +338,10 @@
                                         {
                                             <a href='@Url.Action("CodingReview", "home", new { id = item.ID })'><img src="~/images/GreenCircle.png" width="18" height="18" title="Click to open Coding review form"></a>
                                         }
-                                    </td>
-                                }
+                                    </td>                                    
                             </tr>
                         }
-                    }
-                    else
-                    {
-                        <tr>
-                            <td colspan="14" class="text-center" align="center">No Records Found.</td>
-                        </tr>
-                    }
+                    }                    
                 </tbody>
             </table>
         </div>
@@ -379,9 +371,9 @@
     //added
     $(document).ready(function () {
         $('#tblPatientDetails').DataTable({
-            "searching": true,
             "ordering": true,
             "paging": true,
+            "searching": true,
             "pageLength": 20,
             //"aaSorting": [[4, 'desc']],
              "order": [[4, 'desc']],
@@ -390,7 +382,7 @@
 			{"sName": "PatientName", "sTitle": "Name", "bSortable": "true"},
 			{"sName": "DOB", "sTitle": "DOB", "sType":"date", "bSortable": "true"},
             { "sName": "DateOfAdmission", "sTitle": "Date Of Admission", "sType": "date", "bSortable": "true" },
-                { "sName": "DateOfDeath", "sTitle": "Date Of Death", "sType": "date-uk", "bSortable": "true" },
+            { "sName": "DateOfDeath", "sTitle": "Date Of Death", "sType": "date-uk", "bSortable": "true" },
             { "sName": "WardofDeath", "sTitle": "Ward Of Death", "bSortable": "true" },
             { "sName": "DischargeConsultant", "sTitle": "Discharge Consultant", "bSortable": "true" },
             { "sName": "DischargeSpeciality", "sTitle": "Discharge Specilaity", "bSortable": "true" },

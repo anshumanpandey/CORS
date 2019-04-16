@@ -25,7 +25,7 @@
                 <li class="disabled">
                     <a href='@Url.Action("MedicalExaminerReview", "home", new { id=Model.Patient_ID })'>
                         <h4 class="list-group-item-heading">
-                            Medical Examiner Review
+                            Medical Examiner Scrutiny
                         </h4>
                     </a>
                 </li>
@@ -57,6 +57,13 @@
                         </h4>
                     </a>
                 </li>
+                <li class="disabled">
+                    <a href='@Url.Action("Declaration", "home", new { id = Model.Patient_ID})'>
+                        <h4 class="list-group-item-heading">
+                            Declaration
+                        </h4>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -73,33 +80,68 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="row_bar checkbox-row">
-                                    @if (Model.FormCompleted == true)
+                                    @if (Model.MedTriage == 3)
                                     {
-                                        <input type="checkbox" id="FormCompleted" checked name="FormCompleted"><span> Above & Beyond form completed   </span>
+                                        if (Model.FormCompleted == true)
+                                        {
+                                        <input type="checkbox" disabled="disabled" id="FormCompleted" checked name="FormCompleted"><span> Above & Beyond form completed   </span>
+                                        }
+                                        else
+                                        {
+                                        <input type="checkbox" disabled="disabled" id="FormCompleted" name="FormCompleted"><span> Above & Beyond form completed  </span>
+                                        }
                                     }
                                     else
                                     {
-                                        <input type="checkbox" id="FormCompleted" name="FormCompleted"><span> Above & Beyond form completed  </span>
+                                        if (Model.FormCompleted == true)
+                                        {
+                                            <input type="checkbox" id="FormCompleted" checked name="FormCompleted"><span> Above & Beyond form completed   </span>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" id="FormCompleted" name="FormCompleted"><span> Above & Beyond form completed  </span>
+                                        }
                                     }
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="row_bar checkbox-row">
-                                    @if (Model.ComplementsFedBack == true)
+                                    @if (Model.MedTriage == 3)
                                     {
-                                        <input type="checkbox" id="ComplementsFedBack" checked name="ComplementsFedBack"><span> Compliments fed back to clinical team    </span>
+                                        if (Model.ComplementsFedBack == true)
+                                        {
+                                        <input type="checkbox" disabled="disabled" id="ComplementsFedBack" checked name="ComplementsFedBack"><span> Compliments fed back to clinical team    </span>
+                                        }
+                                        else
+                                        {
+                                        <input type="checkbox" disabled="disabled" id="ComplementsFedBack" name="ComplementsFedBack"><span> Compliments fed back to clinical team   </span>
+                                        }
                                     }
                                     else
                                     {
-                                        <input type="checkbox" id="ComplementsFedBack" name="ComplementsFedBack"><span> Compliments fed back to clinical team   </span>
+                                        if (Model.ComplementsFedBack == true)
+                                        {
+                                            <input type="checkbox" id="ComplementsFedBack" checked name="ComplementsFedBack"><span> Compliments fed back to clinical team    </span>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" id="ComplementsFedBack" name="ComplementsFedBack"><span> Compliments fed back to clinical team   </span>
+                                        }
                                     }
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="row_bar">
                                     Comments
-                                    @Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control" })
-                                    @*@Html.ValidationMessageFor(model => model.objclsMedicalExaminerReview.Comments, "", new { @class = "text-danger" })*@
+                                    @if(Model.MedTriage == 3)
+                                    {                                     
+                                        @Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control", @readonly=true })
+                                        @*@Html.ValidationMessageFor(model => model.objclsMedicalExaminerReview.Comments, "", new { @class = "text-danger" })*@
+                                    }
+                                    else
+                                    {
+                                        @Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control" })
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -107,8 +149,7 @@
                 </div>
                 <div class="pull-right">
                     <button id="activate-prev-1" name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
-                    <button id="activate-step-2" type="submit" name="BtnFinish" class="btn btn-primary btn-lg">Save & Finish</button>
-
+                    <button id="activate-step-2" type="submit" name="BtnFinish" class="btn btn-primary btn-lg">Save & Next</button>
                 </div>
             }
         </div>

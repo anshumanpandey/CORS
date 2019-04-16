@@ -13,6 +13,12 @@ namespace NHS.Common
         public clsMedicalExaminerReview objclsMedicalExaminerReview { get; set; }
     }
 
+    public class CommentType
+    {
+        public int CommonTypeID { get; set; }
+        public string Type { get; set; }
+    }
+
     public class clsMedicalExaminer
     {
         public int ME_ID { get; set; }
@@ -46,12 +52,7 @@ namespace NHS.Common
 
         public int CommentCount { get; set; }
 
-    }
-    public class CommentType
-    {
-        public int CommonTypeID { get; set; }
-        public string Type { get; set; }
-    }
+        public int MedTriage { get; set; }
 
-
+    }
 }

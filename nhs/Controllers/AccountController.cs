@@ -58,10 +58,6 @@ namespace NHS.Controllers
                         Session["LoginUserID"] = usermodel.ID;
                         Session["FirstName"] = usermodel.FirstName;
                         Session["LastName"] = usermodel.LastName;
-
-                        //newly added for gettin role to be display in comments section
-                        Session["Role"]= usermodel.Role;
-                        //newly added
                         Session["StartDate"] = "";
                         Session["EndDate"] = "";
                         Session["WardDeath"] = "";
@@ -71,6 +67,7 @@ namespace NHS.Controllers
                         Session["TotalDeaths"] = 0;
                         Session["QAPCount"] = 0;
                         Session["MedCount"] = 0;
+                        Session["Role"] = usermodel.Role;
 
                         controllername = "Home";
                     }
@@ -79,7 +76,7 @@ namespace NHS.Controllers
                         Alert alertMessage = new Alert();
                         alertMessage.AlertType = ALERTTYPE.Error;
                         alertMessage.MessageType = ALERTMESSAGETYPE.TextWithClose;
-                        alertMessage.Message = "Credentials matched with AD but user has not been setup in CORS app.";
+                        alertMessage.Message = "You are not authorised to access this app. Please call 8066/6761/5252/8335.";
                         TempData["AlertMessage"] = alertMessage.Message;
                         controllername = "Account";
                     }
@@ -89,8 +86,7 @@ namespace NHS.Controllers
                     Alert alertMessage = new Alert();
                     alertMessage.AlertType = ALERTTYPE.Error;
                     alertMessage.MessageType = ALERTMESSAGETYPE.TextWithClose;
-                    //alertMessage.Message = "Credentials provided do not match with AD.";
-                    alertMessage.Message = "Require access to CORS? Click here to Contact Us";
+                    alertMessage.Message = "Credentials provided do not match with AD.";
                     TempData["AlertMessage"] = alertMessage.Message;
                     controllername = "Account";
                 }
@@ -118,9 +114,9 @@ namespace NHS.Controllers
         {
             NetworkCredential credentials
               = new NetworkCredential(username, password, domain);
-
+            
             LdapDirectoryIdentifier id = new LdapDirectoryIdentifier(domain);
-
+            
             using (LdapConnection connection = new LdapConnection(id, credentials, AuthType.Kerberos))
             {
                 connection.SessionOptions.Sealing = true;
@@ -129,6 +125,7 @@ namespace NHS.Controllers
                 try
                 {
                     connection.Bind();
+                    
                 }
                 catch (LdapException lEx)
                 {

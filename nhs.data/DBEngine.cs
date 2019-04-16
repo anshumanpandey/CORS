@@ -28,61 +28,6 @@ namespace NHS.Data
             return _connection;
         }
 
-
-        public MEDeclaration GetMEDeclarationByIdID(int? id)
-        {
-            var connection = GetConnection();
-            IDataReader dbReader = null;
-
-            MEDeclaration medec = new MEDeclaration();
-            NextOfKin nextOfkin;
-            try
-            {
-                SqlCommand dbCmd = new SqlCommand("usp_GetMEDeclaration", connection);
-                dbCmd.CommandType = CommandType.StoredProcedure;
-                if (id != null)
-                    dbCmd.Parameters.AddWithValue("@PatientID", id);
-                else
-                    dbCmd.Parameters.AddWithValue("@PatientID", null);
-                
-
-                dbReader = dbCmd.ExecuteReader();
-
-                if (!dbReader.Equals(null))
-                {
-                    using (dbReader)
-                    {
-                        while (dbReader.Read())
-                        {
-
-
-                            medec.MEDeclarationID = Convert.ToInt32(dbReader["MEDeclarationID"]);
-                            medec.IsConfirmed = Convert.ToBoolean(dbReader["IsConfirmed"]);
-                            medec.DclartionDate = Convert.ToDateTime(dbReader["DeclartionDate"]);
-                                
-                           
-                        }
- 
-
-                    }
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
-            }
-            finally
-            {
-                if (!dbReader.IsClosed)
-                    dbReader.Close();
-            }
-
-           
-            return medec;
-        }
-
         /// <summary>
         /// This method brings in all patient lists or brings in a specific patient information based on the
         /// nhs number.
@@ -93,9 +38,9 @@ namespace NHS.Data
         {
             var connection = GetConnection();
             SqlDataReader dbReader = null;
-            List<clsPatientDetails> lstPatientDetails = new List<clsPatientDetails>();
+            List <clsPatientDetails> lstPatientDetails = new List<clsPatientDetails>();
             try
-            {
+            {   
                 SqlCommand dbCmd = new SqlCommand("usp_GetPatientDashboardDetails", connection);
                 dbCmd.CommandType = CommandType.StoredProcedure;
                 if (patientID != null)
@@ -160,7 +105,7 @@ namespace NHS.Data
                         patientDashboard.SJR1 = 0;
                     else
                         patientDashboard.SJR1 = Convert.ToInt32(dbReader["SJR1"]);
-                    if (string.IsNullOrEmpty(dbReader["SJR2"].ToString()))
+                    if(string.IsNullOrEmpty(dbReader["SJR2"].ToString()))
                         patientDashboard.SJR2 = 0;
                     else
                         patientDashboard.SJR2 = Convert.ToInt32(dbReader["SJR2"]);
@@ -204,7 +149,7 @@ namespace NHS.Data
                         patientDashboard.DischargeSpecialtyCode = "0";
                     else
                         patientDashboard.DischargeSpecialtyCode = Convert.ToString(dbReader["DischargeSpecialityCode"]);
-                    if (string.IsNullOrEmpty(dbReader["DischargeSpeciality"].ToString()))
+                    if(string.IsNullOrEmpty(dbReader["DischargeSpeciality"].ToString()))
                         patientDashboard.DischargeSpeciality = "";
                     else
                         patientDashboard.DischargeSpeciality = Convert.ToString(dbReader["DischargeSpeciality"]);
@@ -685,238 +630,229 @@ namespace NHS.Data
                 dbCmd.Parameters.AddWithValue("@UserID", userID);
 
                 dbReader = dbCmd.ExecuteReader();
-
-                if (!dbReader.Equals(null))
+                
+                while (dbReader.Read())
+                {                    
+                    if (string.IsNullOrEmpty(dbReader["ID"].ToString()))
+                        patientDashboard.ID = 0;
+                    else
+                        patientDashboard.ID = Convert.ToInt32(dbReader["ID"]);
+                    if (string.IsNullOrEmpty(dbReader["PatientId"].ToString()))
+                        patientDashboard.PatientId = "";
+                    else
+                        patientDashboard.PatientId = Convert.ToString(dbReader["PatientId"]);
+                    if (string.IsNullOrEmpty(dbReader["SpellNumber"].ToString()))
+                        patientDashboard.SpellNumber = 0;
+                    else
+                        patientDashboard.SpellNumber = Convert.ToInt32(dbReader["SpellNumber"]);
+                    if (string.IsNullOrEmpty(dbReader["NHSNumber"].ToString()))
+                        patientDashboard.NHSNumber = "";
+                    else
+                        patientDashboard.NHSNumber = Convert.ToString(dbReader["NHSNumber"]);
+                    if (string.IsNullOrEmpty(dbReader["PatientName"].ToString()))
+                        patientDashboard.PatientName = "";
+                    else
+                        patientDashboard.PatientName = Convert.ToString(dbReader["PatientName"]);
+                    if (string.IsNullOrEmpty(dbReader["DOB"].ToString()))
+                        patientDashboard.DOB = Convert.ToDateTime("01/01/0001");
+                    else
+                        patientDashboard.DOB = Convert.ToDateTime(dbReader["DOB"]);
+                    if (string.IsNullOrEmpty(dbReader["DateOfAdmission"].ToString()))
+                        patientDashboard.DateofAdmission = Convert.ToDateTime("01/01/0001");
+                    else
+                        patientDashboard.DateofAdmission = Convert.ToDateTime(dbReader["DateOfAdmission"]);
+                    if (string.IsNullOrEmpty(dbReader["DateOfDeath"].ToString()))
+                        patientDashboard.DateofDeath = Convert.ToDateTime("01/01/0001");
+                    else
+                        patientDashboard.DateofDeath = Convert.ToDateTime(dbReader["DateOfDeath"]);
+                    if (string.IsNullOrEmpty(dbReader["WardOfDeath"].ToString()))
+                        patientDashboard.WardofDeath = "";
+                    else
+                        patientDashboard.WardofDeath = Convert.ToString(dbReader["WardOfDeath"]);
+                    if (string.IsNullOrEmpty(dbReader["DischargeConsultantName"].ToString()))
+                        patientDashboard.DischargeConsutantName = "";
+                    else
+                        patientDashboard.DischargeConsutantName = Convert.ToString(dbReader["DischargeConsultantName"]);
+                    if (string.IsNullOrEmpty(dbReader["AdmissionType"].ToString()))
+                        patientDashboard.AdmissionType = "";
+                    else
+                        patientDashboard.AdmissionType = Convert.ToString(dbReader["AdmissionType"]);
+                    if (string.IsNullOrEmpty(dbReader["MedTriage"].ToString()))
+                        patientDashboard.MedTriage = 2;
+                    else
+                        patientDashboard.MedTriage = Convert.ToInt32(dbReader["MedTriage"]);
+                    if (string.IsNullOrEmpty(dbReader["QAPReview"].ToString()))
+                        patientDashboard.QAPReview = 2;
+                    else
+                        patientDashboard.QAPReview = Convert.ToInt32(dbReader["QAPReview"]);
+                    if (string.IsNullOrEmpty(dbReader["CodingReview"].ToString()))
+                        patientDashboard.CodingReview = 2;
+                    else
+                        patientDashboard.CodingReview = Convert.ToInt32(dbReader["CodingReview"]);
+                    if (string.IsNullOrEmpty(dbReader["SJR1"].ToString()))
+                        patientDashboard.SJR1 = 0;
+                    else
+                        patientDashboard.SJR1 = Convert.ToInt32(dbReader["SJR1"]);
+                    if (string.IsNullOrEmpty(dbReader["SJR2"].ToString()))
+                        patientDashboard.SJR2 = 0;
+                    else
+                        patientDashboard.SJR2 = Convert.ToInt32(dbReader["SJR2"]);
+                    if (string.IsNullOrEmpty(dbReader["SJROutcome"].ToString()))
+                        patientDashboard.SJROutcome = 0;
+                    else
+                        patientDashboard.SJROutcome = Convert.ToInt32(dbReader["SJROutcome"]);
+                    if (string.IsNullOrEmpty(dbReader["Age"].ToString()))
+                        patientDashboard.Age = 0;
+                    else
+                        patientDashboard.Age = Convert.ToInt32(dbReader["Age"]);
+                    if (string.IsNullOrEmpty(dbReader["Gender"].ToString()))
+                        patientDashboard.Gender = "";
+                    else
+                        patientDashboard.Gender = Convert.ToString(dbReader["Gender"]);
+                    if (string.IsNullOrEmpty(dbReader["TimeofAdmission"].ToString()))
+                        patientDashboard.TimeofAdmission = "";
+                    else
+                        patientDashboard.TimeofAdmission = Convert.ToDateTime(dbReader["TimeofAdmission"].ToString()).ToString("HH:mm");
+                    if (!string.IsNullOrEmpty(dbReader["TimeOfDeath"].ToString()))
+                        patientDashboard.TimeofDeath = Convert.ToDateTime(dbReader["TimeOfDeath"].ToString()).ToString("HH:mm");
+                    else
+                        patientDashboard.TimeofDeath = "";
+                    if (string.IsNullOrEmpty(dbReader["DischargeWard"].ToString()))
+                        patientDashboard.DischargeWard = "";
+                    else
+                        patientDashboard.DischargeWard = Convert.ToString(dbReader["DischargeWard"]);
+                    if (string.IsNullOrEmpty(dbReader["DischargeConsultantCode"].ToString()))
+                        patientDashboard.DischargeConsultantCode = "";
+                    else
+                        patientDashboard.DischargeConsultantCode = Convert.ToString(dbReader["DischargeConsultantCode"]);
+                    if (string.IsNullOrEmpty(dbReader["DischargeSpecialityCode"].ToString()))
+                        patientDashboard.DischargeSpecialtyCode = "";
+                    else
+                        patientDashboard.DischargeSpecialtyCode = Convert.ToString(dbReader["DischargeSpecialityCode"]);
+                    if (string.IsNullOrEmpty(dbReader["DischargeSpeciality"].ToString()))
+                        patientDashboard.DischargeSpeciality = "";
+                    else
+                        patientDashboard.DischargeSpeciality = Convert.ToString(dbReader["DischargeSpeciality"]);
+                    if (string.IsNullOrEmpty(dbReader["Caregroup"].ToString()))
+                        patientDashboard.Caregroup = "";
+                    else
+                        patientDashboard.Caregroup = Convert.ToString(dbReader["Caregroup"]);
+                    if (string.IsNullOrEmpty(dbReader["Comments"].ToString()))
+                        patientDashboard.Comments = "";
+                    else
+                        patientDashboard.Comments = Convert.ToString(dbReader["Comments"]);
+                    if (string.IsNullOrEmpty(dbReader["ComorbiditiesCount"].ToString()))
+                        patientDashboard.ComorbiditiesCount = 0;
+                    else
+                        patientDashboard.ComorbiditiesCount = Convert.ToInt32(dbReader["ComorbiditiesCount"]);
+                    //if (!string.IsNullOrEmpty(dbReader["DiagnosisCount"].ToString()))
+                    //    patientDashboard.DiagnosisCount = 0;
+                    //else
+                        patientDashboard.DiagnosisCount = Convert.ToInt32(dbReader["DiagnosisCount"]);
+                    //if (!string.IsNullOrEmpty(dbReader["ProcedureCount"].ToString()))
+                    //    patientDashboard.ProcedureCount = 0;
+                    //else
+                        patientDashboard.ProcedureCount = Convert.ToInt32(dbReader["ProcedureCount"]);
+                    if (string.IsNullOrEmpty(dbReader["IsFullSJRRequired"].ToString()))
+                        patientDashboard.IsFullSJRRequired = false;
+                    else
+                        patientDashboard.IsFullSJRRequired = Convert.ToBoolean(dbReader["IsFullSJRRequired"]);
+                    if (string.IsNullOrEmpty(dbReader["CodingIssueIdentified"].ToString()))
+                        patientDashboard.CodingIssueIdentified = false;
+                    else
+                        patientDashboard.CodingIssueIdentified = Convert.ToBoolean(dbReader["CodingIssueIdentified"]);
+                    if (string.IsNullOrEmpty(dbReader["Stage2SJRRequired"].ToString()))
+                        patientDashboard.Stage2SJRRequired = false;
+                    else
+                        patientDashboard.Stage2SJRRequired = Convert.ToBoolean(dbReader["Stage2SJRRequired"]);
+                    if (string.IsNullOrEmpty(dbReader["Occupation"].ToString()))
+                        patientDashboard.Occupation = "";
+                    else
+                        patientDashboard.Occupation = Convert.ToString(dbReader["Occupation"]);
+                    if (string.IsNullOrEmpty(dbReader["UserRole"].ToString()))
+                        patientDashboard.UserRole = "";
+                    else
+                        patientDashboard.UserRole = Convert.ToString(dbReader["UserRole"]);
+                    if (string.IsNullOrEmpty(dbReader["PatientType"].ToString()))
+                        patientDashboard.PatientType = "AAPC";
+                    else
+                        patientDashboard.PatientType = Convert.ToString(dbReader["PatientType"]);
+                    if (string.IsNullOrEmpty(dbReader["DataQualityComments"].ToString()))
+                        patientDashboard.PatientType = "";
+                    else
+                        patientDashboard.DataQualityIssueComments = Convert.ToString(dbReader["DataQualityComments"]);
+                    if (string.IsNullOrEmpty(dbReader["DataQualityIssuesIdentified"].ToString()))
+                        patientDashboard.DataQualityIssuesIdentified = false;
+                    else
+                        patientDashboard.DataQualityIssuesIdentified = Convert.ToBoolean(dbReader["DataQualityIssuesIdentified"]);
+                    if (string.IsNullOrEmpty(dbReader["UrgentMEReview"].ToString()))
+                        patientDashboard.UrgentMEReview = false;
+                    else
+                        patientDashboard.UrgentMEReview = Convert.ToBoolean(dbReader["UrgentMEReview"]);
+                    if (string.IsNullOrEmpty(dbReader["UrgentMEReviewComment"].ToString()))
+                        patientDashboard.UrgentMEReviewComment = "";
+                    else
+                        patientDashboard.UrgentMEReviewComment = Convert.ToString(dbReader["UrgentMEReviewComment"]);
+                    if (string.IsNullOrEmpty(dbReader["RelativeName"].ToString()))
+                        patientDashboard.RelativeName = "";
+                    else
+                        patientDashboard.RelativeName = Convert.ToString(dbReader["RelativeName"]);
+                    if (string.IsNullOrEmpty(dbReader["RelativeTelNo"].ToString()))
+                        patientDashboard.RelativeTelNo = "";
+                    else
+                        patientDashboard.RelativeTelNo = Convert.ToString(dbReader["RelativeTelNo"]);
+                    if (string.IsNullOrEmpty(dbReader["Relationship"].ToString()))
+                        patientDashboard.Relationship = "";
+                    else
+                        patientDashboard.Relationship = Convert.ToString(dbReader["Relationship"]);
+                    if (string.IsNullOrEmpty(dbReader["GPSurgery"].ToString()))
+                        patientDashboard.GPSurgery = "";
+                    else
+                        patientDashboard.GPSurgery = Convert.ToString(dbReader["GPSurgery"]);
+                    lstPatientDetails.Add(patientDashboard);
+                }
+                
+                if (dbReader.NextResult())
                 {
-                    using (dbReader)
+                    while (dbReader.Read())
                     {
-                        while (dbReader.Read())
-                        {
-                            if (string.IsNullOrEmpty(dbReader["ID"].ToString()))
-                                patientDashboard.ID = 0;
-                            else
-                                patientDashboard.ID = Convert.ToInt32(dbReader["ID"]);
-                            if (string.IsNullOrEmpty(dbReader["PatientId"].ToString()))
-                                patientDashboard.PatientId = "";
-                            else
-                                patientDashboard.PatientId = Convert.ToString(dbReader["PatientId"]);
-                            if (string.IsNullOrEmpty(dbReader["SpellNumber"].ToString()))
-                                patientDashboard.SpellNumber = 0;
-                            else
-                                patientDashboard.SpellNumber = Convert.ToInt32(dbReader["SpellNumber"]);
-                            if (string.IsNullOrEmpty(dbReader["NHSNumber"].ToString()))
-                                patientDashboard.NHSNumber = "";
-                            else
-                                patientDashboard.NHSNumber = Convert.ToString(dbReader["NHSNumber"]);
-                            if (string.IsNullOrEmpty(dbReader["PatientName"].ToString()))
-                                patientDashboard.PatientName = "";
-                            else
-                                patientDashboard.PatientName = Convert.ToString(dbReader["PatientName"]);
-                            if (string.IsNullOrEmpty(dbReader["DOB"].ToString()))
-                                patientDashboard.DOB = Convert.ToDateTime("01/01/0001");
-                            else
-                                patientDashboard.DOB = Convert.ToDateTime(dbReader["DOB"]);
-                            if (string.IsNullOrEmpty(dbReader["DateOfAdmission"].ToString()))
-                                patientDashboard.DateofAdmission = Convert.ToDateTime("01/01/0001");
-                            else
-                                patientDashboard.DateofAdmission = Convert.ToDateTime(dbReader["DateOfAdmission"]);
-                            if (string.IsNullOrEmpty(dbReader["DateOfDeath"].ToString()))
-                                patientDashboard.DateofDeath = Convert.ToDateTime("01/01/0001");
-                            else
-                                patientDashboard.DateofDeath = Convert.ToDateTime(dbReader["DateOfDeath"]);
-                            if (string.IsNullOrEmpty(dbReader["WardOfDeath"].ToString()))
-                                patientDashboard.WardofDeath = "";
-                            else
-                                patientDashboard.WardofDeath = Convert.ToString(dbReader["WardOfDeath"]);
-                            if (string.IsNullOrEmpty(dbReader["DischargeConsultantName"].ToString()))
-                                patientDashboard.DischargeConsutantName = "";
-                            else
-                                patientDashboard.DischargeConsutantName = Convert.ToString(dbReader["DischargeConsultantName"]);
-                            if (string.IsNullOrEmpty(dbReader["AdmissionType"].ToString()))
-                                patientDashboard.AdmissionType = "";
-                            else
-                                patientDashboard.AdmissionType = Convert.ToString(dbReader["AdmissionType"]);
-                            if (string.IsNullOrEmpty(dbReader["MedTriage"].ToString()))
-                                patientDashboard.MedTriage = 2;
-                            else
-                                patientDashboard.MedTriage = Convert.ToInt32(dbReader["MedTriage"]);
-                            if (string.IsNullOrEmpty(dbReader["QAPReview"].ToString()))
-                                patientDashboard.QAPReview = 2;
-                            else
-                                patientDashboard.QAPReview = Convert.ToInt32(dbReader["QAPReview"]);
-                            if (string.IsNullOrEmpty(dbReader["CodingReview"].ToString()))
-                                patientDashboard.CodingReview = 2;
-                            else
-                                patientDashboard.CodingReview = Convert.ToInt32(dbReader["CodingReview"]);
-                            if (string.IsNullOrEmpty(dbReader["SJR1"].ToString()))
-                                patientDashboard.SJR1 = 0;
-                            else
-                                patientDashboard.SJR1 = Convert.ToInt32(dbReader["SJR1"]);
-                            if (string.IsNullOrEmpty(dbReader["SJR2"].ToString()))
-                                patientDashboard.SJR2 = 0;
-                            else
-                                patientDashboard.SJR2 = Convert.ToInt32(dbReader["SJR2"]);
-                            if (string.IsNullOrEmpty(dbReader["SJROutcome"].ToString()))
-                                patientDashboard.SJROutcome = 0;
-                            else
-                                patientDashboard.SJROutcome = Convert.ToInt32(dbReader["SJROutcome"]);
-                            if (string.IsNullOrEmpty(dbReader["Age"].ToString()))
-                                patientDashboard.Age = 0;
-                            else
-                                patientDashboard.Age = Convert.ToInt32(dbReader["Age"]);
-                            if (string.IsNullOrEmpty(dbReader["Gender"].ToString()))
-                                patientDashboard.Gender = "";
-                            else
-                                patientDashboard.Gender = Convert.ToString(dbReader["Gender"]);
-                            if (string.IsNullOrEmpty(dbReader["TimeofAdmission"].ToString()))
-                                patientDashboard.TimeofAdmission = "";
-                            else
-                                patientDashboard.TimeofAdmission = Convert.ToDateTime(dbReader["TimeofAdmission"].ToString()).ToString("HH:mm");
-                            if (!string.IsNullOrEmpty(dbReader["TimeOfDeath"].ToString()))
-                                patientDashboard.TimeofDeath = Convert.ToDateTime(dbReader["TimeOfDeath"].ToString()).ToString("HH:mm");
-                            else
-                                patientDashboard.TimeofDeath = "";
-                            if (string.IsNullOrEmpty(dbReader["DischargeWard"].ToString()))
-                                patientDashboard.DischargeWard = "";
-                            else
-                                patientDashboard.DischargeWard = Convert.ToString(dbReader["DischargeWard"]);
-                            if (string.IsNullOrEmpty(dbReader["DischargeConsultantCode"].ToString()))
-                                patientDashboard.DischargeConsultantCode = "";
-                            else
-                                patientDashboard.DischargeConsultantCode = Convert.ToString(dbReader["DischargeConsultantCode"]);
-                            if (string.IsNullOrEmpty(dbReader["DischargeSpecialityCode"].ToString()))
-                                patientDashboard.DischargeSpecialtyCode = "";
-                            else
-                                patientDashboard.DischargeSpecialtyCode = Convert.ToString(dbReader["DischargeSpecialityCode"]);
-                            if (string.IsNullOrEmpty(dbReader["DischargeSpeciality"].ToString()))
-                                patientDashboard.DischargeSpeciality = "";
-                            else
-                                patientDashboard.DischargeSpeciality = Convert.ToString(dbReader["DischargeSpeciality"]);
-                            if (string.IsNullOrEmpty(dbReader["Caregroup"].ToString()))
-                                patientDashboard.Caregroup = "";
-                            else
-                                patientDashboard.Caregroup = Convert.ToString(dbReader["Caregroup"]);
-                            if (string.IsNullOrEmpty(dbReader["Comments"].ToString()))
-                                patientDashboard.Comments = "";
-                            else
-                                patientDashboard.Comments = Convert.ToString(dbReader["Comments"]);
-                            if (string.IsNullOrEmpty(dbReader["ComorbiditiesCount"].ToString()))
-                                patientDashboard.ComorbiditiesCount = 0;
-                            else
-                                patientDashboard.ComorbiditiesCount = Convert.ToInt32(dbReader["ComorbiditiesCount"]);
-                            //if (!string.IsNullOrEmpty(dbReader["DiagnosisCount"].ToString()))
-                            //    patientDashboard.DiagnosisCount = 0;
-                            //else
-                            patientDashboard.DiagnosisCount = Convert.ToInt32(dbReader["DiagnosisCount"]);
-                            //if (!string.IsNullOrEmpty(dbReader["ProcedureCount"].ToString()))
-                            //    patientDashboard.ProcedureCount = 0;
-                            //else
-                            patientDashboard.ProcedureCount = Convert.ToInt32(dbReader["ProcedureCount"]);
-                            if (string.IsNullOrEmpty(dbReader["IsFullSJRRequired"].ToString()))
-                                patientDashboard.IsFullSJRRequired = false;
-                            else
-                                patientDashboard.IsFullSJRRequired = Convert.ToBoolean(dbReader["IsFullSJRRequired"]);
-                            if (string.IsNullOrEmpty(dbReader["CodingIssueIdentified"].ToString()))
-                                patientDashboard.CodingIssueIdentified = false;
-                            else
-                                patientDashboard.CodingIssueIdentified = Convert.ToBoolean(dbReader["CodingIssueIdentified"]);
-                            if (string.IsNullOrEmpty(dbReader["Stage2SJRRequired"].ToString()))
-                                patientDashboard.Stage2SJRRequired = false;
-                            else
-                                patientDashboard.Stage2SJRRequired = Convert.ToBoolean(dbReader["Stage2SJRRequired"]);
-                            if (string.IsNullOrEmpty(dbReader["Occupation"].ToString()))
-                                patientDashboard.Occupation = "";
-                            else
-                                patientDashboard.Occupation = Convert.ToString(dbReader["Occupation"]);
-                            if (string.IsNullOrEmpty(dbReader["UserRole"].ToString()))
-                                patientDashboard.UserRole = "";
-                            else
-                                patientDashboard.UserRole = Convert.ToString(dbReader["UserRole"]);
-                            if (string.IsNullOrEmpty(dbReader["PatientType"].ToString()))
-                                patientDashboard.PatientType = "AAPC";
-                            else
-                                patientDashboard.PatientType = Convert.ToString(dbReader["PatientType"]);
-                            if (string.IsNullOrEmpty(dbReader["DataQualityComments"].ToString()))
-                                patientDashboard.PatientType = "";
-                            else
-                                patientDashboard.DataQualityIssueComments = Convert.ToString(dbReader["DataQualityComments"]);
-                            if (string.IsNullOrEmpty(dbReader["DataQualityIssuesIdentified"].ToString()))
-                                patientDashboard.DataQualityIssuesIdentified = false;
-                            else
-                                patientDashboard.DataQualityIssuesIdentified = Convert.ToBoolean(dbReader["DataQualityIssuesIdentified"]);
-                            if (string.IsNullOrEmpty(dbReader["UrgentMEReview"].ToString()))
-                                patientDashboard.UrgentMEReview = false;
-                            else
-                                patientDashboard.UrgentMEReview = Convert.ToBoolean(dbReader["UrgentMEReview"]);
-                            if (string.IsNullOrEmpty(dbReader["UrgentMEReviewComment"].ToString()))
-                                patientDashboard.UrgentMEReviewComment = "";
-                            else
-                                patientDashboard.UrgentMEReviewComment = Convert.ToString(dbReader["UrgentMEReviewComment"]);
-                            if (string.IsNullOrEmpty(dbReader["RelativeName"].ToString()))
-                                patientDashboard.RelativeName = "";
-                            else
-                                patientDashboard.RelativeName = Convert.ToString(dbReader["RelativeName"]);
-                            if (string.IsNullOrEmpty(dbReader["RelativeTelNo"].ToString()))
-                                patientDashboard.RelativeTelNo = "";
-                            else
-                                patientDashboard.RelativeTelNo = Convert.ToString(dbReader["RelativeTelNo"]);
-                            if (string.IsNullOrEmpty(dbReader["Relationship"].ToString()))
-                                patientDashboard.Relationship = "";
-                            else
-                                patientDashboard.Relationship = Convert.ToString(dbReader["Relationship"]);
-                            if (string.IsNullOrEmpty(dbReader["GPSurgery"].ToString()))
-                                patientDashboard.GPSurgery = "";
-                            else
-                                patientDashboard.GPSurgery = Convert.ToString(dbReader["GPSurgery"]);
-                            lstPatientDetails.Add(patientDashboard);
-                        }
+                        nextOfkin = new NextOfKin();
+                        if (string.IsNullOrEmpty(dbReader["PatientID"].ToString()))
+                            nextOfkin.PatientID = "";
+                        else
+                            nextOfkin.PatientID = Convert.ToString(dbReader["PatientID"]);
+                        if (string.IsNullOrEmpty(dbReader["RelativeName"].ToString()))
+                            nextOfkin.RelativeName = "";
+                        else
+                            nextOfkin.RelativeName = Convert.ToString(dbReader["RelativeName"]);
+                        if (string.IsNullOrEmpty(dbReader["RelativeTelNo"].ToString()))
+                            nextOfkin.RelativeTelNo = "";
+                        else
+                            nextOfkin.RelativeTelNo = Convert.ToString(dbReader["RelativeTelNo"]);
 
-                        if (dbReader.NextResult())
-                        {
-                            while (dbReader.Read())
-                            {
-                                nextOfkin = new NextOfKin();
-                                if (string.IsNullOrEmpty(dbReader["PatientID"].ToString()))
-                                    nextOfkin.PatientID = "";
-                                else
-                                    nextOfkin.PatientID = Convert.ToString(dbReader["PatientID"]);
-                                if (string.IsNullOrEmpty(dbReader["RelativeName"].ToString()))
-                                    nextOfkin.RelativeName = "";
-                                else
-                                    nextOfkin.RelativeName = Convert.ToString(dbReader["RelativeName"]);
-                                if (string.IsNullOrEmpty(dbReader["RelativeTelNo"].ToString()))
-                                    nextOfkin.RelativeTelNo = "";
-                                else
-                                    nextOfkin.RelativeTelNo = Convert.ToString(dbReader["RelativeTelNo"]);
+                        if (string.IsNullOrEmpty(dbReader["Relationship"].ToString()))
+                            nextOfkin.Relationship = "";
+                        else
+                            nextOfkin.Relationship = Convert.ToString(dbReader["Relationship"]);
 
-                                if (string.IsNullOrEmpty(dbReader["Relationship"].ToString()))
-                                    nextOfkin.Relationship = "";
-                                else
-                                    nextOfkin.Relationship = Convert.ToString(dbReader["Relationship"]);
+                        if (string.IsNullOrEmpty(dbReader["PresentAtDeath"].ToString()))
+                            nextOfkin.PresentAtDeath = false;
+                        else
+                            nextOfkin.PresentAtDeath = Convert.ToBoolean(dbReader["PresentAtDeath"]);
 
-                                if (string.IsNullOrEmpty(dbReader["PresentAtDeath"].ToString()))
-                                    nextOfkin.PresentAtDeath = false;
-                                else
-                                    nextOfkin.PresentAtDeath = Convert.ToBoolean(dbReader["PresentAtDeath"]);
+                        if (string.IsNullOrEmpty(dbReader["IsInformed"].ToString()))
+                            nextOfkin.IsInformed = false;
+                        else
+                            nextOfkin.IsInformed = Convert.ToBoolean(dbReader["IsInformed"]);
 
-                                if (string.IsNullOrEmpty(dbReader["IsInformed"].ToString()))
-                                    nextOfkin.IsInformed = false;
-                                else
-                                    nextOfkin.IsInformed = Convert.ToBoolean(dbReader["IsInformed"]);
-
-                                if (string.IsNullOrEmpty(dbReader["NextOfKinID"].ToString()))
-                                    nextOfkin.NextOfKinID = 0;
-                                else
-                                    nextOfkin.NextOfKinID = Convert.ToInt32(dbReader["NextOfKinID"]);
-                                lstNextOfKin.Add(nextOfkin);
-                                patientDashboard.lstNEXTKin.Add(nextOfkin);
-                            }
-                        }
-
+                        if (string.IsNullOrEmpty(dbReader["NextOfKinID"].ToString()))
+                            nextOfkin.NextOfKinID = 0;
+                        else
+                            nextOfkin.NextOfKinID = Convert.ToInt32(dbReader["NextOfKinID"]);
+                        lstNextOfKin.Add(nextOfkin);
                     }
                 }
-
-
+                patientDashboard.lstNEXTKin = lstNextOfKin;
             }
             catch (Exception ex)
             {
@@ -927,9 +863,41 @@ namespace NHS.Data
                 if (!dbReader.IsClosed)
                     dbReader.Close();
             }
-          
             if (patientDashboard.ID == 0 || patientDashboard.ID == null) patientDashboard.ID = Convert.ToInt32(id);
             return lstPatientDetails;
+        }
+
+        public int InsertKin(NextOfKin nextofkin)
+        {
+            var connection = GetConnection();
+            int retVal = 0;
+            SqlCommand dbCommand = new SqlCommand("usp_InsertNextOfKinDetails", connection);
+            SqlDataReader dataReader = null;
+
+            try
+            {
+                dbCommand.CommandType = CommandType.StoredProcedure;
+                dbCommand.Parameters.AddWithValue("@PatientID", nextofkin.PatientID);
+                dbCommand.Parameters.AddWithValue("@RelativeName", nextofkin.RelativeName);
+                dbCommand.Parameters.AddWithValue("@RelativeTelNo", nextofkin.RelativeTelNo);
+                dbCommand.Parameters.AddWithValue("@Relationship", nextofkin.Relationship);
+                dbCommand.Parameters.AddWithValue("@PresentAtDeath", nextofkin.PresentAtDeath);
+                dbCommand.Parameters.AddWithValue("@IsInformed", nextofkin.IsInformed);
+                dbCommand.Parameters.AddWithValue("@KinID", nextofkin.NextOfKinID);
+                dataReader = dbCommand.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    retVal = Convert.ToInt32(dataReader["ID"]);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
+            }
+            if (!dataReader.IsClosed)
+                dataReader.Close();
+            return retVal;
+
         }
 
         /// <summary>
@@ -952,8 +920,8 @@ namespace NHS.Data
         /// <param name="id">int</param>
         /// <returns>int</returns>
         public int UpdateMedicalExaminerDecision(bool isMCCDissue, bool isCoronerReferral, bool isHospitalPostMortem, bool isDeathCertificate, bool isCornerReferralComplete, bool isCoronerDecisionInquest, bool isCoronerDecisionPostMortem,
-            bool isCoronerDecision100A, bool isCoronerDecisionGPissue, string Reason, string CauseOfDeath1, string CauseOfDeath2, string CauseOfDeath3,
-            string CauseOfDeath4, DateTime? DeathCertificateDate, string DeathCertificateTime, string TimeType, string CauseID, int id)
+            bool isCoronerDecision100A, bool isCoronerDecisionGPissue, string Reason, string CauseOfDeath1, string CauseOfDeath2, string CauseOfDeath3, 
+            string CauseOfDeath4, DateTime? DeathCertificateDate, string DeathCertificateTime, string TimeType,string CauseID, int id)
         {
             var connection = GetConnection();
             int retVal = 0;
@@ -1080,11 +1048,15 @@ namespace NHS.Data
                 dataReader = dbCommand.ExecuteReader();
 
                 while (dataReader.Read())
-                {
+                {                    
                     feedback.Patient_ID = Convert.ToInt32(dataReader["Patient_ID"]);
                     feedback.FormCompleted = Convert.ToBoolean(dataReader["FormCompleted"]);
                     feedback.ComplementsFedBack = Convert.ToBoolean(dataReader["ComplementsFedBack"]);
                     feedback.Comments = Convert.ToString(dataReader["Comments"]);
+                    if (!string.IsNullOrEmpty(dataReader["MedTriage"].ToString()))
+                        feedback.MedTriage = Convert.ToInt32(dataReader["MedTriage"]);
+                    else
+                        feedback.MedTriage = 2;
                 }
             }
             catch (Exception ex)
@@ -1156,7 +1128,7 @@ namespace NHS.Data
                     if (dataReader["InitialManagement"] != null) InitialManagement = Convert.ToString(dataReader["InitialManagement"]);
                     sjrFormInitial.InitialManagement = InitialManagement;
                     int InitialManagementCareRatingID = 0;
-                    if (dataReader["InitialManagementCareRatingID"] != null) InitialManagementCareRatingID = Convert.ToInt32(dataReader["InitialManagementCareRatingID"]);
+                    if(dataReader["InitialManagementCareRatingID"] != null) InitialManagementCareRatingID = Convert.ToInt32(dataReader["InitialManagementCareRatingID"]);
                     sjrFormInitial.InitialManagementCareRatingID = InitialManagementCareRatingID;
                     string OngoingCare = "";
                     if (dataReader["OngoingCare"] != null) OngoingCare = Convert.ToString(dataReader["OngoingCare"]);
@@ -1764,7 +1736,7 @@ namespace NHS.Data
                         diagnosis.FCENumber = 0;
                     else
                         diagnosis.FCENumber = Convert.ToInt32(dataReader["FCENumber"]);
-
+                   
                     if (string.IsNullOrEmpty(dataReader["DischargeConsultantName"].ToString()))
                         diagnosis.DischargeConsultantName = "";
                     else
@@ -1796,7 +1768,7 @@ namespace NHS.Data
                     if (string.IsNullOrEmpty(dataReader["DiagnosisDescription"].ToString()))
                         diagnosis.DiagnosisDescription = "";
                     else
-                        diagnosis.DiagnosisDescription = Convert.ToString(dataReader["DiagnosisDescription"]);
+                        diagnosis.DiagnosisDescription = Convert.ToString(dataReader["DiagnosisDescription"]);                    
                     diagnoses.Add(diagnosis);
                 }
             }
@@ -1880,6 +1852,40 @@ namespace NHS.Data
             return procedures;
         }
 
+        public List<CommentType> GetCommentType()
+        {
+            var connection = GetConnection();
+            List<CommentType> lstCommentType = new List<CommentType>();
+            SqlDataReader dataReader = null;
+
+            try
+            {
+                SqlCommand dbCommand = new SqlCommand("usp_GetCommentType", connection);
+                dbCommand.CommandType = CommandType.StoredProcedure;
+
+                dataReader = dbCommand.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    CommentType commentType = new CommentType();
+                    commentType.CommonTypeID = Convert.ToInt32(dataReader["CommonTypeID"]);
+                    commentType.Type = Convert.ToString(dataReader["Type"]);
+
+                    lstCommentType.Add(commentType);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
+            }
+            finally
+            {
+                if (!dataReader.IsClosed)
+                    dataReader.Close();
+            }
+            return lstCommentType;
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -1905,7 +1911,7 @@ namespace NHS.Data
                     if (!string.IsNullOrEmpty(dataReader["UserID"].ToString()))
                         comment.UserID = Convert.ToInt32(dataReader["UserID"]);
                     else
-                        comment.UserID = 0;
+                        comment.UserID = 0;                    
                     if (!string.IsNullOrEmpty(dataReader["Name"].ToString()))
                         comment.Name = Convert.ToString(dataReader["Name"]);
                     else
@@ -1919,7 +1925,7 @@ namespace NHS.Data
                     else
                         comment.CreatedDate = "";
                     if (!string.IsNullOrEmpty(dataReader["CreatedDate"].ToString()))
-                        comment.CreatedTime = Convert.ToDateTime(dataReader["CreatedDate"]).TimeOfDay.ToString().Substring(0, 5);
+                        comment.CreatedTime = Convert.ToDateTime(dataReader["CreatedDate"]).TimeOfDay.ToString().Substring(0,5);
                     else
                         comment.CreatedTime = "";
                     if (!string.IsNullOrEmpty(dataReader["CommentTypeID"].ToString()))
@@ -1930,8 +1936,7 @@ namespace NHS.Data
                         comment.Role = Convert.ToString(dataReader["Role"]);
                     else
                         comment.Role = "";
-
-                    comments.Add(comment);
+                    comments.Add(comment); 
                 }
             }
             catch (Exception ex)
@@ -1946,45 +1951,6 @@ namespace NHS.Data
             return comments;
         }
 
-        public int insertKin(NextOfKin nextofkin)
-        {
-
-
-            var connection = GetConnection();
-            int retVal = 0;
-            SqlCommand dbCommand = new SqlCommand("usp_InsertNextOfKinDetails", connection);
-            SqlDataReader dataReader = null;
-
-            try
-            {
-                dbCommand.CommandType = CommandType.StoredProcedure;
-                dbCommand.Parameters.AddWithValue("@PatientID", nextofkin.PatientID);
-                dbCommand.Parameters.AddWithValue("@RelativeName", nextofkin.RelativeName);
-                dbCommand.Parameters.AddWithValue("@RelativeTelNo", nextofkin.RelativeTelNo);
-                dbCommand.Parameters.AddWithValue("@Relationship", nextofkin.Relationship);
-                dbCommand.Parameters.AddWithValue("@PresentAtDeath", nextofkin.PresentAtDeath);
-                dbCommand.Parameters.AddWithValue("@IsInformed", nextofkin.IsInformed);
-                dbCommand.Parameters.AddWithValue("@KinID", nextofkin.NextOfKinID);
-                dataReader = dbCommand.ExecuteReader();
-                while (dataReader.Read())
-                {
-
-
-                    retVal = Convert.ToInt32(dataReader["ID"]);
-
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
-            }
-            if (!dataReader.IsClosed)
-                dataReader.Close();
-            return retVal;
-
-        }
         public clsQAPReview GetQAPReview(int? id)
         {
             var connection = GetConnection();
@@ -2113,7 +2079,7 @@ namespace NHS.Data
         /// <param name="comments">string</param>
         /// <param name="id">int</param>
         /// <returns>int</returns>
-        public int UpdatePatientDetails(bool isDataQualityIssuesIdentified, string dataqualitycomments, bool isCodingIssueIdentified, string comments, string occupation, bool isUrgentMEReview,
+        public int UpdatePatientDetails(bool isDataQualityIssuesIdentified, string dataqualitycomments, bool isCodingIssueIdentified, string comments, string occupation, bool isUrgentMEReview, 
             string UrgentMEReviewComments, string RelativeName, string RelativeTelNo, string Relationship, string GPSurgery, int? id)
         {
             var connection = GetConnection();
@@ -2389,7 +2355,7 @@ namespace NHS.Data
 
         public int UpdateSJR1ProblemType(int AssessmentResponseID, int AssessmentCarePhaseID, int MedicationResponseID, int MedicationCarePhaseID,
             int TreatmentResponseID, int TreatmentCarePhaseID, int InfectionResponseID, int InfectionCarePhaseID, int ProcedureResponseID,
-            int ProcedureCarePhaseID, int MonitoringResponseID, int ResuscitationResponseID, int OthertypeResponseID, int OthertypeCarePhaseID, int AvoidabilityScoreID,
+            int ProcedureCarePhaseID, int MonitoringResponseID, int ResuscitationResponseID, int OthertypeResponseID, int OthertypeCarePhaseID, int AvoidabilityScoreID, 
             string Comments, string SIRIComments, bool ProblemOccured, int? id)
         {
             var connection = GetConnection();
@@ -2484,111 +2450,6 @@ namespace NHS.Data
             return retVal;
         }
 
-        
-     public string CheckMEDeclaration(MEDeclaration me)
-        {
-
-            var connection = GetConnection();
-            int retVal = 0;
-            string Formname="" ;
-            SqlCommand dbCommand = new SqlCommand("usp_FormcheckMETriage", connection);
-            SqlDataReader dataReader = null;
-            int MER = 0;
-            int MED = 0;
-            int SA = 0;
-            int OR = 0;
-            int FB = 0;
-            try
-            {
-                dbCommand.CommandType = CommandType.StoredProcedure;
-                dbCommand.Parameters.AddWithValue("@Patient_ID", me.Patient_ID);
-                dataReader = dbCommand.ExecuteReader();
-                while (dataReader.Read())
-                {
-
-
-                    retVal = Convert.ToInt32(dataReader["flag"]);
-                    MER = Convert.ToInt32(dataReader["MER"]);
-                    MED = Convert.ToInt32(dataReader["MED"]);
-                    SA  = Convert.ToInt32(dataReader["SA"]);
-                    OR  = Convert.ToInt32(dataReader["ORf"]);
-                    FB = Convert.ToInt32(dataReader["FB"]);
-
-
-                }
-                Formname = Formname + retVal.ToString();
-                if (MER == 0)
-                {
-                    Formname = Formname + "," + "Medical Examination Review";
-                }
-                if (MED == 0)
-                {
-                    Formname = Formname + "," + "Medical Examination Decision";
-                }
-                if (SA == 0)
-                {
-                    Formname = Formname + "," + "Sjr Assessment";
-                }
-                if (OR == 0)
-                {
-                    Formname = Formname + "," + "other referral";
-                }
-                if (FB == 0)
-                {
-                    Formname = Formname + "," + "feedback";
-                }
-
-            }
-            catch (Exception ex)
-            {
-                LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
-            }
-            if (!dataReader.IsClosed)
-                dataReader.Close();
-            return Formname;
-
-
-        }
-
-        public int insertMEDeclaration(MEDeclaration me)
-        {
-
-            var connection = GetConnection();
-            int retVal =0;
-            SqlCommand dbCommand = new SqlCommand("usp_InsertMEDeclaration", connection);
-            SqlDataReader dataReader = null;
-
-            try
-            {
-                dbCommand.CommandType = CommandType.StoredProcedure;
-                dbCommand.Parameters.AddWithValue("@IsConfirmed", me.IsConfirmed);
-                dbCommand.Parameters.AddWithValue("@Patient_ID", me.Patient_ID);
-                dbCommand.Parameters.AddWithValue("@DeclartionDate", me.DclartionDate);
-          
-                dataReader = dbCommand.ExecuteReader();
-                while (dataReader.Read())
-                {
-
-
-                    retVal = Convert.ToInt32(dataReader["flag"]);
-
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
-            }
-            if (!dataReader.IsClosed)
-                dataReader.Close();
-            return retVal;
-
-
-        }
-
-
-
         /// <summary>
         /// Update SJR Assessment Triage Details for a particular patient ID
         /// </summary>
@@ -2681,6 +2542,28 @@ namespace NHS.Data
             return retVal;
         }
 
+        public int UpdateDeclaration(bool isDeclaration, string CreatedBy, string CreatedDate, string Office, int? id)
+        {
+            var connection = GetConnection();
+            int retVal = 0;
+            SqlCommand dbCommand = new SqlCommand("usp_UpdateDeclaration", connection);
+            try
+            {
+                dbCommand.CommandType = CommandType.StoredProcedure;
+                dbCommand.Parameters.AddWithValue("@Declaration", isDeclaration);
+                dbCommand.Parameters.AddWithValue("@CreatedBy", CreatedBy);
+                dbCommand.Parameters.AddWithValue("@CreatedDate", CreatedDate);
+                dbCommand.Parameters.AddWithValue("@Office", Office);
+                dbCommand.Parameters.AddWithValue("@ID", id);
+                retVal = dbCommand.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
+            }
+            return retVal;
+        }
+
         /// <summary>
         /// Get Other referral tab details for a particular patient ID
         /// </summary>
@@ -2719,6 +2602,10 @@ namespace NHS.Data
                     otherReferralModel.Other = Convert.ToBoolean(dbReader["Other"]);
                     otherReferralModel.OtherReason = Convert.ToString(dbReader["OtherReason"]);
                     otherReferralModel.SafeGuardTeamNotified = Convert.ToBoolean(dbReader["SafeGuard"]);
+                    if (!string.IsNullOrEmpty(dbReader["MedTriage"].ToString()))
+                        otherReferralModel.MedTriage = Convert.ToInt32(dbReader["MedTriage"]);
+                    else
+                        otherReferralModel.MedTriage = 2;
                 }
             }
             catch (Exception ex)
@@ -2732,6 +2619,61 @@ namespace NHS.Data
             }
             if (otherReferralModel.Patient_ID == 0 || otherReferralModel.Patient_ID == null) otherReferralModel.Patient_ID = Convert.ToInt32(id);
             return otherReferralModel;
+        }
+
+        /// <summary>
+        /// Get Other referral tab details for a particular patient ID
+        /// </summary>
+        /// <param name="id">int</param>
+        /// <returns>clsOtherReferralModel</returns>
+        public clsDeclarationModel GetDeclaration(int? id)
+        {
+            var connection = GetConnection();
+            SqlDataReader dbReader = null;
+            clsDeclarationModel declaration = new clsDeclarationModel();
+            try
+            {
+                SqlCommand dbCmd = new SqlCommand("usp_GetMEDeclaration", connection);
+                dbCmd.CommandType = CommandType.StoredProcedure;
+                if (id != null)
+                    dbCmd.Parameters.AddWithValue("@PatientID", id);
+                else
+                    dbCmd.Parameters.AddWithValue("@PatientID", null);
+
+                dbReader = dbCmd.ExecuteReader();
+
+                while (dbReader.Read())
+                {
+                    declaration.Patient_ID = Convert.ToInt32(dbReader["Patient_ID"]);
+                    if (string.IsNullOrEmpty(dbReader["Declaration"].ToString()))
+                        declaration.Declaration = false;
+                    else
+                        declaration.Declaration = Convert.ToBoolean(dbReader["Declaration"]);
+                    if (string.IsNullOrEmpty(dbReader["CreatedBy"].ToString()))
+                        declaration.CreatedBy = "";
+                    else
+                        declaration.CreatedBy = Convert.ToString(dbReader["CreatedBy"]);
+                    if (string.IsNullOrEmpty(dbReader["CreatedDate"].ToString()))
+                        declaration.CreatedDate = "";
+                    else
+                        declaration.CreatedDate = Convert.ToDateTime(dbReader["CreatedDate"]).ToString("dd/MM/yyyy");
+                    if (!string.IsNullOrEmpty(dbReader["MedTriage"].ToString()))
+                        declaration.MedTriage = Convert.ToInt32(dbReader["MedTriage"]);
+                    else
+                        declaration.MedTriage = 2;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
+            }
+            finally
+            {
+                if (!dbReader.IsClosed)
+                    dbReader.Close();
+            }
+            if (declaration.Patient_ID == 0 || declaration.Patient_ID == null) declaration.Patient_ID = Convert.ToInt32(id);
+            return declaration;
         }
 
         /// <summary>
@@ -2756,7 +2698,7 @@ namespace NHS.Data
                 dbReader = dbCmd.ExecuteReader();
 
                 while (dbReader.Read())
-                {
+                {                    
                     medicalExaminerDecision.ID = Convert.ToInt32(dbReader["Patient_ID"]);
                     medicalExaminerDecision.PatientID = Convert.ToString(dbReader["PatientID"]);
                     medicalExaminerDecision.MCCDissue = Convert.ToBoolean(dbReader["MCCDissue"]);
@@ -2773,13 +2715,20 @@ namespace NHS.Data
                     medicalExaminerDecision.CoronerDecision100A = Convert.ToBoolean(dbReader["CoronerDecision100A"]);
                     medicalExaminerDecision.CoronerDecisionGPissue = Convert.ToBoolean(dbReader["CoronerDecisionGPissue"]);
                     medicalExaminerDecision.CoronerDecisionPostMortem = Convert.ToBoolean(dbReader["CoronerDecisionPostMortem"]);
-                    medicalExaminerDecision.CauseID = Convert.ToInt32(dbReader["CauseID"]);
-                    if (dbReader["DeathCertificateDate"] == null)
-                        medicalExaminerDecision.DeathCertificateDate = null;
+                    if (!string.IsNullOrEmpty(dbReader["CauseID"].ToString()))
+                        medicalExaminerDecision.CauseID = Convert.ToInt32(dbReader["CauseID"]);
+                    else
+                        medicalExaminerDecision.CauseID = 0;
+                    if (string.IsNullOrEmpty(dbReader["DeathCertificateDate"].ToString()))
+                        medicalExaminerDecision.DeathCertificateDate = "";
                     else
                         medicalExaminerDecision.DeathCertificateDate = Convert.ToDateTime(dbReader["DeathCertificateDate"]).ToString("dd/MM/yyyy");
                     medicalExaminerDecision.DeathCertificateTime = Convert.ToString(dbReader["DeathCertificateTime"]);
                     medicalExaminerDecision.TimeType = Convert.ToString(dbReader["TimeType"]);
+                    if (!string.IsNullOrEmpty(dbReader["MedTriage"].ToString()))
+                        medicalExaminerDecision.MedTriage = Convert.ToInt32(dbReader["MedTriage"]);
+                    else
+                        medicalExaminerDecision.MedTriage = 2;
                 }
             }
             catch (Exception ex)
@@ -2830,6 +2779,10 @@ namespace NHS.Data
                     sJRReview.OtherConcernDetails = Convert.ToString(dbReader["OtherConcernDetails"]);
                     sJRReview.FullSJRRequired = Convert.ToBoolean(dbReader["FullSJRRequired"]);
                     sJRReview.SpecialityID = Convert.ToInt32(dbReader["SpecialityID"]);
+                    if (!string.IsNullOrEmpty(dbReader["MedTriage"].ToString()))
+                        sJRReview.MedTriage = Convert.ToInt32(dbReader["MedTriage"]);
+                    else
+                        sJRReview.MedTriage = 2;
                 }
             }
             catch (Exception ex)
@@ -2875,11 +2828,18 @@ namespace NHS.Data
                     medicalExaminerReview.QAP_Discussion = Convert.ToBoolean(dbReader["QAP_Discussion"]);
                     medicalExaminerReview.Notes_Review = Convert.ToBoolean(dbReader["Notes_Review"]);
                     medicalExaminerReview.Nok_Discussion = Convert.ToBoolean(dbReader["Nok_Discussion"]);
-                    medicalExaminerReview.QAPName = Convert.ToString(dbReader["QAPName"]);
+                    if (string.IsNullOrEmpty(dbReader["QAPName"].ToString()))
+                        medicalExaminerReview.QAPName = "";
+                    else
+                        medicalExaminerReview.QAPName = Convert.ToString(dbReader["QAPName"]);
                     if (!string.IsNullOrEmpty(dbReader["CommentCount"].ToString()))
                         medicalExaminerReview.CommentCount = Convert.ToInt32(dbReader["CommentCount"]);
                     else
                         medicalExaminerReview.CommentCount = 0;
+                    if (!string.IsNullOrEmpty(dbReader["MedTriage"].ToString()))
+                        medicalExaminerReview.MedTriage = Convert.ToInt32(dbReader["MedTriage"]);
+                    else
+                        medicalExaminerReview.MedTriage = 2;
                     medicalExaminerReview.Comments = "";
                 }
             }
@@ -2937,48 +2897,6 @@ namespace NHS.Data
             }
             return medicalExaminers;
         }
-
-        //changes for getting CommentType
-
-        /// <summary>
-        /// Get list of CommentType in the system.
-        /// </summary>
-        /// <returns>List<clsMedicalExaminers></returns>
-        public List<CommentType> GetCommentType()
-        {
-            var connection = GetConnection();
-            List<CommentType> lstCommentType = new List<CommentType>();
-            SqlDataReader dataReader = null;
-
-            try
-            {
-                SqlCommand dbCommand = new SqlCommand("usp_GetCommentType", connection);
-                dbCommand.CommandType = CommandType.StoredProcedure;
-
-                dataReader = dbCommand.ExecuteReader();
-
-                while (dataReader.Read())
-                {
-                    CommentType commentType = new CommentType();
-                    commentType.CommonTypeID = Convert.ToInt32(dataReader["CommonTypeID"]);
-                    commentType.Type = Convert.ToString(dataReader["Type"]);
-
-                    lstCommentType.Add(commentType);
-                }
-            }
-            catch (Exception ex)
-            {
-                LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
-            }
-            finally
-            {
-                if (!dataReader.IsClosed)
-                    dataReader.Close();
-            }
-            return lstCommentType;
-        }
-        //end changes
-
 
         /// <summary>
         /// Get All coroner referral reasons from the database
@@ -3057,7 +2975,7 @@ namespace NHS.Data
             }
             return reasonNames;
         }
-
+        
         /// <summary>
         /// Checks if the user exists
         /// </summary>
@@ -3125,6 +3043,6 @@ namespace NHS.Data
             catch (Exception ex)
             {
             }
-        }
+        }        
     }
 }
