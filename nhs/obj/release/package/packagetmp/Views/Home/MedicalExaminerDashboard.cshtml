@@ -174,7 +174,7 @@
     <br />
     <div class="row">
         <div style="width:90%;">
-            <table class="stripe row-border" style="overflow:auto;" id="tblPatientDetails">
+            <table class="stripe row-border order-column" style="overflow:auto;" id="tblPatientDetails">
                 <thead>
                     <tr bgcolor="#a9d7cc" style="color:black;width:90%;  font-size:11px;">
                         <th align="left" width="5%">Patient ID</th>
@@ -343,13 +343,7 @@
                                 }
                             </tr>
                         }
-                    }
-                    else
-                    {
-                        <tr>
-                            <td colspan="14" class="text-center" align="center">No Records Found.</td>
-                        </tr>
-                    }
+                    }                    
                 </tbody>
             </table>
         </div>
@@ -379,9 +373,9 @@
     //added
     $(document).ready(function () {
         $('#tblPatientDetails').DataTable({
-            "searching": true,
             "ordering": true,
             "paging": true,
+            "searching": true,
             "pageLength": 20,
             //"aaSorting": [[4, 'desc']],
              "order": [[4, 'desc']],

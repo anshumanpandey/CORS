@@ -29,5 +29,7 @@ namespace NHS.Common
         public Nullable<System.DateTime> UpdatedDate { get; set; }
 
         public bool SafeGuardTeamNotified { get; set; }
+
+        public int MedTriage { get; set; }
     }
 }

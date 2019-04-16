@@ -70,7 +70,7 @@
                             </div>
                             <div id="stage2date" class="col-md-8" style="display:block">
                                 <div class="row_bar">
-                                    <input class="form-control input_datepicker" readonly="readonly" type="text" id="Stage2SJRDateSent" value="@Model.Stage2SJRDateSent" name="Stage2SJRDateSent" placeholder="Select Date">
+                                    <input class="form-control datepicker" readonly="readonly" type="text" id="Stage2SJRDateSent" value="@Model.Stage2SJRDateSent" name="Stage2SJRDateSent" placeholder="Select Date">
                                 </div>
                             </div>
                             <div id="stage2sentlabel" class="col-md-4" style="display:block">
@@ -94,7 +94,7 @@
                                 </div>
                                 <div id="stage2date" class="col-md-8" style="display:none">
                                     <div class="row_bar">
-                                        <input class="form-control input_datepicker" readonly="readonly" type="text" id="Stage2SJRDateSent" value="@Model.Stage2SJRDateSent" name="Stage2SJRDateSent" placeholder="Select Date">
+                                        <input class="form-control datepicker" readonly="readonly" type="text" id="Stage2SJRDateSent" value="@Model.Stage2SJRDateSent" name="Stage2SJRDateSent" placeholder="Select Date">
                                     </div>
                                 </div>
                                 <div id="stage2sentlabel" class="col-md-4" style="display:none">
@@ -142,7 +142,7 @@
                                 <span>Date Received</span>
                             </div>
                             <div class="col-md-8">
-                                <input class="form-control input_datepicker" readonly="readonly" type="text" id="DateReceived" value="@Model.DateReceived" name="DateReceived" placeholder="Select Date">
+                                <input class="form-control datepicker" readonly="readonly" type="text" id="DateReceived" value="@Model.DateReceived" name="DateReceived" placeholder="Select Date">
                             </div>
                             @*<div class="col-md-1">
                                     <div class="row_bar">
@@ -200,7 +200,7 @@
                             </div>
 
                             <div id="msgdate" class="col-md-8" style="display:block">
-                                <input class="form-control input_datepicker" readonly="readonly" type="text" id="MSGDiscussionDate" name="MSGDiscussionDate" value="@Model.MSGDiscussionDate" placeholder="Select Date" value="@Model.MSGDiscussionDate">
+                                <input class="form-control datepicker" readonly="readonly" type="text" id="MSGDiscussionDate" name="MSGDiscussionDate" value="@Model.MSGDiscussionDate" placeholder="Select Date" value="@Model.MSGDiscussionDate">
                             </div>
                             }
                             else
@@ -210,7 +210,7 @@
                                 </div>
 
                                 <div id="msgdate" class="col-md-8" style="display:none">
-                                    <input class="form-control input_datepicker" readonly="readonly" type="text" id="MSGDiscussionDate" name="MSGDiscussionDate" value="@Model.MSGDiscussionDate" placeholder="Select Date" value="@Model.MSGDiscussionDate">
+                                    <input class="form-control datepicker" readonly="readonly" type="text" id="MSGDiscussionDate" name="MSGDiscussionDate" value="@Model.MSGDiscussionDate" placeholder="Select Date" value="@Model.MSGDiscussionDate">
                                 </div>
                             }
                             @*<div class="col-md-1">
@@ -345,6 +345,13 @@
             $("#modelClose").modal();
         });
     });
+    (function ($) {
+        $(".datepicker").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy'
+        });
+    })(jQuery)
 </script>
 <script>
         $(document).ready(function () {

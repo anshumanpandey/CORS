@@ -46,6 +46,7 @@
     <Compile Include="DTO\clsClinicalCodingModel.cs" />
     <Compile Include="DTO\clsCodingReviewModel.cs" />
     <Compile Include="DTO\clsDataManagement.cs" />
+    <Compile Include="DTO\clsDeclarationModel.cs" />
     <Compile Include="DTO\clsFeedBackModel.cs" />
     <Compile Include="DTO\clsMedicalExaminerDecisionModel.cs" />
     <Compile Include="DTO\clsMedicalExaminerReviewModel.cs" />

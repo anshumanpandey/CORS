@@ -42,8 +42,8 @@
     @*<script src="~/Scripts/jquery-3.3.1.min.js"></script>*@
     <script src="~/Scripts/js/jquery-ui.min.js"></script>
     <script src="~/Scripts/js/bootstrap.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="~/Scripts/js/jquery.dataTables.min.js?v=1.1"></script>
+    <script type="text/javascript" charset="utf8" src="~/Scripts/js/dataTables.responsive.min.js?v=1.1"></script>
     @*<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>*@
     <script src="~/Scripts/modernizr-2.8.3.js"></script>
     <script src="~/Scripts/js/respond-1.4.2.min.js"></script>
@@ -98,10 +98,10 @@
                         <ul class="sub-menu collapse" id="products4">
                             <li>
                                 <a href="@Url.Action("MedicalExaminerDashboard", "home", new { id = 0, qapreview = false, medtriage = false} )">
-                                    Inpatient
+                                    Hospital Deaths
                                 </a>
                             </li>
-                            <li>
+                            @*<li>
                                 <a href="@Url.Action("NotImplemented", "home")" class="ex3">
                                     Paeds
                                 </a>
@@ -110,7 +110,7 @@
                                 <a href="@Url.Action("NotImplemented", "home")" class="ex3">
                                     A&E
                                 </a>
-                            </li>
+                            </li>*@
                         </ul>
                     </li>
                     <li>

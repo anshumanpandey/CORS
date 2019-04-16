@@ -21,6 +21,8 @@ namespace NHS.Common
         public Nullable<System.DateTime> UpdatedDate { get; set; }
 
         public string Comments { get; set; }
+
+        public int MedTriage { get; set; }
     }
   
 }

@@ -18,12 +18,12 @@
                         <div class="row">
                             <div class="col-md-1">
                                 <div class="row_bar">
-                                    <input style="font-size:10px;height:38px;width:125%" class="form-control input_datepicker" readonly="readonly" type="text" id="txtStartDate" name="txtStartDate" placeholder="All Dates" value="@Convert.ToString(Session["StartDate"])">
+                                    <input style="font-size:10px;height:38px;width:125%" class="form-control  datepicker" readonly="readonly" type="text" id="txtStartDate" name="txtStartDate" placeholder="All Dates" value="@Convert.ToString(Session["StartDate"])">
                                 </div>
                             </div>
                             <div class="col-md-1">
                                 <div class="row_bar">
-                                    <input style="font-size:10px;height:38px;width:125%" class="form-control input_datepicker" readonly="readonly" type="text" id="txtEndDate" name="txtEndDate" placeholder="All Dates" value="@Convert.ToString(Session["EndDate"])">&nbsp;&nbsp;
+                                    <input style="font-size:10px;height:38px;width:125%" class="form-control  datepicker" readonly="readonly" type="text" id="txtEndDate" name="txtEndDate" placeholder="All Dates" value="@Convert.ToString(Session["EndDate"])">&nbsp;&nbsp;
                                 </div>
                             </div>
                             <div class="col-md-2">
@@ -420,6 +420,13 @@ $(function () {
 window.location.href = "@Url.Action("MedicalExaminerDashboard", "Home")";
     });
 });
+    (function ($) {
+        $(".datepicker").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy'
+        });
+    })(jQuery)
 </script>
 
 

@@ -20,6 +20,11 @@ body, ol, ul, li, div, p, span, form, h1, h2, h3, h4, h5, h6, table, thead, th, 
     margin: 0;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+.next-kin {
+    border: none;
+    margin-bottom: 0 !important;
+    outline:none;
+}
 .agenttotal_pan {
 	width: 10%;
 	display: inline-block;
@@ -254,11 +259,7 @@ ul, menu, dir {
 .container-section {
     padding: 60px;
 }
-.next-kin {
-    border: none;
-    margin-bottom: 0 !important;
-    outline:none;
-}
+
 .form-control {
     margin-bottom: 20px;
 }

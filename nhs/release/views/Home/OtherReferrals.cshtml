@@ -25,7 +25,7 @@
                 <li class="disabled">
                     <a href='@Url.Action("MedicalExaminerReview", "home", new { id=Model.Patient_ID })'>
                         <h4 class="list-group-item-heading">
-                            Medical Examiner Review
+                            Medical Examiner Scrutiny
                         </h4>
                     </a>
                 </li>
@@ -57,6 +57,13 @@
                         </h4>
                     </a>
                 </li>
+                <li class="disabled">
+                    <a href='@Url.Action("Declaration", "home", new { id = Model.Patient_ID})'>
+                        <h4 class="list-group-item-heading">
+                            Declaration
+                        </h4>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -65,18 +72,31 @@
             @using (Html.BeginForm("OtherReferrals", "Home", FormMethod.Post, new { @id = Model.Patient_ID }))
             {
                 @*AntiForgeryConfig.SuppressXFrameOptionsHeader = true;
-                @Html.AntiForgeryToken()
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
 
-                    <div class="col-md-12 well">
-                        <div class="form-section">
-                            <div class="lable_title">
-                                <h2>OTHER REFERRALS</h2>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="row_bar checkbox-row">
-                                        @if (Model.PatientSafetySIRI == true)
+                <div class="col-md-12 well">
+                    <div class="form-section">
+                        <div class="lable_title">
+                            <h2>OTHER REFERRALS</h2>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row_bar checkbox-row">
+                                    @if (Model.MedTriage == 3)
+                                    {
+                                        if (Model.PatientSafetySIRI == true)
+                                        {
+                                        <input type="checkbox" disabled="disabled" id="PatientSafetySIRI" checked name="PatientSafetySIRI"><span> Referred to Patient Safety for SIRI Scoping  </span>
+                                        }
+                                        else
+                                        {
+                                        <input type="checkbox" disabled="disabled" id="PatientSafetySIRI" name="PatientSafetySIRI"><span> Referred to Patient Safety for SIRI Scoping </span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (Model.PatientSafetySIRI == true)
                                         {
                                             <input type="checkbox" id="PatientSafetySIRI" checked name="PatientSafetySIRI"><span> Referred to Patient Safety for SIRI Scoping  </span>
                                         }
@@ -84,37 +104,88 @@
                                         {
                                             <input type="checkbox" id="PatientSafetySIRI" name="PatientSafetySIRI"><span> Referred to Patient Safety for SIRI Scoping </span>
                                         }
-                                    </div>
-                                </div>
-                                @if (Model.PatientSafetySIRI == true)
-                                {
-                                    <div id="PatientSafetySIRIReasonlabel" style="display:block" class="col-md-1">
-                                        <div class="row_bar checkbox-row">                                      
-                                            Reason: 
-                                        </div>
-                                    </div>
-                                    <div id="PatientSafetySIRIReason" style="display:block" class="col-md-5">
-                                        <div class="row_bar checkbox-row">                                      
-                                            @Html.EditorFor(model => model.PatientSafetySIRIReason, new { htmlAttributes = new { @class = "form-control" } })
-                                        </div>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div id="PatientSafetySIRIReasonlabel" style="display:none" class="col-md-1">
-                                        <div class="row_bar checkbox-row">
+                                    }
+                                    @if (Model.MedTriage == 3)
+                                    {
+                                        if (Model.PatientSafetySIRI == true)
+                                        {
+                                        <div id="PatientSafetySIRIReasonlabel" style="display:block" class="col-md-5">
+
                                             Reason:
+
                                         </div>
-                                    </div>
-                                    <div id="PatientSafetySIRIReason" style="display:none" class="col-md-5">
-                                        <div class="row_bar checkbox-row">
-                                            @Html.EditorFor(model => model.PatientSafetySIRIReason, new { htmlAttributes = new { @class = "form-control" } })
+                                            <div id="PatientSafetySIRIReason" style="display:block" class="col-md-6">
+
+                                                @Html.TextAreaFor(model => model.PatientSafetySIRIReason, 4, 55, new { @class = "form-control", @readonly=true, style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
+                                                @*@Html.EditorFor(model => model.PatientSafetySIRIReason, new { htmlAttributes = new { @class = "form-control" } })*@
+
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                        <div id="PatientSafetySIRIReasonlabel" style="display:none" class="col-md-5">
+
+                                            Reason:
+
                                         </div>
-                                    </div>
-                                }
-                                <div class="col-md-12">
-                                    <div class="row_bar checkbox-row">
-                                        @if (Model.ChildDeathCoordinator == true)
+                                            <div id="PatientSafetySIRIReason" style="display:none" class="col-md-6">
+
+                                                @Html.TextAreaFor(model => model.PatientSafetySIRIReason, 4, 55, new { @class = "form-control", @readonly = true, style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
+                                                @*@Html.EditorFor(model => model.PatientSafetySIRIReason, new { htmlAttributes = new { @class = "form-control" } })*@
+
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (Model.PatientSafetySIRI == true)
+                                        {
+                                            <div id="PatientSafetySIRIReasonlabel" style="display:block" class="col-md-5">
+
+                                                Reason:
+
+                                            </div>
+                                            <div id="PatientSafetySIRIReason" style="display:block" class="col-md-6">
+
+                                                @Html.TextAreaFor(model => model.PatientSafetySIRIReason, 4, 55, new { @class = "form-control", style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
+                                                @*@Html.EditorFor(model => model.PatientSafetySIRIReason, new { htmlAttributes = new { @class = "form-control" } })*@
+
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div id="PatientSafetySIRIReasonlabel" style="display:none" class="col-md-5">
+
+                                                Reason:
+
+                                            </div>
+                                            <div id="PatientSafetySIRIReason" style="display:none" class="col-md-6">
+
+                                                @Html.TextAreaFor(model => model.PatientSafetySIRIReason, 4, 55, new { @class = "form-control", style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
+                                                @*@Html.EditorFor(model => model.PatientSafetySIRIReason, new { htmlAttributes = new { @class = "form-control" } })*@
+
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="row_bar checkbox-row">
+                                    @if (Model.MedTriage == 3)
+                                    {
+                                        if (Model.ChildDeathCoordinator == true)
+                                        {
+                                        <input type="checkbox" disabled="disabled" id="ChildDeathCoordinator" checked name="ChildDeathCoordinator"><span> Referred to Child Death Co-ordinator   </span>
+                                        }
+                                        else
+                                        {
+                                        <input type="checkbox" disabled="disabled" id="ChildDeathCoordinator" name="ChildDeathCoordinator"><span> Referred to Child Death Co-ordinator </span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (Model.ChildDeathCoordinator == true)
                                         {
                                             <input type="checkbox" id="ChildDeathCoordinator" checked name="ChildDeathCoordinator"><span> Referred to Child Death Co-ordinator   </span>
                                         }
@@ -122,23 +193,51 @@
                                         {
                                             <input type="checkbox" id="ChildDeathCoordinator" name="ChildDeathCoordinator"><span> Referred to Child Death Co-ordinator </span>
                                         }
-                                    </div>
+                                    }
                                 </div>
-                                <div class="col-md-12">
-                                    <div class="row_bar checkbox-row">
-                                        @if (Model.LearningDisabilityNurse == true)
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row_bar checkbox-row">
+                                    @if (Model.MedTriage == 3)
+                                    {
+                                        if (Model.LearningDisabilityNurse == true)
                                         {
-                                            <input type="checkbox" id="LearningDisabilityNurse" checked name="LearningDisabilityNurse"><span> 	Referred to Learning Disability Nurse for LEDER reporting  </span>
+                                        <input type="checkbox" disabled="disabled" id="LearningDisabilityNurse" checked name="LearningDisabilityNurse"><span> 	Referred to Learning Disability Nurse for LEDER reporting  </span>
                                         }
                                         else
                                         {
-                                            <input type="checkbox" id="LearningDisabilityNurse" name="LearningDisabilityNurse"><span> Referred to Learning Disability Nurse for LEDER reporting  </span>
+                                        <input type="checkbox" disabled="disabled" id="LearningDisabilityNurse" name="LearningDisabilityNurse"><span> Referred to Learning Disability Nurse for LEDER reporting  </span>
                                         }
-                                    </div>
+                                    }
+                                    else
+                                    {
+                                        if(Model.LearningDisabilityNurse == true)
+                                        {
+                                            <input type = "checkbox" id = "LearningDisabilityNurse" checked name = "LearningDisabilityNurse" ><span> Referred to Learning Disability Nurse for LEDER reporting  </span >
+                                         }
+                                        else
+                                        {
+                                            <input type = "checkbox" id = "LearningDisabilityNurse" name = "LearningDisabilityNurse" ><span> Referred to Learning Disability Nurse for LEDER reporting  </span >
+                                        }
+                                    }
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="row_bar checkbox-row">                                      
-                                        @if (Model.HeadOfCompliance == true)
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row_bar checkbox-row">
+                                    @if (Model.MedTriage == 3)
+                                    {
+                                        if (Model.HeadOfCompliance == true)
+                                        {
+                                        <input type="checkbox" disabled="disabled" id="HeadOfCompliance" checked name="HeadOfCompliance"><span> Referred to Head of Compliance for CQC reporting  </span>
+                                        }
+                                        else
+                                        {
+                                        <input type="checkbox" disabled="disabled" id="HeadOfCompliance" name="HeadOfCompliance"><span> Referred to Head of Compliance for CQC reporting  </span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (Model.HeadOfCompliance == true)
                                         {
                                             <input type="checkbox" id="HeadOfCompliance" checked name="HeadOfCompliance"><span> Referred to Head of Compliance for CQC reporting  </span>
                                         }
@@ -146,42 +245,98 @@
                                         {
                                             <input type="checkbox" id="HeadOfCompliance" name="HeadOfCompliance"><span> Referred to Head of Compliance for CQC reporting  </span>
                                         }
-                                    </div>
-                                </div>
-                                @if (Model.HeadOfCompliance == true)
-                                {
-                                <div id="HeadOfComplianceReasonLabel" style="display:block" class="col-md-1">
-                                    <div class="row_bar checkbox-row">                                      
-                                        Reason:
-                                    </div>
-                                </div>
-                                <div id="HeadOfComplianceReason" style="display:block" class="col-md-5">
-                                    <div class="row_bar checkbox-row">                                       
-                                        @Html.EditorFor(model => model.HeadOfComplianceReason, new { htmlAttributes = new { @class = "form-control" } })
-                                    </div>
-                                </div>
-                                }
-                                else
-                                {
-                                    <div id="HOCBlank" class="col-md-6">
-                                        <div class="row_bar checkbox-row">
-                                            <span></span>
-                                        </div>
-                                    </div>
-                                    <div id="HeadOfComplianceReasonLabel" style="display:none" class="col-md-1">
-                                        <div class="row_bar checkbox-row">
+                                    }
+                                    @if (Model.MedTriage == 3)
+                                    {
+                                        if (Model.HeadOfCompliance == true)
+                                        {
+                                        <div id="HeadOfComplianceReasonLabel" style="display:block" class="col-md-5">
+
                                             Reason:
+
                                         </div>
-                                    </div>
-                                    <div id="HeadOfComplianceReason" style="display:none" class="col-md-5">
-                                        <div class="row_bar checkbox-row">
-                                            @Html.EditorFor(model => model.HeadOfComplianceReason, new { htmlAttributes = new { @class = "form-control" } })
+                                            <div id="HeadOfComplianceReason" style="display:block" class="col-md-6">
+
+                                                @*@Html.EditorFor(model => model.HeadOfComplianceReason, new { htmlAttributes = new { @class = "form-control" } })*@
+                                                @Html.TextAreaFor(model => model.HeadOfComplianceReason, 4, 55, new { @class = "form-control", @readonly=true, style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
+                                            </div>
+
+                                        }
+                                        else
+                                        {
+                                        <div id="HOCBlank" class="col-md-6">
+
+                                            <span></span>
+
                                         </div>
-                                    </div>
-                                }
-                                <div class="col-md-6">
-                                    <div class="row_bar checkbox-row">
-                                        @if (Model.PALsComplaints == true)
+                                            <div id="HeadOfComplianceReasonLabel" style="display:none" class="col-md-5">
+
+                                                Reason:
+
+                                            </div>
+                                            <div id="HeadOfComplianceReason" style="display:none" class="col-md-6">
+
+                                                @*@Html.EditorFor(model => model.HeadOfComplianceReason, new { htmlAttributes = new { @class = "form-control" } })*@
+                                                @Html.TextAreaFor(model => model.HeadOfComplianceReason, 4, 55, new { @class = "form-control", @readonly=true, style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
+
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (Model.HeadOfCompliance == true)
+                                        {
+                                            <div id="HeadOfComplianceReasonLabel" style="display:block" class="col-md-5">
+
+                                                Reason:
+
+                                            </div>
+                                            <div id="HeadOfComplianceReason" style="display:block" class="col-md-6">
+
+                                                @*@Html.EditorFor(model => model.HeadOfComplianceReason, new { htmlAttributes = new { @class = "form-control" } })*@
+                                                @Html.TextAreaFor(model => model.HeadOfComplianceReason, 4, 55, new { @class = "form-control", style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
+                                            </div>
+
+                                        }
+                                        else
+                                        {
+                                            <div id="HOCBlank" class="col-md-6">
+
+                                                <span></span>
+
+                                            </div>
+                                            <div id="HeadOfComplianceReasonLabel" style="display:none" class="col-md-5">
+
+                                                Reason:
+
+                                            </div>
+                                            <div id="HeadOfComplianceReason" style="display:none" class="col-md-6">
+
+                                                @*@Html.EditorFor(model => model.HeadOfComplianceReason, new { htmlAttributes = new { @class = "form-control" } })*@
+                                                @Html.TextAreaFor(model => model.HeadOfComplianceReason, 4, 55, new { @class = "form-control", style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
+
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="row_bar checkbox-row">
+                                    @if (Model.MedTriage == 3)
+                                    {
+                                        if (Model.PALsComplaints == true)
+                                        {
+                                        <input type="checkbox" disabled="disabled" id="PALsComplaints" checked name="PALsComplaints"><span> Referred to PALs/ Complaints  </span>
+                                        }
+                                        else
+                                        {
+                                        <input type="checkbox" disabled="disabled" id="PALsComplaints" name="PALsComplaints"><span> Referred to PALs/ Complaints  </span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (Model.PALsComplaints == true)
                                         {
                                             <input type="checkbox" id="PALsComplaints" checked name="PALsComplaints"><span> Referred to PALs/ Complaints  </span>
                                         }
@@ -189,42 +344,100 @@
                                         {
                                             <input type="checkbox" id="PALsComplaints" name="PALsComplaints"><span> Referred to PALs/ Complaints  </span>
                                         }
-                                    </div>
-                                </div>
-                                @if (Model.PALsComplaints == true)
-                                {
-                                <div id="PALsComplaintsReasonLabel" style="display:block" class="col-md-1">
-                                    <div class="row_bar checkbox-row">                                        
-                                       Reason:
-                                    </div>
-                                </div>
-                                <div id="PALsComplaintsReason" style="display:block" class="col-md-5">
-                                    <div class="row_bar checkbox-row">
-                                        @Html.EditorFor(model => model.PALsComplaintsReason, new { htmlAttributes = new { @class = "form-control" } })
-                                    </div>
-                                </div>
-                                }
-                                else
-                                {
-                                    <div id="PALBlank" class="col-md-6">
-                                        <div class="row_bar checkbox-row">
-                                            <span></span>
-                                        </div>
-                                    </div>
-                                    <div id="PALsComplaintsReasonLabel" style="display:none" class="col-md-1">
-                                        <div class="row_bar checkbox-row">
+                                    }
+                                    @if (Model.MedTriage == 3)
+                                    {
+                                        if (Model.PALsComplaints == true)
+                                        {
+                                        <div id="PALsComplaintsReasonLabel" style="display:block" class="col-md-5">
+
                                             Reason:
+
                                         </div>
-                                    </div>
-                                    <div id="PALsComplaintsReason" style="display:none" class="col-md-5">
-                                        <div class="row_bar checkbox-row">
-                                            @Html.EditorFor(model => model.PALsComplaintsReason, new { htmlAttributes = new { @class = "form-control" } })
+                                            <div id="PALsComplaintsReason" style="display:block" class="col-md-6">
+
+                                                @*@Html.EditorFor(model => model.PALsComplaintsReason, new { htmlAttributes = new { @class = "form-control" } })*@
+                                                @Html.TextAreaFor(model => model.PALsComplaintsReason, 4, 55, new { @class = "form-control", @readonly=true, style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
+
+
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                        <div id="PALBlank" class="col-md-6">
+
+                                            <span></span>
+
                                         </div>
-                                    </div>
-                                }
-                                <div class="col-md-6">
-                                    <div class="row_bar checkbox-row">
-                                        @if (Model.WardTeam == true)
+                                            <div id="PALsComplaintsReasonLabel" style="display:none" class="col-md-5">
+
+                                                Reason:
+
+                                            </div>
+                                            <div id="PALsComplaintsReason" style="display:none" class="col-md-6">
+
+                                                @*@Html.EditorFor(model => model.PALsComplaintsReason, new { htmlAttributes = new { @class = "form-control" } })*@
+                                                @Html.TextAreaFor(model => model.PALsComplaintsReason, 4, 55, new { @class = "form-control", @readonly=true, style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
+
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (Model.PALsComplaints == true)
+                                        {
+                                            <div id="PALsComplaintsReasonLabel" style="display:block" class="col-md-5">
+
+                                                Reason:
+
+                                            </div>
+                                            <div id="PALsComplaintsReason" style="display:block" class="col-md-6">
+
+                                                @*@Html.EditorFor(model => model.PALsComplaintsReason, new { htmlAttributes = new { @class = "form-control" } })*@
+                                                @Html.TextAreaFor(model => model.PALsComplaintsReason, 4, 55, new { @class = "form-control", style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
+
+
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div id="PALBlank" class="col-md-6">
+
+                                                <span></span>
+
+                                            </div>
+                                            <div id="PALsComplaintsReasonLabel" style="display:none" class="col-md-5">
+
+                                                Reason:
+
+                                            </div>
+                                            <div id="PALsComplaintsReason" style="display:none" class="col-md-6">
+
+                                                @*@Html.EditorFor(model => model.PALsComplaintsReason, new { htmlAttributes = new { @class = "form-control" } })*@
+                                                @Html.TextAreaFor(model => model.PALsComplaintsReason, 4, 55, new { @class = "form-control", style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
+
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="row_bar checkbox-row">
+                                    @if (Model.MedTriage == 3)
+                                    {
+                                        if (Model.WardTeam == true)
+                                        {
+                                        <input type="checkbox" disabled="disabled" id="WardTeam" checked name="WardTeam"><span> Referred to Ward team  </span>
+                                        }
+                                        else
+                                        {
+                                        <input type="checkbox" disabled="disabled" id="WardTeam" name="WardTeam"><span> Referred to Ward team  </span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (Model.WardTeam == true)
                                         {
                                             <input type="checkbox" id="WardTeam" checked name="WardTeam"><span> Referred to Ward team  </span>
                                         }
@@ -232,42 +445,104 @@
                                         {
                                             <input type="checkbox" id="WardTeam" name="WardTeam"><span> Referred to Ward team  </span>
                                         }
-                                    </div>
-                                </div> 
-                                @if (Model.WardTeam == true)
-                                {
-                                <div id="WardTeamReasonLabel" style="display:block" class="col-md-1">
-                                    <div class="row_bar checkbox-row">                                       
-                                        Reason:
-                                    </div>
-                                </div>
-                                <div id="WardTeamReason" style="display:block" class="col-md-5">
-                                    <div class="row_bar checkbox-row">                                       
-                                        @Html.EditorFor(model => model.WardTeamReason, new { htmlAttributes = new { @class = "form-control" } })
-                                    </div>
-                                </div>
-                                }
-                                else
-                                {
-                                    <div id="WardBlank" class="col-md-6">
-                                        <div class="row_bar checkbox-row">
-                                            <span></span>
-                                        </div>
-                                    </div>
-                                    <div id="WardTeamReasonLabel" style="display:none" class="col-md-1">
-                                        <div class="row_bar checkbox-row">
+                                    }
+                                    @if (Model.MedTriage == 3)
+                                    {
+                                        if (Model.WardTeam == true)
+                                        {
+                                        <div id="WardTeamReasonLabel" style="display:block" class="col-md-5">
+
                                             Reason:
+
                                         </div>
-                                    </div>
-                                    <div id="WardTeamReason" style="display:none" class="col-md-5">
-                                        <div class="row_bar checkbox-row">
-                                            @Html.EditorFor(model => model.WardTeamReason, new { htmlAttributes = new { @class = "form-control" } })
+                                            <div id="WardTeamReason" style="display:block" class="col-md-6">
+
+                                                @*@Html.EditorFor(model => model.WardTeamReason, new { htmlAttributes = new { @class = "form-control" } })*@
+                                                @Html.TextAreaFor(model => model.WardTeamReason, 4, 55, new { @class = "form-control", @readonly=true, style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
+
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                        <div id="WardBlank" class="col-md-6">
+
+                                            <span></span>
+
                                         </div>
-                                    </div>
-                                }
-                                <div class="col-md-6">
-                                    <div class="row_bar checkbox-row">
-                                        @if (Model.SafeGuardTeamNotified == true)
+                                            <div id="WardTeamReasonLabel" style="display:none" class="col-md-5">
+
+
+                                                Reason:
+
+
+                                            </div>
+                                            <div id="WardTeamReason" style="display:none" class="col-md-6">
+
+                                                @*@Html.EditorFor(model => model.WardTeamReason, new { htmlAttributes = new { @class = "form-control" } })*@
+                                                @Html.TextAreaFor(model => model.WardTeamReason, 4, 55, new { @class = "form-control", @readonly = true, style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
+
+
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (Model.WardTeam == true)
+                                        {
+                                            <div id="WardTeamReasonLabel" style="display:block" class="col-md-5">
+
+                                                Reason:
+
+                                            </div>
+                                            <div id="WardTeamReason" style="display:block" class="col-md-6">
+
+                                                @*@Html.EditorFor(model => model.WardTeamReason, new { htmlAttributes = new { @class = "form-control" } })*@
+                                                @Html.TextAreaFor(model => model.WardTeamReason, 4, 55, new { @class = "form-control", style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
+
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div id="WardBlank" class="col-md-6">
+
+                                                <span></span>
+
+                                            </div>
+                                            <div id="WardTeamReasonLabel" style="display:none" class="col-md-5">
+
+
+                                                Reason:
+
+
+                                            </div>
+                                            <div id="WardTeamReason" style="display:none" class="col-md-6">
+
+                                                @*@Html.EditorFor(model => model.WardTeamReason, new { htmlAttributes = new { @class = "form-control" } })*@
+                                                @Html.TextAreaFor(model => model.WardTeamReason, 4, 55, new { @class = "form-control", style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
+
+
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="row_bar checkbox-row">
+                                    @if (Model.MedTriage == 3)
+                                    {
+                                        if (Model.SafeGuardTeamNotified == true)
+                                        {
+                                        <input type="checkbox" disabled="disabled" id="SafeGuard" checked name="SafeGuard"><span> SafeGuarding Team Notified  </span>
+                                        }
+                                        else
+                                        {
+                                        <input type="checkbox" disabled="disabled" id="SafeGuard" name="SafeGuard"><span> SafeGuarding Team Notified  </span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (Model.SafeGuardTeamNotified == true)
                                         {
                                             <input type="checkbox" id="SafeGuard" checked name="SafeGuard"><span> SafeGuarding Team Notified  </span>
                                         }
@@ -275,16 +550,30 @@
                                         {
                                             <input type="checkbox" id="SafeGuard" name="SafeGuard"><span> SafeGuarding Team Notified  </span>
                                         }
-                                    </div>
+                                    }
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="row_bar checkbox-row">
-                                        <span></span>
-                                    </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row_bar checkbox-row">
+                                    <span></span>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="row_bar checkbox-row">
-                                        @if (Model.Other == true)
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row_bar checkbox-row">
+                                    @if (Model.MedTriage == 3)
+                                    {
+                                        if (Model.Other == true)
+                                        {
+                                        <input type="checkbox" disabled="disabled" id="Other" checked name="Other"><span> Other  </span>
+                                        }
+                                        else
+                                        {
+                                        <input type="checkbox" disabled="disabled" id="Other" name="Other"><span> Other  </span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (Model.Other == true)
                                         {
                                             <input type="checkbox" id="Other" checked name="Other"><span> Other  </span>
                                         }
@@ -292,54 +581,108 @@
                                         {
                                             <input type="checkbox" id="Other" name="Other"><span> Other  </span>
                                         }
-                                    </div>
-                                </div>
-                                @if (Model.Other == true)
-                                {
-                                    <div id="OtherReasonLabel" style="display:block" class="col-md-1">
-                                        <div class="row_bar checkbox-row">
-                                           Reason:
-                                        </div>
-                                    </div>
-                                    <div id="OtherReason" style="display:block" class="col-md-5">
-                                        <div class="row_bar checkbox-row">                                      
-                                            @Html.EditorFor(model => model.OtherReason, new { htmlAttributes = new { @class = "form-control" } })
-                                        </div>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div id="OtherBlank" class="col-md-6">
-                                        <div class="row_bar checkbox-row">
-                                            <span></span>
-                                        </div>
-                                    </div>
-                                    <div id="OtherReasonLabel" style="display:none" class="col-md-1">
-                                        <div class="row_bar checkbox-row">
+                                    }
+                                    @if (Model.MedTriage == 3)
+                                    {
+                                        if (Model.Other == true)
+                                        {
+                                        <div id="OtherReasonLabel" style="display:block" class="col-md-5">
+
                                             Reason:
+
                                         </div>
-                                    </div>
-                                    <div id="OtherReason" style="display:none" class="col-md-5">
-                                        <div class="row_bar checkbox-row">
-                                            @Html.EditorFor(model => model.OtherReason, new { htmlAttributes = new { @class = "form-control" } })
+                                            <div id="OtherReason" style="display:block" class="col-md-6">
+
+                                                @*@Html.EditorFor(model => model.OtherReason, new { htmlAttributes = new { @class = "form-control", @rows = 10, @cols = 100 } })*@
+                                                @Html.TextAreaFor(model => model.OtherReason, 4, 55, new { @class = "form-control", @readonly=true, style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
+
+
+
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                        <div id="OtherBlank" class="col-md-6">
+
+                                            <span></span>
+
                                         </div>
-                                    </div>
-                                }
+                                            <div id="OtherReasonLabel" style="display:none" class="col-md-5">
+
+                                                Reason:
+                                            </div>
+
+                                                <div id="OtherReason" style="display:none" class="col-md-6">
+
+                                                    @Html.TextAreaFor(model => model.OtherReason, 4, 55, new { htmlAttributes = new { @class = "form-control", @readonly=true } })
+
+                                                </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (Model.Other == true)
+                                        {
+                                            <div id="OtherReasonLabel" style="display:block" class="col-md-5">
+
+                                                Reason:
+
+                                            </div>
+                                            <div id="OtherReason" style="display:block" class="col-md-6">
+
+                                                @*@Html.EditorFor(model => model.OtherReason, new { htmlAttributes = new { @class = "form-control", @rows = 10, @cols = 100 } })*@
+                                                @Html.TextAreaFor(model => model.OtherReason, 4, 55, new { @class = "form-control", style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
+
+
+
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div id="OtherBlank" class="col-md-6">
+
+                                                <span></span>
+
+                                            </div>
+                                            <div id="OtherReasonLabel" style="display:none" class="col-md-5">
+
+                                                Reason:
+                                            </div>
+
+                                            <div id="OtherReason" style="display:none" class="col-md-6">
+
+                                                @Html.TextAreaFor(model => model.OtherReason, 4, 55, new { htmlAttributes = new { @class = "form-control" } })
+
+                                            </div>
+                                        }
+                                    }
+                                </div>
                             </div>
+
+                            @*//changes*@
+                            @*<div class="col-md-6">
+
+                                </div>*@
+                            @*changes*@
+
+
+
+
                         </div>
                     </div>
+                </div>
                     <div class="pull-right">
                         <button id="activate-prev-1" name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
                         <button id="activate-step-2" name="BtnNext" class="btn btn-primary btn-lg">Save & Next</button>
                     </div>
             }
-            </div>
+        </div>
     </div>
     <br />
     <br />
     @*<div class="pull-right">
-        <button class="btn btn-primary btn-lg" id="btnClose5">Close</button>
-    </div>*@
+            <button class="btn btn-primary btn-lg" id="btnClose5">Close</button>
+        </div>*@
 </div>
 <div class="modal fade" id="modelClose5">
     <div class="modal-dialog modal-md">
@@ -368,7 +711,7 @@
                         <div class="col-md-4">
                             <button type="submit" class="btn btn-primary btn-block" name="btnCloseYes" id="btnCloseYes">No</button>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -400,7 +743,7 @@ window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.
 <script>
         $(document).ready(function () {
             $("#PatientSafetySIRI").click(function () {
-                if ($(this).is(":checked")) {                    
+                if ($(this).is(":checked")) {
                     $("#PatientSafetySIRIReasonlabel").css("display", "block");
                     $("#PatientSafetySIRIReason").css("display", "block");
                 }

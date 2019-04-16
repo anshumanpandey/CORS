@@ -765,8 +765,6 @@
     <Content Include="assets\plugins\sky-forms\version-2.0.1\icons\fontawesome-webfont.ttf" />
     <Content Include="assets\plugins\sky-forms\version-2.0.1\icons\fontawesome-webfont.woff" />
     <Content Include="assets\plugins\sky-forms\version-2.0.1\icons\FontAwesome.otf" />
-    <None Include="Properties\PublishProfiles\beautyathomesadmin - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\beautyathomesadmin - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mortalitydemo - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\mortalitydemo - Web Deploy.pubxml" />
@@ -775,6 +773,7 @@
     <None Include="Properties\PublishProfiles\nhsforms - FTP %2812%29.pubxml" />
     <None Include="Properties\PublishProfiles\nhsforms - FTP %2813%29.pubxml" />
     <None Include="Properties\PublishProfiles\nhsforms - FTP %2814%29.pubxml" />
+    <None Include="Properties\PublishProfiles\nhsforms - FTP %2815%29.pubxml" />
     <None Include="Properties\PublishProfiles\nhsforms - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\nhsforms - FTP %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\nhsforms - FTP %284%29.pubxml" />
@@ -792,7 +791,6 @@
     <None Include="Properties\PublishProfiles\nhsforms - FTP14.pubxml" />
     <None Include="Properties\PublishProfiles\nhsforms - FTP15.pubxml" />
     <None Include="Properties\PublishProfiles\nhsforms - FTP16.pubxml" />
-    <None Include="Properties\PublishProfiles\nhsforms - FTP17.pubxml" />
     <None Include="Properties\PublishProfiles\nhsforms - FTP2.pubxml" />
     <None Include="Properties\PublishProfiles\nhsforms - FTP3.pubxml" />
     <None Include="Properties\PublishProfiles\nhsforms - FTP4.pubxml" />
@@ -805,6 +803,7 @@
     <None Include="Properties\PublishProfiles\nhsforms - Web Deploy %2811%29.pubxml" />
     <None Include="Properties\PublishProfiles\nhsforms - Web Deploy %2812%29.pubxml" />
     <None Include="Properties\PublishProfiles\nhsforms - Web Deploy %2813%29.pubxml" />
+    <None Include="Properties\PublishProfiles\nhsforms - Web Deploy %2814%29.pubxml" />
     <None Include="Properties\PublishProfiles\nhsforms - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\nhsforms - Web Deploy %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\nhsforms - Web Deploy %284%29.pubxml" />
@@ -815,7 +814,6 @@
     <None Include="Properties\PublishProfiles\nhsforms - Web Deploy %289%29.pubxml" />
     <None Include="Properties\PublishProfiles\nhsforms - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\nhsforms - Web Deploy1.pubxml" />
-    <None Include="Properties\PublishProfiles\nhsforms - Web Deploy2.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -828,8 +826,10 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\js\bootstrap.min.js" />
     <Content Include="Scripts\js\custom.js" />
+    <Content Include="Scripts\js\dataTables.responsive.min.js" />
     <Content Include="Scripts\js\jquery-1.12.4.min.js" />
     <Content Include="Scripts\js\jquery-ui.min.js" />
+    <Content Include="Scripts\js\jquery.dataTables.min.js" />
     <Content Include="Scripts\js\modernizr-2.8.3.min.js" />
     <Content Include="Scripts\js\respond-1.4.2.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
@@ -871,7 +871,7 @@
     <Content Include="Views\Home\CodingReview.cshtml" />
     <Content Include="Views\Home\NotAuthorizedPatientDetails.cshtml" />
     <Content Include="Views\Home\QAPReviewFirstStep.cshtml" />
-    <Content Include="Views\Home\MeDeclaration.cshtml" />
+    <Content Include="Views\Home\Declaration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
