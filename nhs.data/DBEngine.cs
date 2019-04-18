@@ -1039,25 +1039,92 @@ namespace NHS.Data
         {
             var connection = GetConnection();
             SqlDataReader dataReader = null;
+            List<clsFeedBackModel> lstFBM = new List<clsFeedBackModel>();
             clsFeedBackModel feedback = new clsFeedBackModel();
+            FeedBackComments fbcomments = new FeedBackComments();
+
             try
             {
-                SqlCommand dbCommand = new SqlCommand("usp_GetFeedback", connection);
+                SqlCommand dbCommand = new SqlCommand("usp_GetFeedbackData", connection);
                 dbCommand.CommandType = CommandType.StoredProcedure;
                 dbCommand.Parameters.AddWithValue("@PatientID", id);
                 dataReader = dbCommand.ExecuteReader();
 
                 while (dataReader.Read())
-                {                    
+                {
+                    
                     feedback.Patient_ID = Convert.ToInt32(dataReader["Patient_ID"]);
                     feedback.FormCompleted = Convert.ToBoolean(dataReader["FormCompleted"]);
                     feedback.ComplementsFedBack = Convert.ToBoolean(dataReader["ComplementsFedBack"]);
-                    feedback.Comments = Convert.ToString(dataReader["Comments"]);
+                    //feedback.Comments = Convert.ToString(dataReader["Comments"]);
+                    //feedback.FBTypeID = Convert.ToInt32(dataReader["FBTypeID"]);
                     if (!string.IsNullOrEmpty(dataReader["MedTriage"].ToString()))
                         feedback.MedTriage = Convert.ToInt32(dataReader["MedTriage"]);
                     else
                         feedback.MedTriage = 2;
+                     
                 }
+                if (dataReader.NextResult())
+                {
+                    while (dataReader.Read())
+                    {
+                        
+                        if (string.IsNullOrEmpty(dataReader["FeedBackCommentID"].ToString()))
+                            fbcomments.FeedBackCommentID = 0;
+                        else
+                            fbcomments.FeedBackCommentID = Convert.ToInt32(dataReader["FeedBackCommentID"]);
+
+                        if (string.IsNullOrEmpty(dataReader["Patient_ID"].ToString()))
+                            fbcomments.Patient_ID = 0;
+                        else
+                            fbcomments.Patient_ID = Convert.ToInt32(dataReader["Patient_ID"]);
+
+                        if (string.IsNullOrEmpty(dataReader["Comments"].ToString()))
+                            fbcomments.Comments = "";
+                        else
+                            fbcomments.Comments = Convert.ToString(dataReader["Comments"]);
+
+                         
+                            fbcomments.CreatedDate = Convert.ToDateTime(dataReader["CreatedDate"]);
+
+                        if (string.IsNullOrEmpty(dataReader["FBTypeID"].ToString()))
+                            fbcomments.FBTypeID = 0;
+                        else
+                            fbcomments.FBTypeID = Convert.ToInt32(dataReader["FBTypeID"]);
+
+                        if (string.IsNullOrEmpty(dataReader["name"].ToString()))
+                            fbcomments.Name = "";
+                        else
+                            fbcomments.Name = Convert.ToString(dataReader["name"]);
+
+                        if (string.IsNullOrEmpty(dataReader["role"].ToString()))
+                            fbcomments.Role = "";
+                        else
+                            fbcomments.Role = Convert.ToString(dataReader["role"]);
+
+                        feedback.lstFBComments.Add(fbcomments);
+                    }
+                }
+                //if (dataReader.NextResult())
+                //{
+                //    while (dataReader.Read())
+                //    {
+                //        fbcomments = new FeedBackComments();
+                //        if (string.IsNullOrEmpty(dataReader["FeedBackCommentID"].ToString()))
+                //            fbcomments.FeedBackCommentID = 0;
+                //        else
+                //            fbcomments.FeedBackCommentID = Convert.ToInt32(dataReader["FeedBackCommentID"]);
+
+                //        if (string.IsNullOrEmpty(dataReader["Patient_ID"].ToString()))
+                //            fbcomments.Patient_ID = 0;
+                //        else
+                //            fbcomments.Patient_ID = Convert.ToInt32(dataReader["Patient_ID"]);
+
+                       
+
+                //        feedback.lstFBComments.Add(fbcomments);
+                //    }
+                //}
             }
             catch (Exception ex)
             {
@@ -1068,10 +1135,11 @@ namespace NHS.Data
                 if (!dataReader.IsClosed)
                     dataReader.Close();
             }
-            if (feedback.Patient_ID == 0) feedback.Patient_ID = Convert.ToInt32(id);
-            return feedback;
+            DateTime dt = System.DateTime.Now.Date;
+            //if (feedback.Patient_ID == 0) feedback.Patient_ID = Convert.ToInt32(id);
+           return feedback;
         }
-
+       
 
         public int GetRatingIDByName(string name)
         {
@@ -1852,6 +1920,40 @@ namespace NHS.Data
             return procedures;
         }
 
+        public List<FeedbackType> GetFeedbackType()
+        {
+            var connection = GetConnection();
+            List<FeedbackType> lstFeedbackType = new List<FeedbackType>();
+            SqlDataReader dataReader = null;
+
+            try
+            {
+                SqlCommand dbCommand = new SqlCommand("usp_GetFeedbackType", connection);
+                dbCommand.CommandType = CommandType.StoredProcedure;
+
+                dataReader = dbCommand.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    FeedbackType feedbackType = new FeedbackType();
+                    feedbackType.FeedbackTypeID = Convert.ToInt32(dataReader["FeedbackTypeID"]);
+                    feedbackType.FBType = Convert.ToString(dataReader["FBType"]);
+
+                    lstFeedbackType.Add(feedbackType);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
+            }
+            finally
+            {
+                if (!dataReader.IsClosed)
+                    dataReader.Close();
+            }
+            return lstFeedbackType;
+        }
+
         public List<CommentType> GetCommentType()
         {
             var connection = GetConnection();
@@ -2429,11 +2531,11 @@ namespace NHS.Data
             return retVal;
         }
 
-        public int UpdatePositiveFeedback(bool isFormCompleted, bool isComplementsFedBack, string Comments, int? id)
+        public int UpdatePositiveFeedback(bool isFormCompleted, bool isComplementsFedBack, string Comments, int FBTypeID, int? id,int Userid)
         {
             var connection = GetConnection();
             int retVal = 0;
-            SqlCommand dbCommand = new SqlCommand("usp_UpdatePositiveFeedback", connection);
+            SqlCommand dbCommand = new SqlCommand("usp_UpdatePositiveFeedbackData", connection);
             try
             {
                 dbCommand.CommandType = CommandType.StoredProcedure;
@@ -2441,6 +2543,9 @@ namespace NHS.Data
                 dbCommand.Parameters.AddWithValue("@ComplementsFedBack", isComplementsFedBack);
                 dbCommand.Parameters.AddWithValue("@Comments", Comments);
                 dbCommand.Parameters.AddWithValue("@ID", id);
+                dbCommand.Parameters.AddWithValue("@FBTypeID", FBTypeID);
+                dbCommand.Parameters.AddWithValue("@UserId", Userid);
+                
                 retVal = dbCommand.ExecuteNonQuery();
             }
             catch (Exception ex)

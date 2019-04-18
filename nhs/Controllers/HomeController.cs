@@ -949,7 +949,7 @@ namespace NHS.Controllers
                                 {
                                     if (a.CommentTypeID == b.CommonTypeID)
                                     {
-                                        a.CommentType = b.Type;
+                                        a.FBType = b.FBType;
                                     }
                                 }
                             }
@@ -1531,6 +1531,7 @@ namespace NHS.Controllers
                 return RedirectToAction("Index", "Account");
             bool isUser = GetUserDetailsFromAD();
             clsFeedBackModel feedback = new clsFeedBackModel();
+            List<clsFeedBackModel> lstFBM = new List<clsFeedBackModel>();
             string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
             DBEngine dBEngine = new DBEngine(connectionString);
             try
@@ -1546,7 +1547,26 @@ namespace NHS.Controllers
                 //{
                 try
                     {
-                        feedback = dBEngine.GetFeedback(id);
+                    ViewBag.FeedbackType = dBEngine.GetFeedbackType();
+                    //ViewBag.Comments = dBEngine.GetComments(id);
+                    //ViewBag.CommentType = dBEngine.GetCommentType();
+                    feedback = dBEngine.GetFeedback(id);
+                    ViewBag.Feedback = feedback;
+
+
+                    foreach (var b in ViewBag.FeedbackType)
+                    {
+                        foreach (var a in ViewBag.Feedback.lstFBComments)
+                        {
+                            if (a.FBTypeID == b.FeedbackTypeID)
+                            {
+                                a.FBType = b.FBType;
+                            }
+                        }
+                    }
+
+                    //feedback = lstFBM.ToList().Where(a => a.Patient_ID == id).OrderByDescending(a=>a.FeedBack_ID).FirstOrDefault();
+                    TempData["Role"] = Session["Role"];
                     if (feedback.Patient_ID == 0 || feedback.Patient_ID == null)
                         feedback.Patient_ID = Convert.ToInt32(id);
                     }
@@ -1583,7 +1603,7 @@ namespace NHS.Controllers
             bool isComplementsFedBack = false;
             string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
             DBEngine dBEngine = new DBEngine(connectionString);
-
+            int FBTypeID;
             try
             {
                 if (id == null || id == 0)
@@ -1602,7 +1622,15 @@ namespace NHS.Controllers
                     actionName = "Declaration";
                     if (Convert.ToString(formCollection["FormCompleted"]) == "on") isFormCompleted = true;
                     if (Convert.ToString(formCollection["ComplementsFedBack"]) == "on") isComplementsFedBack = true;
-                    int retVal = dBEngine.UpdatePositiveFeedback(isFormCompleted, isComplementsFedBack, formCollection["Comments"], id);
+                    if (formCollection["ddlFeedbackType"] != "")
+                    {
+                        FBTypeID = Convert.ToInt32(formCollection["ddlFeedbackType"]);
+                    }
+                    else
+                    {
+                        FBTypeID = 0;
+                    }
+                    int retVal = dBEngine.UpdatePositiveFeedback(isFormCompleted, isComplementsFedBack, formCollection["Comments"], FBTypeID, id, Convert.ToInt32(Session["LoginUserID"]));
                 }
             }
             catch (Exception ex)
