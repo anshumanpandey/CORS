@@ -1041,7 +1041,7 @@ namespace NHS.Data
             SqlDataReader dataReader = null;
             List<clsFeedBackModel> lstFBM = new List<clsFeedBackModel>();
             clsFeedBackModel feedback = new clsFeedBackModel();
-            FeedBackComments fbcomments = new FeedBackComments();
+            FeedBackComments fbcomments ;
 
             try
             {
@@ -1068,7 +1068,7 @@ namespace NHS.Data
                 {
                     while (dataReader.Read())
                     {
-                        
+                        fbcomments = new FeedBackComments();
                         if (string.IsNullOrEmpty(dataReader["FeedBackCommentID"].ToString()))
                             fbcomments.FeedBackCommentID = 0;
                         else
@@ -1087,6 +1087,16 @@ namespace NHS.Data
                          
                             fbcomments.CreatedDate = Convert.ToDateTime(dataReader["CreatedDate"]);
 
+                        if (!string.IsNullOrEmpty(dataReader["CreatedDate"].ToString()))
+                        {
+                            //    fbcomments.CreatedTime = Convert.ToDateTime(dataReader["CreatedDate"]).TimeOfDay.ToString().Substring(0, 5);
+                            fbcomments.CreatedTime = Convert.ToDateTime(dataReader["CreatedDate"]).TimeOfDay.ToString().Substring(0, 5);
+                        }
+                        else
+                            fbcomments.CreatedTime = "";
+
+                        
+                        
                         if (string.IsNullOrEmpty(dataReader["FBTypeID"].ToString()))
                             fbcomments.FBTypeID = 0;
                         else

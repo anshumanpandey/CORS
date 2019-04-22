@@ -37,6 +37,7 @@ namespace NHS.Common
         public int Patient_ID { get; set; }
         public string Comments { get; set; }
         public DateTime CreatedDate { get; set; }
+        public string CreatedTime { get; set; }
         public int FBTypeID { get; set; }
         public string FBType { get; set; }
         public int UserId { get; set; }

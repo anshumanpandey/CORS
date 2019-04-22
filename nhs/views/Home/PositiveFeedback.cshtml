@@ -132,7 +132,7 @@
                                     @{
                                         var countcomments = @ViewBag.Feedback.lstFBComments.Count;
                                     }
-                                    Available Comments (<span id="com" name="0" value="0" onclick="OpenFilterComment(0)" style="cursor:pointer;">@countcomments</span>)
+                                    Available Feedbacks (<span id="com" name="0" value="0" onclick="OpenFilterComment(0)" style="cursor:pointer;">@countcomments</span>)
                                     <div class="clearfix" style="height:5px"></div>
 
                                     <table style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;width:90%">
@@ -170,7 +170,7 @@
                             </div>
 
                             <div class="col-md-12">
-                                Comments @*<a href="#" id="commentslink" name="commentslink">View Previous Comments (@Model.CommentCount.ToString())</a>*@
+                                Feedbacks @*<a href="#" id="commentslink" name="commentslink">View Previous Comments (@Model.CommentCount.ToString())</a>*@
 
                                 <table class="table table-bordered" id="assets-data-table">
                                     @*<tr bgcolor="#a9d7cc" style="color:black;">
@@ -179,7 +179,7 @@
                                     <tbody bgcolor="#ffffff" style="color:black;">
                                         @for (var i = 0; i < ViewBag.Feedback.lstFBComments.Count; i++)
                                         {
-                                            
+
                                             if (i == 0)
                                             {
                                                 <tr style="color:black;" bgcolor="ffffff">
@@ -195,15 +195,35 @@
                                                         <div class="pull-left col-md-6" style="padding-left:0px">
                                                             <b>Date:</b> @ViewBag.Feedback.lstFBComments[i].CreatedDate.Date.ToString("dd/MM/yyyy")
                                                         </div>
-                                                        @*<div class="pull-left col-md-6">
+                                                        <div class="pull-left col-md-6">
                                                             <b>Time:</b>
-                                                            @ViewBag.Feedback.lstFBComments[i].CreatedDate.TimeOfDay.Hours:@ViewBag.Feedback.lstFBComments[i].CreatedDate.TimeOfDay.Minutes:@ViewBag.Feedback.lstFBComments[i].CreatedDate.TimeOfDay.Seconds
-                                                        </div>*@
+
+
+                                                            @if (Convert.ToInt32(ViewBag.Feedback.lstFBComments[i].CreatedTime.Split(':')[0]) >= 12)
+                                                            {
+                                                                @ViewBag.Feedback.lstFBComments[i].CreatedTime <b>PM</b>
+                                                            }
+                                                            else
+                                                            {
+                                                                @ViewBag.Feedback.lstFBComments[i].CreatedTime <b>AM</b>
+                                                                                                }
+                                                        </div>
+
+                                                       
+                                                        @*<div class="pull-left col-md-6">
+                                                                    <b>Time:</b>
+                                                                    @ViewBag.Feedback.lstFBComments[i].CreatedDate.TimeOfDay.Hours:@ViewBag.Feedback.lstFBComments[i].CreatedDate.TimeOfDay.Minutes:@ViewBag.Feedback.lstFBComments[i].CreatedDate.TimeOfDay.Seconds
+                                                            @{
+                                                                //var nowDate = new DateTime(Convert.ToInt32(@ViewBag.Feedback.lstFBComments[i].CreatedDate.slice(6)));
+                                                                var date = new DateTime(@ViewBag.Feedback.lstFBComments[i].CreatedDate).ToShortDateString();
+                                                            }
+                                                            </div>*@
+
                                                         <div class="pull-left col-md-12" style="padding-left:0px">
-                                                            <b>Comment Type:</b> @ViewBag.Feedback.lstFBComments[i].FBType
+                                                            <b>Feedback Type:</b> @ViewBag.Feedback.lstFBComments[i].FBType
                                                         </div>
                                                         <div class="pull-left col-md-12" style="padding-left:0px">
-                                                            <b>Comment:</b> @ViewBag.Feedback.lstFBComments[i].Comments
+                                                            <b>Feedback:</b> @ViewBag.Feedback.lstFBComments[i].Comments
                                                         </div>
 
                                                         @*//}*@
@@ -255,17 +275,17 @@
                                 @*newly added*@
                                 @*@Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control" })*@
                                 <div class="row_bar">
-                                    Comments
+                                    Feedback
                                     @Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control" })
                                     @*@Html.ValidationMessageFor(model => model.objclsMedicalExaminerReview.Comments, "", new { @class = "text-danger" })*@
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="pull-right">
-                                    <button id="BtnOpenComment" name="BtnOpenComment" class="btn btn-primary" onclick="OpenComment(); return false;">Add Comment</button>
+                                    <button id="BtnOpenComment" name="BtnOpenComment" class="btn btn-primary" onclick="OpenComment(); return false;">Add Feedback</button>
                                 </div>
                                 <div class="pull-right">
-                                    <button id="BtnCloseComment" name="BtnCloseComment" class="btn btn-primary" style="display:none;" onclick="CloseComment(); return false;">Close Comment</button>
+                                    <button id="BtnCloseComment" name="BtnCloseComment" class="btn btn-primary" style="display:none;" onclick="CloseComment(); return false;">Close Feedback</button>
                                 </div>
                             </div>
                             @*<div class="col-md-12">
@@ -346,14 +366,14 @@
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Comments History</h4>
+                    <h4 class="modal-title">Feedback History</h4>
                     <button type="button" class="close" data-dismiss="modal">×</button>
                 </div>
                 <!-- Modal body -->
                 <div class="modal-body">
                     <table class="table table-bordered" id="FilterComment">
                         <tr bgcolor="#a9d7cc" style="color:black;">
-                            <th style="text-align:center">Comments</th>
+                            <th style="text-align:center">Feedback</th>
                         </tr>
 
                     </table>
@@ -385,7 +405,7 @@ window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.
             });
         });
     </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.js"></script>
     <script>
     function OpenComment() {
         $("#comment").show();
@@ -403,7 +423,7 @@ window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.
         debugger;
         var tableF = document.getElementById("FilterComment");
         tableF.innerHTML = "";
-        tableF.innerHTML = "<tr bgcolor='#a9d7cc' style='color:black;'><th style='text-align:center'>Comments</th></tr>";
+        tableF.innerHTML = "<tr bgcolor='#a9d7cc' style='color:black;'><th style='text-align:center'>Feedback</th></tr>";
         var data = @Html.Raw(Json.Encode(@ViewBag.Feedback.lstFBComments));
         var newElement = document.createElement("tr");
         for (var i = 0; i < @ViewBag.Feedback.lstFBComments.Count; i++)
@@ -418,30 +438,37 @@ window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.
                     var nowDate = new Date(parseInt(data[i].CreatedDate.substr(6)));
                     //var result = "";
                     //result += nowDate.format("ddd mmm dd yyyy HH:MM:ss");
-
+                    if (parseInt(data[i].CreatedTime.slice(0, 2)) >= 12)
+                    {
                         var div = ("<tr style = 'color:black; bgcolor = ffffff>" +
                             "<td>" +
                             //"<div style = 'text-align:left' >" +
                             "<div class='col-md-6'><b>By: </b>" + data[i].Name + "</div>" +
                             "<div class='pull-right col-md-6'><b>Role: </b>" + data[i].Role + "</div>" +
                             "<div class='pull-left col-md-6' style='padding-left:0px'><b>Date: </b>" + nowDate.toLocaleDateString() + "</div>" +
-                            "<div class='pull-right col-md-6'><b>Time: </b>" + nowDate.toLocaleTimeString() + " </div>" +
-                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Comment Type:</b> " + data[i].FBType + "</div>" +
-                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Comment: </b>" + data[i].Comments + "</div>" +
+                            "<div class='pull-right col-md-6'><b>Time: </b>" + data[i].CreatedTime + " PM</div>" + /*nowDate.toLocaleTimeString()*/
+                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Feedback Type:</b> " + data[i].FBType + "</div>" +
+                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Feedback: </b>" + data[i].Comments + "</div>" +
                             "</td>" +
                             "</tr>");
+                    }
+                    else
+                    {
+                        var div = ("<tr style = 'color:black; bgcolor = ffffff>" +
+                            "<td>" +
+                            //"<div style = 'text-align:left' >" +
+                            "<div class='col-md-6'><b>By: </b>" + data[i].Name + "</div>" +
+                            "<div class='pull-right col-md-6'><b>Role: </b>" + data[i].Role + "</div>" +
+                            "<div class='pull-left col-md-6' style='padding-left:0px'><b>Date: </b>" + nowDate.toLocaleDateString() + "</div>" +
+                            "<div class='pull-right col-md-6'><b>Time: </b>" + data[i].CreatedTime + " AM</div>" + /*nowDate.toLocaleTimeString()*/
+                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Feedback Type:</b> " + data[i].FBType + "</div>" +
+                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Feedback: </b>" + data[i].Comments + "</div>" +
+                            "</td>" +
+                            "</tr>");
+                    }
+                       
 
-                        //var div = ("<tr style = 'color:black; bgcolor = ffffff>" +
-                        //    "<td>" +
-                        //    //"<div style = 'text-align:left' >" +
-                        //    "<div class='col-md-6'><b>By: </b>" + data[i].Name + "</div>" +
-                        //    "<div class='pull-right col-md-6'><b>Role: </b>" + data[i].Role + "</div>" +
-                        //    "<div class='pull-left col-md-6' style='padding-left:0px'><b>Date: </b>" + data[i].CreatedDate + "</div>" +
-                        //    "<div class='pull-right col-md-6'><b>Time: </b>" + data[i].CreatedTime + " AM</div>" +
-                        //    "<div class='pull-left col-md-12' style='padding-left:0px'><b>Comment Type:</b> " + data[i].CommentType + "</div>" +
-                        //    "<div class='pull-left col-md-12' style='padding-left:0px'><b>Comment: </b>" + data[i].Comments + "</div>" +
-                        //    "</td>" +
-                        //    "</tr>");
+                      
                     newElement.innerHTML = div;
 
                     newElement.style.color = "black";
@@ -463,8 +490,8 @@ window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.
                             "<div class='pull-right col-md-6'><b>Role: </b>" + data[i].Role + "</div>" +
                             "<div class='pull-left col-md-6' style='padding-left:0px'><b>Date: </b>" + data[i].CreatedDate + "</div>" +
                             "<div class='pull-right col-md-6'><b>Time: </b>" + data[i].CreatedTime + " PM</div>" +
-                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Comment Type:</b> " + data[i].CommentType + "</div>" +
-                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Comment: </b>" + data[i].Comments + "</div>" +
+                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Feedback Type:</b> " + data[i].CommentType + "</div>" +
+                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Feedback: </b>" + data[i].Comments + "</div>" +
                             "</td>" +
                             "</tr>");
                     }
@@ -477,8 +504,8 @@ window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.
                             "<div class='pull-right col-md-6'><b>Role: </b>" + data[i].Role + "</div>" +
                             "<div class='pull-left col-md-6' style='padding-left:0px'><b>Date: </b>" + data[i].CreatedDate + "</div>" +
                             "<div class='pull-right col-md-6'><b>Time: </b>" + data[i].CreatedTime + " AM</div>" +
-                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Comment Type:</b> " + data[i].CommentType + "</div>" +
-                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Comment: </b>" + data[i].Comments + "</div>" +
+                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Feedback Type:</b> " + data[i].CommentType + "</div>" +
+                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Feedback: </b>" + data[i].Comments + "</div>" +
                             "</td>" +
                             "</tr>");
                     }
