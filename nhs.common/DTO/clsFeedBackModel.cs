@@ -8,6 +8,10 @@ namespace NHS.Common
 {
     public class clsFeedBackModel
     {
+        public clsFeedBackModel()
+        {
+            lstFBComments = new List<FeedBackComments>();
+        }
         public int FeedBack_ID { get; set; }
         public Nullable<int> Patient_ID { get; set; }
         public string PatientID { get; set; }
@@ -23,6 +27,28 @@ namespace NHS.Common
         public string Comments { get; set; }
 
         public int MedTriage { get; set; }
+        public List<FeedBackComments> lstFBComments { get; set; }
     }
-  
+    public class FeedBackComments
+    {
+        public int FeedBack_ID { get; set; }
+
+        public int FeedBackCommentID { get; set; }
+        public int Patient_ID { get; set; }
+        public string Comments { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public int FBTypeID { get; set; }
+        public string FBType { get; set; }
+        public int UserId { get; set; }
+        public string Name { get; set; }
+        public string Role { get; set; }
+    }
+
+    public class FeedbackType
+    {
+        public int FeedbackTypeID { get; set; }
+
+        public string FBType { get; set; }
+       
+    }
 }

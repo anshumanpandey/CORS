@@ -174,120 +174,122 @@
 
                                 <table class="table table-bordered" id="assets-data-table">
                                     @*<tr bgcolor="#a9d7cc" style="color:black;">
-                    <th style="text-align:center">Comments</th>
-                </tr>*@
+                                            <th style="text-align:center">Comments</th>
+                                        </tr>*@
                                     <tbody bgcolor="#ffffff" style="color:black;">
                                         @for (var i = 0; i < ViewBag.Feedback.lstFBComments.Count; i++)
                                         {
+                                            
                                             if (i == 0)
                                             {
                                                 <tr style="color:black;" bgcolor="ffffff">
                                                     <td>
                                                         @*@if (Convert.ToInt32(ViewBag.Feedback.lstFBComments[i].CreatedTime.Substring(0, 2)) >= 12)
-                                                        {*@
-                                                            <div class="pull-left col-md-6" style="padding-left:0px">
-                                                                <b>By:</b> @ViewBag.Feedback.lstFBComments[i].Name
-                                                            </div>
-                                                            <div class="pull-left col-md-6">
-                                                                <b>Role:</b>  @ViewBag.Feedback.lstFBComments[i].Role
-                                                            </div>
-                                                            <div class="pull-left col-md-6" style="padding-left:0px">
-                                                                <b>Date:</b> @ViewBag.Feedback.lstFBComments[i].CreatedDate
-                                                            </div>
-                                                            @*<div class="pull-left col-md-6">
-                                                                <b>Time:</b> @ViewBag.Comments[i].CreatedTime PM
-                                                            </div>*@
-                                                            <div class="pull-left col-md-12" style="padding-left:0px">
-                                                                <b>Comment Type:</b> @ViewBag.Feedback.lstFBComments[i].FBType
-                                                            </div>
-                                                            <div class="pull-left col-md-12" style="padding-left:0px">
-                                                                <b>Comment:</b> @ViewBag.Feedback.lstFBComments[i].Comments
-                                                            </div>
+                                                            {*@
+                                                        <div class="pull-left col-md-6" style="padding-left:0px">
+                                                            <b>By:</b> @ViewBag.Feedback.lstFBComments[i].Name
+                                                        </div>
+                                                        <div class="pull-left col-md-6">
+                                                            <b>Role:</b>  @ViewBag.Feedback.lstFBComments[i].Role
+                                                        </div>
+                                                        <div class="pull-left col-md-6" style="padding-left:0px">
+                                                            <b>Date:</b> @ViewBag.Feedback.lstFBComments[i].CreatedDate.Date.ToString("dd/MM/yyyy")
+                                                        </div>
+                                                        @*<div class="pull-left col-md-6">
+                                                            <b>Time:</b>
+                                                            @ViewBag.Feedback.lstFBComments[i].CreatedDate.TimeOfDay.Hours:@ViewBag.Feedback.lstFBComments[i].CreatedDate.TimeOfDay.Minutes:@ViewBag.Feedback.lstFBComments[i].CreatedDate.TimeOfDay.Seconds
+                                                        </div>*@
+                                                        <div class="pull-left col-md-12" style="padding-left:0px">
+                                                            <b>Comment Type:</b> @ViewBag.Feedback.lstFBComments[i].FBType
+                                                        </div>
+                                                        <div class="pull-left col-md-12" style="padding-left:0px">
+                                                            <b>Comment:</b> @ViewBag.Feedback.lstFBComments[i].Comments
+                                                        </div>
 
-                                                            @*//}*@
-                                                         
+                                                        @*//}*@
+
                                                     </td>
                                                 </tr>
                                             }
                                         }
                                     </tbody>
                                 </table>
-                    </div>
+                            </div>
 
-                                <div id="comment" style="display:none;" class="col-md-12">
-                                    @*newly added for role and comment type*@
-                                    <div class="row">
-                                        <div class="col-md-12" style="padding: 0 !important;">
-                                            <div class="col-md-6">
-                                                @*<div class="row_bar">*@
-                                                Role
-                                            </div>
-                                            <div class="col-md-6">
-                                                @{
-                                                    var role = TempData["Role"];
-                                                }
-                                                @Html.TextBox("role", role.ToString(), new { @readonly = "readonly", @class = "form-control", style = "width: 50%;cursor:not-allowed" })
-                                                @*</div>*@
-                                            </div>
+                            <div id="comment" style="display:none;" class="col-md-12">
+                                @*newly added for role and comment type*@
+                                <div class="row">
+                                    <div class="col-md-12" style="padding: 0 !important;">
+                                        <div class="col-md-6">
+                                            @*<div class="row_bar">*@
+                                            Role
+                                        </div>
+                                        <div class="col-md-6">
+                                            @{
+                                                var role = TempData["Role"];
+                                            }
+                                            @Html.TextBox("role", role.ToString(), new { @readonly = "readonly", @class = "form-control", style = "width: 50%;cursor:not-allowed" })
+                                            @*</div>*@
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-12" style="padding: 0 !important;">
-                                            <div class="col-md-6" style="padding: 0 !important;">
-                                                <div class="col-md-6">
-                                                    Feedback Type
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <select class="form-control" id="ddlFeedbackType" name="ddlFeedbackType">
-                                                        <option value="">Select Feedback Type</option>
-                                                        @foreach (var item in ViewBag.FeedbackType)
-                                                        {
-                                                            <option value="@item.FeedbackTypeID">@item.FBType</option>
-                                                        }
-                                                    </select>
-                                                </div>
-
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12" style="padding: 0 !important;">
+                                        <div class="col-md-6" style="padding: 0 !important;">
+                                            <div class="col-md-6">
+                                                Feedback Type
                                             </div>
+                                            <div class="col-md-6">
+                                                <select class="form-control" id="ddlFeedbackType" name="ddlFeedbackType">
+                                                    <option value="">Select Feedback Type</option>
+                                                    @foreach (var item in ViewBag.FeedbackType)
+                                                    {
+                                                        <option value="@item.FeedbackTypeID">@item.FBType</option>
+                                                    }
+                                                </select>
+                                            </div>
+
                                         </div>
                                     </div>
-                                    @*newly added*@
-                                    @*@Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control" })*@
-                                    <div class="row_bar">
-                                        Comments
-                                        @Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control" })
-                                        @*@Html.ValidationMessageFor(model => model.objclsMedicalExaminerReview.Comments, "", new { @class = "text-danger" })*@
+                                </div>
+                                @*newly added*@
+                                @*@Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control" })*@
+                                <div class="row_bar">
+                                    Comments
+                                    @Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control" })
+                                    @*@Html.ValidationMessageFor(model => model.objclsMedicalExaminerReview.Comments, "", new { @class = "text-danger" })*@
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="pull-right">
+                                    <button id="BtnOpenComment" name="BtnOpenComment" class="btn btn-primary" onclick="OpenComment(); return false;">Add Comment</button>
+                                </div>
+                                <div class="pull-right">
+                                    <button id="BtnCloseComment" name="BtnCloseComment" class="btn btn-primary" style="display:none;" onclick="CloseComment(); return false;">Close Comment</button>
+                                </div>
+                            </div>
+                            @*<div class="col-md-12">
+                                    <div class="row_bar checkbox-row">
+
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="pull-right">
-                                        <button id="BtnOpenComment" name="BtnOpenComment" class="btn btn-primary" onclick="OpenComment(); return false;">Add Comment</button>
+                                    <div class="row_bar">
+                                        Comments
+                                        @if (Model.MedTriage == 3)
+                                        {
+                                            @Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control", @readonly = true })
+                                            @Html.ValidationMessageFor(model => model.objclsMedicalExaminerReview.Comments, "", new { @class = "text-danger" })
+                                            }
+                                            else
+                                            {
+                                            @Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control" })
+                                            }
+                                        </div>
                                     </div>
-                                    <div class="pull-right">
-                                        <button id="BtnCloseComment" name="BtnCloseComment" class="btn btn-primary" style="display:none;" onclick="CloseComment(); return false;">Close Comment</button>
-                                    </div>
-                                </div>
-                                @*<div class="col-md-12">
-                <div class="row_bar checkbox-row">
-
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div class="row_bar">
-                    Comments
-                    @if (Model.MedTriage == 3)
-                    {
-                        @Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control", @readonly = true })
-                        @Html.ValidationMessageFor(model => model.objclsMedicalExaminerReview.Comments, "", new { @class = "text-danger" })
-                        }
-                        else
-                        {
-                        @Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control" })
-                        }
-                    </div>
-                </div>
-            </div>*@
-                            </div>
+                                </div>*@
                         </div>
+                    </div>
                     <div class="pull-right">
                         <button id="activate-prev-1" name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
                         <button id="activate-step-2" type="submit" name="BtnFinish" class="btn btn-primary btn-lg">Save & Next</button>
@@ -298,93 +300,93 @@
             }
         </div>
     </div>
-<br />
-<br />
-@*<div class="pull-right">
-        <button class="btn btn-primary btn-lg" id="btnClose6">Close</button>
-        </div>
-    </div>*@
-<div class="modal fade" id="modelClose6">
-    <div class="modal-dialog modal-md">
-        <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Message</h4>
-                <button type="button" class="close" data-dismiss="modal">×</button>
+    <br />
+    <br />
+    @*<div class="pull-right">
+            <button class="btn btn-primary btn-lg" id="btnClose6">Close</button>
             </div>
+        </div>*@
+    <div class="modal fade" id="modelClose6">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
 
-            <!-- Modal body -->
-            <div class="modal-body">
-                <div class="form-section" style="text-align:left">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="row_bar">
-                                <div>Do you want to exit without saving your changes?</div>
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Message</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="form-section" style="text-align:left">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row_bar">
+                                    <div>Do you want to exit without saving your changes?</div>
+                                </div>
                             </div>
-                        </div>
-                        <br />
-                        <br />
-                        <div class="col-md-4">
-                            <button type="button" class="btn btn-primary btn-block" id="btnModelClose1" data-dismiss="modal" formmethod="post" onclick="location.href='@Url.Action("MortalityReview", "Home", new { id=Model.Patient_ID })'">Yes</button>
-                        </div>
-                        <div class="col-md-4">
-                            <button type="submit" class="btn btn-primary btn-block" name="btnCloseYes" id="btnCloseYes">No</button>
-                        </div>
+                            <br />
+                            <br />
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-primary btn-block" id="btnModelClose1" data-dismiss="modal" formmethod="post" onclick="location.href='@Url.Action("MortalityReview", "Home", new { id=Model.Patient_ID })'">Yes</button>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-primary btn-block" name="btnCloseYes" id="btnCloseYes">No</button>
+                            </div>
 
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-@*changes for showing filter comments based on comment type*@
-<div class="modal fade" id="myModalCommentsFilter" style="max-height:750px; overflow:auto">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Comments History</h4>
-                <button type="button" class="close" data-dismiss="modal">×</button>
-            </div>
-            <!-- Modal body -->
-            <div class="modal-body">
-                <table class="table table-bordered" id="FilterComment">
-                    <tr bgcolor="#a9d7cc" style="color:black;">
-                        <th style="text-align:center">Comments</th>
-                    </tr>
+    @*changes for showing filter comments based on comment type*@
+    <div class="modal fade" id="myModalCommentsFilter" style="max-height:750px; overflow:auto">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Comments History</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <table class="table table-bordered" id="FilterComment">
+                        <tr bgcolor="#a9d7cc" style="color:black;">
+                            <th style="text-align:center">Comments</th>
+                        </tr>
 
-                </table>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
-@*end changes*@
+    @*end changes*@
 
 
-<script>
-    $(document).ready(function () {
-        $("#btnClose6").click(function () {
-            $("#modelClose6").modal();
+    <script>
+        $(document).ready(function () {
+            $("#btnClose6").click(function () {
+                $("#modelClose6").modal();
+            });
         });
-    });
-</script>
-<script type="text/javascript">
+    </script>
+    <script type="text/javascript">
 $(function () {
     $("#btnModelClose6").click(function () {
 window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.Patient_ID }))";
 });
 });
-</script>
-<script>
-    $(document).ready(function () {
-        $("#btnCloseYes").click(function () {
-            $("#modelClose6").modal('hide');
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#btnCloseYes").click(function () {
+                $("#modelClose6").modal('hide');
+            });
         });
-    });
-</script>
-
-<script>
+    </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.js"></script>
+    <script>
     function OpenComment() {
         $("#comment").show();
         $("#BtnOpenComment").hide();
@@ -412,19 +414,23 @@ window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.
             {
                 if (data[i].FBTypeID == parseInt(typeIDFilter))
                 {
-                    
+
+                    var nowDate = new Date(parseInt(data[i].CreatedDate.substr(6)));
+                    //var result = "";
+                    //result += nowDate.format("ddd mmm dd yyyy HH:MM:ss");
+
                         var div = ("<tr style = 'color:black; bgcolor = ffffff>" +
                             "<td>" +
                             //"<div style = 'text-align:left' >" +
                             "<div class='col-md-6'><b>By: </b>" + data[i].Name + "</div>" +
                             "<div class='pull-right col-md-6'><b>Role: </b>" + data[i].Role + "</div>" +
-                            "<div class='pull-left col-md-6' style='padding-left:0px'><b>Date: </b>" + new Date(parseInt(data[i].CreatedDate.replace('/Date(', ''))).toISOString()+ "</div>" +
-                            //"<div class='pull-right col-md-6'><b>Time: </b>" + data[i].CreatedTime + " PM</div>" +
+                            "<div class='pull-left col-md-6' style='padding-left:0px'><b>Date: </b>" + nowDate.toLocaleDateString() + "</div>" +
+                            "<div class='pull-right col-md-6'><b>Time: </b>" + nowDate.toLocaleTimeString() + " </div>" +
                             "<div class='pull-left col-md-12' style='padding-left:0px'><b>Comment Type:</b> " + data[i].FBType + "</div>" +
                             "<div class='pull-left col-md-12' style='padding-left:0px'><b>Comment: </b>" + data[i].Comments + "</div>" +
                             "</td>" +
                             "</tr>");
-                    
+
                         //var div = ("<tr style = 'color:black; bgcolor = ffffff>" +
                         //    "<td>" +
                         //    //"<div style = 'text-align:left' >" +
@@ -436,7 +442,6 @@ window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.
                         //    "<div class='pull-left col-md-12' style='padding-left:0px'><b>Comment: </b>" + data[i].Comments + "</div>" +
                         //    "</td>" +
                         //    "</tr>");
-                    }
                     newElement.innerHTML = div;
 
                     newElement.style.color = "black";
@@ -444,6 +449,8 @@ window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.
                     newElement.style.border = "1px solid #dee2e6";
 
                     tableF.appendChild(newElement);
+                    }
+
                 }
                 else if (parseInt(typeIDFilter) == 0)
                 {
@@ -484,9 +491,9 @@ window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.
                     tableF.appendChild(newElement);
                 }
             }
-         
+
         //tableF.innerHTML = a.toString() + "</tbody>";
         //alert(tableF.innerHTML);
         $("#myModalCommentsFilter").modal();
     }
-</script>
+    </script>

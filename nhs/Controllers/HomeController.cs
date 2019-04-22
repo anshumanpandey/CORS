@@ -924,6 +924,7 @@ namespace NHS.Controllers
             else
                 return RedirectToAction("Index", "Account");
             //bool isUser = GetUserDetailsFromAD();
+            TempData["Role"] = Session["Role"];
             clsMedicalExaminerReview medicalExaminerReview = new clsMedicalExaminerReview();
             string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
             DBEngine dBEngine = new DBEngine(connectionString);
@@ -954,7 +955,7 @@ namespace NHS.Controllers
                                 }
                             }
 
-                        TempData["Role"] = Session["Role"];
+                        
                         if (Request.HttpMethod != "POST")
                             {
                                 medicalExaminerReview = dBEngine.GetMedicalExaminerReview(id);
@@ -1552,7 +1553,17 @@ namespace NHS.Controllers
                     //ViewBag.CommentType = dBEngine.GetCommentType();
                     feedback = dBEngine.GetFeedback(id);
                     ViewBag.Feedback = feedback;
-
+                    CultureInfo enUS = new CultureInfo("en-US");
+                    CultureInfo provider = CultureInfo.InvariantCulture;
+                    DateTime dateValue;
+                    
+                    //foreach (var item in ViewBag.Feedback.lstFBComments)
+                    //{
+                    //    dateValue =DateTime.Parse(item.CreatedDate);
+                    //    dateValue = DateTime.ParseExact(item.CreatedDate, "dd/MM/yyyy HH:mm", null);
+                    //    //item.CreatedDate = Convert.ToDateTime(item.CreatedDate).ToString("dd/MM/yyyy HH:mm");
+                    //    item.CreatedDate = DateTime.ParseExact(item.CreatedDate, "o", CultureInfo.InvariantCulture, DateTimeStyles.None);
+                    //}
 
                     foreach (var b in ViewBag.FeedbackType)
                     {
