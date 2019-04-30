@@ -63,6 +63,7 @@ namespace NHS.Common
         public int CauseID { get; set; }
 
         public int MedTriage { get; set; }
+        public bool NoFurtherAction { get; set; }
     }
     public class ReasonGroups
     {

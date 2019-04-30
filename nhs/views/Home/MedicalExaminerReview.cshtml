@@ -50,6 +50,13 @@
                     </a>
                 </li>
                 <li class="disabled">
+                    <a href='@Url.Action("FinalOutcome", "home", new { id = Model.Patient_ID})'>
+                        <h4 class="list-group-item-heading">
+                            Final Outcome(MEO)
+                        </h4>
+                    </a>
+                </li>
+                <li class="disabled">
                     <a href='@Url.Action("SJRAssessmentTriage", "home", new { id = Model.Patient_ID})'>
                         <h4 class="list-group-item-heading">
                             SJR Assessment Triage
@@ -90,49 +97,142 @@
                         <h2>MEDICAL EXAMINER SCRUTINY </h2>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="row_bar">
-                                Name of Medical Examiner
-                                @if (Model.MedTriage == 3)
-                                {
-                                    <select disabled="disabled" class="form-control" id="ddlDischargeSpeciality" name="ddlDischargeSpeciality">
-                                        <option value="">
-                                            Select Medical Examiner
-                                        </option>
-
-                                        @foreach (var item in ViewBag.MedicalExaminers)
+                        <div class="col-md-6" style="padding: 0">
+                            <div class="col-md-12">
+                                <div class="row_bar">
+                                    @if (!string.IsNullOrEmpty(Model.QAPName))
+                                    {
+                                        <span><b>Name of QAP: </b> @Html.Label("lblQAP", Model.QAPName.ToString(), new { style = "width:40%; margin: 9px;" })</span>
+                                    }
+                                    else
+                                    {
+                                        <span><b>Name of QAP: </b> <i>Awaiting QAP form completion</i> </span>
+                                    }
+                                </div>
+                            </div> 
+                            <div class="col-md-12">
+                                <div class="row_bar checkbox-row">
+                                    @if (Model.MedTriage == 3)
+                                    {
+                                        if (Model.QAP_Discussion == true)
                                         {
-                                            if (item.ID == Model.ME_ID)
-                                            {
-                                                <option selected value="@item.ID">@item.Name</option>
-                                            }
-                                            else
-                                            {
-                                                <option value="@item.ID">@item.Name</option>
-                                            }
+                                            <input type="checkbox" disabled="disabled" id="QAP_Discussion" checked name="QAP_Discussion"><span> Discussion with QAP Complete? </span>
                                         }
-                                    </select>
-                                }
-                                else
-                                {
-                                    <select class="form-control" id="ddlDischargeSpeciality" name="ddlDischargeSpeciality">
-                                        <option value="">
-                                            Select Medical Examiner
-                                        </option>
-                                        @foreach (var item in ViewBag.MedicalExaminers)
+                                        else
                                         {
-                                            if (item.ID == Model.ME_ID)
-                                            {
-                                                <option selected value="@item.ID">@item.Name</option>
-                                            }
-                                            else
-                                            {
-                                                <option value="@item.ID">@item.Name</option>
-                                            }
+                                            <input type="checkbox" disabled="disabled" id="QAP_Discussion" name="QAP_Discussion"><span> Issue MCCD </span>
                                         }
-                                    </select>
-                                }
+                                    }
+                                    else
+                                    {
+                                        if (Model.QAP_Discussion == true)
+                                        {
+                                            <input type="checkbox" id="QAP_Discussion" checked name="QAP_Discussion"><span> Discussion with QAP Complete? </span>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" id="QAP_Discussion" name="QAP_Discussion"><span> Issue MCCD </span>
+                                        }
+                                    }
+                                </div>
                             </div>
+                            <div class="col-md-12">
+                                <div class="row_bar checkbox-row">
+                                    @if (Model.MedTriage == 3)
+                                    {
+                                        if (Model.Notes_Review == true)
+                                        {
+                                            <input type="checkbox" disabled="disabled" id="Notes_Review" checked name="Notes_Review"><span> Notes review complete? </span>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" disabled="disabled" id="Notes_Review" name="Notes_Review"><span> Notes review complete? </span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (Model.Notes_Review == true)
+                                        {
+                                            <input type="checkbox" id="Notes_Review" checked name="Notes_Review"><span> Notes review complete? </span>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" id="Notes_Review" name="Notes_Review"><span> Notes review complete? </span>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row_bar checkbox-row mb-3">
+                                    @if (Model.MedTriage == 3)
+                                    {
+                                        if (Model.Nok_Discussion == true)
+                                        {
+                                            <input type="checkbox" disabled="disabled" id="Nok_Discussion" checked name="Nok_Discussion"><span> Discussion with NoK complete? </span>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" disabled="disabled" id="Nok_Discussion" name="Nok_Discussion"><span> Discussion with NoK complete? </span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (Model.Nok_Discussion == true)
+                                        {
+                                            <input type="checkbox" id="Nok_Discussion" checked name="Nok_Discussion"><span> Discussion with NoK complete? </span>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" id="Nok_Discussion" name="Nok_Discussion"><span> Discussion with NoK complete? </span>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                            @*changes by puja*@
+                            @*<div class="row_bar">
+        Name of Medical Examiner*@
+                            @*@if (Model.MedTriage == 3)
+        {
+            <select disabled="disabled" class="form-control" id="ddlDischargeSpeciality" name="ddlDischargeSpeciality">
+                <option value="">
+                    Select Medical Examiner
+                </option>
+
+                @foreach (var item in ViewBag.MedicalExaminers)
+                {
+                    if (item.ID == Model.ME_ID)
+                    {
+                        <option selected value="@item.ID">@item.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@item.ID">@item.Name</option>
+                    }
+                }
+            </select>
+        }
+        else
+        {
+            <select class="form-control" id="ddlDischargeSpeciality" name="ddlDischargeSpeciality">
+                <option value="">
+                    Select Medical Examiner
+                </option>
+                @foreach (var item in ViewBag.MedicalExaminers)
+                {
+                    if (item.ID == Model.ME_ID)
+                    {
+                        <option selected value="@item.ID">@item.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@item.ID">@item.Name</option>
+                    }
+                }
+            </select>
+        }*@
+                            @*</div>*@
+
+                            @*changes by puja*@
                         </div>
                         <div class="col-md-6" style="padding-left: 64px;float: right;position: absolute;top: 24px;right: -237px;z-index: 99;max-width: 75%;">
                             @{
@@ -202,96 +302,7 @@
 
 
 
-                        <div class="col-md-12">
-                            <div class="row_bar">
-                                @if (!string.IsNullOrEmpty(Model.QAPName))
-                                {
-                                    <span><b>Name of QAP: </b> @Html.Label("lblQAP", Model.QAPName.ToString(), new { style = "width:40%; margin: 9px;" })</span>
-                                }
-                                else
-                                {
-                                    <span><b>Name of QAP: </b> <i>Awaiting QAP form completion</i> </span>
-                                }
-                            </div>
-                        </div><br/><br />
-                        <div class="col-md-12">
-                            <div class="row_bar checkbox-row">
-                                @if (Model.MedTriage == 3)
-                                {
-                                    if (Model.QAP_Discussion == true)
-                                    {
-                                        <input type="checkbox" disabled="disabled" id="QAP_Discussion" checked name="QAP_Discussion"><span> Discussion with QAP Complete? </span>
-                                    }
-                                    else
-                                    {
-                                        <input type="checkbox" disabled="disabled" id="QAP_Discussion" name="QAP_Discussion"><span> Issue MCCD </span>
-                                    }
-                                }
-                                else
-                                {
-                                    if (Model.QAP_Discussion == true)
-                                    {
-                                        <input type="checkbox" id="QAP_Discussion" checked name="QAP_Discussion"><span> Discussion with QAP Complete? </span>
-                                    }
-                                    else
-                                    {
-                                        <input type="checkbox" id="QAP_Discussion" name="QAP_Discussion"><span> Issue MCCD </span>
-                                    }
-                                }
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="row_bar checkbox-row">
-                                @if (Model.MedTriage == 3)
-                                {
-                                    if (Model.Notes_Review == true)
-                                    {
-                                    <input type="checkbox" disabled="disabled" id="Notes_Review" checked name="Notes_Review"><span> Notes review complete? </span>
-                                    }
-                                    else
-                                    {
-                                    <input type="checkbox" disabled="disabled" id="Notes_Review" name="Notes_Review"><span> Notes review complete? </span>
-                                    }
-                                }
-                                else
-                                {
-                                    if (Model.Notes_Review == true)
-                                    {
-                                        <input type="checkbox" id="Notes_Review" checked name="Notes_Review"><span> Notes review complete? </span>
-                                    }
-                                    else
-                                    {
-                                        <input type="checkbox" id="Notes_Review" name="Notes_Review"><span> Notes review complete? </span>
-                                    }
-                                }
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="row_bar checkbox-row mb-3">
-                                @if (Model.MedTriage == 3)
-                                {
-                                    if (Model.Nok_Discussion == true)
-                                    {
-                                    <input type="checkbox" disabled="disabled" id="Nok_Discussion" checked name="Nok_Discussion"><span> Discussion with NoK complete? </span>
-                                    }
-                                    else
-                                    {
-                                    <input type="checkbox" disabled="disabled" id="Nok_Discussion" name="Nok_Discussion"><span> Discussion with NoK complete? </span>
-                                    }
-                                }
-                                else
-                                {
-                                    if (Model.Nok_Discussion == true)
-                                    {
-                                        <input type="checkbox" id="Nok_Discussion" checked name="Nok_Discussion"><span> Discussion with NoK complete? </span>
-                                    }
-                                    else
-                                    {
-                                        <input type="checkbox" id="Nok_Discussion" name="Nok_Discussion"><span> Discussion with NoK complete? </span>
-                                    }
-                                }
-                            </div>
-                        </div>
+                      
                         <div class="col-md-12">
                             <div class="row_bar">
                                 Comments @*<a href="#" id="commentslink" name="commentslink">View Previous Comments (@Model.CommentCount.ToString())</a>*@
@@ -611,6 +622,12 @@ window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.
         });
     });
 </script>
+<style>
+    #Cmnt {
+    
+    margin-top:5px !important;
+    }
+</style>
 <script>
     $(document).ready(function () {
         $("#commentslink").click(function () {
@@ -627,43 +644,42 @@ window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.
         {
             var typeIDFilter = e;
             var newElement = document.createElement("tr");
+        
             if (typeIDFilter != null) 
             {
                 if (data[i].CommentTypeID == parseInt(typeIDFilter))
                 {
                     if (parseInt(data[i].CreatedTime.slice(0, 2)) >= 12) 
                     {
-                        var div = ("<tr style = 'color:black; bgcolor = ffffff>" +
-                            "<td>" +
+                        var div = ("<td>" +
                             //"<div style = 'text-align:left' >" +
-                            "<div class='col-md-6'><b>By: </b>" + data[i].Name + "</div>" +
+                            "<div class='pull-left col-md-6' style='padding-left:0px'><b>By: </b>" + data[i].Name + "</div>" +
                             "<div class='pull-right col-md-6'><b>Role: </b>" + data[i].Role + "</div>" +
                             "<div class='pull-left col-md-6' style='padding-left:0px'><b>Date: </b>" + data[i].CreatedDate + "</div>" +
                             "<div class='pull-right col-md-6'><b>Time: </b>" + data[i].CreatedTime + " PM</div>" +
                             "<div class='pull-left col-md-12' style='padding-left:0px'><b>Comment Type:</b> " + data[i].CommentType + "</div>" +
-                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Comment: </b>" + data[i].Comments + "</div>" +
-                            "</td>" +
-                            "</tr>");
+                            "<div class='pull-left col-md-12' style='padding-left:0px;margin-bottom: 9px;'><b>Comment: </b>" + data[i].Comments + "</div>" +
+                            "</td>");
                     }
                     else 
                     {
-                        var div = ("<tr style = 'color:black; bgcolor = ffffff>" +
-                            "<td>" +
+                        var div = ("<td>" +
                             //"<div style = 'text-align:left' >" +
-                            "<div class='col-md-6'><b>By: </b>" + data[i].Name + "</div>" +
+                            "<div class='pull-left col-md-6' style='padding-left:0px'><b>By: </b>" + data[i].Name + "</div>" +
                             "<div class='pull-right col-md-6'><b>Role: </b>" + data[i].Role + "</div>" +
                             "<div class='pull-left col-md-6' style='padding-left:0px'><b>Date: </b>" + data[i].CreatedDate + "</div>" +
                             "<div class='pull-right col-md-6'><b>Time: </b>" + data[i].CreatedTime + " AM</div>" +
                             "<div class='pull-left col-md-12' style='padding-left:0px'><b>Comment Type:</b> " + data[i].CommentType + "</div>" +
-                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Comment: </b>" + data[i].Comments + "</div>" +
-                            "</td>" +
-                            "</tr>");
+                            "<div class='pull-left col-md-12' style='padding-left:0px;margin-bottom: 9px;'><b>Comment: </b>" + data[i].Comments + "</div>" +
+                            "</td>");
                     }
                     newElement.innerHTML = div;
-
+                    newElement.id = 'Cmnt';
                     newElement.style.color = "black";
                     newElement.style.bgcolor = "ffffff";
                     newElement.style.border = "1px solid #dee2e6";
+                    newElement.style.marginTop = "5px !Important";
+                    newElement.style.marginLeft="5px !important"
                      
                     tableF.appendChild(newElement);
                 }
@@ -671,38 +687,38 @@ window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.
                 {
                     if (parseInt(data[i].CreatedTime.slice(0, 2)) >= 12) 
                     {
-                        var div = ("<tr style = 'color:black; bgcolor = ffffff>" +
+                        var div = ("<tr style = 'color:black; bgcolor = ffffff;margin-top:5px !important>" +
                             "<td>" +
                             //"<div style = 'text-align:left' >" +
-                            "<div class='col-md-6'><b>By: </b>" + data[i].Name + "</div>" +
+                            "<div class='pull-left col-md-6' style='padding-left:0px'><b>By: </b>" + data[i].Name + "</div>" +
                             "<div class='pull-right col-md-6'><b>Role: </b>" + data[i].Role + "</div>" +
                             "<div class='pull-left col-md-6' style='padding-left:0px'><b>Date: </b>" + data[i].CreatedDate + "</div>" +
                             "<div class='pull-right col-md-6'><b>Time: </b>" + data[i].CreatedTime + " PM</div>" +
                             "<div class='pull-left col-md-12' style='padding-left:0px'><b>Comment Type:</b> " + data[i].CommentType + "</div>" +
-                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Comment: </b>" + data[i].Comments + "</div>" +
+                            "<div class='pull-left col-md-12' style='padding-left:0px;margin-bottom: 9px;'><b>Comment: </b>" + data[i].Comments + "</div>" +
                             "</td>" +
-                            "</tr>");
+                            "</tr><tr style='height:20px !important'></tr>");
                     }
                     else 
                     {
-                        var div = ("<tr style = 'color:black; bgcolor = ffffff>" +
+                        var div = ("<tr style = 'color:black; bgcolor = ffffff;margin-top:5px !important>" +
                             "<td>" +
                             //"<div style = 'text-align:left' >" +
-                            "<div class='col-md-6'><b>By: </b>" + data[i].Name + "</div>" +
+                            "<div class='pull-left col-md-6' style='padding-left:0px'><b>By: </b>" + data[i].Name + "</div>" +
                             "<div class='pull-right col-md-6'><b>Role: </b>" + data[i].Role + "</div>" +
                             "<div class='pull-left col-md-6' style='padding-left:0px'><b>Date: </b>" + data[i].CreatedDate + "</div>" +
                             "<div class='pull-right col-md-6'><b>Time: </b>" + data[i].CreatedTime + " AM</div>" +
                             "<div class='pull-left col-md-12' style='padding-left:0px'><b>Comment Type:</b> " + data[i].CommentType + "</div>" +
-                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Comment: </b>" + data[i].Comments + "</div>" +
+                            "<div class='pull-left col-md-12' style='padding-left:0px;margin-bottom: 9px;'><b>Comment: </b>" + data[i].Comments + "</div>" +
                             "</td>" +
-                            "</tr>");
+                            "</tr><tr style='height:20px !important'></tr>");
                     }
                     newElement.innerHTML = div;
 
                     newElement.style.color = "black";
                     newElement.style.bgcolor = "ffffff";
                     newElement.style.border = "1px solid #dee2e6";
-                     
+                    newElement.style.marginTop = "5px !Important";
                     tableF.appendChild(newElement);
                 }                
             }

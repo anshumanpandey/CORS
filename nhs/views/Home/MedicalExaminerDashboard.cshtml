@@ -12,6 +12,8 @@
 <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />*@
 
 <style>
+
+   
     #DOD_ToolTip {
         display: none;
         position: absolute;
@@ -213,18 +215,18 @@
             <table class="stripe row-border order-column" style="overflow:auto;" id="tblPatientDetails">
                 <thead>
                     <tr bgcolor="#a9d7cc" style="color:black;width:90%;  font-size:11px;">
-                        <th align="left" width="5%">Patient ID</th>
+                        <th align="left" width="10%">Patient ID</th>
                         <th align="left" width="5%">Name</th>
-                        <th align="center" width="5%">DOB</th>
-                        <th align="center" width="5%">Date of Admission</th>
+                        <th align="center" width="5%" style="display:none">DOB</th>
+                        <th align="center" width="5%" style="display:none" >Date of Admission</th>
                         <th align="center" width="5%">Date of Death</th>
-                        <th align="left" width="5%">Ward of Death</th>
+                        <th align="left" width="10%" style="display:none">Ward of Death</th>
                         <th align="center" width="10%">Discharge Consultant</th>
-                        <th align="center" width="10%">Discharge Speciality</th>
-                        <th align="center" width="10%">Patient Type</th>
-                        <th align="center" width="5%">QAP Review Status</th>
-                        <th align="center" width="5%">Medical Examiner Triage Review</th>
-                        <th align="center" width="5%">SJR Review Status</th>
+                        <th align="center" width="10%" style="display:none">Discharge Speciality</th>
+                        <th align="center" width="10%">Patient Type Actual</th>
+                        <th align="center" width="10%">QAP Review Status</th>
+                        <th align="center" width="10%">Medical Examiner Triage Review</th>
+                        <th align="center" width="10%">SJR Review Status</th>
                         <th align="center" width="5%">SJR  Review Outcome</th>
                         <th align="center" width="5%">SJR 2 Review Status</th>
                         <th align="center" width="5%">Coding Review Status</th>
@@ -236,29 +238,15 @@
                         foreach (var item in Model)
                         {
                             <tr>
-                                <td align="left" width="5%"><u>@Html.ActionLink(item.PatientId.Trim(), "MortalityReview", new { id = item.ID }, new { @style = "color:blue;" })</u></td>
-                                <td align="left" width="5%">@item.PatientName.Trim()</td>
-                                <td align="left" width="5%">@item.DOB.ToString("dd/MM/yyyy")</td>
-                                <td align="center" width="5%">@item.DateofAdmission.ToString("dd/MM/yyyy")</td>
+                                <td align="left" width="5%" class="PID"> <u >@Html.ActionLink(item.PatientId.Trim(), "MortalityReview", new { id = item.ID }, new { @style = "color:blue;" })</u></td>
+                                <td align="left" width="8%">@item.PatientName.Trim()   <br/> ( @item.Age Yrs)</td>
+                                <td align="left" width="5%" style="display:none">@item.DOB.ToString("dd/MM/yyyy")</td>
+                                <td align="center" width="5%" style="display:none">@item.DateofAdmission.ToString("dd/MM/yyyy")</td>
                                 @*changes*@
                                 <td align="center" width="5%" id="DateOfDeath">@item.DateofDeath.ToString("dd/MM/yyyy")</td>
-                                @*<div id="DOD_ToolTip">
-                                        <div class="col-md-12">
-                                            <div class="col-md-6" id="DRow">Name</div>
-                                            <div class="col-md-6" id="DRow">@item.DOB.ToString("dd/MM/yyyy")</div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="col-md-6" id="DRow">Code</div>
-                                            <div class="col-md-6" id="DRow">@item.DateofAdmission.ToString("dd/MM/yyyy")</div>
-                                        </div>
-                                    </div>*@
-
-                                @*changes*@
-
-
-                                <td align="center" width="5%">@item.WardofDeath.Trim()</td>
+                                <td align="center" width="5%" style="display:none">@item.WardofDeath.Trim()</td>
                                 <td align="center" width="10%">@item.DischargeConsutantName.Trim()</td>
-                                <td align="center" width="10%">@item.DischargeSpeciality.Trim()</td>
+                                <td align="center" width="10%" style="display:none">@item.DischargeSpeciality.Trim()</td>
                                 <td align="center" width="10%">@item.PatientTypeLongText</td>
 
                                 <td align="center" width="5%">
@@ -405,17 +393,32 @@
 
 
     $(document).ready(function () {
-        var columns = ['DOB', 'DateOfAdmission']
+        var columns = ['DOB', 'DateOfAdmission', 'WardofDeath','DischargeSpeciality']
         $('#tblPatientDetails tbody tr').each(function () {
             var cells = $('td', this);
             var titleArr = cells.map(function (index) {
-                if (index == 2 || index == 3) {
-                    debugger;
-                    return columns[parseInt(index) - 2] + ' ' + this.innerHTML;
+                if (index == 2 ) {
+                    var div = document.createElement("div");
+                    div.innerHTML = columns[index - 2] + '                            :     ' + this.innerHTML;
+                    div.style.fontSize = "bold";
+                    return div.innerHTML;
                     index++;
                 }
-                
-
+                else if (index == 3) {
+                    return columns[index - 2] + '       :    ' + this.innerHTML;
+                    index++;
+                }
+                else if (index == 5) {
+                    return columns[index - 3] + '              :    ' + this.innerHTML;
+                    index++;
+                }
+                else if (index == 7) {
+                    return columns[index - 4] + '    :   ' + this.innerHTML;
+                    index++;
+                }
+                else
+                {
+                }
             });
             debugger;
             //$.each(titleArr, function (index, value) {
@@ -425,12 +428,12 @@
             //    this.attr("font-weight", "bold");
             //})
             cells.each(function (index) {
-                if (index == 4) {
+                if (index == 0) {
                     debugger;
-                    var finalTooltip = titleArr.filter(function (i) {
-                        return index !== i;
-                    });
-                    $(this).attr('title', finalTooltip.toArray().join('\r\n'))
+                    //var finalTooltip = titleArr.filter(function (i) {
+                    //    return index !== i;
+                    //});
+                    $(this).attr('title', titleArr.toArray().join('\r\n'))
               
                 }
 
@@ -446,6 +449,7 @@
             "delay": 0,
             "track": true,
             "fade": 250
+           
         });
     });
 

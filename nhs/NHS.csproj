@@ -872,6 +872,7 @@
     <Content Include="Views\Home\NotAuthorizedPatientDetails.cshtml" />
     <Content Include="Views\Home\QAPReviewFirstStep.cshtml" />
     <Content Include="Views\Home\Declaration.cshtml" />
+    <Content Include="Views\Home\FinalOutcome.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -914,7 +915,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>61252</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:61252/</IISUrl>
+          <IISUrl>http://localhost:61254/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -950,7 +950,7 @@ namespace NHS.Controllers
                                 {
                                     if (a.CommentTypeID == b.CommonTypeID)
                                     {
-                                        a.FBType = b.FBType;
+                                        a.CommentType = b.Type;
                                     }
                                 }
                             }
@@ -1036,7 +1036,8 @@ namespace NHS.Controllers
                     if (Convert.ToString(formCollection["QAP_Discussion"]) == "on") isQAP_Discussion = true;
                     if (Convert.ToString(formCollection["Notes_Review"]) == "on") isNotes_Review = true;
                     if (Convert.ToString(formCollection["Nok_Discussion"]) == "on") isNok_Discussion = true;
-                    if (formCollection["ddlDischargeSpeciality"] == "") formCollection["ddlDischargeSpeciality"] = "0";
+                    if (formCollection["ddlDischargeSpeciality"] == ""|| formCollection["ddlDischargeSpeciality"]==null)
+                         formCollection["ddlDischargeSpeciality"] =Session["LoginUserID"].ToString() ;
                     if (formCollection["QAPName"] == "") formCollection["QAPName"] = "0";
 
 
@@ -1155,7 +1156,7 @@ namespace NHS.Controllers
                     actionName = "MedicalExaminerReview";
                 if (BtnNext != null)
                 {
-                    actionName = "SJRAssessmentTriage";
+                    actionName = "FinalOutcome";
                     if (Convert.ToString(formCollection["IssueMCCD"]) == "on") isMCCDissue = true;
                     if (Convert.ToString(formCollection["CoronerReferral"]) == "on") isCoronerReferral = true;
                     if (Convert.ToString(formCollection["PostMortem"]) == "on") isHospitalPostMortem = true;
@@ -1176,6 +1177,10 @@ namespace NHS.Controllers
                         formCollection["DeathCertificateTime"] = "";
                         formCollection["TimeType"] = "0";
                     }
+                    formCollection["CauseOfDeath1"] = ""; formCollection["CauseOfDeath2"] = ""; formCollection["CauseOfDeath3"] = "";
+                    formCollection["CauseOfDeath4"] = "";
+                    formCollection["TimeType"] = "";
+                    formCollection["DeathCertificateTime"] = "";
                     int retVal = dBEngine.UpdateMedicalExaminerDecision(isMCCDissue, isCoronerReferral, isHospitalPostMortem, isDeathCertificate, isCornerReferralComplete, isCoronerDecisionInquest, isCoronerDecisionPostMortem,
                        isCoronerDecision100A, isCoronerDecisionGPissue, formCollection["CoronerReferralReason"], formCollection["CauseOfDeath1"], formCollection["CauseOfDeath2"], formCollection["CauseOfDeath3"],
                        formCollection["CauseOfDeath4"], deathCertificateDate, formCollection["DeathCertificateTime"], formCollection["TimeType"],formCollection["ddlCauseOdfDeath"], id);
@@ -1363,7 +1368,7 @@ namespace NHS.Controllers
         }
 
         /// <summary>
-        /// Get Other referral details for a particular patient ID
+        /// Get Declaration for a particular patient ID
         /// </summary>
         /// <param name="id">int</param>
         /// <returns>ActionResult</returns>
@@ -1406,7 +1411,132 @@ namespace NHS.Controllers
             }
             return View(declaration);
         }
+        /// <summary>
+        /// Get Fimal Outcome for a particular patient ID
+        /// </summary>
+        /// <param name="id">int</param>
+        /// <returns>ActionResult</returns>
+        public ActionResult FinalOutcome(int? id)
+        {
+            if (Session["FullName"] != null)
+            {
+                if (string.IsNullOrEmpty(Session["FullName"].ToString()))
+                    return RedirectToAction("Index", "Account");
+            }
+            else
+                return RedirectToAction("Index", "Account");
+            bool isUser = GetUserDetailsFromAD();
+            clsMedicalExaminerDecision medicalExaminerDecision = new clsMedicalExaminerDecision();
+            string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
+            DBEngine dBEngine = new DBEngine(connectionString);
+            try
+            {
+                if (id == null || id == 0)
+                {
+                    if (Session["PatientID"] != null)
+                        id = Convert.ToInt32(Session["PatientID"]);
+                    else
+                        return RedirectToAction("Index", "Account");
+                }
+                try
+                {
+                    medicalExaminerDecision = dBEngine.GetMedicalExaminerDecision(id);
+                    medicalExaminerDecision.a = "1a";
+                    medicalExaminerDecision.b = "1b";
+                    medicalExaminerDecision.c = "1c";
+                    medicalExaminerDecision.d = "1d";
+                    if (medicalExaminerDecision.ID == 0 || medicalExaminerDecision.ID == null)
+                        medicalExaminerDecision.ID = Convert.ToInt32(id);
+                    //ViewBag.ReasonGroups = dBEngine.GetReasonGroups();
+                }
+                catch (Exception ex)
+                {
+                    dBEngine.LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            medicalExaminerDecision.NoFurtherAction = false;
+            return View(medicalExaminerDecision);
+        }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="formCollection"></param>
+        /// <param name="BtnPrevious"></param>
+        /// <param name="BtnNext"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult FinalOutcome(FormCollection formCollection, string BtnPrevious, string BtnNext, int id)
+        {
+            clsMedicalExaminerDecision medicalExaminerDecision = new clsMedicalExaminerDecision();
+            bool isMCCDissue = false;
+            bool isCoronerReferral = false;
+            bool isHospitalPostMortem = false;
+            bool isDeathCertificate = false;
+            bool isCornerReferralComplete = false;
+            bool isCoronerDecisionInquest = false;
+            bool isCoronerDecisionPostMortem = false;
+            bool isCoronerDecision100A = false;
+            bool isCoronerDecisionGPissue = false;
+            string actionName = "";
+        
+            string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
+            DBEngine dBEngine = new DBEngine(connectionString);
+            DateTime? deathCertificateDate = null;
+            if (id == null || id == 0)
+            {
+                if (Session["PatientID"] != null)
+                    id = Convert.ToInt32(Session["PatientID"]);
+                else
+                    return RedirectToAction("Index", "Account");
+            }
+            try
+            {
+                if (BtnPrevious != null)
+                    actionName = "MedicalExaminerDecision";
+                if (BtnNext != null)
+                {
+                    actionName = "SJRAssessmentTriage";
+                    medicalExaminerDecision = dBEngine.GetMedicalExaminerDecision(id);
+
+                    //if (Convert.ToString(formCollection["IssueMCCD"]) == null) isMCCDissue = medicalExaminerDecision.MCCDissue;
+                    //if (Convert.ToString(formCollection["CoronerReferral"]) == null) isCoronerReferral = medicalExaminerDecision.CoronerReferral;
+                    //if (Convert.ToString(formCollection["PostMortem"]) ==null) isHospitalPostMortem = medicalExaminerDecision.HospitalPostMortem;
+                    //if (Convert.ToString(formCollection["DeathCertificate"]) == "on") isDeathCertificate = true;
+                    //if (Convert.ToString(formCollection["CoronerReferralComplete"]) == "on") isCornerReferralComplete = medicalExaminerDecision.CornerReferralComplete;
+                    //if (Convert.ToString(formCollection["Inquest"]) == "on") isCoronerDecisionInquest = true;
+                    //if (Convert.ToString(formCollection["Post-Mortem"]) == "on") isCoronerDecisionPostMortem = true;
+                    //if (Convert.ToString(formCollection["100A"]) == "on") isCoronerDecision100A = true;
+                    //if (Convert.ToString(formCollection["GPIssue"]) == "on") isCoronerDecisionGPissue = true;
+                    //if (isDeathCertificate == true)
+                    //{
+                    //    if (formCollection["DeathCertificateDate"] != "") deathCertificateDate = DateTime.ParseExact(Convert.ToDateTime(formCollection["DeathCertificateDate"]).ToString("dd/MM/yyyy"), "dd/MM/yyyy", null);
+                    //    //if (formCollection["DeathCertificateTime"] == "") formCollection["DeathCertificateTime"] = DateTime.ParseExact("00:00", "HH:mm", null).ToString();
+                    //}
+                    //else
+                    //{
+                    //    deathCertificateDate = null;
+                    //    formCollection["DeathCertificateTime"] = "";
+                    //    formCollection["TimeType"] = "0";
+                    //}
+                    //if (Convert.ToString(formCollection["CoronerReferralReason"]) == null) formCollection["CoronerReferralReason"] = medicalExaminerDecision.CoronerReferralReason;
+                    //if (Convert.ToString(formCollection["ddlCauseOdfDeath"]) == null) formCollection["ddlCauseOdfDeath"]= medicalExaminerDecision.CauseID.ToString();
+                    //int retVal = dBEngine.UpdateMedicalExaminerDecision(isMCCDissue, isCoronerReferral, isHospitalPostMortem, isDeathCertificate, isCornerReferralComplete, isCoronerDecisionInquest, isCoronerDecisionPostMortem,
+                    //   isCoronerDecision100A, isCoronerDecisionGPissue, formCollection["CoronerReferralReason"], formCollection["CauseOfDeath1"], formCollection["CauseOfDeath2"], formCollection["CauseOfDeath3"],
+                    //   formCollection["CauseOfDeath4"], deathCertificateDate, formCollection["DeathCertificateTime"], formCollection["TimeType"], formCollection["ddlCauseOdfDeath"], id);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return RedirectToAction(actionName, new { id = id });
+        }
 
         /// <summary>
         /// 

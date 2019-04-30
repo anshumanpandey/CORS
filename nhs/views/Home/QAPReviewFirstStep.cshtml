@@ -4,6 +4,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <style>
+    .cls_mar_top {
+    margin-top:7px;
+    }
+    .IsRevCom {
+        margin-top: 7px;
+        padding-left: 16px;
+        margin-bottom: 7px;
+    }
     .square1 {
         height: 30px;
         width: 100px;
@@ -57,21 +65,21 @@
                 </div>
             </div>
             @*<ul class="nav nav-pills nav-justified thumbnail setup-panel">
-                <li class="active">
-                    <a href="@Url.Action("Stage2SJRformFirstStep", "home", new { id=Model.Patient_ID })">
-                        <h4 class="list-group-item-heading">
-                            <b>Phase of Care Assessment</b>
-                        </h4>
-                    </a>
-                </li>
-                <li class="disabled">
-                    <a href="@Url.Action("Stage2SJRFormSecondStep", "home", new { id=Model.Patient_ID })">
-                        <h4 class="list-group-item-heading">
-                            <b>Assessment Of Problems in Healthcare</b>
-                        </h4>
-                    </a>
-                </li>
-            </ul>*@
+                    <li class="active">
+                        <a href="@Url.Action("Stage2SJRformFirstStep", "home", new { id=Model.Patient_ID })">
+                            <h4 class="list-group-item-heading">
+                                <b>Phase of Care Assessment</b>
+                            </h4>
+                        </a>
+                    </li>
+                    <li class="disabled">
+                        <a href="@Url.Action("Stage2SJRFormSecondStep", "home", new { id=Model.Patient_ID })">
+                            <h4 class="list-group-item-heading">
+                                <b>Assessment Of Problems in Healthcare</b>
+                            </h4>
+                        </a>
+                    </li>
+                </ul>*@
         </div>
     </div>
     <div>
@@ -118,7 +126,7 @@
                                         }
                                     </div>
                                 </div>
-                                <br/>
+                                <br />
                                 <div class="col-md-6">
                                     <div class="row_bar">
                                         <span><i>If no preliminary view can be formed make a note of the reason.</i></span>
@@ -216,16 +224,16 @@
                                 </div>
                                 @if (Model.Referral == true)
                                 {
-                                <div id="reasonlabel" style="display:block;" class="col-md-12">
-                                    <div class="row_bar">
-                                        Reason
+                                    <div id="reasonlabel" style="display:block;" class="col-md-12">
+                                        <div class="row_bar">
+                                            Reason
+                                        </div>
                                     </div>
-                                </div>
-                                <div id="reasontextarea" style="display:block;" class="col-md-12">
-                                    <div class="row_bar">
-                                        @Html.TextAreaFor(model => model.Reason, 5, 200, new { @class = "form-control", placeholder = "" })
+                                    <div id="reasontextarea" style="display:block;" class="col-md-12">
+                                        <div class="row_bar">
+                                            @Html.TextAreaFor(model => model.Reason, 5, 200, new { @class = "form-control", placeholder = "" })
+                                        </div>
                                     </div>
-                                </div>
                                 }
                                 else
                                 {
@@ -297,12 +305,23 @@
                                         @Html.EditorFor(model => model.AlternatePhone, new { htmlAttributes = new { @class = "form-control" } })
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+
+                                @*changes*@
+                                <div class="col-md-12 IsRevCom">
+                                    <div class="row_bar">
+                                        <input type="checkbox" id="QAPReview" name="QAPReview"><span>Review Completed?</span>
+                                    </div>
+                                </div>
+                                @*changes*@
+
+
+
+                                <div class="col-md-2" id="dvNameLabelSign" style="display:none">
                                     <div class="row_bar">
                                         <span><b><i>Signature</i></b></span>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4" id="dvNameSpanSign" style="display:none">
                                     <div class="row_bar">
                                         @if (Model.QAPReview == 3)
                                         {
@@ -312,21 +331,21 @@
                                         {
                                             if (Session["FullName"] != null)
                                             {
-                                            <span><b><i>@Convert.ToString(Session["FullName"])</i></b></span>
+                                                <span><b><i>@Convert.ToString(Session["FullName"])</i></b></span>
                                             }
                                             else
                                             {
-                                            <span>&nbsp;</span>
+                                                <span>&nbsp;</span>
                                             }
                                         }
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-2" id="dvDateLabel" style="display:none">
                                     <div class="row_bar">
                                         <span><b><i>Date</i></b></span>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4" id="dvDateSpan" style="display:none">
                                     <div class="row_bar">
                                         @if (Model.QAPReview == 3)
                                         {
@@ -338,7 +357,7 @@
                                         }
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-12 cls_mar_top">
                                     <div class="row_bar">
                                         <span><i>The doctor providing the information in this form needs to be available to respond, if asked, to any enquiries from a medical examiner or office.</i></span>
                                     </div>
@@ -347,9 +366,11 @@
                         </div>
                     </div>
                     <div class="pull-right">
-                        <button id="BtnNext" type="submit" name="BtnNext" class="btn btn-primary btn-lg">Save & Next</button>
+                        <button id="BtnNext" type="submit" name="BtnNext" class="btn btn-primary btn-lg">Save</button>
+                        <span id="btnSave" name="btnSave" class="btn btn-primary btn-lg">Next</span>
                     </div>
                 }
+
             </div>
         </div>
         <br />
@@ -388,12 +409,73 @@
             </div>
         </div>
     </div>
+
+    @*changes *@
+    <div class="modal fade" id="modelCloseNext">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Message</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="form-section" style="text-align:left">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row_bar">
+                                    <div>Please note all the unsaved data will be lost. Please click save to save the data</div>
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-primary btn-block" id="btnModelClose2" data-dismiss="modal" formmethod="post" onclick="location.href='@Url.Action("MortalityReview", "Home", new { id=Model.Patient_ID })'">Yes</button>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-primary btn-block" name="btnCloseYes2" id="btnCloseYes2">No</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*changes*@
 </div>
 <script>
+   
+
     $(document).ready(function () {
         $("#btnClose1").click(function () {
             $("#modelClose1").modal();
         });
+        $("#btnSave").click(function () {
+            $("#modelCloseNext").modal();
+        });
+        //changes
+
+
+        $("#QAPReview").click(function () {
+            if ($(this).is(":checked")) {
+                $("#dvNameLabelSign").css("display", "block");
+                $("#dvNameSpanSign").css("display", "block");
+                $("#dvDateLabel").css("display", "block");
+                $("#dvDateSpan").css("display", "block");
+            }
+            else {
+                $("#dvNameLabelSign").css("display", "none");
+                $("#dvNameSpanSign").css("display", "none");
+                $("#dvDateLabel").css("display", "none");
+                $("#dvDateSpan").css("display", "none");
+            }
+        });
+
+        //changes
     });
 </script>
 <script type="text/javascript">
@@ -408,6 +490,9 @@ window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.
         $(document).ready(function () {
             $("#btnCloseYes").click(function () {
                 $("#modelClose1").modal('hide');
+            });
+            $("#btnCloseYes2").click(function () {
+                $("#modelCloseNext").modal('hide');
             });
         });
 </script>
