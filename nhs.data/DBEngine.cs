@@ -809,6 +809,17 @@ namespace NHS.Data
                         patientDashboard.GPSurgery = "";
                     else
                         patientDashboard.GPSurgery = Convert.ToString(dbReader["GPSurgery"]);
+
+                    if (string.IsNullOrEmpty(dbReader["PrimaryDiagnosis"].ToString()))
+                        patientDashboard.PrimaryDiagnosis = "";
+                    else
+                        patientDashboard.PrimaryDiagnosis = Convert.ToString(dbReader["PrimaryDiagnosis"]);
+
+                    if (string.IsNullOrEmpty(dbReader["PrimaryProcedure"].ToString()))
+                        patientDashboard.PrimaryProcedure = "";
+                    else
+                        patientDashboard.PrimaryProcedure = Convert.ToString(dbReader["PrimaryProcedure"]);
+
                     lstPatientDetails.Add(patientDashboard);
                 }
                 
@@ -921,7 +932,7 @@ namespace NHS.Data
         /// <returns>int</returns>
         public int UpdateMedicalExaminerDecision(bool isMCCDissue, bool isCoronerReferral, bool isHospitalPostMortem, bool isDeathCertificate, bool isCornerReferralComplete, bool isCoronerDecisionInquest, bool isCoronerDecisionPostMortem,
             bool isCoronerDecision100A, bool isCoronerDecisionGPissue, string Reason, string CauseOfDeath1, string CauseOfDeath2, string CauseOfDeath3, 
-            string CauseOfDeath4, DateTime? DeathCertificateDate, string DeathCertificateTime, string TimeType,string CauseID, int id)
+            string CauseOfDeath4, DateTime? DeathCertificateDate, string DeathCertificateTime, string TimeType,string CauseID, int id,bool isCoronerDecisionNFAction)
         {
             var connection = GetConnection();
             int retVal = 0;
@@ -947,6 +958,7 @@ namespace NHS.Data
                 dbCommand.Parameters.AddWithValue("@DeathCertificateTime", DeathCertificateTime);
                 dbCommand.Parameters.AddWithValue("@TimeType", TimeType);
                 dbCommand.Parameters.AddWithValue("@CauseID", Convert.ToInt32(CauseID));
+                dbCommand.Parameters.AddWithValue("@isCornerDecisionNoFurtherAction", isCoronerDecisionNFAction);
                 dbCommand.Parameters.AddWithValue("@ID", id);
                 retVal = dbCommand.ExecuteNonQuery();
             }
@@ -1665,7 +1677,11 @@ namespace NHS.Data
                     if (string.IsNullOrEmpty(dataReader["DOB"].ToString()))
                         patientDashboard.DOB = Convert.ToDateTime("01/01/0001");
                     else
+                    {
+                  
                         patientDashboard.DOB = Convert.ToDateTime(dataReader["DOB"]);
+                      
+                    }
                     if (string.IsNullOrEmpty(dataReader["DateOfAdmission"].ToString()))
                         patientDashboard.DateofAdmission = Convert.ToDateTime("01/01/0001");
                     else
@@ -1675,7 +1691,7 @@ namespace NHS.Data
                     else
                         patientDashboard.DateofDeath = Convert.ToDateTime(dataReader["DateOfDeath"]);
                     if (string.IsNullOrEmpty(dataReader["WardOfDeath"].ToString()))
-                        patientDashboard.WardofDeath = "0";
+                        patientDashboard.WardofDeath = "";
                     else
                         patientDashboard.WardofDeath = Convert.ToString(dataReader["WardOfDeath"]);
                     if (string.IsNullOrEmpty(dataReader["DischargeConsultantName"].ToString()))
@@ -1964,7 +1980,7 @@ namespace NHS.Data
             return lstFeedbackType;
         }
 
-        public List<CommentType> GetCommentType()
+        public List<CommentType> GetCommentType(string category)
         {
             var connection = GetConnection();
             List<CommentType> lstCommentType = new List<CommentType>();
@@ -1974,7 +1990,8 @@ namespace NHS.Data
             {
                 SqlCommand dbCommand = new SqlCommand("usp_GetCommentType", connection);
                 dbCommand.CommandType = CommandType.StoredProcedure;
-
+             
+                dbCommand.Parameters.AddWithValue("@Category", category);
                 dataReader = dbCommand.ExecuteReader();
 
                 while (dataReader.Read())
@@ -2003,7 +2020,7 @@ namespace NHS.Data
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public List<CommentHistory> GetComments(int? id)
+        public List<CommentHistory> GetComments(int? id,string category)
         {
             var connection = GetConnection();
             List<CommentHistory> comments = new List<CommentHistory>();
@@ -2014,6 +2031,7 @@ namespace NHS.Data
                 SqlCommand dbCommand = new SqlCommand("usp_GetComments", connection);
                 dbCommand.CommandType = CommandType.StoredProcedure;
                 dbCommand.Parameters.AddWithValue("@PatientID", id);
+                dbCommand.Parameters.AddWithValue("@Category", category);
 
                 dataReader = dbCommand.ExecuteReader();
 
@@ -2184,6 +2202,79 @@ namespace NHS.Data
             return qapreview;
         }
 
+
+        //changes
+
+        /// <summary>
+        /// Update patient details first tab details.
+        /// </summary>
+        /// <param name="isCodingIssueIdentified">bool</param>
+        /// <param name="comments">string</param>
+        /// <param name="id">int</param>
+        /// <returns>int</returns>
+        public List<int> UpdatePatientDetailsV2(bool isDataQualityIssuesIdentified, string dataqualitycomments, bool isCodingIssueIdentified, string comments, string occupation, bool isUrgentMEReview,
+            string UrgentMEReviewComments, string RelativeName, string RelativeTelNo, string Relationship, string GPSurgery, string fname, string lname, string gender, string DOD, string patientType,string DOB,int? id,int UserId)
+        {
+            var connection = GetConnection();
+            int retVal = 0;
+            SqlCommand dbCommand = new SqlCommand("usp_UpdatePatientDetails", connection);
+            SqlDataReader dataReader = null;
+            List<int> ids = new List<int>();
+            try
+            {
+                dbCommand.CommandType = CommandType.StoredProcedure;
+                dbCommand.Parameters.AddWithValue("@IsDataQualityIssuesIdentified", isDataQualityIssuesIdentified);
+                dbCommand.Parameters.AddWithValue("@IsCodingIssueIdentified", isCodingIssueIdentified);
+                dbCommand.Parameters.AddWithValue("@DataQualityComments", dataqualitycomments);
+                dbCommand.Parameters.AddWithValue("@Comments", comments);
+                dbCommand.Parameters.AddWithValue("@Occupation", occupation);
+                dbCommand.Parameters.AddWithValue("@UrgentMEReview", isUrgentMEReview);
+                dbCommand.Parameters.AddWithValue("@UrgentMEReviewComment", UrgentMEReviewComments);
+                dbCommand.Parameters.AddWithValue("@RelativeName", RelativeName);
+                dbCommand.Parameters.AddWithValue("@RelativeTelNo", RelativeTelNo);
+                dbCommand.Parameters.AddWithValue("@Relationship", Relationship);
+                dbCommand.Parameters.AddWithValue("@GPSurgery", GPSurgery);
+                //changes
+                dbCommand.Parameters.AddWithValue("@fname", fname);
+                dbCommand.Parameters.AddWithValue("@lname", lname);
+                dbCommand.Parameters.AddWithValue("@gender", gender);
+                dbCommand.Parameters.AddWithValue("@DOD", Convert.ToDateTime(DOD).Date);
+                dbCommand.Parameters.AddWithValue("@patientType", patientType);
+                dbCommand.Parameters.AddWithValue("@DOB", Convert.ToDateTime(DOB).Date);
+
+                dbCommand.Parameters.AddWithValue("@UserId", UserId);
+                //changes
+                dbCommand.Parameters.AddWithValue("@ID", id);
+                //dbCommand.Parameters.AddWithValue("@patientID", patientID);
+                
+                //retVal = dbCommand.ExecuteNonQuery();
+                dataReader = dbCommand.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    ids.Add(Convert.ToInt32(dataReader["PID"]));
+                    ids.Add(Convert.ToInt32(dataReader["PKID"]));
+                }
+                }
+            catch (Exception ex)
+            {
+                LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
+            }
+            finally
+            {
+                if (!dataReader.IsClosed)
+                    dataReader.Close();
+            }
+            return ids;
+        }
+        //changse
+
+
+
+
+
+
+
         /// <summary>
         /// Update patient details first tab details.
         /// </summary>
@@ -2254,6 +2345,41 @@ namespace NHS.Data
             catch (Exception ex)
             {
                 LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
+            }
+            return retVal;
+        }
+
+        public int MRESaveComments(string comments, int? id, int userID, int commentTypeID)
+        {
+            var connection = GetConnection();
+            int retVal = 0;
+            SqlCommand dbCommand = new SqlCommand("usp_MERSaveComments", connection);
+            SqlDataReader dataReader = null;
+            try
+            {
+                dbCommand.CommandType = CommandType.StoredProcedure;
+                dbCommand.Parameters.AddWithValue("@Comments", comments);
+                dbCommand.Parameters.AddWithValue("@CommentTypeID", commentTypeID);
+                dbCommand.Parameters.AddWithValue("@UserID", userID);
+                dbCommand.Parameters.AddWithValue("@ID", id);
+
+                dataReader = dbCommand.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+
+                    retVal = Convert.ToInt32(dataReader["CID"]);
+                } 
+                       
+            }
+            catch (Exception ex)
+            {
+                LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
+            }
+            finally
+            {
+                if (!dataReader.IsClosed)
+                    dataReader.Close();
             }
             return retVal;
         }
@@ -2400,6 +2526,39 @@ namespace NHS.Data
                 dbCommand.CommandType = CommandType.StoredProcedure;
                 dbCommand.Parameters.AddWithValue("@CodingIssue", codingIssue);
                 dbCommand.Parameters.AddWithValue("@Comments", Comments);
+                dbCommand.Parameters.AddWithValue("@ID", id);
+                retVal = dbCommand.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
+            }
+            return retVal;
+        }
+
+
+        public int UpdateQualityReview(string sourceReview,string ReviewDate, string ReviewerName, string Spell, string Summary, string isCodingIssue, string isTimingIssue, string isDataSysIssue, string isClinicalReview, string isProcessReview, string Recom, bool isReviewCompleted,int id)
+        {
+            var connection = GetConnection();
+            int retVal = 0;
+            SqlCommand dbCommand = new SqlCommand("usp_UpdateQualityReview", connection);
+            try
+            {
+                dbCommand.CommandType = CommandType.StoredProcedure;
+                dbCommand.Parameters.AddWithValue("@sourceReview", sourceReview);
+                dbCommand.Parameters.AddWithValue("@ReviewDate", Convert.ToDateTime(ReviewDate).Date);
+                dbCommand.Parameters.AddWithValue("@ReviewerName", ReviewerName);
+                dbCommand.Parameters.AddWithValue("@Spell", Spell);
+                dbCommand.Parameters.AddWithValue("@Summary", Summary);
+                dbCommand.Parameters.AddWithValue("@isCodingIssue", isCodingIssue);
+                dbCommand.Parameters.AddWithValue("@isTimingIssue", isTimingIssue);
+                dbCommand.Parameters.AddWithValue("@isDataSysIssue", isDataSysIssue);
+
+                dbCommand.Parameters.AddWithValue("@isClinicalReview", isClinicalReview);
+                dbCommand.Parameters.AddWithValue("@isProcessReview", isProcessReview);
+                dbCommand.Parameters.AddWithValue("@Recom", Recom);
+                dbCommand.Parameters.AddWithValue("@isReviewCompleted", isReviewCompleted);
+                
                 dbCommand.Parameters.AddWithValue("@ID", id);
                 retVal = dbCommand.ExecuteNonQuery();
             }
@@ -2844,6 +3003,7 @@ namespace NHS.Data
                         medicalExaminerDecision.MedTriage = Convert.ToInt32(dbReader["MedTriage"]);
                     else
                         medicalExaminerDecision.MedTriage = 2;
+                    medicalExaminerDecision.NoFurtherAction = Convert.ToBoolean(dbReader["CoronerDecisionNFAction"]);
                 }
             }
             catch (Exception ex)
@@ -2858,6 +3018,56 @@ namespace NHS.Data
             if (medicalExaminerDecision.ID == 0 || medicalExaminerDecision.ID == null)
                 medicalExaminerDecision.ID = Convert.ToInt32(id);
             return medicalExaminerDecision;
+        }
+
+
+        public clsQualityReview GetQualityReviewByID(int? id)
+        {
+            var connection = GetConnection();
+            SqlDataReader dbReader = null;
+            clsQualityReview clsQReview = new clsQualityReview();
+            try
+            {
+                SqlCommand dbCmd = new SqlCommand("usp_GetQualityReviewByID", connection);
+                dbCmd.CommandType = CommandType.StoredProcedure;
+                if (id != null)
+                    dbCmd.Parameters.AddWithValue("@ID", id);
+                else
+                    dbCmd.Parameters.AddWithValue("@ID", null);
+
+                dbReader = dbCmd.ExecuteReader();
+
+                while (dbReader.Read())
+                {
+                    //clsQReview.ID = Convert.ToInt32(dbReader["Patient_ID"]);
+                    clsQReview.sourceReview = Convert.ToString(dbReader["sourceReview"]);
+                    clsQReview.ReviewDate = Convert.ToDateTime(dbReader["ReviewDate"]).Date;
+                    clsQReview.ReviewerName = Convert.ToString(dbReader["ReviewerName"]);
+                    clsQReview.Spell = Convert.ToString(dbReader["Spell"]);
+                    clsQReview.Summary = Convert.ToString(dbReader["Summary"]);
+                    clsQReview.isCodingIssue = Convert.ToString(dbReader["isCodingIssue"]);
+                    clsQReview.isTimingIssue = Convert.ToString(dbReader["isTimingIssue"]);
+                    clsQReview.isDataSysIssue = Convert.ToString(dbReader["isDataSysIssue"]);
+                    clsQReview.isClinicalReview = Convert.ToString(dbReader["isClinicalReview"]);
+                    clsQReview.isProcessReview = Convert.ToString(dbReader["isProcessReview"]);
+                    clsQReview.Recom = Convert.ToString(dbReader["Recom"]);
+                    clsQReview.isReviewCompleted = Convert.ToBoolean(dbReader["isReviewCompleted"]);
+                    clsQReview.Patient_ID = Convert.ToInt32(dbReader["Patient_ID"]);
+                   
+                }
+            }
+            catch (Exception ex)
+            {
+                LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
+            }
+            finally
+            {
+                if (!dbReader.IsClosed)
+                    dbReader.Close();
+            }
+            //if (medicalExaminerDecision.ID == 0 || medicalExaminerDecision.ID == null)
+            //    medicalExaminerDecision.ID = Convert.ToInt32(id);
+            return clsQReview;
         }
 
         /// <summary>
@@ -2883,6 +3093,7 @@ namespace NHS.Data
 
                 while (dbReader.Read())
                 {
+                    sJRReview.SJRReview_ID = Convert.ToInt32(dbReader["SJRReview_ID"]);
                     sJRReview.Patient_ID = Convert.ToInt32(dbReader["Patient_ID"]);
                     sJRReview.PatientID = Convert.ToString(dbReader["PatientID"]);
                     sJRReview.PaediatricPatient = Convert.ToBoolean(dbReader["PaediatricPatient"]);
@@ -2910,6 +3121,14 @@ namespace NHS.Data
                     dbReader.Close();
             }
             if (sJRReview.Patient_ID == 0) sJRReview.Patient_ID = Convert.ToInt32(id);
+            if (sJRReview.SJRReview_ID == 0)
+            {
+                sJRReview.IsFormStarted = false;
+            }
+            else
+            {
+                sJRReview.IsFormStarted = true;
+            }
             return sJRReview;
         }
 

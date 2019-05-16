@@ -92,71 +92,97 @@
 
                             <br /><br />
 
+                                  <div class="col-md-6">
+                                      <div class="row">
+                                          <div class="col-md-12">
+                                              <div class="row_bar">
+                                                  Cause of Death
+                                              </div>
+                                          </div>
+                                          @if (Model.MedTriage == 3)
+                                          {
+                                              <div class="col-md-6">
+                                                  <div class="row_bar">
+                                                      1a
+                                                      @Html.EditorFor(model => model.CauseOfDeath1, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
 
-                            <div class="col-md-12">
-                                <div class="row_bar">
-                                    Cause of Death
-                                </div>
-                            </div>
-                            @if (Model.MedTriage == 3)
-                            {
-                                <div class="col-md-6">
-                                    <div class="row_bar">
-                                        1a
-                                        @Html.EditorFor(model => model.CauseOfDeath1, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                                                  </div>
+                                              </div>
+                                          }
+                                          else
+                                          {
+                                              <div class="col-md-6">
+                                                  <div class="row_bar">
+                                                      1a
+                                                      @Html.EditorFor(model => model.CauseOfDeath1, new { htmlAttributes = new { @class = "form-control" } })
 
-                                    </div>
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="col-md-6">
-                                    <div class="row_bar">
-                                        1a
-                                        @Html.EditorFor(model => model.CauseOfDeath1, new { htmlAttributes = new { @class = "form-control" } })
+                                                  </div>
+                                              </div>
+                                          }
+                                          <div class="col-md-6">
+                                              <div class="row_bar">
+                                                  1b
+                                                  @if (Model.MedTriage == 3)
+                                                  {
+                                                      @Html.EditorFor(model => model.CauseOfDeath2, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                                                  }
+                                                  else
+                                                  {
+                                                      @Html.EditorFor(model => model.CauseOfDeath2, new { htmlAttributes = new { @class = "form-control" } })
+                                                  }
+                                              </div>
+                                          </div>
+                                          <div class="col-md-6">
+                                              <div class="row_bar">
+                                                  1c
+                                                  @if (Model.MedTriage == 3)
+                                                  {
+                                                      @Html.EditorFor(model => model.CauseOfDeath3, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                                                  }
+                                                  else
+                                                  {
+                                                      @Html.EditorFor(model => model.CauseOfDeath3, new { htmlAttributes = new { @class = "form-control" } })
+                                                  }
+                                              </div>
+                                          </div>
+                                          <div class="col-md-6">
+                                              <div class="row_bar">
+                                                  2
+                                                  @if (Model.MedTriage == 3)
+                                                  {
+                                                      @Html.EditorFor(model => model.CauseOfDeath4, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                                                  }
+                                                  else
+                                                  {
+                                                      @Html.EditorFor(model => model.CauseOfDeath4, new { htmlAttributes = new { @class = "form-control" } })
+                                                  }
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                      <div class="col-md-12" style="margin-top: 44px !important;">
+                                          <div class="row_bar"></div>
+                                      </div>
+                                      <div class="table_margin">
+                                          <table width="100%" style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;">
+                                              <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                                  <td width="40%" style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Patient ID</b></td>
+                                                  <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.Patient_Id </td>
+                                              </tr>
+                                              <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                                  <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Patient Name</b></td>
+                                                  <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.PatientName</td>
 
-                                    </div>
-                                </div>
-                            }
-                            <div class="col-md-6">
-                                <div class="row_bar">
-                                    1b
-                                    @if (Model.MedTriage == 3)
-                                    {
-                                        @Html.EditorFor(model => model.CauseOfDeath2, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
-                                    }
-                                    else
-                                    {
-                                        @Html.EditorFor(model => model.CauseOfDeath2, new { htmlAttributes = new { @class = "form-control" } })
-                                    }
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="row_bar">
-                                    1c
-                                    @if (Model.MedTriage == 3)
-                                    {
-                                        @Html.EditorFor(model => model.CauseOfDeath3, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
-                                    }
-                                    else
-                                    {
-                                        @Html.EditorFor(model => model.CauseOfDeath3, new { htmlAttributes = new { @class = "form-control" } })
-                                    }
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="row_bar">
-                                    2
-                                    @if (Model.MedTriage == 3)
-                                    {
-                                        @Html.EditorFor(model => model.CauseOfDeath4, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
-                                    }
-                                    else
-                                    {
-                                        @Html.EditorFor(model => model.CauseOfDeath4, new { htmlAttributes = new { @class = "form-control" } })
-                                    }
-                                </div>
-                            </div>
+                                              </tr>
+                                              <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                                                  <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>DOB</b></td>
+                                                  <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.DOB.ToString("dd/MM/yyyy")</td>
+                                              </tr>
+                                          </table>
+                                      </div>
+                                  </div>
+
 
                             <div class="col-md-4">
                                 <div class="row_bar">
@@ -430,7 +456,7 @@
                                     </div>
                                 }
                             }
-                            <div class="col-md-12">
+                            @*<div class="col-md-12">
                                 <div class="row_bar">
                                     @if (Model.MedTriage == 3)
                                     {
@@ -455,7 +481,7 @@
                                         }
                                     }
                                 </div>
-                            </div><br /><br />
+                            </div>*@<br /><br />
                             <div class="col-md-12">
                                 <div class="row_bar">
                                     <label class="label_part" for="defaultCheck1">(If Applicable) Coroner's decision </label>
@@ -657,8 +683,8 @@
         $("#txtTime").mouseleave(function () {
              
             debugger;
-                    var data = $("#txtTime").val();
-            if (parseInt(data) >= 12) {
+            var data = $("#txtTime").val();
+            if (parseInt(data) >= 12 && parseInt(data)<24) {
                 $("#TimeType").val("PM");
             }
             else {

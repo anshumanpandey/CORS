@@ -690,3 +690,16 @@ td a {
 .ClrAmber {
     background: #ffbf00
 }
+
+/*==========Dipankar===========*/
+.row_bar_padding {
+    padding: 0 0 12px 0;
+}
+
+.table_margin {
+    margin: 0 0 20px 0;
+}
+
+.row_bar_margin {
+    margin: 0 0 0 -14px;
+}

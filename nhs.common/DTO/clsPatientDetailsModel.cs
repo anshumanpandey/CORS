@@ -49,7 +49,26 @@ namespace NHS.Common
         public string PatientTypeLongText { get; set; }
     }
 
-    public class clsQAPReview
+    public class clsQualityReview
+    {
+        public int QualityR_ID          {get;set;}
+        public string  sourceReview 	{get;set;}
+        public DateTime ReviewDate 		{get;set;}
+        public string ReviewerName 		{get;set;}
+        public string Spell 			{get;set;}
+        public string Summary 			{get;set;}
+        public string isCodingIssue 	{get;set;}
+        public string isTimingIssue 	{get;set;}
+        public string isDataSysIssue 	{get;set;}
+        public string isClinicalReview 	{get;set;}
+        public string isProcessReview 	{get;set;}
+        public string Recom 			{get;set;}
+        public bool isReviewCompleted { get; set; }
+        public int Patient_ID { get; set; }
+        
+    }
+
+        public class clsQAPReview
     {
         public int Patient_ID { get; set; }
 
@@ -94,6 +113,7 @@ namespace NHS.Common
         public string Interval4 { get; set; }
 
         public int QAPReview { get; set; }
+
     }
 
     public class clsPatientDetails

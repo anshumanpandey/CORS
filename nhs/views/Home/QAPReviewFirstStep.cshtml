@@ -103,7 +103,24 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="row_bar">
-                                        @Html.TextAreaFor(model => model.Synopsis, 10, 200, new { @class = "form-control", placeholder = "This information is to provide information to support your proposed cause of death or referral to the coroner. Please include information regarding any concerns raised." })
+                                        @if (Model.QAPReview == 3)
+                                        {
+
+                                            if (Model.CreatedBy == Convert.ToString(Session["FullName"]))
+                                            {
+                                                @Html.TextAreaFor(model => model.Synopsis, 10, 200, new { @class = "form-control", placeholder = "This information is to provide information to support your proposed cause of death or referral to the coroner. Please include information regarding any concerns raised." })
+                                            }
+                                            else
+                                            {
+                                                @Html.TextAreaFor(model => model.Synopsis, 10, 200, new { @class = "form-control", @readonly = true, placeholder = "This information is to provide information to support your proposed cause of death or referral to the coroner. Please include information regarding any concerns raised." })
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            @Html.TextAreaFor(model => model.Synopsis, 10, 200, new { @class = "form-control", placeholder = "This information is to provide information to support your proposed cause of death or referral to the coroner. Please include information regarding any concerns raised." })
+                                        }
+
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -114,15 +131,52 @@
                                 <div class="col-md-12">
                                     <div class="row_bar">
                                         Do you have any concerns about the quality of care this patient received?
-                                        @if (Model.Concern == true)
+                                        @if (Model.QAPReview == 3)
                                         {
-                                            <input type="radio" checked id="Concern" name="Concern"><span>Yes </span>
-                                            <input type="radio" id="Concern" name="Concern"><span>No </span>
+                                            if (Model.CreatedBy == Convert.ToString(Session["FullName"]))
+                                            {
+                                                if (Model.Concern == true)
+                                                {
+                                                    <input type="radio" checked id="Concern" name="Concern"><span>Yes </span>
+                                                    <input type="radio" id="Concern" name="Concern"><span>No </span>
+                                                }
+                                                else
+                                                {
+                                                    <input type="radio" id="Concern" name="Concern"><span>Yes </span>
+                                                    <input type="radio" checked id="Concern" name="Concern"><span>No </span>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (Model.Concern == true)
+                                                {
+                                                    <input type="radio" checked id="Concern" name="Concern" disabled="disabled"><span>Yes </span>
+                                                    <input type="radio" id="Concern" name="Concern" disabled="disabled"><span>No </span>
+                                                }
+                                                else
+                                                {
+                                                    <input type="radio" id="Concern" name="Concern" disabled="disabled"><span>Yes </span>
+                                                    <input type="radio" checked id="Concern" name="Concern" disabled="disabled"><span>No </span>
+                                                }
+                                            }
+
+
+
+
                                         }
                                         else
                                         {
-                                            <input type="radio" id="Concern" name="Concern"><span>Yes </span>
-                                            <input type="radio" checked id="Concern" name="Concern"><span>No </span>
+
+                                            if (Model.Concern == true)
+                                            {
+                                                <input type="radio" checked id="Concern" name="Concern"><span>Yes </span>
+                                                <input type="radio" id="Concern" name="Concern"><span>No </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="radio" id="Concern" name="Concern"><span>Yes </span>
+                                                <input type="radio" checked id="Concern" name="Concern"><span>No </span>
+                                            }
                                         }
                                     </div>
                                 </div>
@@ -145,12 +199,48 @@
                                 </div>
                                 <div class="col-md-5">
                                     <div class="row_bar">
-                                        @Html.EditorFor(model => model.Reason1a, new { htmlAttributes = new { @class = "form-control" } })
+
+                                        @if (Model.QAPReview == 3)
+                                        {
+                                            if (Model.CreatedBy == Convert.ToString(Session["FullName"]))
+                                            {
+                                                @Html.EditorFor(model => model.Reason1a, new { htmlAttributes = new { @class = "form-control" } })
+                                            }
+                                            else
+                                            {
+                                                @Html.EditorFor(model => model.Reason1a, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                                            }
+
+
+
+                                        }
+                                        else
+                                        {
+                                            @Html.EditorFor(model => model.Reason1a, new { htmlAttributes = new { @class = "form-control" } })
+                                        }
+
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="row_bar">
-                                        @Html.EditorFor(model => model.Interval1, new { htmlAttributes = new { @class = "form-control" } })
+
+                                        @if (Model.QAPReview == 3)
+                                        {
+                                            if (Model.CreatedBy == Convert.ToString(Session["FullName"]))
+                                            {
+                                                @Html.EditorFor(model => model.Interval1, new { htmlAttributes = new { @class = "form-control" } })
+                                            }
+                                            else
+                                            {
+                                                @Html.EditorFor(model => model.Interval1, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            @Html.EditorFor(model => model.Interval1, new { htmlAttributes = new { @class = "form-control" } })
+                                        }
+
                                     </div>
                                 </div>
                                 <div class="col-md-1">
@@ -160,12 +250,47 @@
                                 </div>
                                 <div class="col-md-5">
                                     <div class="row_bar">
-                                        @Html.EditorFor(model => model.Reason1b, new { htmlAttributes = new { @class = "form-control" } })
+
+
+                                        @if (Model.QAPReview == 3)
+                                        {
+                                            if (Model.CreatedBy == Convert.ToString(Session["FullName"]))
+                                            {
+                                                @Html.EditorFor(model => model.Reason1b, new { htmlAttributes = new { @class = "form-control" } })
+                                            }
+                                            else
+                                            {
+                                                @Html.EditorFor(model => model.Reason1b, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            @Html.EditorFor(model => model.Reason1b, new { htmlAttributes = new { @class = "form-control" } })
+                                        }
+
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="row_bar">
-                                        @Html.EditorFor(model => model.Interval2, new { htmlAttributes = new { @class = "form-control" } })
+
+                                        @if (Model.QAPReview == 3)
+                                        {
+                                            if (Model.CreatedBy == Convert.ToString(Session["FullName"]))
+                                            {
+                                                @Html.EditorFor(model => model.Interval2, new { htmlAttributes = new { @class = "form-control" } })
+                                            }
+                                            else
+                                            {
+                                                @Html.EditorFor(model => model.Interval2, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            @Html.EditorFor(model => model.Interval2, new { htmlAttributes = new { @class = "form-control" } })
+                                        }
+
                                     </div>
                                 </div>
                                 <div class="col-md-1">
@@ -175,12 +300,49 @@
                                 </div>
                                 <div class="col-md-5">
                                     <div class="row_bar">
-                                        @Html.EditorFor(model => model.Reason1c, new { htmlAttributes = new { @class = "form-control" } })
+
+                                        @if (Model.QAPReview == 3)
+                                        {
+
+                                            if (Model.CreatedBy == Convert.ToString(Session["FullName"]))
+                                            {
+                                                @Html.EditorFor(model => model.Reason1c, new { htmlAttributes = new { @class = "form-control" } })
+                                            }
+                                            else
+                                            {
+                                                @Html.EditorFor(model => model.Reason1c, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            @Html.EditorFor(model => model.Reason1c, new { htmlAttributes = new { @class = "form-control" } })
+                                        }
+
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="row_bar">
-                                        @Html.EditorFor(model => model.Interval3, new { htmlAttributes = new { @class = "form-control" } })
+
+
+                                        @if (Model.QAPReview == 3)
+                                        {
+                                            if (Model.CreatedBy == Convert.ToString(Session["FullName"]))
+                                            {
+                                                @Html.EditorFor(model => model.Interval3, new { htmlAttributes = new { @class = "form-control" } })
+                                            }
+                                            else
+                                            {
+                                                @Html.EditorFor(model => model.Interval3, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                                            }
+
+
+                                        }
+                                        else
+                                        {
+                                            @Html.EditorFor(model => model.Interval3, new { htmlAttributes = new { @class = "form-control" } })
+                                        }
+
                                     </div>
                                 </div>
                                 <div class="col-md-1">
@@ -190,64 +352,230 @@
                                 </div>
                                 <div class="col-md-5">
                                     <div class="row_bar">
-                                        @Html.EditorFor(model => model.Reason2, new { htmlAttributes = new { @class = "form-control" } })
+                                        @if (Model.QAPReview == 3)
+                                        {
+
+                                            if (Model.CreatedBy == Convert.ToString(Session["FullName"]))
+                                            {
+                                                @Html.EditorFor(model => model.Reason2, new { htmlAttributes = new { @class = "form-control" } })
+                                            }
+                                            else
+                                            {
+                                                @Html.EditorFor(model => model.Reason2, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            @Html.EditorFor(model => model.Reason2, new { htmlAttributes = new { @class = "form-control" } })
+                                        }
+
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="row_bar">
-                                        @Html.EditorFor(model => model.Interval4, new { htmlAttributes = new { @class = "form-control" } })
+                                        @if (Model.QAPReview == 3)
+                                        {
+                                            if (Model.CreatedBy == Convert.ToString(Session["FullName"]))
+                                            {
+                                                @Html.EditorFor(model => model.Interval4, new { htmlAttributes = new { @class = "form-control" } })
+                                            }
+                                            else
+                                            {
+                                                @Html.EditorFor(model => model.Interval4, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            @Html.EditorFor(model => model.Interval4, new { htmlAttributes = new { @class = "form-control" } })
+                                        }
+
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="row_bar">
-                                        @if (Model.MCCD == true)
+                                        @if (Model.QAPReview == 3)
                                         {
-                                            <input type="checkbox" checked id="MCCD" name="MCCD"><span> I feel able to complete the MCCD with no need for coroner referral <i>(Only valid for a doctor that attended the deceased)</i> </span>
+                                            if (Model.CreatedBy == Convert.ToString(Session["FullName"]))
+                                            {
+                                                if (Model.MCCD == true)
+                                                {
+                                                    <input type="checkbox" checked id="MCCD" name="MCCD"><span> I feel able to complete the MCCD with no need for coroner referral <i>(Only valid for a doctor that attended the deceased)</i> </span>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" id="MCCD" name="MCCD"><span> I feel able to complete the MCCD with no need for coroner referral <i>(Only valid for a doctor that attended the deceased)</i> </span>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (Model.MCCD == true)
+                                                {
+                                                    <input type="checkbox" checked id="MCCD" name="MCCD" disabled="disabled"><span> I feel able to complete the MCCD with no need for coroner referral <i>(Only valid for a doctor that attended the deceased)</i> </span>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" id="MCCD" name="MCCD" disabled="disabled"><span> I feel able to complete the MCCD with no need for coroner referral <i>(Only valid for a doctor that attended the deceased)</i> </span>
+                                                }
+                                            }
+
                                         }
                                         else
                                         {
-                                            <input type="checkbox" id="MCCD" name="MCCD"><span> I feel able to complete the MCCD with no need for coroner referral <i>(Only valid for a doctor that attended the deceased)</i> </span>
+                                            if (Model.MCCD == true)
+                                            {
+                                                <input type="checkbox" checked id="MCCD" name="MCCD"><span> I feel able to complete the MCCD with no need for coroner referral <i>(Only valid for a doctor that attended the deceased)</i> </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" id="MCCD" name="MCCD"><span> I feel able to complete the MCCD with no need for coroner referral <i>(Only valid for a doctor that attended the deceased)</i> </span>
+                                            }
                                         }
+
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="row_bar">
-                                        @if (Model.Referral == true)
+
+                                        @if (Model.QAPReview == 3)
                                         {
-                                            <input type="checkbox" checked id="Referral" name="Referral"><span> I feel this case requires referral to the coroner for further action for the following reason </span>
+                                            if (Model.CreatedBy == Convert.ToString(Session["FullName"]))
+                                            {
+                                                if (Model.Referral == true)
+                                                {
+                                                    <input type="checkbox" checked id="Referral" name="Referral"><span> I feel this case requires referral to the coroner for further action for the following reason </span>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" id="Referral" name="Referral"><span> I feel this case requires referral to the coroner for further action for the following reason </span>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (Model.Referral == true)
+                                                {
+                                                    <input type="checkbox" checked id="Referral" name="Referral" disabled="disabled"><span> I feel this case requires referral to the coroner for further action for the following reason </span>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" id="Referral" name="Referral" disabled="disabled"><span> I feel this case requires referral to the coroner for further action for the following reason </span>
+                                                }
+                                            }
+
                                         }
                                         else
                                         {
-                                            <input type="checkbox" id="Referral" name="Referral"><span> I feel this case requires referral to the coroner for further action for the following reason </span>
+                                            if (Model.Referral == true)
+                                            {
+                                                <input type="checkbox" checked id="Referral" name="Referral"><span> I feel this case requires referral to the coroner for further action for the following reason </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" id="Referral" name="Referral"><span> I feel this case requires referral to the coroner for further action for the following reason </span>
+                                            }
                                         }
+
+
                                     </div>
                                 </div>
-                                @if (Model.Referral == true)
+
+                                @if (Model.QAPReview == 3)
                                 {
-                                    <div id="reasonlabel" style="display:block;" class="col-md-12">
-                                        <div class="row_bar">
-                                            Reason
-                                        </div>
-                                    </div>
-                                    <div id="reasontextarea" style="display:block;" class="col-md-12">
-                                        <div class="row_bar">
-                                            @Html.TextAreaFor(model => model.Reason, 5, 200, new { @class = "form-control", placeholder = "" })
-                                        </div>
-                                    </div>
+                                    if (Model.CreatedBy == Convert.ToString(Session["FullName"]))
+                                    {
+                                        if (Model.Referral == true)
+                                        {
+                                            <div id="reasonlabel" style="display:block;" class="col-md-12">
+                                                <div class="row_bar">
+                                                    Reason
+                                                </div>
+                                            </div>
+                                            <div id="reasontextarea" style="display:block;" class="col-md-12">
+                                                <div class="row_bar">
+                                                    @Html.TextAreaFor(model => model.Reason, 5, 200, new { @class = "form-control", placeholder = "" })
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div id="reasonlabel" style="display:none;" class="col-md-12">
+                                                <div class="row_bar">
+                                                    Reason
+                                                </div>
+                                            </div>
+                                            <div id="reasontextarea" style="display:none;" class="col-md-12">
+                                                <div class="row_bar">
+                                                    @Html.TextAreaFor(model => model.Reason, 5, 200, new { @class = "form-control", placeholder = "" })
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (Model.Referral == true)
+                                        {
+                                            <div id="reasonlabel" style="display:block;" class="col-md-12">
+                                                <div class="row_bar">
+                                                    Reason
+                                                </div>
+                                            </div>
+                                            <div id="reasontextarea" style="display:block;" class="col-md-12">
+                                                <div class="row_bar">
+                                                    @Html.TextAreaFor(model => model.Reason, 5, 200, new { @class = "form-control", placeholder = "", @readonly = true })
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div id="reasonlabel" style="display:none;" class="col-md-12">
+                                                <div class="row_bar">
+                                                    Reason
+                                                </div>
+                                            </div>
+                                            <div id="reasontextarea" style="display:none;" class="col-md-12">
+                                                <div class="row_bar">
+                                                    @Html.TextAreaFor(model => model.Reason, 5, 200, new { @class = "form-control", placeholder = "", @readonly = true })
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+
+
                                 }
                                 else
                                 {
-                                    <div id="reasonlabel" style="display:none;" class="col-md-12">
-                                        <div class="row_bar">
-                                            Reason
+                                    if (Model.Referral == true)
+                                    {
+                                        <div id="reasonlabel" style="display:block;" class="col-md-12">
+                                            <div class="row_bar">
+                                                Reason
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div id="reasontextarea" style="display:none;" class="col-md-12">
-                                        <div class="row_bar">
-                                            @Html.TextAreaFor(model => model.Reason, 5, 200, new { @class = "form-control", placeholder = "" })
+                                        <div id="reasontextarea" style="display:block;" class="col-md-12">
+                                            <div class="row_bar">
+                                                @Html.TextAreaFor(model => model.Reason, 5, 200, new { @class = "form-control", placeholder = "" })
+                                            </div>
                                         </div>
-                                    </div>
+                                    }
+                                    else
+                                    {
+                                        <div id="reasonlabel" style="display:none;" class="col-md-12">
+                                            <div class="row_bar">
+                                                Reason
+                                            </div>
+                                        </div>
+                                        <div id="reasontextarea" style="display:none;" class="col-md-12">
+                                            <div class="row_bar">
+                                                @Html.TextAreaFor(model => model.Reason, 5, 200, new { @class = "form-control", placeholder = "" })
+                                            </div>
+                                        </div>
+                                    }
                                 }
+
+
+
+
                                 <div class="col-md-12">
                                     <div class="row_bar">
                                         Medical practitioner's name and contact details
@@ -260,7 +588,23 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="row_bar">
-                                        @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+                                        @if (Model.QAPReview == 3)
+                                        {
+                                            if (Model.CreatedBy == Convert.ToString(Session["FullName"]))
+                                            {
+                                                @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+                                            }
+                                            else
+                                            {
+                                                @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+                                        }
+
                                     </div>
                                 </div>
                                 <div class="col-md-2">
@@ -270,7 +614,23 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="row_bar">
-                                        @Html.EditorFor(model => model.GMCNo, new { htmlAttributes = new { @class = "form-control" } })
+                                        @if (Model.QAPReview == 3)
+                                        {
+                                            if (Model.CreatedBy == Convert.ToString(Session["FullName"]))
+                                            {
+                                                @Html.EditorFor(model => model.GMCNo, new { htmlAttributes = new { @class = "form-control" } })
+                                            }
+                                            else
+                                            {
+                                                @Html.EditorFor(model => model.GMCNo, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            @Html.EditorFor(model => model.GMCNo, new { htmlAttributes = new { @class = "form-control" } })
+                                        }
+
                                     </div>
                                 </div>
                                 <br /><br /><br />
@@ -281,7 +641,23 @@
                                 </div>
                                 <div class="col-md-10">
                                     <div class="row_bar">
-                                        @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control" } })
+                                        @if (Model.QAPReview == 3)
+                                        {
+                                            if (Model.CreatedBy == Convert.ToString(Session["FullName"]))
+                                            {
+                                                @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control" } })
+                                            }
+                                            else
+                                            {
+                                                @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control" } })
+                                        }
+
                                     </div>
                                 </div>
                                 <br /><br /><br />
@@ -292,7 +668,24 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="row_bar">
-                                        @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+
+                                        @if (Model.QAPReview == 3)
+                                        {
+                                            if (Model.CreatedBy == Convert.ToString(Session["FullName"]))
+                                            {
+                                                @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                                            }
+                                            else
+                                            {
+                                                @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                                        }
+
                                     </div>
                                 </div>
                                 <div class="col-md-2">
@@ -302,14 +695,47 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="row_bar">
-                                        @Html.EditorFor(model => model.AlternatePhone, new { htmlAttributes = new { @class = "form-control" } })
+                                        @if (Model.QAPReview == 3)
+                                        {
+                                            if (Model.CreatedBy == Convert.ToString(Session["FullName"]))
+                                            {
+                                                @Html.EditorFor(model => model.AlternatePhone, new { htmlAttributes = new { @class = "form-control" } })
+                                            }
+                                            else
+                                            {
+                                                @Html.EditorFor(model => model.AlternatePhone, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            @Html.EditorFor(model => model.AlternatePhone, new { htmlAttributes = new { @class = "form-control" } })
+                                        }
+
                                     </div>
                                 </div>
 
                                 @*changes*@
                                 <div class="col-md-12 IsRevCom">
                                     <div class="row_bar">
-                                        <input type="checkbox" id="QAPReview" name="QAPReview"><span>Review Completed?</span>
+
+                                        @if (Model.QAPReview == 3)
+                                        {
+                                            if (Model.CreatedBy == Convert.ToString(Session["FullName"]))
+                                            {
+                                                <input type="checkbox" id="QAPReview" name="QAPReview" ><span>Review Completed?</span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" id="QAPReview" name="QAPReview" disabled="disabled"><span>Review Completed?</span>
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" id="QAPReview" name="QAPReview"><span>Review Completed?</span>
+                                        }
+
                                     </div>
                                 </div>
                                 @*changes*@

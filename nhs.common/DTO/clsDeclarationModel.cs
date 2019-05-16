@@ -16,5 +16,8 @@ namespace NHS.Common.DTO
         public string CreatedDate { get; set; }
 
         public int MedTriage { get; set; }
+
+        public DateTime DOB { get; set; }
+        public string PatientName { get; set; }
     }
 }

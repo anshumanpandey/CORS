@@ -1,5 +1,4 @@
 ﻿@model NHS.Common.clsPatientDetails
-
 @{
     /**/
 
@@ -25,6 +24,23 @@
                     <input type="image" src="~/images/Delete.png" width="30" height="30" alt="Submit" id="btnClose1" title="Close" />
                 </div>
             </div>
+            <ul class="nav nav-pills nav-justified thumbnail setup-panel">
+                <li class="active">
+                    <a href='@Url.Action("CodingReview", "home", new { id=Model.ID })'>
+                        <h4 class="list-group-item-heading">
+                            <b> Coding Review</b>
+                        </h4>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href='@Url.Action("QualityReview", "home", new { id=Model.ID })'>
+                        <h4 class="list-group-item-heading">
+                            <b>Clinical Coding Quality Review</b>
+                        </h4>
+                    </a>
+
+                </li>
+                </ul>
         </div>
     </div>
 
@@ -33,7 +49,7 @@
         {
             <div class="col-xs-12 col-lg-12">
                 <div class="row" align="right">
-
+                 
                 </div>
                 <div class="col-md-12 text-center">
                     <div class="form-section" style="text-align:left">
@@ -48,7 +64,16 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="row_bar">
-                                    <span>@Model.PrimaryProcedure</span>
+
+                                    @if (!string.IsNullOrEmpty(@Model.PrimaryDiagnosis))
+                                    {
+                                        <span>@Model.PrimaryDiagnosis</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Awaiting Pending</span>
+                                    }
+
                                 </div>
                             </div>
                             <div class="col-md-4">

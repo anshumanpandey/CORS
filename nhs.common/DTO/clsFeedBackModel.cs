@@ -28,6 +28,10 @@ namespace NHS.Common
 
         public int MedTriage { get; set; }
         public List<FeedBackComments> lstFBComments { get; set; }
+
+        
+        public DateTime DOB { get; set; }
+        public string PatientName { get; set; }
     }
     public class FeedBackComments
     {

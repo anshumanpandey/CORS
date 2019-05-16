@@ -64,6 +64,11 @@ namespace NHS.Common
 
         public int MedTriage { get; set; }
         public bool NoFurtherAction { get; set; }
+
+
+        public string Patient_Id { get; set; }
+        public DateTime DOB { get; set; }
+        public string PatientName { get; set; }
     }
     public class ReasonGroups
     {

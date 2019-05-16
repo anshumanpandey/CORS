@@ -37,6 +37,13 @@
                     </a>
                 </li>
                 <li class="disabled">
+                    <a href='@Url.Action("FinalOutcome", "home", new { id = Model.Patient_ID})'>
+                        <h4 class="list-group-item-heading">
+                            Final Outcome
+                        </h4>
+                    </a>
+                </li>
+                <li class="disabled">
                     <a href='@Url.Action("SJRAssessmentTriage", "home", new { id = Model.Patient_ID})'>
                         <h4 class="list-group-item-heading">
                             SJR Assessment Triage
@@ -104,114 +111,138 @@
                                     }
                                 </div>
                             </div>
-                            @if (Model.Declaration == false)
-                            {
-                            <div class="col-md-2" id="dvNameLabel" style="display:none">
-                                <div class="row_bar">
-                                    <span><b><i>Name of medical examiner (print)</i></b></span>
-                                </div>
-                            </div>
-                            <div class="col-md-4" id="dvNameSpan" style="display:none">
-                                <div class="row_bar">
-                                    @if (!string.IsNullOrEmpty(Model.CreatedBy))
+                            <div class="col-md-8">
+                                <div class="row">
+                                    @if (Model.Declaration == false)
                                     {
-                                        <span><b><i>@Model.CreatedBy</i></b></span>
+                                        <div class="col-md-6" id="dvNameLabel" style="display:none">
+                                            <div class="row_bar">
+                                                <span><b><i>Name of medical examiner (print)</i></b></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" id="dvNameSpan" style="display:none">
+                                            <div class="row_bar">
+                                                @if (!string.IsNullOrEmpty(Model.CreatedBy))
+                                                {
+                                                    <span><b><i>@Model.CreatedBy</i></b></span>
+                                                }
+                                                else
+                                                {
+                                                    if (Session["FullName"] != null)
+                                                    {
+                                                        <span><b><i>@Convert.ToString(Session["FullName"])</i></b></span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>&nbsp;</span>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" id="dvOfficeLabel" style="display:none">
+                                            <div class="row_bar">
+                                                <span><b><i>Office</i></b></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" id="dvOfficeSpan" style="display:none">
+                                            <div class="row_bar">
+                                                <span><b><i>Royal Berkshire Hospital</i></b></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" id="dvDateLabel" style="display:none">
+                                            <div class="row_bar">
+                                                <span><b><i>Date</i></b></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" id="dvDateSpan" style="display:none">
+                                            <div class="row_bar">
+                                                @if (!string.IsNullOrEmpty(Model.CreatedDate))
+                                                {
+                                                    <span><b><i>@Model.CreatedDate</i></b></span>
+                                                }
+                                                else
+                                                {
+                                                    <span><b><i>@DateTime.Now.ToString("dd/MM/yyyy")</i></b></span>
+                                                }
+                                            </div>
+                                        </div>
                                     }
                                     else
                                     {
-                                        if (Session["FullName"] != null)
-                                        {
-                                            <span><b><i>@Convert.ToString(Session["FullName"])</i></b></span>
-                                        }
-                                        else
-                                        {
-                                            <span>&nbsp;</span>
-                                        }
+                                        <div class="col-md-6" id="dvNameLabel" style="display:block">
+                                            <div class="row_bar">
+                                                <span><b><i>Name of medical examiner (print)</i></b></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" id="dvNameSpan" style="display:block">
+                                            <div class="row_bar">
+                                                @if (!string.IsNullOrEmpty(Model.CreatedBy))
+                                                {
+                                                    <span><b><i>@Model.CreatedBy</i></b></span>
+                                                }
+                                                else
+                                                {
+                                                    if (Session["FullName"] != null)
+                                                    {
+                                                        <span><b><i>@Convert.ToString(Session["FullName"])</i></b></span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>&nbsp;</span>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" id="dvOfficeLabel" style="display:block">
+                                            <div class="row_bar">
+                                                <span><b><i>Office</i></b></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" id="dvOfficeSpan" style="display:block">
+                                            <div class="row_bar">
+                                                <span><b><i>Royal Berkshire Hospital</i></b></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" id="dvDateLabel" style="display:block">
+                                            <div class="row_bar">
+                                                <span><b><i>Date</i></b></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" id="dvDateSpan" style="display:block">
+                                            <div class="row_bar">
+                                                @if (!string.IsNullOrEmpty(Model.CreatedDate))
+                                                {
+                                                    <span><b><i>@Model.CreatedDate</i></b></span>
+                                                }
+                                                else
+                                                {
+                                                    <span><b><i>@DateTime.Now.ToString("dd/MM/yyyy")</i></b></span>
+                                                }
+                                            </div>
+                                        </div>
                                     }
                                 </div>
                             </div>
-                            <div class="col-md-2" id="dvOfficeLabel" style="display:none">
-                                <div class="row_bar">
-                                    <span><b><i>Office</i></b></span>
+                            <div class="col-md-4">
+                                <div class="table_margin">
+                                    <table width="100%" style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;">
+                                        <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                            <td width="40%" style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Patient ID</b></td>
+                                            <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.Patient_ID </td>
+                                        </tr>
+                                        <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                            <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Patient Name</b></td>
+                                            <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.PatientName</td>
+
+                                        </tr>
+                                        <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                                            <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>DOB</b></td>
+                                            <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.DOB.ToString("dd/MM/yyyy")</td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
-                            <div class="col-md-4" id="dvOfficeSpan" style="display:none">
-                                <div class="row_bar">
-                                    <span><b><i>Royal Berkshire Hospital</i></b></span>
-                                </div>
-                            </div>
-                            <div class="col-md-2" id="dvDateLabel" style="display:none">
-                                <div class="row_bar">
-                                    <span><b><i>Date</i></b></span>
-                                </div>
-                            </div>
-                            <div class="col-md-4" id="dvDateSpan" style="display:none">
-                                <div class="row_bar">
-                                    @if (!string.IsNullOrEmpty(Model.CreatedDate))
-                                    {
-                                        <span><b><i>@Model.CreatedDate</i></b></span>
-                                    }
-                                    else
-                                    {
-                                        <span><b><i>@DateTime.Now.ToString("dd/MM/yyyy")</i></b></span>
-                                    }
-                                </div>
-                            </div>
-                            }
-                            else
-                            {
-                                <div class="col-md-2" id="dvNameLabel" style="display:block">
-                                    <div class="row_bar">
-                                        <span><b><i>Name of medical examiner (print)</i></b></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-4" id="dvNameSpan" style="display:block">
-                                    <div class="row_bar">
-                                        @if (!string.IsNullOrEmpty(Model.CreatedBy))
-                                        {
-                                            <span><b><i>@Model.CreatedBy</i></b></span>
-                                        }
-                                        else
-                                        {
-                                            if (Session["FullName"] != null)
-                                            {
-                                                <span><b><i>@Convert.ToString(Session["FullName"])</i></b></span>
-                                            }
-                                            else
-                                            {
-                                                <span>&nbsp;</span>
-                                            }
-                                        }
-                                    </div>
-                                </div>
-                                <div class="col-md-2" id="dvOfficeLabel" style="display:block">
-                                    <div class="row_bar">
-                                        <span><b><i>Office</i></b></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-4" id="dvOfficeSpan" style="display:block">
-                                    <div class="row_bar">
-                                        <span><b><i>Royal Berkshire Hospital</i></b></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-2" id="dvDateLabel" style="display:block">
-                                    <div class="row_bar">
-                                        <span><b><i>Date</i></b></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-4" id="dvDateSpan" style="display:block">
-                                    <div class="row_bar">
-                                        @if (!string.IsNullOrEmpty(Model.CreatedDate))
-                                        {
-                                            <span><b><i>@Model.CreatedDate</i></b></span>
-                                        }
-                                        else
-                                        {
-                                            <span><b><i>@DateTime.Now.ToString("dd/MM/yyyy")</i></b></span>
-                                        }
-                                    </div>
-                                </div>
-                            }
+                           
                         </div>
                     </div>
                 </div>
