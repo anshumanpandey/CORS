@@ -1790,6 +1790,10 @@ namespace NHS.Data
                         patientDashboard.MedCount = 0;
                     else
                         patientDashboard.MedCount = Convert.ToInt32(dataReader["MedCount"]);
+                    if (string.IsNullOrEmpty(dataReader["TypeOfPatient"].ToString()))
+                        patientDashboard.TypeOfPatient = "";
+                    else
+                        patientDashboard.TypeOfPatient = Convert.ToString(dataReader["TypeOfPatient"]);
                     lstPatientDetails.Add(patientDashboard);
                 }
             }
@@ -2546,7 +2550,7 @@ namespace NHS.Data
             {
                 dbCommand.CommandType = CommandType.StoredProcedure;
                 dbCommand.Parameters.AddWithValue("@sourceReview", sourceReview);
-                dbCommand.Parameters.AddWithValue("@ReviewDate", Convert.ToDateTime(ReviewDate).Date);
+                dbCommand.Parameters.AddWithValue("@ReviewDate", Convert.ToDateTime(ReviewDate));
                 dbCommand.Parameters.AddWithValue("@ReviewerName", ReviewerName);
                 dbCommand.Parameters.AddWithValue("@Spell", Spell);
                 dbCommand.Parameters.AddWithValue("@Summary", Summary);

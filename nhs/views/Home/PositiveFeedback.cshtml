@@ -315,7 +315,7 @@
                                 @*@Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control" })*@
                                 <div class="row_bar">
                                     Feedback
-                                    @Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control" })
+                                    @Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control" ,@id="cmnt"})
                                     @*@Html.ValidationMessageFor(model => model.objclsMedicalExaminerReview.Comments, "", new { @class = "text-danger" })*@
                                 </div>
                             </div>
@@ -434,7 +434,13 @@
                     if ($("#ddlFeedbackType").val() == '') {
                         alert("Please Select Feedback Type.");
                         return false;
-                    }}
+                    }
+                    else if ($("#cmnt").val() == '')
+                    {
+                        alert("Please Enter Comment.");
+                        return false;
+                    }
+                }
                    
                  
                  

@@ -795,6 +795,7 @@
     <None Include="Properties\PublishProfiles\nhsforms - FTP16.pubxml" />
     <None Include="Properties\PublishProfiles\nhsforms - FTP17.pubxml" />
     <None Include="Properties\PublishProfiles\nhsforms - FTP18.pubxml" />
+    <None Include="Properties\PublishProfiles\nhsforms - FTP19.pubxml" />
     <None Include="Properties\PublishProfiles\nhsforms - FTP2.pubxml" />
     <None Include="Properties\PublishProfiles\nhsforms - FTP3.pubxml" />
     <None Include="Properties\PublishProfiles\nhsforms - FTP4.pubxml" />
@@ -820,6 +821,7 @@
     <None Include="Properties\PublishProfiles\nhsforms - Web Deploy1.pubxml" />
     <None Include="Properties\PublishProfiles\nhsforms - Web Deploy2.pubxml" />
     <None Include="Properties\PublishProfiles\nhsforms - Web Deploy3.pubxml" />
+    <None Include="Properties\PublishProfiles\nhsforms - Web Deploy4.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

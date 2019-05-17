@@ -1378,7 +1378,7 @@ namespace NHS.Controllers
                     if (isDeathCertificate == true)
                     {
                         if (formCollection["DeathCertificateDate"] == null)
-                            deathCertificateDate = DateTime.ParseExact(Convert.ToDateTime(medicalExaminerDecision.DeathCertificateDate).ToString("dd/MM/yyyy"), "dd/MM/yyyy", null);
+                            deathCertificateDate = DateTime.ParseExact(medicalExaminerDecision.DeathCertificateDate, "dd/MM/yyyy", null);
                         //deathCertificateDate = DateTime.ParseExact(Convert.ToDateTime(formCollection["DeathCertificateDate"]).ToString("dd/MM/yyyy"), "dd/MM/yyyy", null);
                         //if (formCollection["DeathCertificateTime"] == "") formCollection["DeathCertificateTime"] = DateTime.ParseExact("00:00", "HH:mm", null).ToString();
                     }
@@ -1779,7 +1779,14 @@ namespace NHS.Controllers
                     if (Convert.ToString(formCollection["NoFurAction"]) == "on") isCoronerDecisionNFAction = true;
                     if (isDeathCertificate == true)
                     {
-                        if (formCollection["DeathCertificateDate"] != "") deathCertificateDate = DateTime.ParseExact(Convert.ToDateTime(formCollection["DeathCertificateDate"]).ToString("dd/MM/yyyy"), "dd/MM/yyyy", null);
+                        try {
+                            if (formCollection["DeathCertificateDate"] != "") deathCertificateDate = DateTime.ParseExact(formCollection["DeathCertificateDate"].ToString(), "dd/MM/yyyy", null);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
+                       
                         //if (formCollection["DeathCertificateTime"] == "") formCollection["DeathCertificateTime"] = DateTime.ParseExact("00:00", "HH:mm", null).ToString();
                     }
                     else

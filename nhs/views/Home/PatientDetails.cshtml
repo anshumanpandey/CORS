@@ -366,14 +366,15 @@
 
                                     @if (Model.ID > 0)
                                     {
-                                        if (Model.Gender.Trim().ToUpper().IndexOf("FEMALE") > 0)
+                                    <span>@Model.Gender</span>
+                                        @*if (Model.Gender.Trim().ToUpper().IndexOf("FEMALE") > 0)
                                         {
                                             <span>Female</span>
                                         }
                                         else
                                         {
                                             <span>Male</span>
-                                        }
+                                        }*@
                                     }
                                     else
                                     {

@@ -221,22 +221,22 @@
         <div style="width:90%;">
             <table class="stripe row-border order-column" style="overflow:auto;" id="tblPatientDetails">
                 <thead>
-                    <tr bgcolor="#a9d7cc" style="color:black;width:90%;  font-size:11px;">
-                        <th align="left" width="10%">Patient ID</th>
-                        <th align="left" width="5%">Name</th>
-                        <th align="center" width="5%" style="display:none">DOB</th>
-                        <th align="center" width="5%" style="display:none">Date of Admission</th>
-                        <th align="center" width="5%">Date of Death</th>
-                        <th align="left" width="10%" style="display:none">Ward of Death</th>
-                        <th align="center" width="10%">Discharge Consultant</th>
-                        <th align="center" width="10%" style="display:none">Discharge Speciality</th>
-                        <th align="center" width="10%">Patient Type Actual</th>
-                        <th align="center" width="10%">QAP Review Status</th>
-                        <th align="center" width="10%">Medical Examiner Triage Review</th>
-                        <th align="center" width="10%">SJR Review Status</th>
-                        <th align="center" width="5%">SJR  Review Outcome</th>
-                        <th align="center" width="5%">SJR 2 Review Status</th>
-                        <th align="center" width="5%">Coding Review Status</th>
+                    <tr bgcolor="#a9d7cc" style="color:black;  font-size:11px;">
+                        <th align="center" width="2%" style="text-align:center;">Patient ID</th>
+                        <th align="left" width="9%" style="">Name</th>
+                        <th align="center" width="5%" style="display:none;">DOB</th>
+                        <th align="center" width="5%" style="display:none;">Date of Admission</th>
+                        <th align="center" width="8%" style="">Date of Death</th>
+                        <th align="left" width="10%" style="display:none;">Ward of Death</th>
+                        <th align="center" width="10%" style="">Discharge Consultant</th>
+                        <th align="center" width="10%" style="display:none;">Discharge Speciality</th>
+                        <th align="center" width="3%" style="">Patient Type </th>
+                        <th align="center" width="10%" style="">QAP Review Status</th>
+                        <th align="center" width="10%" style="">ME Triage Review</th>
+                        <th align="center" width="10%" style="">SJR Review Status</th>
+                        <th align="center" width="5%" style="">SJR  Review Outcome</th>
+                        <th align="center" width="5%" style="">SJR 2 Review Status</th>
+                        <th align="center" width="5%" style="">Coding Review Status</th>
                     </tr>
                 </thead>
                 <tbody style="font-size:11px;padding:0px;">
@@ -244,148 +244,147 @@
                     {
                         foreach (var item in Model)
                         {
-                            <tr>
-                                <td align="left" width="5%" class="PID"> <u>@Html.ActionLink(item.PatientId.Trim(), "MortalityReview", new { id = item.ID }, new { @style = "color:blue;" })</u></td>
-                                <td align="left" width="8%">@item.PatientName.Trim()   <br /> ( @item.Age Yrs)</td>
-                                <td align="left" width="5%" style="display:none">@item.DOB.ToString("dd/MM/yyyy")</td>
-                                <td align="center" width="5%" style="display:none">@item.DateofAdmission.ToString("dd/MM/yyyy")</td>
-                                @*changes*@
-                                <td align="center" width="5%" id="DateOfDeath">@item.DateofDeath.ToString("dd/MM/yyyy")</td>
-                                <td align="center" width="5%" style="display:none">@item.WardofDeath.Trim()</td>
-                                <td align="center" width="10%">@item.DischargeConsutantName.Trim()</td>
-                                <td align="center" width="10%" style="display:none">@item.DischargeSpeciality.Trim()</td>
-                                <td align="center" width="10%">@item.PatientTypeLongText</td>
+                    <tr>
+                        <td align="left" class="PID"> <u>@Html.ActionLink(item.PatientId.Trim(), "MortalityReview", new { id = item.ID }, new { @style = "color:blue;" })</u></td>
+                        <td align="left">@item.PatientName.Trim()   <br /> ( @item.Age Yrs)</td>
+                        <td align="left" style="display:none">@item.DOB.ToString("dd/MM/yyyy")</td>
+                        <td align="center" style="display:none">@item.DateofAdmission.ToString("dd/MM/yyyy")</td>
+                        @*changes*@
+                        <td align="left" id="DateOfDeath">@item.DateofDeath.ToString("dd/MM/yyyy")</td>
+                        <td align="center" style="display:none">@item.WardofDeath.Trim()</td>
+                        <td align="center">@item.DischargeConsutantName.Trim()</td>
+                        <td align="center" style="display:none">@item.DischargeSpeciality.Trim()</td>
+                        <td align="center">@item.PatientTypeLongText</td>
+                        <td align="center"  >
+                            @if (item.QAPReview == 0)
+                            {
+                                <a href='#'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open Medical Examiner Triage form"></a>
+                            }
+                            else if (item.QAPReview == 1)
+                            {
+                                <a href='@Url.Action("QAPReviewFirstStep", "home", new { id = item.ID })'><img src="~/images/amber.png" width="18" height="18" title="Click to open QAP review form"></a>
+                            }
 
-                                <td align="center" width="5%">
-                                    @if (item.QAPReview == 0)
-                                    {
-                                        <a href='#'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open Medical Examiner Triage form"></a>
-                                    }
-                                    else if (item.QAPReview == 1)
-                                    {
-                                        <a href='@Url.Action("QAPReviewFirstStep", "home", new { id = item.ID })'><img src="~/images/amber.png" width="18" height="18" title="Click to open QAP review form"></a>
-                                    }
+                            else if (item.QAPReview == 2)
+                            {
+                                <a href='@Url.Action("QAPReviewFirstStep", "home", new { id = item.ID })'><img src="~/images/RedC.png" width="18" height="18" title="Click to open QAP review form"></a>
+                            }
+                            else if (item.QAPReview == 3)
+                            {
+                                <a href='@Url.Action("QAPReviewFirstStep", "home", new { id = item.ID })'><img src="~/images/GreenCircle.png" width="18" height="18" title="Click to open QAP review form"></a>
+                            }
+                        </td>
+                        <td align="center" >
+                            @if (item.MedTriage == 0)
+                            {
+                                <a href='#'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open Medical Examiner Triage form"></a>
+                            }
+                            else if (item.MedTriage == 1)
+                            {
+                                <a href='@Url.Action("PatientDetails", "home", new { id = item.ID })'><img src="~/images/amber.png" width="18" height="18" title="Click to open Medical Examiner Triage form"></a>
+                            }
 
-                                    else if (item.QAPReview == 2)
-                                    {
-                                        <a href='@Url.Action("QAPReviewFirstStep", "home", new { id = item.ID })'><img src="~/images/RedC.png" width="18" height="18" title="Click to open QAP review form"></a>
-                                    }
-                                    else if (item.QAPReview == 3)
-                                    {
-                                        <a href='@Url.Action("QAPReviewFirstStep", "home", new { id = item.ID })'><img src="~/images/GreenCircle.png" width="18" height="18" title="Click to open QAP review form"></a>
-                                    }
-                                </td>
-                                <td align="center" width="5%">
-                                    @if (item.MedTriage == 0)
-                                    {
-                                        <a href='#'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open Medical Examiner Triage form"></a>
-                                    }
-                                    else if (item.MedTriage == 1)
-                                    {
-                                        <a href='@Url.Action("PatientDetails", "home", new { id = item.ID })'><img src="~/images/amber.png" width="18" height="18" title="Click to open Medical Examiner Triage form"></a>
-                                    }
+                            else if (item.MedTriage == 2)
+                            {
+                                <a href='@Url.Action("PatientDetails", "home", new { id = item.ID })'><img src="~/images/RedC.png" width="18" height="18" title="Click to open Medical Examiner Triage form"></a>
+                            }
+                            else if (item.MedTriage == 3)
+                            {
+                                <a href='@Url.Action("PatientDetails", "home", new { id = item.ID })'><img src="~/images/GreenCircle.png" width="18" height="18" title="Click to open Medical Examiner Triage form"></a>
+                            }
+                        </td>
+                        <td align="center"  >
+                            @if (item.SJR1 == 0)
+                            {
+                                <a href='#'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open SJR Stage 1 form"></a>
+                            }
+                            else if (item.SJR1 == 1)
+                            {
+                                <a href='@Url.Action("Stage2SJRformFirstStep", "home", new { id = item.ID })'><img src="~/images/amber.png" width="18" height="18" title="Click to open SJR Stage 1 form"></a>
+                            }
 
-                                    else if (item.MedTriage == 2)
-                                    {
-                                        <a href='@Url.Action("PatientDetails", "home", new { id = item.ID })'><img src="~/images/RedC.png" width="18" height="18" title="Click to open Medical Examiner Triage form"></a>
-                                    }
-                                    else if (item.MedTriage == 3)
-                                    {
-                                        <a href='@Url.Action("PatientDetails", "home", new { id = item.ID })'><img src="~/images/GreenCircle.png" width="18" height="18" title="Click to open Medical Examiner Triage form"></a>
-                                    }
-                                </td>
-                                <td align="center" width="5%">
-                                    @if (item.SJR1 == 0)
-                                    {
-                                        <a href='#'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open SJR Stage 1 form"></a>
-                                    }
-                                    else if (item.SJR1 == 1)
-                                    {
-                                        <a href='@Url.Action("Stage2SJRformFirstStep", "home", new { id = item.ID })'><img src="~/images/amber.png" width="18" height="18" title="Click to open SJR Stage 1 form"></a>
-                                    }
+                            else if (item.SJR1 == 2)
+                            {
+                                <a href='@Url.Action("Stage2SJRformFirstStep", "home", new { id = item.ID })'><img src="~/images/RedC.png" width="18" height="18" title="Click to open SJR Stage 1 form"></a>
+                            }
 
-                                    else if (item.SJR1 == 2)
-                                    {
-                                        <a href='@Url.Action("Stage2SJRformFirstStep", "home", new { id = item.ID })'><img src="~/images/RedC.png" width="18" height="18" title="Click to open SJR Stage 1 form"></a>
-                                    }
+                            else if (item.SJR1 == 3)
+                            {
+                                <a href='@Url.Action("Stage2SJRformFirstStep", "home", new { id = item.ID })'><img src="~/images/GreenCircle.png" width="18" height="18" title="Click to open SJR Stage 1 form"></a>
+                            }
+                            else
+                            {
+                                <a href='@Url.Action("Stage2SJRformFirstStep", "home", new { id = item.ID })'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open SJR Stage 1 form"></a>
+                            }
+                        </td>
+                        <td align="center" >
+                            @if (item.SJROutcome == 0)
+                            {
+                                <a href='#'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open SJR Outcome form"></a>
+                            }
+                            else if (item.SJROutcome == 1)
+                            {
+                                <a href='@Url.Action("SJROutcome", "home", new { id = item.ID })'><img src="~/images/amber.png" width="18" height="18" title="Click to open SJR Outcome form"></a>
+                            }
 
-                                    else if (item.SJR1 == 3)
-                                    {
-                                        <a href='@Url.Action("Stage2SJRformFirstStep", "home", new { id = item.ID })'><img src="~/images/GreenCircle.png" width="18" height="18" title="Click to open SJR Stage 1 form"></a>
-                                    }
-                                    else
-                                    {
-                                        <a href='@Url.Action("Stage2SJRformFirstStep", "home", new { id = item.ID })'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open SJR Stage 1 form"></a>
-                                    }
-                                </td>
-                                <td align="center" width="5%">
-                                    @if (item.SJROutcome == 0)
-                                    {
-                                        <a href='#'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open SJR Outcome form"></a>
-                                    }
-                                    else if (item.SJROutcome == 1)
-                                    {
-                                        <a href='@Url.Action("SJROutcome", "home", new { id = item.ID })'><img src="~/images/amber.png" width="18" height="18" title="Click to open SJR Outcome form"></a>
-                                    }
+                            else if (item.SJROutcome == 2)
+                            {
+                                <a href='@Url.Action("SJROutcome", "home", new { id = item.ID })'><img src="~/images/RedC.png" width="18" height="18" title="Click to open SJR Outcome form"></a>
+                            }
 
-                                    else if (item.SJROutcome == 2)
-                                    {
-                                        <a href='@Url.Action("SJROutcome", "home", new { id = item.ID })'><img src="~/images/RedC.png" width="18" height="18" title="Click to open SJR Outcome form"></a>
-                                    }
+                            else if (item.SJROutcome == 3)
+                            {
+                                <a href='@Url.Action("SJROutcome", "home", new { id = item.ID })'><img src="~/images/GreenCircle.png" width="18" height="18" title="Click to open SJR Outcome form"></a>
+                            }
+                            else
+                            {
+                                <a href='@Url.Action("SJROutcome", "home", new { id = item.ID })'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open SJR Outcome form"></a>
+                            }
+                        </td>
+                        <td align="center"  >
+                            @if (item.SJR2 == 0)
+                            {
+                                <a href='#'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open SJR Stage 2 form"></a>
+                            }
+                            else if (item.SJR2 == 1)
+                            {
+                                <a href='@Url.Action("Stage3SJRFormFirstStep", "home", new { id = item.ID })'><img src="~/images/amber.png" width="18" height="18" title="Click to open SJR Stage 2 form"></a>
+                            }
 
-                                    else if (item.SJROutcome == 3)
-                                    {
-                                        <a href='@Url.Action("SJROutcome", "home", new { id = item.ID })'><img src="~/images/GreenCircle.png" width="18" height="18" title="Click to open SJR Outcome form"></a>
-                                    }
-                                    else
-                                    {
-                                        <a href='@Url.Action("SJROutcome", "home", new { id = item.ID })'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open SJR Outcome form"></a>
-                                    }
-                                </td>
-                                <td align="center" width="5%">
-                                    @if (item.SJR2 == 0)
-                                    {
-                                        <a href='#'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open SJR Stage 2 form"></a>
-                                    }
-                                    else if (item.SJR2 == 1)
-                                    {
-                                        <a href='@Url.Action("Stage3SJRFormFirstStep", "home", new { id = item.ID })'><img src="~/images/amber.png" width="18" height="18" title="Click to open SJR Stage 2 form"></a>
-                                    }
+                            else if (item.SJR2 == 2)
+                            {
+                                <a href='@Url.Action("Stage3SJRFormFirstStep", "home", new { id = item.ID })'><img src="~/images/RedC.png" width="18" height="18" title="Click to open SJR Stage 2 form"></a>
+                            }
 
-                                    else if (item.SJR2 == 2)
-                                    {
-                                        <a href='@Url.Action("Stage3SJRFormFirstStep", "home", new { id = item.ID })'><img src="~/images/RedC.png" width="18" height="18" title="Click to open SJR Stage 2 form"></a>
-                                    }
+                            else if (item.SJR2 == 3)
+                            {
+                                <a href='@Url.Action("Stage3SJRFormFirstStep", "home", new { id = item.ID })'><img src="~/images/GreenCircle.png" width="18" height="18" title="Click to open SJR Stage 2 form"></a>
+                            }
+                            else
+                            {
+                                <a href='@Url.Action("Stage3SJRFormFirstStep", "home", new { id = item.ID })'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open SJR Stage 2 form"></a>
+                            }
+                        </td>
+                        <td align="center"  >
+                            @if (item.CodingReview == 0)
+                            {
+                                <a href='#'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open Medical Examiner Triage form"></a>
+                            }
+                            else if (item.CodingReview == 1)
+                            {
+                                <a href='@Url.Action("CodingReview", "home", new { id = item.ID })'><img src="~/images/amber.png" width="18" height="18" title="Click to open Coding review form"></a>
+                            }
 
-                                    else if (item.SJR2 == 3)
-                                    {
-                                        <a href='@Url.Action("Stage3SJRFormFirstStep", "home", new { id = item.ID })'><img src="~/images/GreenCircle.png" width="18" height="18" title="Click to open SJR Stage 2 form"></a>
-                                    }
-                                    else
-                                    {
-                                        <a href='@Url.Action("Stage3SJRFormFirstStep", "home", new { id = item.ID })'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open SJR Stage 2 form"></a>
-                                    }
-                                </td>
-                                <td align="center" width="5%">
-                                    @if (item.CodingReview == 0)
-                                    {
-                                        <a href='#'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open Medical Examiner Triage form"></a>
-                                    }
-                                    else if (item.CodingReview == 1)
-                                    {
-                                        <a href='@Url.Action("CodingReview", "home", new { id = item.ID })'><img src="~/images/amber.png" width="18" height="18" title="Click to open Coding review form"></a>
-                                    }
-
-                                    else if (item.CodingReview == 2)
-                                    {
-                                        <a href='@Url.Action("CodingReview", "home", new { id = item.ID })'><img src="~/images/RedC.png" width="18" height="18" title="Click to open Coding review form"></a>
-                                    }
-                                    else if (item.CodingReview == 3)
-                                    {
-                                        <a href='@Url.Action("CodingReview", "home", new { id = item.ID })'><img src="~/images/GreenCircle.png" width="18" height="18" title="Click to open Coding review form"></a>
-                                    }
-                                </td>
-                            </tr>
+                            else if (item.CodingReview == 2)
+                            {
+                                <a href='@Url.Action("CodingReview", "home", new { id = item.ID })'><img src="~/images/RedC.png" width="18" height="18" title="Click to open Coding review form"></a>
+                            }
+                            else if (item.CodingReview == 3)
+                            {
+                                <a href='@Url.Action("CodingReview", "home", new { id = item.ID })'><img src="~/images/GreenCircle.png" width="18" height="18" title="Click to open Coding review form"></a>
+                            }
+                        </td>
+                    </tr>
                         }
                     }
                     else
@@ -414,14 +413,14 @@
 
 
     $(document).ready(function () {
-        debugger;
+     
         var columns = ['DOB', 'DateOfAdmission', 'WardofDeath', 'DischargeSpeciality']
         $('#tblPatientDetails tbody tr').each(function () {
             var cells = $('td', this);
             var titleArr = cells.map(function (index) {
                 if (index == 2) {
                     var div = document.createElement("div");
-                    div.innerHTML = columns[index - 2] + '                            :     ' + this.innerHTML;
+                    div.innerHTML = columns[index - 2] + '                             :     ' + this.innerHTML;
                     div.style.fontSize = "bold";
                     return div.innerHTML;
                     index++;
@@ -441,7 +440,7 @@
                 else {
                 }
             });
-            debugger;
+          
             //$.each(titleArr, function (index, value) {
             //    value.attr("font-weight", "bold");
             //});
@@ -450,7 +449,7 @@
             //})
             cells.each(function (index) {
                 if (index == 0) {
-                    debugger;
+                  
                     //var finalTooltip = titleArr.filter(function (i) {
                     //    return index !== i;
                     //});

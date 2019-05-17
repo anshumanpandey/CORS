@@ -229,6 +229,7 @@ namespace NHS.Common
 
         public bool IsInformed2 { get; set; }
         public List<NextOfKin> lstNEXTKin { get; set; }
+        public string TypeOfPatient { get; set; }
     }
 
     public class NextOfKin
