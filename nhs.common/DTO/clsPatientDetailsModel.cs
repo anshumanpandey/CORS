@@ -66,7 +66,11 @@ namespace NHS.Common
         public string Recom 			{get;set;}
         public bool isReviewCompleted { get; set; }
         public int Patient_ID { get; set; }
-        
+
+        public string PatientId { get; set; }
+        public string DOB { get; set; }
+        public string PatientName { get; set; }
+
     }
 
         public class clsQAPReview
@@ -116,6 +120,10 @@ namespace NHS.Common
         public int QAPReview { get; set; }
 
         public bool ReviewCompleted { get; set; }
+
+        public string PatientId { get; set; }
+        public string DOB { get; set; }
+        public string PatientName { get; set; }
 
     }
 

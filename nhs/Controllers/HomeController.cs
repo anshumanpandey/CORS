@@ -179,6 +179,11 @@ namespace NHS.Controllers
             {
                 throw ex;
             }
+            List<clsPatientDetails> patientDetailsLst = new List<clsPatientDetails>();
+            patientDetailsLst = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
+            patientDetailsLst.ToList()[0].PatientId = patientDetails.ToList()[0].PatientId.ToString();
+            patientDetailsLst.ToList()[0].PatientName = patientDetails.ToList()[0].PatientName;
+            patientDetailsLst.ToList()[0].DOB = patientDetails.ToList()[0].DOB;
             return View(patientDetails[0]);
         }
 
@@ -229,6 +234,11 @@ namespace NHS.Controllers
             {
                 throw ex;
             }
+            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
+            patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
+            clsQReview.PatientId = patientDetails.ToList()[0].PatientId.ToString();
+            clsQReview.PatientName = patientDetails.ToList()[0].PatientName;
+            clsQReview.DOB = patientDetails.ToList()[0].DOB;
             return View(clsQReview);
         }
         [HttpPost]
@@ -324,6 +334,12 @@ namespace NHS.Controllers
             {
                 throw ex;
             }
+            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
+            patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
+            qapreview.PatientId = patientDetails.ToList()[0].PatientId.ToString();
+            qapreview.PatientName = patientDetails.ToList()[0].PatientName;
+            qapreview.DOB = patientDetails.ToList()[0].DOB;
+
             return View(qapreview);
         }
 
@@ -544,6 +560,11 @@ namespace NHS.Controllers
             {
                 throw ex;
             }
+            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
+            patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
+            medicalExaminerReview.PatientId = patientDetails.ToList()[0].PatientId.ToString();
+            medicalExaminerReview.PatientName = patientDetails.ToList()[0].PatientName;
+            medicalExaminerReview.DOB = patientDetails.ToList()[0].DOB;
             return View(medicalExaminerReview);
         }
 
@@ -599,6 +620,12 @@ namespace NHS.Controllers
             {
                 throw ex;
             }
+
+            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
+            patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
+            sjrProblemType.PatientId = patientDetails.ToList()[0].PatientId.ToString();
+            sjrProblemType.PatientName = patientDetails.ToList()[0].PatientName;
+            sjrProblemType.DOB = patientDetails.ToList()[0].DOB;
             return View(sjrProblemType);
         }
 
@@ -654,6 +681,11 @@ namespace NHS.Controllers
             {
                 throw ex;
             }
+            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
+            patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
+            sjrProblemType.PatientId = patientDetails.ToList()[0].PatientId.ToString();
+            sjrProblemType.PatientName = patientDetails.ToList()[0].PatientName;
+            sjrProblemType.DOB = patientDetails.ToList()[0].DOB;
             return View(sjrProblemType);
         }
 
@@ -795,6 +827,11 @@ namespace NHS.Controllers
             {
                 throw ex;
             }
+            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
+            patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
+            medicalExaminerReview.PatientId = patientDetails.ToList()[0].PatientId.ToString();
+            medicalExaminerReview.PatientName = patientDetails.ToList()[0].PatientName;
+            medicalExaminerReview.DOB = patientDetails.ToList()[0].DOB;
             return View(medicalExaminerReview);
         }
 
@@ -830,6 +867,7 @@ namespace NHS.Controllers
             {
                 throw ex;
             }
+
             return RedirectToAction(actionName, new { id = id });
         }
 

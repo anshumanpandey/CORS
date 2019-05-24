@@ -71,5 +71,8 @@ namespace NHS.Common
         public Nullable<System.DateTime> UpdatedDate { get; set; }
 
         public bool ProblemOccured { get; set; }
+        public string PatientId { get; set; }
+        public string DOB { get; set; }
+        public string PatientName { get; set; }
     }
 }
