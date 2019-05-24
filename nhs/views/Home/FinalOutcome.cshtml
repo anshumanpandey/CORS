@@ -25,7 +25,7 @@
                 <li class="disabled">
                     <a href='@Url.Action("MedicalExaminerReview", "home", new { id=Model.ID })'>
                         <h4 class="list-group-item-heading">
-                            Medical Examiner Scrutiny
+                            Medical Examiner<br /> Scrutiny
                         </h4>
                     </a>
                 </li>
@@ -36,17 +36,11 @@
                         </h4>
                     </a>
                 </li>
-                <li class="active">
-                    <a href='@Url.Action("FinalOutcome", "home", new { id = Model.ID})'>
-                        <h4 class="list-group-item-heading">
-                            Final Outcome
-                        </h4>
-                    </a>
-                </li>
+                
                 <li class="disabled">
                     <a href='@Url.Action("SJRAssessmentTriage", "home", new { id = Model.ID})'>
                         <h4 class="list-group-item-heading">
-                            SJR Assessment Triage
+                            SJR Assessment<br /> Triage
                         </h4>
                     </a>
                 </li>
@@ -71,6 +65,13 @@
                         </h4>
                     </a>
                 </li>
+                <li class="active">
+                    <a href='@Url.Action("FinalOutcome", "home", new { id = Model.ID})'>
+                        <h4 class="list-group-item-heading">
+                            Final Outcome<br />(MEO)
+                        </h4>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -85,7 +86,7 @@
                 <div class="col-md-12 well">
                     <div class="form-section">
                         <div class="lable_title">
-                            <h2>MFinal Outcome</h2>
+                            <h2>MEO Final Outcome</h2>
                         </div>
                         <div class="row">
 
@@ -99,63 +100,37 @@
                                                   Cause of Death
                                               </div>
                                           </div>
-                                          @if (Model.MedTriage == 3)
-                                          {
+
                                               <div class="col-md-6">
                                                   <div class="row_bar">
                                                       1a
-                                                      @Html.EditorFor(model => model.CauseOfDeath1, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                                                      @Html.EditorFor(model => model.CauseOfDeath1Final, new { htmlAttributes = new { @class = "form-control" } })
 
                                                   </div>
                                               </div>
-                                          }
-                                          else
-                                          {
-                                              <div class="col-md-6">
-                                                  <div class="row_bar">
-                                                      1a
-                                                      @Html.EditorFor(model => model.CauseOfDeath1, new { htmlAttributes = new { @class = "form-control" } })
-
-                                                  </div>
-                                              </div>
-                                          }
+                                          
                                           <div class="col-md-6">
                                               <div class="row_bar">
                                                   1b
-                                                  @if (Model.MedTriage == 3)
-                                                  {
-                                                      @Html.EditorFor(model => model.CauseOfDeath2, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
-                                                  }
-                                                  else
-                                                  {
-                                                      @Html.EditorFor(model => model.CauseOfDeath2, new { htmlAttributes = new { @class = "form-control" } })
-                                                  }
+                                                 
+                                                      @Html.EditorFor(model => model.CauseOfDeath2Final, new { htmlAttributes = new { @class = "form-control" } })
+                                                  
                                               </div>
                                           </div>
                                           <div class="col-md-6">
                                               <div class="row_bar">
                                                   1c
-                                                  @if (Model.MedTriage == 3)
-                                                  {
-                                                      @Html.EditorFor(model => model.CauseOfDeath3, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
-                                                  }
-                                                  else
-                                                  {
-                                                      @Html.EditorFor(model => model.CauseOfDeath3, new { htmlAttributes = new { @class = "form-control" } })
-                                                  }
+                                                 
+                                                      @Html.EditorFor(model => model.CauseOfDeath3Final, new { htmlAttributes = new { @class = "form-control" } })
+                                                  
                                               </div>
                                           </div>
                                           <div class="col-md-6">
                                               <div class="row_bar">
                                                   2
-                                                  @if (Model.MedTriage == 3)
-                                                  {
-                                                      @Html.EditorFor(model => model.CauseOfDeath4, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
-                                                  }
-                                                  else
-                                                  {
-                                                      @Html.EditorFor(model => model.CauseOfDeath4, new { htmlAttributes = new { @class = "form-control" } })
-                                                  }
+                                                  
+                                                      @Html.EditorFor(model => model.CauseOfDeath4Final, new { htmlAttributes = new { @class = "form-control" } })
+                                                  
                                               </div>
                                           </div>
                                       </div>
@@ -177,7 +152,7 @@
                                               </tr>
                                               <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
                                                   <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>DOB</b></td>
-                                                  <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.DOB.ToString("dd/MM/yyyy")</td>
+                                                  <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.DOB</td>
                                               </tr>
                                           </table>
                                       </div>
@@ -186,20 +161,8 @@
 
                             <div class="col-md-4">
                                 <div class="row_bar">
-                                    @if (Model.MedTriage == 3)
-                                    {
-                                        if (Model.DeathCertificate == true)
-                                        {
-                                            <input type="checkbox" disabled="disabled" checked id="DeathCertificate" name="DeathCertificate"><span> Death Certificate Complete? </span>
-                                        }
-                                        else
-                                        {
-                                            <input type="checkbox" disabled="disabled" id="DeathCertificate" name="DeathCertificate"><span> Death Certificate Complete? </span>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (Model.DeathCertificate == true)
+
+                                        @if (Model.DeathCertificate == true)
                                         {
                                             <input type="checkbox" checked id="DeathCertificate" name="DeathCertificate"><span> Death Certificate Complete? </span>
                                         }
@@ -207,35 +170,23 @@
                                         {
                                             <input type="checkbox" id="DeathCertificate" name="DeathCertificate"><span> Death Certificate Complete? </span>
                                         }
-                                    }
+                                   
                                 </div>
                             </div>
                             @if (Model.DeathCertificate == true)
                             {
                                 <div id="deathdate" class="col-md-4" style="display:block;">
                                     <div class="row_bar">
-                                        @if (Model.MedTriage == 3)
-                                        {
-                                            if (string.IsNullOrEmpty(Model.DeathCertificateDate))
-                                            {
-                                                <input class="form-control input_datepicker" disabled="disabled" readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="" placeholder="Select Date">
-                                            }
+
+                                            @*@if (string.IsNullOrEmpty(Model.DeathCertificateDate))
+                                            {*@
+                                                <input class="form-control input_datepicker" readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="@Model.DeathCertificateDate" placeholder="Select Date">
+                                            @*}
                                             else
                                             {
                                                 <input class="form-control input_datepicker" disabled="disabled" readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="@Model.DeathCertificateDate" placeholder="Select Date">
-                                            }
-                                        }
-                                        else
-                                        {
-                                            if (string.IsNullOrEmpty(Model.DeathCertificateDate))
-                                            {
-                                                <input class="form-control input_datepicker" readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="" placeholder="Select Date">
-                                            }
-                                            else
-                                            {
-                                                <input class="form-control input_datepicker" readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="@Model.DeathCertificateDate" placeholder="Select Date">
-                                            }
-                                        }
+                                            }*@
+                                        
                                     </div>
                                 </div>
                             }
@@ -243,20 +194,8 @@
                             {
                                 <div id="deathdate" class="col-md-4" style="display:none;">
                                     <div class="row_bar">
-                                        @if (Model.MedTriage == 3)
-                                        {
-                                            if (string.IsNullOrEmpty(Model.DeathCertificateDate))
-                                            {
-                                                <input class="form-control datepicker" disabled="disabled" readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="" placeholder="Select Date">
-                                            }
-                                            else
-                                            {
-                                                <input class="form-control datepicker" disabled="disabled" readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="@Model.DeathCertificateDate" placeholder="Select Date">
-                                            }
-                                        }
-                                        else
-                                        {
-                                            if (string.IsNullOrEmpty(Model.DeathCertificateDate))
+                                        
+                                            @if (string.IsNullOrEmpty(Model.DeathCertificateDate))
                                             {
                                                 <input class="form-control datepicker" readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="" placeholder="Select Date">
                                             }
@@ -264,7 +203,7 @@
                                             {
                                                 <input class="form-control datepicker" readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="@Model.DeathCertificateDate" placeholder="Select Date">
                                             }
-                                        }
+                                        
                                     </div>
                                 </div>
                             }
@@ -272,16 +211,10 @@
                             {
                                 <div id="deathtime" class="col-md-2" style="display:block;">
                                     <div class="row_bar">
-                                        @if (Model.MedTriage == 3)
-                                        {
-                                            <input class="form-control" readonly="readonly" name="DeathCertificateTime" type="text" maxlength="5" id="txtTime" placeholder="00:00"
-                                                   value="@Model.DeathCertificateTime" />
-                                        }
-                                        else
-                                        {
+                                        
                                             <input class="form-control" name="DeathCertificateTime" type="text" maxlength="5" id="txtTime" placeholder="00:00"
                                                    value="@Model.DeathCertificateTime" />
-                                        }
+                                        
                                     </div>
                                 </div>
                             }
@@ -289,22 +222,8 @@
                             {
                                 <div id="deathtime" class="col-md-2" style="display:none;">
                                     <div class="row_bar">
-                                        @if (Model.MedTriage == 3)
-                                        {
-                                            if (string.IsNullOrEmpty(Model.DeathCertificateTime))
-                                            {
-                                                <input class="form-control" readonly="readonly" name="DeathCertificateTime" type="text" maxlength="5" id="txtTime" placeholder="00:00"
-                                                       value="" />
-                                            }
-                                            else
-                                            {
-                                                <input class="form-control" readonly="readonly" name="DeathCertificateTime" type="text" maxlength="5" id="txtTime" placeholder="00:00"
-                                                       value="@Model.DeathCertificateTime" />
-                                            }
-                                        }
-                                        else
-                                        {
-                                            if (string.IsNullOrEmpty(Model.DeathCertificateTime))
+                                        
+                                            @if (string.IsNullOrEmpty(Model.DeathCertificateTime))
                                             {
                                                 <input class="form-control" name="DeathCertificateTime" type="text" maxlength="5" id="txtTime" placeholder="00:00"
                                                        value="" />
@@ -314,174 +233,45 @@
                                                 <input class="form-control" name="DeathCertificateTime" type="text" maxlength="5" id="txtTime" placeholder="00:00"
                                                        value="@Model.DeathCertificateTime" />
                                             }
-                                        }
+                                       
                                     </div>
                                 </div>
                             }
                             @if (Model.DeathCertificate == true)
                             {
-                                if (Model.MedTriage == 3)
-                                {
+                                
                                     <div id="deathtimetype" class="col-md-2" style="display:block;">
                                         <div class="row_bar">
-                                            <select disabled="disabled" class="form-control" id="TimeType" name="TimeType">
-                                                @if (Model.TimeType == "0")
-                                                {
-                                                    <option selected value="0">--Select--</option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="0">--Select--</option>
-                                                }
-                                                @if (Model.TimeType == "AM")
-                                                {
-                                                    <option selected value="AM">AM</option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="AM">AM</option>
-                                                }
-                                                @if (Model.TimeType == "PM")
-                                                {
-                                                    <option selected value="PM">PM</option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="PM">PM</option>
-                                                }
-                                            </select>
+                                            @if (Model.TimeType == "0")
+                                            {
+                                                <span>&nbsp;</span>
+                                            }
+                                            else
+                                            {
+                                                <span>@Model.TimeType</span>
+                                            }
                                         </div>
                                     </div>
-                                }
-                                else
-                                {
-                                    <div id="deathtimetype" class="col-md-2" style="display:block;">
-                                        <div class="row_bar">
-                                            <select class="form-control" id="TimeType" name="TimeType">
-                                                @if (Model.TimeType == "0")
-                                                {
-                                                    <option selected value="0">--Select--</option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="0">--Select--</option>
-                                                }
-                                                @if (Model.TimeType == "AM")
-                                                {
-                                                    <option selected value="AM">AM</option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="AM">AM</option>
-                                                }
-                                                @if (Model.TimeType == "PM")
-                                                {
-                                                    <option selected value="PM">PM</option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="PM">PM</option>
-                                                }
-                                            </select>
-                                        </div>
-                                    </div>
-                                }
+                                
                             }
                             else
                             {
-                                if (Model.MedTriage == 3)
-                                {
+                                
                                     <div id="deathtimetype" class="col-md-2" style="display:none;">
                                         <div class="row_bar">
-                                            <select disabled="disabled" class="form-control" id="TimeType" name="TimeType">
-                                                @if (Model.TimeType == "0")
-                                                {
-                                                    <option selected value="0">--Select--</option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="0">--Select--</option>
-                                                }
-                                                @if (Model.TimeType == "AM")
-                                                {
-                                                    <option selected value="AM">AM</option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="AM">AM</option>
-                                                }
-                                                @if (Model.TimeType == "PM")
-                                                {
-                                                    <option selected value="PM">PM</option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="PM">PM</option>
-                                                }
-                                            </select>
+                                            @if (Model.TimeType == "0")
+                                            {
+                                                <span>&nbsp;</span>
+                                            }
+                                            else
+                                            {
+                                                <span>@Model.TimeType</span>
+                                            }
                                         </div>
                                     </div>
-                                }
-                                else
-                                {
-                                    <div id="deathtimetype" class="col-md-2" style="display:none;">
-                                        <div class="row_bar">
-                                            <select class="form-control" id="TimeType" name="TimeType">
-                                                @if (Model.TimeType == "0")
-                                                {
-                                                    <option selected value="0">--Select--</option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="0">--Select--</option>
-                                                }
-                                                @if (Model.TimeType == "AM")
-                                                {
-                                                    <option selected value="AM">AM</option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="AM">AM</option>
-                                                }
-                                                @if (Model.TimeType == "PM")
-                                                {
-                                                    <option selected value="PM">PM</option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="PM">PM</option>
-                                                }
-                                            </select>
-                                        </div>
-                                    </div>
-                                }
+                                
                             }
-                            @*<div class="col-md-12">
-                                <div class="row_bar">
-                                    @if (Model.MedTriage == 3)
-                                    {
-                                        if (Model.CornerReferralComplete == true)
-                                        {
-                                            <input type="checkbox" disabled="disabled" checked id="CoronerReferralComplete" name="CoronerReferralComplete"><span> Coroner's referral Complete? </span>
-                                        }
-                                        else
-                                        {
-                                            <input type="checkbox" disabled="disabled" id="CoronerReferralComplete" name="CoronerReferralComplete"><span> Coroner's referral Complete? </span>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (Model.CornerReferralComplete == true)
-                                        {
-                                            <input type="checkbox" checked id="CoronerReferralComplete" name="CoronerReferralComplete"><span> Coroner's referral Complete? </span>
-                                        }
-                                        else
-                                        {
-                                            <input type="checkbox" id="CoronerReferralComplete" name="CoronerReferralComplete"><span> Coroner's referral Complete? </span>
-                                        }
-                                    }
-                                </div>
-                            </div>*@<br /><br />
+                            <br /><br />
                             <div class="col-md-12">
                                 <div class="row_bar">
                                     <label class="label_part" for="defaultCheck1">(If Applicable) Coroner's decision </label>
@@ -489,20 +279,8 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="row_bar">
-                                    @if (Model.MedTriage == 3)
-                                    {
-                                        if (Model.CoronerDecisionInquest == true)
-                                        {
-                                            <input type="checkbox" disabled="disabled" checked id="Inquest" name="Inquest"><span> Inquest </span>
-                                        }
-                                        else
-                                        {
-                                            <input type="checkbox" disabled="disabled" id="Inquest" name="Inquest"><span> Inquest </span>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (Model.CoronerDecisionInquest == true)
+                                    
+                                        @if (Model.CoronerDecisionInquest == true)
                                         {
                                             <input type="checkbox" checked id="Inquest" name="Inquest"><span> Inquest </span>
                                         }
@@ -510,25 +288,13 @@
                                         {
                                             <input type="checkbox" id="Inquest" name="Inquest"><span> Inquest </span>
                                         }
-                                    }
+                                    
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="row_bar">
-                                    @if (Model.MedTriage == 3)
-                                    {
-                                        if (Model.CoronerDecisionPostMortem == true)
-                                        {
-                                            <input type="checkbox" disabled="disabled" checked id="Post-Mortem" name="Post-Mortem"><span> Post-Mortem </span>
-                                        }
-                                        else
-                                        {
-                                            <input type="checkbox" disabled="disabled" id="Post-Mortem" name="Post-Mortem"><span> Post-Mortem </span>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (Model.CoronerDecisionPostMortem == true)
+                                    
+                                        @if (Model.CoronerDecisionPostMortem == true)
                                         {
                                             <input type="checkbox" checked id="Post-Mortem" name="Post-Mortem"><span> Post-Mortem </span>
                                         }
@@ -536,25 +302,13 @@
                                         {
                                             <input type="checkbox" id="Post-Mortem" name="Post-Mortem"><span> Post-Mortem </span>
                                         }
-                                    }
+                                   
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="row_bar">
-                                    @if (Model.MedTriage == 3)
-                                    {
-                                        if (Model.CoronerDecision100A == true)
-                                        {
-                                            <input type="checkbox" disabled="disabled" checked id="100A" name="100A"><span> 100 A </span>
-                                        }
-                                        else
-                                        {
-                                            <input type="checkbox" disabled="disabled" id="100A" name="100A"><span> 100 A </span>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (Model.CoronerDecision100A == true)
+                                    
+                                        @if (Model.CoronerDecision100A == true)
                                         {
                                             <input type="checkbox" checked id="100A" name="100A"><span> 100 A </span>
                                         }
@@ -562,25 +316,13 @@
                                         {
                                             <input type="checkbox" id="100A" name="100A"><span> 100 A </span>
                                         }
-                                    }
+                                    
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="row_bar">
-                                    @if (Model.MedTriage == 3)
-                                    {
-                                        if (Model.CoronerDecisionGPissue == true)
-                                        {
-                                            <input type="checkbox" disabled="disabled" checked id="GPIssue" name="GPIssue"><span> GP Issue </span>
-                                        }
-                                        else
-                                        {
-                                            <input type="checkbox" disabled="disabled" id="GPIssue" name="GPIssue"><span> GP Issue </span>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (Model.CoronerDecisionGPissue == true)
+                                    
+                                        @if (Model.CoronerDecisionGPissue == true)
                                         {
                                             <input type="checkbox" checked id="GPIssue" name="GPIssue"><span> GP Issue </span>
                                         }
@@ -588,34 +330,36 @@
                                         {
                                             <input type="checkbox" id="GPIssue" name="GPIssue"><span> GP Issue </span>
                                         }
-                                    }
+                                    
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="row_bar">
-                                    @if (Model.MedTriage == 3)
-                                    {
-                                        if (Model.NoFurtherAction == true)
-                                        {
-                                            <input type="checkbox" disabled="disabled" checked id="NoFurAction" name="NoFurAction"><span> No Further Action </span>
-                                        }
-                                        else
-                                        {
-                                            <input type="checkbox" disabled="disabled" id="NoFurAction" name="NoFurAction"><span> No Further Action</span>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (Model.NoFurtherAction == true)
+                                    
+                                        @if (Model.NoFurtherAction == true)
                                         {
                                             <input type="checkbox" checked id="NoFurAction" name="NoFurAction"><span> No Further Action </span>
                                         }
                                         else
                                         {
-                                            <input type="checkbox" id="NoFurAction" name="NoFurAction"><span> No Further Action </span>
+                                            <input type="checkbox" id="NoFurAction" name="NoFurAction"><span> No Further Action</span>
                                         }
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row_bar">
+                                    
+                                    @if (Model.CoronerDecisionForensicPM == true)
+                                    {
+                                    <input type="checkbox" checked id="ForensicPM" name="ForensicPM"><span> Forensic PM </span>
                                     }
+                                    else
+                                    {
+                                    <input type="checkbox" id="ForensicPM" name="ForensicPM"><span> Forensic PM</span>
+                                    }                                  
+                
                                 </div>
                             </div>
                         </div>
@@ -623,7 +367,7 @@
                 </div>
                 <div class="pull-right">
                     <button id="activate-prev-1" name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
-                    <button id="activate-step-2" id="BtnNext" name="BtnNext" class="btn btn-primary btn-lg">Save & Next</button>
+                    <button id="activate-step-2" id="BtnNext" name="BtnNext" class="btn btn-primary btn-lg">Save & Finish</button>
                 </div>
                 @*</form>*@
             </div>

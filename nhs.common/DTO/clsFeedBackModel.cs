@@ -30,7 +30,7 @@ namespace NHS.Common
         public List<FeedBackComments> lstFBComments { get; set; }
 
         
-        public DateTime DOB { get; set; }
+        public string DOB { get; set; }
         public string PatientName { get; set; }
     }
     public class FeedBackComments

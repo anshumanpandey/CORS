@@ -9,6 +9,8 @@ namespace NHS.Common.DTO
     public class clsDeclarationModel
     {
         public int Patient_ID { get; set; }
+
+        public string PatientID { get; set; }
         public bool Declaration { get; set; }
 
         public string CreatedBy { get; set; }
@@ -17,7 +19,7 @@ namespace NHS.Common.DTO
 
         public int MedTriage { get; set; }
 
-        public DateTime DOB { get; set; }
+        public string DOB { get; set; }
         public string PatientName { get; set; }
     }
 }

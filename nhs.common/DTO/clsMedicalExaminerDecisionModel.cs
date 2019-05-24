@@ -37,6 +37,11 @@ namespace NHS.Common
         public string CauseOfDeath2 { get; set; }
         public string CauseOfDeath3 { get; set; }
         public string CauseOfDeath4 { get; set; }
+        public string CauseOfDeath1Final { get; set; }
+        public string CauseOfDeath2Final { get; set; }
+        public string CauseOfDeath3Final { get; set; }
+        public string CauseOfDeath4Final { get; set; }
+
         public bool DeathCertificate { get; set; }
         public bool CornerReferralComplete { get; set; }
 
@@ -49,6 +54,7 @@ namespace NHS.Common
         public bool CoronerDecisionInquest { get; set; }
         public bool CoronerDecision100A { get; set; }
         public bool CoronerDecisionPostMortem { get; set; }
+        public bool CoronerDecisionForensicPM { get; set; }
         public bool CoronerDecisionGPissue { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
@@ -67,7 +73,7 @@ namespace NHS.Common
 
 
         public string Patient_Id { get; set; }
-        public DateTime DOB { get; set; }
+        public string DOB { get; set; }
         public string PatientName { get; set; }
     }
     public class ReasonGroups

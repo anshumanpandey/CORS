@@ -55,7 +55,7 @@ namespace NHS.Common
         public int MedTriage { get; set; }
 
         public string PatientId { get; set; }
-        public DateTime DOB { get; set; }
+        public string DOB { get; set; }
         public string PatientName { get; set; }
 
     }

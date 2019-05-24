@@ -108,17 +108,17 @@
 
                                             if (Model.CreatedBy == Convert.ToString(Session["FullName"]))
                                             {
-                                                @Html.TextAreaFor(model => model.Synopsis, 10, 200, new { @class = "form-control", placeholder = "This information is to provide information to support your proposed cause of death or referral to the coroner. Please include information regarding any concerns raised." })
+                                                @Html.TextAreaFor(model => model.Synopsis, 10, 200, new { @class = "form-control", placeholder = "This information is to provide support your proposed cause of death or referral to the coroner. Please include information regarding any concerns raised." })
                                             }
                                             else
                                             {
-                                                @Html.TextAreaFor(model => model.Synopsis, 10, 200, new { @class = "form-control", @readonly = true, placeholder = "This information is to provide information to support your proposed cause of death or referral to the coroner. Please include information regarding any concerns raised." })
+                                                @Html.TextAreaFor(model => model.Synopsis, 10, 200, new { @class = "form-control", @readonly = true, placeholder = "This information is to provide support your proposed cause of death or referral to the coroner. Please include information regarding any concerns raised." })
                                             }
 
                                         }
                                         else
                                         {
-                                            @Html.TextAreaFor(model => model.Synopsis, 10, 200, new { @class = "form-control", placeholder = "This information is to provide information to support your proposed cause of death or referral to the coroner. Please include information regarding any concerns raised." })
+                                            @Html.TextAreaFor(model => model.Synopsis, 10, 200, new { @class = "form-control", placeholder = "This information is to provide support your proposed cause of death or referral to the coroner. Please include information regarding any concerns raised." })
                                         }
 
                                     </div>
@@ -159,10 +159,6 @@
                                                     <input type="radio" checked id="Concern" name="Concern" disabled="disabled"><span>No </span>
                                                 }
                                             }
-
-
-
-
                                         }
                                         else
                                         {
@@ -723,13 +719,26 @@
                                         {
                                             if (Model.CreatedBy == Convert.ToString(Session["FullName"]))
                                             {
-                                                <input type="checkbox" id="QAPReview" name="QAPReview" ><span>Review Completed?</span>
+                                                if (Model.ReviewCompleted == true)
+                                                {
+                                                    <input type="checkbox" id="QAPReview" name="QAPReview" checked><span>Review Completed?</span>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" id="QAPReview" name="QAPReview"><span>Review Completed?</span>
+                                                }
                                             }
                                             else
                                             {
-                                                <input type="checkbox" id="QAPReview" name="QAPReview" disabled="disabled"><span>Review Completed?</span>
+                                                if (Model.ReviewCompleted == true)
+                                                {
+                                                    <input type="checkbox" id="QAPReview" name="QAPReview" disabled="disabled" checked><span>Review Completed?</span>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" id="QAPReview" name="QAPReview" disabled="disabled"><span>Review Completed?</span>
+                                                }
                                             }
-
                                         }
                                         else
                                         {
@@ -741,48 +750,94 @@
                                 @*changes*@
 
 
-
-                                <div class="col-md-2" id="dvNameLabelSign" style="display:none">
-                                    <div class="row_bar">
-                                        <span><b><i>Signature</i></b></span>
+                                @if (Model.ReviewCompleted == false)
+                                {
+                                    <div class="col-md-2" id="dvNameLabelSign" style="display:none">
+                                        <div class="row_bar">
+                                            <span><b><i>Signature</i></b></span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-4" id="dvNameSpanSign" style="display:none">
-                                    <div class="row_bar">
-                                        @if (Model.QAPReview == 3)
-                                        {
-                                            <span><b><i>@Model.CreatedBy</i></b></span>
-                                        }
-                                        else
-                                        {
-                                            if (Session["FullName"] != null)
+                                    <div class="col-md-4" id="dvNameSpanSign" style="display:none">
+                                        <div class="row_bar">
+                                            @if (Model.QAPReview == 3)
                                             {
-                                                <span><b><i>@Convert.ToString(Session["FullName"])</i></b></span>
+                                                <span><b><i>@Model.CreatedBy</i></b></span>
                                             }
                                             else
                                             {
-                                                <span>&nbsp;</span>
+                                                if (Session["FullName"] != null)
+                                                {
+                                                    <span><b><i>@Convert.ToString(Session["FullName"])</i></b></span>
+                                                }
+                                                else
+                                                {
+                                                    <span>&nbsp;</span>
+                                                }
                                             }
-                                        }
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-2" id="dvDateLabel" style="display:none">
-                                    <div class="row_bar">
-                                        <span><b><i>Date</i></b></span>
+                                    <div class="col-md-2" id="dvDateLabel" style="display:none">
+                                        <div class="row_bar">
+                                            <span><b><i>Date</i></b></span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-4" id="dvDateSpan" style="display:none">
-                                    <div class="row_bar">
-                                        @if (Model.QAPReview == 3)
-                                        {
-                                            <span><b><i>@Model.CreatedDate</i></b></span>
-                                        }
-                                        else
-                                        {
-                                            <span><b><i>@DateTime.Now.ToString("dd/MM/yyyy")</i></b></span>
-                                        }
+                                    <div class="col-md-4" id="dvDateSpan" style="display:none">
+                                        <div class="row_bar">
+                                            @if (Model.QAPReview == 3)
+                                            {
+                                                <span><b><i>@Model.CreatedDate</i></b></span>
+                                            }
+                                            else
+                                            {
+                                                <span><b><i>@DateTime.Now.ToString("dd/MM/yyyy")</i></b></span>
+                                            }
+                                        </div>
                                     </div>
-                                </div>
+                                }
+                                else
+                                {
+                                    <div class="col-md-2" id="dvNameLabelSign" style="display:block">
+                                        <div class="row_bar">
+                                            <span><b><i>Signature</i></b></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" id="dvNameSpanSign" style="display:block">
+                                        <div class="row_bar">
+                                            @if (Model.QAPReview == 3)
+                                            {
+                                                <span><b><i>@Model.CreatedBy</i></b></span>
+                                            }
+                                            else
+                                            {
+                                                if (Session["FullName"] != null)
+                                                {
+                                                    <span><b><i>@Convert.ToString(Session["FullName"])</i></b></span>
+                                                }
+                                                else
+                                                {
+                                                    <span>&nbsp;</span>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" id="dvDateLabel" style="display:block">
+                                        <div class="row_bar">
+                                            <span><b><i>Date</i></b></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" id="dvDateSpan" style="display:block">
+                                        <div class="row_bar">
+                                            @if (Model.QAPReview == 3)
+                                            {
+                                                <span><b><i>@Model.CreatedDate</i></b></span>
+                                            }
+                                            else
+                                            {
+                                                <span><b><i>@DateTime.Now.ToString("dd/MM/yyyy")</i></b></span>
+                                            }
+                                        </div>
+                                    </div>
+                                }
                                 <div class="col-md-12 cls_mar_top">
                                     <div class="row_bar">
                                         <span><i>The doctor providing the information in this form needs to be available to respond, if asked, to any enquiries from a medical examiner or office.</i></span>
@@ -792,6 +847,7 @@
                         </div>
                     </div>
                     <div class="pull-right">
+                        <button id="BtnCancel" name="BtnCancel" class="btn btn-primary btn-lg" onclick="location.href='@Url.Action("MortalityReview", "Home", new { id=Model.Patient_ID })'">Cancel</button>
                         <button id="BtnNext" type="submit" name="BtnNext" class="btn btn-primary btn-lg">Save</button>
                         <span id="btnSave" name="btnSave" class="btn btn-primary btn-lg">Next</span>
                     </div>

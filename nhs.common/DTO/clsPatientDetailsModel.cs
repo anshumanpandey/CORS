@@ -45,6 +45,7 @@ namespace NHS.Common
 
     public class PatientTypes
     {
+        public int ID { get; set; }
         public string PatientType { get; set; }
         public string PatientTypeLongText { get; set; }
     }
@@ -114,13 +115,15 @@ namespace NHS.Common
 
         public int QAPReview { get; set; }
 
+        public bool ReviewCompleted { get; set; }
+
     }
 
     public class clsPatientDetails
     {
         public int ID { get; set; }
         public string PatientId { get; set; }
-        public Nullable<int> SpellNumber { get; set; }
+        public string SpellNumber { get; set; }
         //[Display(Name = "Patient Name")]
         public string PatientName { get; set; }
         //[Display(Name = "MRN")]
@@ -129,7 +132,7 @@ namespace NHS.Common
         public string Gender { get; set; }
         //[Display(Name = "Patient age at time of death")]
         public Nullable<int> Age { get; set; }
-        public DateTime DOB { get; set; }
+        public string DOB { get; set; }
         //[Display(Name = "Day/ Date of Admission")]
         public DateTime DateofAdmission { get; set; }
         //[Display(Name = "Time of arrival")]
@@ -229,6 +232,11 @@ namespace NHS.Common
 
         public bool IsInformed2 { get; set; }
         public List<NextOfKin> lstNEXTKin { get; set; }
+        public string TypeOfPatient { get; set; }
+
+        public int AgeAtDeath { get; set; }
+
+        public int PatientTypeActual { get; set; }
     }
 
     public class NextOfKin

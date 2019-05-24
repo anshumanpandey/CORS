@@ -61,7 +61,7 @@
         </div>
         <div class="col-md-2">
             <div class="card">
-                @if (Model.Gender.Trim().ToUpper() == "FEMALE")
+                @if (Model.Gender.Trim().ToUpper() == "FEMALE" || Model.Gender.Trim().ToUpper().IndexOf("FEMALE") > 0)
                 {
                     <img src="~/images/femaleuser.jpg?v=1.1" />
                 }
@@ -109,7 +109,7 @@
             </tr>
             <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
                 <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc;"><b>DOB</b></td>
-                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; "><b>@Model.DOB.ToString("dd/MM/yyyy")</b></td>
+                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; "><b>@Model.DOB</b></td>
             </tr>
         </table>
         @*@if (Model.PatientType == "AAPC")
@@ -278,9 +278,13 @@
                 <p style="position: relative;top: 20px;font-size: 22px;color:white"> Mortality<br /> review</p>
             </a>*@
             }
-            @if (Model.CodingReview == 1)
+            @if (Model.CodingReview == 3)
             {
-                <a href="@Url.Action("CodingReview", "home", new { id = Model.ID })" class="box3" style="top: 10%; left: 5%;transform: translate(-50%);"><img src="~/images/11.png?v=1.1" title="QAP Review" width="150" height="150" /></a>
+                <a href="@Url.Action("CodingReview", "home", new { id = Model.ID })" class="box3" style="top: 10%; left: 5%;transform: translate(-50%);"><img src="~/images/12.png?v=1.1" title="Coding Review" width="150" height="150" /></a>
+            }
+            else if (Model.CodingReview == 0)
+            {
+                <a href="#" class="box3" style="top: 10%; left: 5%;transform: translate(-50%);"><img src="~/images/14.png?v=1.1" title="Coding Review" width="150" height="150" /></a>
                 @*<a href='@Url.Action("PatientDetails", "home", new {id=Model.ID})' class="box3 ClrAmber" style="top: -60px; left: 50%;transform: translate(-50%);" id="jqMedicalExaminerTriage">
                 <p style="position: relative;top: 30%">Medical Examiner Triage </p>
                 <img src="~/images/53.png" />
@@ -292,18 +296,18 @@
                 @*<a href='@Url.Action("PatientDetails", "home", new {id=Model.ID})' class="box3 clr1" style="top: -60px; left: 50%;transform: translate(-50%);" id="jqMedicalExaminerTriage">
                 <p style="position: relative;top: 30%;">Medical Examiner Triage </p>
             </a>*@
-                <a href="@Url.Action("CodingReview", "home", new { id = Model.ID })" class="box3" style="top: 10%; left: 5%;transform: translate(-50%);"><img src="~/images/13.png?v=1.1" title="QAP Review" width="150" height="150" /></a>
+                <a href="@Url.Action("CodingReview", "home", new { id = Model.ID })" class="box3" style="top: 10%; left: 5%;transform: translate(-50%);"><img src="~/images/13.png?v=1.1" title="Coding Review" width="150" height="150" /></a>
             }
-            else if (Model.CodingReview == 3)
+            else if (Model.CodingReview == 1)
             {
-                @*<a href='@Url.Action("PatientDetails", "home", new {id=Model.ID})' class="box3 ClrGreen" style="top: -60px; left: 50%;transform: translate(-50%);" id="jqMedicalExaminerTriage">
-                <p style="position: relative;top: 30%;">Medical Examiner Triage </p>
-            </a>*@
-                <a href="@Url.Action("CodingReview", "home", new { id = Model.ID })" class="box3" style="top: 10%; left: 5%;transform: translate(-50%);"><img src="~/images/12.png?v=1.1" title="QAP Review" width="150" height="150" /></a>
+                @*<a href='@Url.Action("PatientDetails", "home", new {id=Model.ID})' class="box3 clr1" style="top: -60px; left: 50%;transform: translate(-50%);" id="jqMedicalExaminerTriage">
+                        <p style="position: relative;top: 30%;">Medical Examiner Triage </p>
+                    </a>*@
+                <a href="@Url.Action("CodingReview", "home", new { id = Model.ID })" class="box3" style="top: 10%; left: 5%;transform: translate(-50%);"><img src="~/images/11.png?v=1.1" title="Coding Review" width="150" height="150" /></a>
             }
             else
             {
-                <a href="@Url.Action("CodingReview", "home", new { id = Model.ID })" class="box3" style="top: 10%; left: 5%;transform: translate(-50%);"><img src="~/images/13.png?v=1.1" title="Medical Examiner Triage" width="150" height="150" /></a>
+                <a href="#" class="box3" style="top: 10%; left: 5%;transform: translate(-50%);"><img src="~/images/14.png?v=1.1" title="Medical Examiner Triage" width="150" height="150" /></a>
             }
 
 

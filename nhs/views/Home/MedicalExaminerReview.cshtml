@@ -38,7 +38,7 @@
                 <li class="active">
                     <a href='@Url.Action("MedicalExaminerReview", "home", new { id=Model.Patient_ID })'>
                         <h4 class="list-group-item-heading">
-                            Medical Examiner Scrutiny
+                            Medical Examiner<br/> Scrutiny
                         </h4>
                     </a>
                 </li>
@@ -49,17 +49,11 @@
                         </h4>
                     </a>
                 </li>
-                <li class="disabled">
-                    <a href='@Url.Action("FinalOutcome", "home", new { id = Model.Patient_ID})'>
-                        <h4 class="list-group-item-heading">
-                            Final Outcome(MEO)
-                        </h4>
-                    </a>
-                </li>
+                
                 <li class="disabled">
                     <a href='@Url.Action("SJRAssessmentTriage", "home", new { id = Model.Patient_ID})'>
                         <h4 class="list-group-item-heading">
-                            SJR Assessment Triage
+                            SJR Assessment<br/> Triage
                         </h4>
                     </a>
                 </li>
@@ -81,6 +75,13 @@
                     <a href='@Url.Action("Declaration", "home", new { id = Model.Patient_ID})'>
                         <h4 class="list-group-item-heading">
                             Declaration
+                        </h4>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href='@Url.Action("FinalOutcome", "home", new { id = Model.Patient_ID})'>
+                        <h4 class="list-group-item-heading">
+                            Final Outcome<br />(MEO)
                         </h4>
                     </a>
                 </li>
@@ -250,7 +251,7 @@
                                     </tr>
                                     <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
                                         <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>DOB</b></td>
-                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.DOB.ToString("dd/MM/yyyy")</td>
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.DOB</td>
                                     </tr>
                                 </table>
                             </div>
@@ -425,14 +426,16 @@
                                             </div>
                                         </div>
                                         @*newly added*@
+
                                         @Html.TextArea("txtComments", null, 10, 100, new { @class = "form-control" })
 
                                         <div class="pull-right">
-                                            <button id="BtnSaveComment" name="BtnSaveComment" class="btn btn-primary btn-lg" onclick="SaveComment(); return false;">Save & Next</button>
+                                            <button id="BtnSaveComment" name="BtnSaveComment" class="btn btn-primary btn-lg" onclick="SaveComment(); return false;">Save Comment</button>
                                         </div>
                                     </div>
                                                             @*}*@
                                     </div>
+                                <hidden id="IsComment" class="form-control" value="false" style="display:none"></hidden>
                                 <div class="pull-right">
                                     <button id="BtnOpenComment" name="BtnOpenComment" class="btn btn-primary btn-lg" onclick="OpenComment(); return false;">Add New Comment</button>
                                 </div>
@@ -448,7 +451,7 @@
                     <button id="BtnPrevious" name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
                     <button id="BtnNext" name="BtnNext" class="btn btn-primary btn-lg">Save & Next</button>
                 </div>
-                                                    }
+                                                        }
         </div>
     </div>
     <br />
@@ -622,8 +625,44 @@
             $("#modelClose2").modal();
         });
 
+        //puja changes
+        //for checking validation of comments whether comments has been save if given before the form submition of MEReview
+        $("#BtnNext").on("click", function () {
+            var IscommentOpen = $("#comment").is(":visible");
+            var CommentType = $("#ddlCommentType").val();
+            var comments = $("#txtComments").val();
+            if (IscommentOpen == true)
+            {
+                if (CommentType == "0" || comments == "")
+                {
+                    //$("#IsComment").val("")
+                    if (confirm("You have not entered any comments. Do you want to discard or continue to save the form") == true) {
+                        $("#IsComment").val("false");
+                    } else {
+                        
+                        return false;
+                    }
+                }
+
+                if (CommentType != "0" && comments != "")
+                {
+                    $("#IsComment").val("true");
+                    // alert("Please save the entered comments");
+                }
+                //else if (comments != "") {
+                //    alert("Please save the entered comments");
+                //}
+                //else if (CommentType != "0") {
+                //    alert("Please save the entered comments");
+                //}
+                //else { }
+            }
+        });
 
     });
+    //end chnages
+
+   
     function SaveComment()
     {
         var CommentType = $("#ddlCommentType").val();
@@ -646,16 +685,17 @@
         }
         else
         {
-           
-        
+
+
         $.ajax({
             type: "POST",
-            url: "/Home/MERSaveComment",
+            url: "@Url.Action("MERSaveComment", "Home")",
           //  contentType: "application/json; charset=utf-8",
             data: { CommentType: CommentType, comments: comments },
-          
+
             success: function (result) {
-                alert("Comments Saved");
+                //alert("Comments Saved");
+                location.reload(true);
                 $("#ddlCommentType").val(0);
                 $("#txtComments").val("");
 

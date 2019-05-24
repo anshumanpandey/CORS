@@ -41,10 +41,10 @@ namespace NHS.Common
         public Nullable<System.DateTime> CreateDate { get; set; }
         public string UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
-
+        public string Comments { get; set; }
         public int MedTriage { get; set; }
 
-        public DateTime DOB { get; set; }
+        public string DOB { get; set; }
         public string PatientName { get; set; }
         public bool IsFormStarted { get; set; }
     }
