@@ -259,7 +259,8 @@
 
 
                             @{
-                                var countcomments = @Model.CommentCount.ToString();
+                                //var countcomments = @Model.CommentCount.ToString();
+                                var countcomments = ViewBag.Comments.Count;
                             }
                             Available Comments (<span id="com" name="0" value="0" onclick="OpenFilterComment(0)" style="cursor:pointer;">@countcomments</span>)
                             <div class="clearfix" style="height:5px"></div>
@@ -435,7 +436,8 @@
                                     </div>
                                                             @*}*@
                                     </div>
-                                <hidden id="IsComment" class="form-control" value="false" style="display:none"></hidden>
+                                @*<label id="IsComment" class="form-control" value="false" style="display:none"  ></label>*@
+                                <input id="IsComment" type="hidden" class="form-control" value="" name="IsComment">
                                 <div class="pull-right">
                                     <button id="BtnOpenComment" name="BtnOpenComment" class="btn btn-primary btn-lg" onclick="OpenComment(); return false;">Add New Comment</button>
                                 </div>
@@ -636,8 +638,9 @@
                 if (CommentType == "0" || comments == "")
                 {
                     //$("#IsComment").val("")
-                    if (confirm("You have not entered any comments. Do you want to discard or continue to save the form") == true) {
-                        $("#IsComment").val("false");
+                    if (confirm("You have not entered any comments. Do you want to discard and continue to save the form") == true) {
+                        //$("#IsComment").val("false");
+                        $('input#IsComment').val('false')
                     } else {
                         
                         return false;
@@ -646,7 +649,7 @@
 
                 if (CommentType != "0" && comments != "")
                 {
-                    $("#IsComment").val("true");
+                    $('input#IsComment').val('true')
                     // alert("Please save the entered comments");
                 }
                 //else if (comments != "") {

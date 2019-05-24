@@ -5,13 +5,15 @@
 }
 <style>
     .cls_mar_top {
-    margin-top:7px;
+        margin-top: 7px;
     }
+
     .IsRevCom {
         margin-top: 7px;
         padding-left: 16px;
         margin-bottom: 7px;
     }
+
     .square1 {
         height: 30px;
         width: 100px;
@@ -137,26 +139,26 @@
                                             {
                                                 if (Model.Concern == true)
                                                 {
-                                                    <input type="radio" checked id="Concern" name="Concern"><span>Yes </span>
-                                                    <input type="radio" id="Concern" name="Concern"><span>No </span>
+                                                    <input type="radio" checked id="Concern" name="Concern" value="Yes"><span>Yes </span>
+                                                    <input type="radio" id="Concern" name="Concern" value="No"><span>No </span>
                                                 }
                                                 else
                                                 {
-                                                    <input type="radio" id="Concern" name="Concern"><span>Yes </span>
-                                                    <input type="radio" checked id="Concern" name="Concern"><span>No </span>
+                                                    <input type="radio" id="Concern" name="Concern" value="Yes"><span>Yes </span>
+                                                    <input type="radio" checked id="Concern" name="Concern" value="No"><span>No </span>
                                                 }
                                             }
                                             else
                                             {
                                                 if (Model.Concern == true)
                                                 {
-                                                    <input type="radio" checked id="Concern" name="Concern" disabled="disabled"><span>Yes </span>
-                                                    <input type="radio" id="Concern" name="Concern" disabled="disabled"><span>No </span>
+                                                    <input type="radio" checked id="Concern" name="Concern" disabled="disabled" value="Yes"><span>Yes </span>
+                                                    <input type="radio" id="Concern" name="Concern" disabled="disabled" value="No"><span>No </span>
                                                 }
                                                 else
                                                 {
-                                                    <input type="radio" id="Concern" name="Concern" disabled="disabled"><span>Yes </span>
-                                                    <input type="radio" checked id="Concern" name="Concern" disabled="disabled"><span>No </span>
+                                                    <input type="radio" id="Concern" name="Concern" disabled="disabled" value="Yes"><span>Yes </span>
+                                                    <input type="radio" checked id="Concern" name="Concern" disabled="disabled" value="No"><span>No </span>
                                                 }
                                             }
                                         }
@@ -165,13 +167,13 @@
 
                                             if (Model.Concern == true)
                                             {
-                                                <input type="radio" checked id="Concern" name="Concern"><span>Yes </span>
-                                                <input type="radio" id="Concern" name="Concern"><span>No </span>
+                                                <input type="radio" checked id="Concern" name="Concern" value="Yes"><span>Yes </span>
+                                                <input type="radio" id="Concern" name="Concern" value="No"><span>No </span>
                                             }
                                             else
                                             {
-                                                <input type="radio" id="Concern" name="Concern"><span>Yes </span>
-                                                <input type="radio" checked id="Concern" name="Concern"><span>No </span>
+                                                <input type="radio" id="Concern" name="Concern" value="Yes"><span>Yes </span>
+                                                <input type="radio" checked id="Concern" name="Concern" value="No"><span>No </span>
                                             }
                                         }
                                     </div>
@@ -930,7 +932,7 @@
     @*changes*@
 </div>
 <script>
-   
+
 
     $(document).ready(function () {
         $("#btnClose1").click(function () {
@@ -969,26 +971,24 @@ window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.
 });
 </script>
 <script>
-        $(document).ready(function () {
-            $("#btnCloseYes").click(function () {
-                $("#modelClose1").modal('hide');
-            });
-            $("#btnCloseYes2").click(function () {
-                $("#modelCloseNext").modal('hide');
-            });
+    $(document).ready(function () {
+        $("#btnCloseYes").click(function () {
+            $("#modelClose1").modal('hide');
         });
+        $("#btnCloseYes2").click(function () {
+            $("#modelCloseNext").modal('hide');
+        });
+    });
 </script>
 <script>
     $(document).ready(function () {
         $("#Referral").click(function () {
-            if ($(this).is(":checked"))
-            {
+            if ($(this).is(":checked")) {
                 $("#reasonlabel").css("display", "block");
-                $("#reasontextarea").css("display", "block");                
+                $("#reasontextarea").css("display", "block");
                 $("#MCCD").attr("disabled", true);
             }
-            else
-            {
+            else {
                 $("#reasonlabel").css("display", "none");
                 $("#reasontextarea").css("display", "none");
                 $("#MCCD").removeAttr("disabled");
@@ -999,14 +999,12 @@ window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.
 <script>
     $(document).ready(function () {
         $("#MCCD").click(function () {
-            if ($(this).is(":checked"))
-            {
+            if ($(this).is(":checked")) {
                 $("#reasonlabel").css("display", "none");
                 $("#reasontextarea").css("display", "none");
                 $("#Referral").attr("disabled", true);
             }
-            else
-            {
+            else {
                 $("#Referral").removeAttr("disabled");
             }
         });

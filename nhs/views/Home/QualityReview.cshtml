@@ -1,6 +1,9 @@
 ﻿@model NHS.Common.clsQualityReview
 @{
+    /**/
+
     Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 
 <style>
@@ -16,6 +19,10 @@
 </style>
 <br />
 <br />
+@{
+
+    var role = "";
+}
 <div class="container">
     <div class="row form-group">
         <div class="col-lg-12">
@@ -52,106 +59,180 @@
                 <div class="col-md-6">
                     @Html.Label("Source of Review")
                 </div><div class="col-md-6">
+                    @if (Session["Role"] != null || Session["Role"].Equals(""))
+                    {
+                        role = Session["Role"].ToString();
+                    }
 
-    @if (!string.IsNullOrEmpty(Model.sourceReview))
-    {
-        @*if (Model.sourceReview.Equals("B"))
-            {
-                <option selected value=@Model.sourceReview>
-                    @Model.sourceReview
-                </option>
-                <option value="A">
-                    A
-                </option>
-            }
-            else
-            {
-                <option selected value=@Model.sourceReview>
-                    @Model.sourceReview
-                </option>
-                <option value="B">
-                    B
-                </option>
-            }*@
-        <select class="form-control" id="ddlSourceReview" name="ddlSourceReview" style="width: 50%;">
-            <option selected value="999">
-                Select a value
-            </option>
-            <option value="Internal_Audit">
-                Internal Audit
-            </option>
-            <option value="HSMR_review">
-                HSMR review
-            </option>
-            <option value="SHMI_review">
-                SHMI review
-            </option>
-            <option value="Consultant query">
-                Consultant query
-            </option>
-            <option value="Activity_and_Finance query">
-                Activity and Finance query
-            </option>
-            <option value="Others">
-                Others
-            </option>
-        </select>
-        <script>
+                    @if (role == "Consultant")
+                    {
+                        if (!string.IsNullOrEmpty(Model.sourceReview))
+                        {
+
+                            <select class="form-control" id="ddlSourceReview" name="ddlSourceReview" style="width: 50%;" disabled="disabled">
+                                <option selected value="999">
+                                    Select a value
+                                </option>
+                                <option value="Internal_Audit">
+                                    Internal Audit
+                                </option>
+                                <option value="HSMR_review">
+                                    HSMR review
+                                </option>
+                                <option value="SHMI_review">
+                                    SHMI review
+                                </option>
+                                <option value="Consultant query">
+                                    Consultant query
+                                </option>
+                                <option value="Activity_and_Finance query">
+                                    Activity and Finance query
+                                </option>
+                                <option value="Others">
+                                    Others
+                                </option>
+                            </select>
+                            <script>
                                       $("#ddlSourceReview").val("@Model.sourceReview");
-        </script>
-    }
-    else
-    {
-        <select class="form-control" id="ddlSourceReview" name="ddlSourceReview" style="width: 50%;">
-            <option selected value="999">
-                Select a value
-            </option>
-            <option value="Internal_Audit">
-                Internal Audit
-            </option>
-            <option value="HSMR_review">
-                HSMR review
-            </option>
-            <option value="SHMI_review">
-                SHMI review
-            </option>
-            <option value="Consultant query">
-                Consultant query
-            </option>
-            <option value="Activity_and_Finance query">
-                Activity and Finance query
-            </option>
-            <option value="Others">
-                Others
-            </option>
-        </select>
-    }
+                            </script>
+                        }
+                        else
+                        {
+                            <select class="form-control" id="ddlSourceReview" name="ddlSourceReview" style="width: 50%;" disabled="disabled">
+                                <option selected value="999">
+                                    Select a value
+                                </option>
+                                <option value="Internal_Audit">
+                                    Internal Audit
+                                </option>
+                                <option value="HSMR_review">
+                                    HSMR review
+                                </option>
+                                <option value="SHMI_review">
+                                    SHMI review
+                                </option>
+                                <option value="Consultant query">
+                                    Consultant query
+                                </option>
+                                <option value="Activity_and_Finance query">
+                                    Activity and Finance query
+                                </option>
+                                <option value="Others">
+                                    Others
+                                </option>
+                            </select>
+                        }
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(Model.sourceReview))
+                        {
+
+                            <select class="form-control" id="ddlSourceReview" name="ddlSourceReview" style="width: 50%;">
+                                <option selected value="999">
+                                    Select a value
+                                </option>
+                                <option value="Internal_Audit">
+                                    Internal Audit
+                                </option>
+                                <option value="HSMR_review">
+                                    HSMR review
+                                </option>
+                                <option value="SHMI_review">
+                                    SHMI review
+                                </option>
+                                <option value="Consultant query">
+                                    Consultant query
+                                </option>
+                                <option value="Activity_and_Finance query">
+                                    Activity and Finance query
+                                </option>
+                                <option value="Others">
+                                    Others
+                                </option>
+                            </select>
+                            <script>
+                                      $("#ddlSourceReview").val("@Model.sourceReview");
+                            </script>
+                        }
+                        else
+                        {
+                            <select class="form-control" id="ddlSourceReview" name="ddlSourceReview" style="width: 50%;">
+                                <option selected value="999">
+                                    Select a value
+                                </option>
+                                <option value="Internal_Audit">
+                                    Internal Audit
+                                </option>
+                                <option value="HSMR_review">
+                                    HSMR review
+                                </option>
+                                <option value="SHMI_review">
+                                    SHMI review
+                                </option>
+                                <option value="Consultant query">
+                                    Consultant query
+                                </option>
+                                <option value="Activity_and_Finance query">
+                                    Activity and Finance query
+                                </option>
+                                <option value="Others">
+                                    Others
+                                </option>
+                            </select>
+                        }
+                    }
 
 
 
 
-</div>
+
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     @Html.Label("Date of Review")
                 </div>
                 <div class="col-md-6">
-                    @if (Model.ReviewDate != null)
+
+                    @if (role == "Consultant")
                     {
-                        if (Convert.ToInt32(Model.ReviewDate.Year)>1)
+                        if (Model.ReviewDate != null)
                         {
-                            <input class="form-control input_datepicker" type="text" id="ReviewDate" name="ReviewDate" value=@Model.ReviewDate placeholder="Select Date" style="width: 50%;">
+                            if (Convert.ToInt32(Model.ReviewDate.Year) > 1)
+                            {
+                                <input class="form-control input_datepicker" type="text" id="ReviewDate" name="ReviewDate" value=@Model.ReviewDate placeholder="Select Date" style="width: 50%;" disabled="disabled">
+                            }
+                            else
+                            {
+                                <input class="form-control input_datepicker" type="text" id="ReviewDate" name="ReviewDate" value=@System.DateTime.Now.Date placeholder="Select Date" style="width: 50%;" disabled="disabled">
+                            }
                         }
                         else
                         {
-                            <input class="form-control input_datepicker" type="text" id="ReviewDate" name="ReviewDate" value=@System.DateTime.Now.Date placeholder="Select Date" style="width: 50%;">
+                            <input class="form-control input_datepicker" type="text" id="ReviewDate" name="ReviewDate" value="" placeholder="Select Date" style="width: 50%;" disabled="disabled">
                         }
                     }
                     else
                     {
-                        <input class="form-control input_datepicker" type="text" id="ReviewDate" name="ReviewDate" value="" placeholder="Select Date" style="width: 50%;">
+                        if (Model.ReviewDate != null)
+                        {
+                            if (Convert.ToInt32(Model.ReviewDate.Year) > 1)
+                            {
+                                <input class="form-control input_datepicker" type="text" id="ReviewDate" name="ReviewDate" value=@Model.ReviewDate placeholder="Select Date" style="width: 50%;">
+                            }
+                            else
+                            {
+                                <input class="form-control input_datepicker" type="text" id="ReviewDate" name="ReviewDate" value=@System.DateTime.Now.Date placeholder="Select Date" style="width: 50%;">
+                            }
+                        }
+                        else
+                        {
+                            <input class="form-control input_datepicker" type="text" id="ReviewDate" name="ReviewDate" value="" placeholder="Select Date" style="width: 50%;">
+                        }
                     }
+
+
 
 
                 </div>
@@ -161,20 +242,22 @@
                     @Html.Label("Name of Reviewer")
                 </div>
                 <div class="col-md-6">
-                    @{ 
+                    @{
                         var fullname = Session["FirstName"].ToString() + " " + Session["LastName"].ToString();
 
                     }
-                    @*@if (!string.IsNullOrEmpty(Model.ReviewerName))
-                    {*@
 
-                        @Html.TextBox("ReviewerName", fullname, new { style = "width:50%", @class = "form-control" ,@readonly="readonly"})
-                    @*}                               
+                    @if (role == "Consultant")
+                    {
+                        @Html.TextBox("ReviewerName", fullname, new { style = "width:50%", @class = "form-control", @readonly = "readonly" })
+                    }
                     else
                     {
+                        @Html.TextBox("ReviewerName", fullname, new { style = "width:50%", @class = "form-control", @readonly = "readonly" })
+                    }
 
-                        @Html.TextBox("ReviewerName", null, new { style = "width:50%", @class = "form-control" })
-                    }*@
+
+
 
                 </div>
             </div>
@@ -183,14 +266,30 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    @if (!string.IsNullOrEmpty(Model.Spell))
+
+                    @if (role == "Consultant")
                     {
-                        @Html.TextArea("Spell", Model.Spell, new { style = "width:50%", @class = "form-control",onkeypress = "return numbersonly(event)" })
+                        if (!string.IsNullOrEmpty(Model.Spell))
+                        {
+                            @Html.TextArea("Spell", Model.Spell, new { style = "width:50%", @class = "form-control", onkeypress = "return numbersonly(event)", @readonly = "readonly" })
+                        }
+                        else
+                        {
+                            @Html.TextArea("Spell", null, new { style = "width:50%", @class = "form-control", @readonly = "readonly" })
+                        }
                     }
                     else
                     {
-                        @Html.TextArea("Spell", null, new { style = "width:50%", @class = "form-control" })
+                        if (!string.IsNullOrEmpty(Model.Spell))
+                        {
+                            @Html.TextArea("Spell", Model.Spell, new { style = "width:50%", @class = "form-control", onkeypress = "return numbersonly(event)" })
+                        }
+                        else
+                        {
+                            @Html.TextArea("Spell", null, new { style = "width:50%", @class = "form-control" })
+                        }
                     }
+
 
                 </div>
             </div>
@@ -199,14 +298,32 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    @if (!string.IsNullOrEmpty(Model.Summary))
+
+                    @if (role == "Consultant")
                     {
-                        @Html.TextArea("Summary", Model.Summary, new { style = "width:50%", @class = "form-control" })
+
+                        if (!string.IsNullOrEmpty(Model.Summary))
+                        {
+                            @Html.TextArea("Summary", Model.Summary, new { style = "width:50%", @class = "form-control", @readonly = "readonly" })
+                        }
+                        else
+                        {
+                            @Html.TextArea("Summary", null, new { style = "width:50%", @class = "form-control", @readonly = "readonly" })
+                        }
                     }
                     else
                     {
-                        @Html.TextArea("Summary", null, new { style = "width:50%", @class = "form-control" })
+
+                        if (!string.IsNullOrEmpty(Model.Summary))
+                        {
+                            @Html.TextArea("Summary", Model.Summary, new { style = "width:50%", @class = "form-control" })
+                        }
+                        else
+                        {
+                            @Html.TextArea("Summary", null, new { style = "width:50%", @class = "form-control" })
+                        }
                     }
+
                 </div>
             </div>
             <div class="row">
@@ -217,34 +334,78 @@
                 <div class="col-md-6">@Html.Label("Coding issue")</div>
                 <div class="col-md-6">
 
-                    @if (!string.IsNullOrEmpty(Model.isCodingIssue))
+                    @if (role == "Consultant")
                     {
-                        if (Model.isCodingIssue.Equals("N/A"))
+                        if (!string.IsNullOrEmpty(Model.isCodingIssue))
+                        {
+                            if (Model.isCodingIssue.Equals("N/A"))
+                            {
+                                <input type="radio" id="isCodingIssueNA" name="isCodingIssue" value="N/A" checked disabled="disabled"> <span> N/A </span>
+                                <input type="radio" id="isCodingIssueYes" name="isCodingIssue" value="Yes" disabled="disabled"><span> Yes </span>
+                                <input type="radio" id="isCodingIssueNo" name="isCodingIssue" value="No" disabled="disabled"><span> No </span>
+
+                            }
+                            else if (Model.isCodingIssue.Equals("Yes"))
+                            {
+                                <input type="radio" id="isCodingIssueNA" name="isCodingIssue" value="N/A" disabled="disabled"> <span> N/A </span>
+                                <input type="radio" id="isCodingIssueYes" name="isCodingIssue" value="Yes" checked disabled="disabled"><span> Yes </span>
+                                <input type="radio" id="isCodingIssueNo" name="isCodingIssue" value="No" disabled="disabled"><span> No </span>
+                            }
+                            else
+                            {
+                                <input type="radio" id="isCodingIssueNA" name="isCodingIssue" value="N/A" disabled="disabled"> <span> N/A </span>
+                                <input type="radio" id="isCodingIssueYes" name="isCodingIssue" value="Yes" disabled="disabled"><span> Yes </span>
+                                <input type="radio" id="isCodingIssueNo" name="isCodingIssue" value="No" checked disabled="disabled"><span> No </span>
+                            }
+                        }
+                        else
+                        {
+                            <input type="radio" id="isCodingIssueNA" name="isCodingIssue" value="N/A" checked disabled="disabled"> <span> N/A </span>
+                            <input type="radio" id="isCodingIssueYes" name="isCodingIssue" value="Yes" disabled="disabled"><span> Yes </span>
+                            <input type="radio" id="isCodingIssueNo" name="isCodingIssue" value="No" disabled="disabled"><span> No </span>
+                        }
+
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(Model.isCodingIssue))
+                        {
+                            if (Model.isCodingIssue.Equals("N/A"))
+                            {
+                                <input type="radio" id="isCodingIssueNA" name="isCodingIssue" value="N/A" checked> <span> N/A </span>
+                                <input type="radio" id="isCodingIssueYes" name="isCodingIssue" value="Yes"><span> Yes </span>
+                                <input type="radio" id="isCodingIssueNo" name="isCodingIssue" value="No"><span> No </span>
+
+                            }
+                            else if (Model.isCodingIssue.Equals("Yes"))
+                            {
+                                <input type="radio" id="isCodingIssueNA" name="isCodingIssue" value="N/A"> <span> N/A </span>
+                                <input type="radio" id="isCodingIssueYes" name="isCodingIssue" value="Yes" checked><span> Yes </span>
+                                <input type="radio" id="isCodingIssueNo" name="isCodingIssue" value="No"><span> No </span>
+                            }
+                            else
+                            {
+                                <input type="radio" id="isCodingIssueNA" name="isCodingIssue" value="N/A"> <span> N/A </span>
+                                <input type="radio" id="isCodingIssueYes" name="isCodingIssue" value="Yes"><span> Yes </span>
+                                <input type="radio" id="isCodingIssueNo" name="isCodingIssue" value="No" checked><span> No </span>
+                            }
+                        }
+                        else
                         {
                             <input type="radio" id="isCodingIssueNA" name="isCodingIssue" value="N/A" checked> <span> N/A </span>
                             <input type="radio" id="isCodingIssueYes" name="isCodingIssue" value="Yes"><span> Yes </span>
                             <input type="radio" id="isCodingIssueNo" name="isCodingIssue" value="No"><span> No </span>
+                        }
 
-                        }
-                        else if (Model.isCodingIssue.Equals("Yes"))
-                        {
-                            <input type="radio" id="isCodingIssueNA" name="isCodingIssue" value="N/A"> <span> N/A </span>
-                            <input type="radio" id="isCodingIssueYes" name="isCodingIssue" value="Yes" checked><span> Yes </span>
-                            <input type="radio" id="isCodingIssueNo" name="isCodingIssue" value="No"><span> No </span>
-                        }
-                        else
-                        {
-                            <input type="radio" id="isCodingIssueNA" name="isCodingIssue" value="N/A"> <span> N/A </span>
-                            <input type="radio" id="isCodingIssueYes" name="isCodingIssue" value="Yes"><span> Yes </span>
-                            <input type="radio" id="isCodingIssueNo" name="isCodingIssue" value="No" checked><span> No </span>
-                        }
                     }
-                    else
-                    {
-                        <input type="radio" id="isCodingIssueNA" name="isCodingIssue" value="N/A" checked> <span> N/A </span>
-                        <input type="radio" id="isCodingIssueYes" name="isCodingIssue" value="Yes"><span> Yes </span>
-                        <input type="radio" id="isCodingIssueNo" name="isCodingIssue" value="No"><span> No </span>
-                    }
+
+
+
+
+
+
+
+
 
                 </div>
             </div>
@@ -253,132 +414,282 @@
 
                 <div class="col-md-6">@Html.Label("Timing issue")</div>
                 <div class="col-md-6">
-                    @if (!string.IsNullOrEmpty(Model.isTimingIssue))
+
+
+                    @if (role == "Consultant")
                     {
-                        if (Model.isTimingIssue.Equals("N/A"))
+                        if (!string.IsNullOrEmpty(Model.isTimingIssue))
                         {
-                            <input type="radio" id="isTimingIssueNA" name="isTimingIssue" value="N/A" checked> <span> N/A </span>
-                            <input type="radio" id="isTimingIssueYes" name="isTimingIssue" value="Yes"><span> Yes </span>
-                            <input type="radio" id="isTimingIssueNo" name="isTimingIssue" value="No"><span> No </span>
+                            if (Model.isTimingIssue.Equals("N/A"))
+                            {
+                                <input type="radio" id="isTimingIssueNA" name="isTimingIssue" value="N/A" checked disabled="disabled"> <span> N/A </span>
+                                <input type="radio" id="isTimingIssueYes" name="isTimingIssue" value="Yes" disabled="disabled"><span> Yes </span>
+                                <input type="radio" id="isTimingIssueNo" name="isTimingIssue" value="No" disabled="disabled"><span> No </span>
+                            }
+                            else if (Model.isTimingIssue.Equals("Yes"))
+                            {
+                                <input type="radio" id="isTimingIssueNA" name="isTimingIssue" value="N/A" disabled="disabled"> <span> N/A </span>
+                                <input type="radio" id="isTimingIssueYes" name="isTimingIssue" value="Yes" checked disabled="disabled"> <span> Yes </span>
+                                <input type="radio" id="isTimingIssueNo" name="isTimingIssue" value="No" disabled="disabled"><span> No </span>
+                            }
+                            else
+                            {
+                                <input type="radio" id="isTimingIssueNA" name="isTimingIssue" value="N/A" checked disabled="disabled"> <span> N/A </span>
+                                <input type="radio" id="isTimingIssueYes" name="isTimingIssue" value="Yes" disabled="disabled"><span> Yes </span>
+                                <input type="radio" id="isTimingIssueNo" name="isTimingIssue" value="No" checked disabled="disabled"><span> No </span>
+                            }
                         }
-                        else if (Model.isTimingIssue.Equals("Yes"))
+                        else
                         {
-                            <input type="radio" id="isTimingIssueNA" name="isTimingIssue" value="N/A"> <span> N/A </span>
-                            <input type="radio" id="isTimingIssueYes" name="isTimingIssue" value="Yes" checked><span> Yes </span>
-                            <input type="radio" id="isTimingIssueNo" name="isTimingIssue" value="No"><span> No </span>
+                            <input type="radio" id="isTimingIssueNA" name="isTimingIssue" value="N/A" checked disabled="disabled"> <span> N/A </span>
+                            <input type="radio" id="isTimingIssueYes" name="isTimingIssue" value="Yes" disabled="disabled"><span> Yes </span>
+                            <input type="radio" id="isTimingIssueNo" name="isTimingIssue" value="No" disabled="disabled"><span> No </span>
+                        }
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(Model.isTimingIssue))
+                        {
+                            if (Model.isTimingIssue.Equals("N/A"))
+                            {
+                                <input type="radio" id="isTimingIssueNA" name="isTimingIssue" value="N/A" checked> <span> N/A </span>
+                                <input type="radio" id="isTimingIssueYes" name="isTimingIssue" value="Yes"><span> Yes </span>
+                                <input type="radio" id="isTimingIssueNo" name="isTimingIssue" value="No"><span> No </span>
+                            }
+                            else if (Model.isTimingIssue.Equals("Yes"))
+                            {
+                                <input type="radio" id="isTimingIssueNA" name="isTimingIssue" value="N/A"> <span> N/A </span>
+                                <input type="radio" id="isTimingIssueYes" name="isTimingIssue" value="Yes" checked><span> Yes </span>
+                                <input type="radio" id="isTimingIssueNo" name="isTimingIssue" value="No"><span> No </span>
+                            }
+                            else
+                            {
+                                <input type="radio" id="isTimingIssueNA" name="isTimingIssue" value="N/A"> <span> N/A </span>
+                                <input type="radio" id="isTimingIssueYes" name="isTimingIssue" value="Yes"><span> Yes </span>
+                                <input type="radio" id="isTimingIssueNo" name="isTimingIssue" value="No" checked><span> No </span>
+                            }
                         }
                         else
                         {
                             <input type="radio" id="isTimingIssueNA" name="isTimingIssue" value="N/A" checked> <span> N/A </span>
                             <input type="radio" id="isTimingIssueYes" name="isTimingIssue" value="Yes"><span> Yes </span>
-                            <input type="radio" id="isTimingIssueNo" name="isTimingIssue" value="No" checked><span> No </span>
+                            <input type="radio" id="isTimingIssueNo" name="isTimingIssue" value="No"><span> No </span>
                         }
                     }
-                    else
-                    {
-                        <input type="radio" id="isTimingIssueNA" name="isTimingIssue" value="N/A" checked> <span> N/A </span>
-                        <input type="radio" id="isTimingIssueYes" name="isTimingIssue" value="Yes"><span> Yes </span>
-                        <input type="radio" id="isTimingIssueNo" name="isTimingIssue" value="No"><span> No </span>
-                    }
+
+
                 </div>
             </div>
             <div class="row">
 
                 <div class="col-md-6">@Html.Label("Data/System issue")</div>
                 <div class="col-md-6">
-                    @if (!string.IsNullOrEmpty(Model.isDataSysIssue))
+
+
+                    @if (role == "Consultant")
                     {
-                        if (Model.isDataSysIssue.Equals("N/A"))
+                        if (!string.IsNullOrEmpty(Model.isDataSysIssue))
+                        {
+                            if (Model.isDataSysIssue.Equals("N/A"))
+                            {
+                                <input type="radio" id="isDataSysNA" name="isDataSysIssue" value="N/A" checked disabled="disabled"> <span> N/A </span>
+                                <input type="radio" id="isDataSysYes" name="isDataSysIssue" value="Yes" disabled="disabled"><span> Yes </span>
+                                <input type="radio" id="isDataSysNo" name="isDataSysIssue" value="No" disabled="disabled"><span> No </span>
+                            }
+                            else if (Model.isCodingIssue.Equals("Yes"))
+                            {
+                                <input type="radio" id="isDataSysNA" name="isDataSysIssue" value="N/A" disabled="disabled"> <span> N/A </span>
+                                <input type="radio" id="isDataSysYes" name="isDataSysIssue" value="Yes" checked disabled="disabled"><span> Yes </span>
+                                <input type="radio" id="isDataSysNo" name="isDataSysIssue" value="No" disabled="disabled"><span> No </span>
+                            }
+                            else
+                            {
+                                <input type="radio" id="isDataSysNA" name="isDataSysIssue" value="N/A" disabled="disabled"> <span> N/A </span>
+                                <input type="radio" id="isDataSysYes" name="isDataSysIssue" value="Yes" disabled="disabled"><span> Yes </span>
+                                <input type="radio" id="isDataSysNo" name="isDataSysIssue" value="No" checked disabled="disabled"><span> No </span>
+                            }
+                        }
+                        else
+                        {
+                            <input type="radio" id="isDataSysNA" name="isDataSysIssue" value="N/A" checked disabled="disabled"> <span> N/A </span>
+                            <input type="radio" id="isDataSysYes" name="isDataSysIssue" value="Yes" disabled="disabled"><span> Yes </span>
+                            <input type="radio" id="isDataSysNo" name="isDataSysIssue" value="No" disabled="disabled"><span> No </span>
+                        }
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(Model.isDataSysIssue))
+                        {
+                            if (Model.isDataSysIssue.Equals("N/A"))
+                            {
+                                <input type="radio" id="isDataSysNA" name="isDataSysIssue" value="N/A" checked> <span> N/A </span>
+                                <input type="radio" id="isDataSysYes" name="isDataSysIssue" value="Yes"><span> Yes </span>
+                                <input type="radio" id="isDataSysNo" name="isDataSysIssue" value="No"><span> No </span>
+                            }
+                            else if (Model.isCodingIssue.Equals("Yes"))
+                            {
+                                <input type="radio" id="isDataSysNA" name="isDataSysIssue" value="N/A"> <span> N/A </span>
+                                <input type="radio" id="isDataSysYes" name="isDataSysIssue" value="Yes" checked><span> Yes </span>
+                                <input type="radio" id="isDataSysNo" name="isDataSysIssue" value="No"><span> No </span>
+                            }
+                            else
+                            {
+                                <input type="radio" id="isDataSysNA" name="isDataSysIssue" value="N/A"> <span> N/A </span>
+                                <input type="radio" id="isDataSysYes" name="isDataSysIssue" value="Yes"><span> Yes </span>
+                                <input type="radio" id="isDataSysNo" name="isDataSysIssue" value="No" checked><span> No </span>
+                            }
+                        }
+                        else
                         {
                             <input type="radio" id="isDataSysNA" name="isDataSysIssue" value="N/A" checked> <span> N/A </span>
                             <input type="radio" id="isDataSysYes" name="isDataSysIssue" value="Yes"><span> Yes </span>
                             <input type="radio" id="isDataSysNo" name="isDataSysIssue" value="No"><span> No </span>
                         }
-                        else if (Model.isCodingIssue.Equals("Yes"))
-                        {
-                            <input type="radio" id="isDataSysNA" name="isDataSysIssue" value="N/A"> <span> N/A </span>
-                            <input type="radio" id="isDataSysYes" name="isDataSysIssue" value="Yes" checked><span> Yes </span>
-                            <input type="radio" id="isDataSysNo" name="isDataSysIssue" value="No"><span> No </span>
-                        }
-                        else
-                        {
-                            <input type="radio" id="isDataSysNA" name="isDataSysIssue" value="N/A"> <span> N/A </span>
-                            <input type="radio" id="isDataSysYes" name="isDataSysIssue" value="Yes"><span> Yes </span>
-                            <input type="radio" id="isDataSysNo" name="isDataSysIssue" value="No" checked><span> No </span>
-                        }
                     }
-                    else
-                    {
-                        <input type="radio" id="isDataSysNA" name="isDataSysIssue" value="N/A" checked> <span> N/A </span>
-                        <input type="radio" id="isDataSysYes" name="isDataSysIssue" value="Yes"><span> Yes </span>
-                        <input type="radio" id="isDataSysNo" name="isDataSysIssue" value="No"><span> No </span>
-                    }
+
+
+
                 </div>
             </div>
             <div class="row">
 
                 <div class="col-md-6">@Html.Label("Forward          For Clinical review")</div>
                 <div class="col-md-6">
-                    @if (!string.IsNullOrEmpty(Model.isClinicalReview))
+
+                    @if (role == "Consultant")
                     {
-                        if (Model.isClinicalReview.Equals("N/A"))
+                        if (!string.IsNullOrEmpty(Model.isClinicalReview))
+                        {
+                            if (Model.isClinicalReview.Equals("N/A"))
+                            {
+                                <input type="radio" id="isClinicalReviewNA" name="isClinicalReview" value="N/A" checked disabled="disabled"> <span> N/A </span>
+                                <input type="radio" id="isClinicalReviewYes" name="isClinicalReview" value="Yes" disabled="disabled"><span> Yes </span>
+                                <input type="radio" id="isClinicalReviewNo" name="isClinicalReview" value="No" disabled="disabled"><span> No </span>
+                            }
+                            else if (Model.isClinicalReview.Equals("Yes"))
+                            {
+                                <input type="radio" id="isClinicalReviewNA" name="isClinicalReview" value="N/A" disabled="disabled"> <span> N/A </span>
+                                <input type="radio" id="isClinicalReviewYes" name="isClinicalReview" value="Yes" checked disabled="disabled"><span> Yes </span>
+                                <input type="radio" id="isClinicalReviewNo" name="isClinicalReview" value="No" disabled="disabled"><span> No </span>
+                            }
+                            else
+                            {
+                                <input type="radio" id="isClinicalReviewNA" name="isClinicalReview" value="N/A" disabled="disabled"> <span> N/A </span>
+                                <input type="radio" id="isClinicalReviewYes" name="isClinicalReview" value="Yes" disabled="disabled"><span> Yes </span>
+                                <input type="radio" id="isClinicalReviewNo" name="isClinicalReview" value="No" checked disabled="disabled"><span> No </span>
+                            }
+                        }
+                        else
+                        {
+                            <input type="radio" id="isClinicalReviewNA" name="isClinicalReview" value="N/A" checked disabled="disabled"> <span> N/A </span>
+                            <input type="radio" id="isClinicalReviewYes" name="isClinicalReview" value="Yes" disabled="disabled"><span> Yes </span>
+                            <input type="radio" id="isClinicalReviewNo" name="isClinicalReview" value="No" disabled="disabled"><span> No </span>
+                        }
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(Model.isClinicalReview))
+                        {
+                            if (Model.isClinicalReview.Equals("N/A"))
+                            {
+                                <input type="radio" id="isClinicalReviewNA" name="isClinicalReview" value="N/A" checked> <span> N/A </span>
+                                <input type="radio" id="isClinicalReviewYes" name="isClinicalReview" value="Yes"><span> Yes </span>
+                                <input type="radio" id="isClinicalReviewNo" name="isClinicalReview" value="No"><span> No </span>
+                            }
+                            else if (Model.isClinicalReview.Equals("Yes"))
+                            {
+                                <input type="radio" id="isClinicalReviewNA" name="isClinicalReview" value="N/A"> <span> N/A </span>
+                                <input type="radio" id="isClinicalReviewYes" name="isClinicalReview" value="Yes" checked><span> Yes </span>
+                                <input type="radio" id="isClinicalReviewNo" name="isClinicalReview" value="No"><span> No </span>
+                            }
+                            else
+                            {
+                                <input type="radio" id="isClinicalReviewNA" name="isClinicalReview" value="N/A"> <span> N/A </span>
+                                <input type="radio" id="isClinicalReviewYes" name="isClinicalReview" value="Yes"><span> Yes </span>
+                                <input type="radio" id="isClinicalReviewNo" name="isClinicalReview" value="No" checked><span> No </span>
+                            }
+                        }
+                        else
                         {
                             <input type="radio" id="isClinicalReviewNA" name="isClinicalReview" value="N/A" checked> <span> N/A </span>
                             <input type="radio" id="isClinicalReviewYes" name="isClinicalReview" value="Yes"><span> Yes </span>
                             <input type="radio" id="isClinicalReviewNo" name="isClinicalReview" value="No"><span> No </span>
                         }
-                        else if (Model.isClinicalReview.Equals("Yes"))
-                        {
-                            <input type="radio" id="isClinicalReviewNA" name="isClinicalReview" value="N/A"> <span> N/A </span>
-                            <input type="radio" id="isClinicalReviewYes" name="isClinicalReview" value="Yes" checked><span> Yes </span>
-                            <input type="radio" id="isClinicalReviewNo" name="isClinicalReview" value="No"><span> No </span>
-                        }
-                        else
-                        {
-                            <input type="radio" id="isClinicalReviewNA" name="isClinicalReview" value="N/A"> <span> N/A </span>
-                            <input type="radio" id="isClinicalReviewYes" name="isClinicalReview" value="Yes"><span> Yes </span>
-                            <input type="radio" id="isClinicalReviewNo" name="isClinicalReview" value="No" checked><span> No </span>
-                        }
                     }
-                    else
-                    {
-                        <input type="radio" id="isClinicalReviewNA" name="isClinicalReview" value="N/A" checked> <span> N/A </span>
-                        <input type="radio" id="isClinicalReviewYes" name="isClinicalReview" value="Yes"><span> Yes </span>
-                        <input type="radio" id="isClinicalReviewNo" name="isClinicalReview" value="No"><span> No </span>
-                    }
+
+
+
                 </div>
             </div>
             <div class="row">
 
                 <div class="col-md-6">@Html.Label("Forward          For Process review")</div>
                 <div class="col-md-6">
-                    @if (!string.IsNullOrEmpty(Model.isProcessReview))
+
+
+                    @if (role == "Consultant")
                     {
-                        if (Model.isCodingIssue.Equals("N/A"))
+                        if (!string.IsNullOrEmpty(Model.isProcessReview))
+                        {
+                            if (Model.isCodingIssue.Equals("N/A"))
+                            {
+                                <input type="radio" id="isProcessReviewNA" name="isProcessReview" value="N/A" checked disabled="disabled"> <span> N/A </span>
+                                <input type="radio" id="isProcessReviewYes" name="isProcessReview" value="Yes" disabled="disabled"><span> Yes </span>
+                                <input type="radio" id="isProcessReviewNo" name="isProcessReview" value="No" disabled="disabled"><span> No </span>
+                            }
+                            else if (Model.isCodingIssue.Equals("Yes"))
+                            {
+                                <input type="radio" id="isProcessReviewNA" name="isProcessReview" value="N/A" disabled="disabled"> <span> N/A </span>
+                                <input type="radio" id="isProcessReviewYes" name="isProcessReview" value="Yes" checked disabled="disabled"><span> Yes </span>
+                                <input type="radio" id="isProcessReviewNo" name="isProcessReview" value="No" disabled="disabled"><span> No </span>
+                            }
+                            else
+                            {
+                                <input type="radio" id="isProcessReviewNA" name="isProcessReview" value="N/A" disabled="disabled"> <span> N/A </span>
+                                <input type="radio" id="isProcessReviewYes" name="isProcessReview" value="Yes" disabled="disabled"><span> Yes </span>
+                                <input type="radio" id="isProcessReviewNo" name="isProcessReview" value="No" checked disabled="disabled"><span> No </span>
+                            }
+                        }
+                        else
+                        {
+                            <input type="radio" id="isProcessReviewNA" name="isProcessReview" value="N/A" checked disabled="disabled"> <span> N/A </span>
+                            <input type="radio" id="isProcessReviewYes" name="isProcessReview" value="Yes" disabled="disabled"><span> Yes </span>
+                            <input type="radio" id="isProcessReviewNo" name="isProcessReview" value="No" disabled="disabled"><span> No </span>
+                        }
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(Model.isProcessReview))
+                        {
+                            if (Model.isCodingIssue.Equals("N/A"))
+                            {
+                                <input type="radio" id="isProcessReviewNA" name="isProcessReview" value="N/A" checked> <span> N/A </span>
+                                <input type="radio" id="isProcessReviewYes" name="isProcessReview" value="Yes"><span> Yes </span>
+                                <input type="radio" id="isProcessReviewNo" name="isProcessReview" value="No"><span> No </span>
+                            }
+                            else if (Model.isCodingIssue.Equals("Yes"))
+                            {
+                                <input type="radio" id="isProcessReviewNA" name="isProcessReview" value="N/A"> <span> N/A </span>
+                                <input type="radio" id="isProcessReviewYes" name="isProcessReview" value="Yes" checked><span> Yes </span>
+                                <input type="radio" id="isProcessReviewNo" name="isProcessReview" value="No"><span> No </span>
+                            }
+                            else
+                            {
+                                <input type="radio" id="isProcessReviewNA" name="isProcessReview" value="N/A"> <span> N/A </span>
+                                <input type="radio" id="isProcessReviewYes" name="isProcessReview" value="Yes"><span> Yes </span>
+                                <input type="radio" id="isProcessReviewNo" name="isProcessReview" value="No" checked><span> No </span>
+                            }
+                        }
+                        else
                         {
                             <input type="radio" id="isProcessReviewNA" name="isProcessReview" value="N/A" checked> <span> N/A </span>
                             <input type="radio" id="isProcessReviewYes" name="isProcessReview" value="Yes"><span> Yes </span>
                             <input type="radio" id="isProcessReviewNo" name="isProcessReview" value="No"><span> No </span>
                         }
-                        else if (Model.isCodingIssue.Equals("Yes"))
-                        {
-                            <input type="radio" id="isProcessReviewNA" name="isProcessReview" value="N/A"> <span> N/A </span>
-                            <input type="radio" id="isProcessReviewYes" name="isProcessReview" value="Yes" checked><span> Yes </span>
-                            <input type="radio" id="isProcessReviewNo" name="isProcessReview" value="No"><span> No </span>
-                        }
-                        else
-                        {
-                            <input type="radio" id="isProcessReviewNA" name="isProcessReview" value="N/A"> <span> N/A </span>
-                            <input type="radio" id="isProcessReviewYes" name="isProcessReview" value="Yes"><span> Yes </span>
-                            <input type="radio" id="isProcessReviewNo" name="isProcessReview" value="No" checked><span> No </span>
-                        }
                     }
-                    else
-                    {
-                        <input type="radio" id="isProcessReviewNA" name="isProcessReview" value="N/A" checked> <span> N/A </span>
-                        <input type="radio" id="isProcessReviewYes" name="isProcessReview" value="Yes"><span> Yes </span>
-                        <input type="radio" id="isProcessReviewNo" name="isProcessReview" value="No"><span> No </span>
-                    }
+
+
+
                 </div>
             </div>
             <div class="row">
@@ -386,14 +697,30 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    @if (!string.IsNullOrEmpty(Model.Recom))
+
+                    @if (role == "Consultant")
                     {
-                        @Html.TextArea("Recom", Model.Recom, new { style = "width:50%", @class = "form-control" })
+                         if (!string.IsNullOrEmpty(Model.Recom))
+                        {
+                            @Html.TextArea("Recom", Model.Recom, new { style = "width:50%", @class = "form-control", @readonly = "readonly" })
+                        }
+                        else
+                        {
+                            @Html.TextArea("Recom", null, new { style = "width:50%", @class = "form-control", @readonly = "readonly" })
+                        }
                     }
                     else
                     {
-                        @Html.TextArea("Recom", null, new { style = "width:50%", @class = "form-control" })
+                        if (!string.IsNullOrEmpty(Model.Recom))
+                        {
+                            @Html.TextArea("Recom", Model.Recom, new { style = "width:50%", @class = "form-control" })
+                        }
+                        else
+                        {
+                            @Html.TextArea("Recom", null, new { style = "width:50%", @class = "form-control" })
+                        }
                     }
+
                 </div>
             </div>
             <div class="row">
@@ -402,24 +729,53 @@
             <div class="row">
                 <div class="col-md-6">@Html.Label("Review Completed?")</div>
                 <div class="col-md-6">
-                    @if (Model.isReviewCompleted != null)
+
+
+                    @if (role == "Consultant")
                     {
-                        if (Model.isReviewCompleted.Equals(true))
+                        if (Model.isReviewCompleted != null)
                         {
-                            <input type="radio" id="isReviewCompletedYes" name="isReviewCompleted" value="Yes" checked> <span> Yes </span>
-                            <input type="radio" id="isReviewCompletedNo" name="isReviewCompleted" value="No"><span> NO </span>
+                            if (Model.isReviewCompleted.Equals(true))
+                            {
+                                <input type="radio" id="isReviewCompletedYes" name="isReviewCompleted" value="Yes" checked disabled="disabled"> <span> Yes </span>
+                                <input type="radio" id="isReviewCompletedNo" name="isReviewCompleted" value="No" disabled="disabled"><span> NO </span>
+                            }
+                            else
+                            {
+                                <input type="radio" id="isReviewCompletedYes" name="isReviewCompleted" value="Yes" disabled="disabled"> <span> Yes </span>
+                                <input type="radio" id="isReviewCompletedNo" name="isReviewCompleted" value="No" checked disabled="disabled"><span> NO </span>
+                            }
                         }
                         else
                         {
-                            <input type="radio" id="isReviewCompletedYes" name="isReviewCompleted" value="Yes"> <span> Yes </span>
-                            <input type="radio" id="isReviewCompletedNo" name="isReviewCompleted" value="No" checked><span> NO </span>
+                            <input type="radio" id="isReviewCompletedYes" name="isReviewCompleted" value="Yes" checked disabled="disabled"> <span> Yes </span>
+                            <input type="radio" id="isReviewCompletedNo" name="isReviewCompleted" value="No" disabled="disabled"><span> NO </span>
                         }
                     }
                     else
                     {
-                        <input type="radio" id="isReviewCompletedYes" name="isReviewCompleted" value="Yes" checked> <span> Yes </span>
-                        <input type="radio" id="isReviewCompletedNo" name="isReviewCompleted" value="No"><span> NO </span>
+                        if (Model.isReviewCompleted != null)
+                        {
+                            if (Model.isReviewCompleted.Equals(true))
+                            {
+                                <input type="radio" id="isReviewCompletedYes" name="isReviewCompleted" value="Yes" checked> <span> Yes </span>
+                                <input type="radio" id="isReviewCompletedNo" name="isReviewCompleted" value="No"><span> NO </span>
+                            }
+                            else
+                            {
+                                <input type="radio" id="isReviewCompletedYes" name="isReviewCompleted" value="Yes"> <span> Yes </span>
+                                <input type="radio" id="isReviewCompletedNo" name="isReviewCompleted" value="No" checked><span> NO </span>
+                            }
+                        }
+                        else
+                        {
+                            <input type="radio" id="isReviewCompletedYes" name="isReviewCompleted" value="Yes" checked> <span> Yes </span>
+                            <input type="radio" id="isReviewCompletedNo" name="isReviewCompleted" value="No"><span> NO </span>
+                        }
                     }
+
+
+
                 </div>
             </div>
 

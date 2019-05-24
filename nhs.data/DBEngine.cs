@@ -2969,10 +2969,11 @@ namespace NHS.Data
             return retVal;
         }
 
-        public int UpdateDeclaration(bool isDeclaration, string CreatedBy, string CreatedDate, string Office, int? id)
+        public bool UpdateDeclaration(bool isDeclaration, string CreatedBy, string CreatedDate, string Office, int? id)
         {
             var connection = GetConnection();
-            int retVal = 0;
+            bool retVal = false;
+            SqlDataReader dbReader = null;
             SqlCommand dbCommand = new SqlCommand("usp_UpdateDeclaration", connection);
             try
             {
@@ -2982,11 +2983,22 @@ namespace NHS.Data
                 dbCommand.Parameters.AddWithValue("@CreatedDate", CreatedDate);
                 dbCommand.Parameters.AddWithValue("@Office", Office);
                 dbCommand.Parameters.AddWithValue("@ID", id);
-                retVal = dbCommand.ExecuteNonQuery();
-            }
+                //retVal = dbCommand.ExecuteNonQuery();
+                dbReader = dbCommand.ExecuteReader();
+                while (dbReader.Read())
+                {
+                    retVal = Convert.ToBoolean(dbReader["IsAllForm"]);  // false if All form is not submitted and True if all form has been submitted
+                }
+
+                }
             catch (Exception ex)
             {
                 LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
+            }
+            finally
+            {
+                if (!dbReader.IsClosed)
+                    dbReader.Close();
             }
             return retVal;
         }

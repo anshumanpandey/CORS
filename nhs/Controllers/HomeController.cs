@@ -1282,17 +1282,20 @@ namespace NHS.Controllers
                         commentTypeID = 0;
                     }
 
-                    Console.WriteLine(role);
-                    Console.WriteLine(commentTypeID);
-                    bool IsComment = Convert.ToBoolean(formCollection["IsComment"]);
-                    if (IsComment)
+                     
+                    if (formCollection["IsComment"] != "")
                     {
-                        string CommentType = "";
-                        string comments = "";
-                        CommentType = formCollection["ddlCommentType"].ToString();
-                        comments = formCollection["txtComments"].ToString();
-                        return MERSaveComment(CommentType, comments);
+                        bool IsComment = Convert.ToBoolean(formCollection["IsComment"]);
+                        if (IsComment)
+                        {
+                            string CommentType = "";
+                            string comments = "";
+                            CommentType = formCollection["ddlCommentType"].ToString();
+                            comments = formCollection["txtComments"].ToString();
+                            int result = SaveComment(CommentType, comments);
+                        }
                     }
+                    
                     //int retVal = dBEngine.UpdateMedicalExaminerReview(isQAP_Discussion, isNotes_Review, isNok_Discussion,
                     //   Convert.ToInt32(formCollection["ddlDischargeSpeciality"]), formCollection["QAPName"], formCollection["Comments"], id, Convert.ToInt32(Session["LoginUserID"]));
 
@@ -1307,6 +1310,28 @@ namespace NHS.Controllers
             }
             return RedirectToAction(actionName, new { id = id });
         }
+        public int SaveComment(string CommentType, string comments)
+        {
+            string actionName = "";
+            string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
+            DBEngine dBEngine = new DBEngine(connectionString);
+            int commentTypeID = 0, id = 0;
+
+            commentTypeID = Convert.ToInt32(CommentType);
+
+
+            if (id == null || id == 0)
+            {
+                if (Session["PatientID"] != null)
+                    id = Convert.ToInt32(Session["PatientID"]);
+                else
+                { }
+                    //return RedirectToAction("Index", "Account");
+            }
+            int retVal = dBEngine.MRESaveComments(comments, id, Convert.ToInt32(Session["LoginUserID"]), commentTypeID);
+            return retVal;
+        }
+
 
 
 
@@ -1329,7 +1354,7 @@ namespace NHS.Controllers
                     return RedirectToAction("Index", "Account");
             }
             int retVal = dBEngine.MRESaveComments(comments, id, Convert.ToInt32(Session["LoginUserID"]), commentTypeID);
-            return RedirectToAction("MedicalExaminerReview", new { id = id });
+            return RedirectToAction("Declaration", new { id = id });
         }
 
         // for saving feedback comments
@@ -1977,8 +2002,8 @@ namespace NHS.Controllers
         /// <param name="BtnNext"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpPost]
-        public ActionResult Declaration(FormCollection formCollection, string BtnPrevious, string BtnSave, int? id)
+        //[HttpPost]
+        public ActionResult SaveDeclaration(bool Isdec,  int? id)
         {
             string actionName = "";
             bool isDeclaration = false;
@@ -1991,7 +2016,7 @@ namespace NHS.Controllers
             bool isSafeGuard = false;
             string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
             DBEngine dBEngine = new DBEngine(connectionString);
-
+            bool retVal;
             try
             {
                 if (id == null || id == 0)
@@ -2001,22 +2026,16 @@ namespace NHS.Controllers
                     else
                         return RedirectToAction("Index", "Account");
                 }
-                if (BtnPrevious != null)
-                {
-                    actionName = "PositiveFeedback";
-                }
-                if (BtnSave != null)
-                {
-                    actionName = "MortalityReview";
-                    if (Convert.ToString(formCollection["Declaration"]) == "on") isDeclaration = true;
-                    int retVal = dBEngine.UpdateDeclaration(isDeclaration, Session["FullName"].ToString(), DateTime.Now.ToString("dd/MM/yyyy"), "Royal Berkshire Hospital", id);
-                }
+                    //if (Convert.ToString(formCollection["Declaration"]) == "on") isDeclaration = true;
+                     retVal = dBEngine.UpdateDeclaration(Isdec, Session["FullName"].ToString(), DateTime.Now.ToString("dd/MM/yyyy"), "Royal Berkshire Hospital", id);
+                 
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-            return RedirectToAction(actionName, new { id = id });
+            //return RedirectToAction(actionName, new { id = id });
+            return Json(retVal);
         }
 
         /// <summary>
@@ -2160,6 +2179,25 @@ namespace NHS.Controllers
                     {
                         FBTypeID = 0;
                     }
+
+                    if (formCollection["IsComment"] != "")
+                    {
+                        bool IsComment = Convert.ToBoolean(formCollection["IsComment"]);
+                        if (IsComment)
+                        {
+                            string CommentType = "";
+                            string comments = "";
+                            CommentType = formCollection["ddlFeedbackType"].ToString();
+                            comments = formCollection["cmnt"].ToString();
+                            int result = SaveComment(CommentType, comments);
+                        }
+                    }
+
+                    if (string.IsNullOrEmpty(formCollection["Comments"]))
+                    {
+                        formCollection["Comments"] = "";
+                    }
+
                     int retVal = dBEngine.UpdatePositiveFeedback(isFormCompleted, isComplementsFedBack, formCollection["Comments"], FBTypeID, id, Convert.ToInt32(Session["LoginUserID"]));
                 }
             }
@@ -2545,7 +2583,7 @@ namespace NHS.Controllers
             try
             {
                 patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
-                ViewBag.PatientHistoryLink = "'" + "http://rbhbedred001/#/views/R550_RBH_Mortality_Reviews/PatientHistory?MRN=" + patientDetails[0].PatientId + ":iid=" + id.ToString() + "'";
+                ViewBag.PatientHistoryLink = "'" + "http://rbhdbsred011/TIPSTest/ReportViewer.aspx?ReportPath=R720_CORS_PatientHistory&MRN=" + patientDetails[0].PatientId + ":iid=" + id.ToString() + "'";
                 patientDetails.ToList()[0].MedTriage = patientDetails.ToList()[0].MedTriage == 0 ? 2 : patientDetails.ToList()[0].MedTriage;
                 patientDetails.ToList()[0].QAPReview = patientDetails.ToList()[0].QAPReview == 0 ? 2 : patientDetails.ToList()[0].QAPReview;
                 //patientDetails.ToList()[0].SJR1 = patientDetails.ToList()[0].SJR1 == 0 ? 2 : patientDetails.ToList()[0].SJR1;
