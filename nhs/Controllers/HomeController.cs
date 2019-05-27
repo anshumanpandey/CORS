@@ -179,18 +179,18 @@ namespace NHS.Controllers
             {
                 throw ex;
             }
-            List<clsPatientDetails> patientDetailsLst = new List<clsPatientDetails>();
-            patientDetailsLst = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
-            patientDetailsLst.ToList()[0].PatientId = patientDetails.ToList()[0].PatientId.ToString();
-            patientDetailsLst.ToList()[0].PatientName = patientDetails.ToList()[0].PatientName;
-            patientDetailsLst.ToList()[0].DOB = patientDetails.ToList()[0].DOB;
+            //List<clsPatientDetails> patientDetailsLst = new List<clsPatientDetails>();
+            //patientDetailsLst = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
+            //patientDetailsLst.ToList()[0].PatientId = patientDetails.ToList()[0].PatientId.ToString();
+            //patientDetailsLst.ToList()[0].PatientName = patientDetails.ToList()[0].PatientName;
+            //patientDetailsLst.ToList()[0].DOB = patientDetails.ToList()[0].DOB;
             return View(patientDetails[0]);
         }
 
         public ActionResult QualityReview(int? id)
         {
             clsQualityReview clsQReview = new clsQualityReview();
-            
+            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
             if (Session["FullName"] != null)
             {
                 if (string.IsNullOrEmpty(Session["FullName"].ToString()))
@@ -212,6 +212,12 @@ namespace NHS.Controllers
                         ViewBag.Diagnoses = dBEngine.GetDiagnosisDetails(id);
                         ViewBag.Procedures = dBEngine.GetProcedureDetails(id);
                         clsQReview = dBEngine.GetQualityReviewByID(id);
+
+                       
+                        patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
+                        clsQReview.PatientId = patientDetails.ToList()[0].PatientId.ToString();
+                        clsQReview.PatientName = patientDetails.ToList()[0].PatientName;
+                        clsQReview.DOB = patientDetails.ToList()[0].DOB;
                         if (clsQReview.Patient_ID == 0)
                             clsQReview.Patient_ID = Convert.ToInt32(id);
                     }
@@ -234,11 +240,7 @@ namespace NHS.Controllers
             {
                 throw ex;
             }
-            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
-            patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
-            clsQReview.PatientId = patientDetails.ToList()[0].PatientId.ToString();
-            clsQReview.PatientName = patientDetails.ToList()[0].PatientName;
-            clsQReview.DOB = patientDetails.ToList()[0].DOB;
+           
             return View(clsQReview);
         }
         [HttpPost]
@@ -294,6 +296,7 @@ namespace NHS.Controllers
         }
         public ActionResult QAPReviewFirstStep(int? id)
         {
+            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
             if (Session["FullName"] != null)
             {
                 if (string.IsNullOrEmpty(Session["FullName"].ToString()))
@@ -317,8 +320,15 @@ namespace NHS.Controllers
                 try
                 {
                     if (Request.HttpMethod != "POST")
+                    {
                         qapreview = dBEngine.GetQAPReview(id);
-                    if (qapreview.Patient_ID == 0 || qapreview.Patient_ID == null)
+                        
+                        patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
+                        qapreview.PatientId = patientDetails.ToList()[0].PatientId.ToString();
+                        qapreview.PatientName = patientDetails.ToList()[0].PatientName;
+                        qapreview.DOB = patientDetails.ToList()[0].DOB;
+                    }
+                        if (qapreview.Patient_ID == 0 || qapreview.Patient_ID == null)
                         qapreview.Patient_ID = Convert.ToInt32(id);
                     if (qapreview.QAPReview == 3)
                     {
@@ -334,11 +344,7 @@ namespace NHS.Controllers
             {
                 throw ex;
             }
-            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
-            patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
-            qapreview.PatientId = patientDetails.ToList()[0].PatientId.ToString();
-            qapreview.PatientName = patientDetails.ToList()[0].PatientName;
-            qapreview.DOB = patientDetails.ToList()[0].DOB;
+            
 
             return View(qapreview);
         }
@@ -414,6 +420,7 @@ namespace NHS.Controllers
         /// <returns></returns>
         public ActionResult SJROutcome(int? id)
         {
+            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
             if (Session["FullName"] != null)
             {
                 if (string.IsNullOrEmpty(Session["FullName"].ToString()))
@@ -441,6 +448,11 @@ namespace NHS.Controllers
                     if (Request.HttpMethod != "POST")
                     {
                         sjrOutcome = dBEngine.GetSJROutcome(id);
+                  
+                        patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
+                        sjrOutcome.PatientId = patientDetails.ToList()[0].PatientId.ToString();
+                        sjrOutcome.PatientName = patientDetails.ToList()[0].PatientName;
+                        sjrOutcome.DOB = patientDetails.ToList()[0].DOB;
                     }
                     if (sjrOutcome.Patient_ID == 0 || sjrOutcome.Patient_ID == null)
                         sjrOutcome.Patient_ID = Convert.ToInt32(id);
@@ -459,6 +471,7 @@ namespace NHS.Controllers
             {
                 throw ex;
             }
+          
             return View(sjrOutcome);
         }
 
@@ -510,6 +523,7 @@ namespace NHS.Controllers
         /// <returns></returns>
         public ActionResult Stage2SJRformFirstStep(int? id)
         {
+            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
             if (Session["FullName"] != null)
             {
                 if (string.IsNullOrEmpty(Session["FullName"].ToString()))
@@ -537,6 +551,11 @@ namespace NHS.Controllers
                     if (Request.HttpMethod != "POST")
                     {
                         medicalExaminerReview = dBEngine.GetSJRFormInitial(id);
+                       
+                        patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
+                        medicalExaminerReview.PatientId = patientDetails.ToList()[0].PatientId.ToString();
+                        medicalExaminerReview.PatientName = patientDetails.ToList()[0].PatientName;
+                        medicalExaminerReview.DOB = patientDetails.ToList()[0].DOB;
                     }
                     if (medicalExaminerReview.Patient_ID == 0 || medicalExaminerReview.Patient_ID == null)
                         medicalExaminerReview.Patient_ID = Convert.ToInt32(id);
@@ -560,11 +579,7 @@ namespace NHS.Controllers
             {
                 throw ex;
             }
-            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
-            patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
-            medicalExaminerReview.PatientId = patientDetails.ToList()[0].PatientId.ToString();
-            medicalExaminerReview.PatientName = patientDetails.ToList()[0].PatientName;
-            medicalExaminerReview.DOB = patientDetails.ToList()[0].DOB;
+            
             return View(medicalExaminerReview);
         }
 
@@ -575,6 +590,7 @@ namespace NHS.Controllers
         /// <returns></returns>
         public ActionResult Stage2SJRFormSecondStep(int? id)
         {
+            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
             if (Session["FullName"] != null)
             {
                 if (string.IsNullOrEmpty(Session["FullName"].ToString()))
@@ -602,6 +618,11 @@ namespace NHS.Controllers
                     if (Request.HttpMethod != "POST")
                     {
                         sjrProblemType = dBEngine.GetSJRProblemType(id);
+                       
+                        patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
+                        sjrProblemType.PatientId = patientDetails.ToList()[0].PatientId.ToString();
+                        sjrProblemType.PatientName = patientDetails.ToList()[0].PatientName;
+                        sjrProblemType.DOB = patientDetails.ToList()[0].DOB;
                     }
                     if (sjrProblemType.Patient_ID == 0 || sjrProblemType.Patient_ID == null)
                         sjrProblemType.Patient_ID = Convert.ToInt32(id);
@@ -621,11 +642,7 @@ namespace NHS.Controllers
                 throw ex;
             }
 
-            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
-            patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
-            sjrProblemType.PatientId = patientDetails.ToList()[0].PatientId.ToString();
-            sjrProblemType.PatientName = patientDetails.ToList()[0].PatientName;
-            sjrProblemType.DOB = patientDetails.ToList()[0].DOB;
+           
             return View(sjrProblemType);
         }
 
@@ -636,6 +653,7 @@ namespace NHS.Controllers
         /// <returns></returns>
         public ActionResult Stage3SJRFormSecondStep(int? id)
         {
+            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
             if (Session["FullName"] != null)
             {
                 if (string.IsNullOrEmpty(Session["FullName"].ToString()))
@@ -663,6 +681,11 @@ namespace NHS.Controllers
                     if (Request.HttpMethod != "POST")
                     {
                         sjrProblemType = dBEngine.GetSJR2ProblemType(id);
+                        
+                        patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
+                        sjrProblemType.PatientId = patientDetails.ToList()[0].PatientId.ToString();
+                        sjrProblemType.PatientName = patientDetails.ToList()[0].PatientName;
+                        sjrProblemType.DOB = patientDetails.ToList()[0].DOB;
                     }
                     if (sjrProblemType.Patient_ID == 0 || sjrProblemType.Patient_ID == null)
                         sjrProblemType.Patient_ID = Convert.ToInt32(id);
@@ -681,11 +704,7 @@ namespace NHS.Controllers
             {
                 throw ex;
             }
-            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
-            patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
-            sjrProblemType.PatientId = patientDetails.ToList()[0].PatientId.ToString();
-            sjrProblemType.PatientName = patientDetails.ToList()[0].PatientName;
-            sjrProblemType.DOB = patientDetails.ToList()[0].DOB;
+            
             return View(sjrProblemType);
         }
 
@@ -777,6 +796,7 @@ namespace NHS.Controllers
         /// <returns></returns>
         public ActionResult Stage3SJRformFirstStep(int? id)
         {
+            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
             if (Session["FullName"] != null)
             {
                 if (string.IsNullOrEmpty(Session["FullName"].ToString()))
@@ -804,6 +824,11 @@ namespace NHS.Controllers
                     if (Request.HttpMethod != "POST")
                     {
                         medicalExaminerReview = dBEngine.GetSJR2FormInitial(id);
+                        
+                        patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
+                        medicalExaminerReview.PatientId = patientDetails.ToList()[0].PatientId.ToString();
+                        medicalExaminerReview.PatientName = patientDetails.ToList()[0].PatientName;
+                        medicalExaminerReview.DOB = patientDetails.ToList()[0].DOB;
                     }
                     if (medicalExaminerReview.Patient_ID == 0 || medicalExaminerReview.Patient_ID == null)
                         medicalExaminerReview.Patient_ID = Convert.ToInt32(id);
@@ -827,11 +852,7 @@ namespace NHS.Controllers
             {
                 throw ex;
             }
-            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
-            patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
-            medicalExaminerReview.PatientId = patientDetails.ToList()[0].PatientId.ToString();
-            medicalExaminerReview.PatientName = patientDetails.ToList()[0].PatientName;
-            medicalExaminerReview.DOB = patientDetails.ToList()[0].DOB;
+            
             return View(medicalExaminerReview);
         }
 
@@ -1057,7 +1078,8 @@ namespace NHS.Controllers
         [HttpPost]
         public ActionResult PatientDetails(FormCollection formCollection, string btnCloseYes, int? id)
         {
-            List<int> ids = new List<int>();
+            //List<string> ids = new List<string>();
+            int ids = 0;
             List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
             bool isDataQualityIssuesIdentified = false;
             bool isUrgentMEReview = false;
@@ -1113,11 +1135,11 @@ namespace NHS.Controllers
                 ids = dbEngine.UpdatePatientDetailsV2(isDataQualityIssuesIdentified, formCollection["DataQualityIssueComments"], false, "", formCollection["Occupation"],
                     isUrgentMEReview, formCollection["UrgentMEReviewComment"], formCollection["RelativeName"], formCollection["RelativeTelNo"], formCollection["Relationship"],
                     formCollection["GPSurgery"], formCollection["txtFName"], formCollection["txtLName"], formCollection["ddlGender"], formCollection["DateofDeath"], formCollection["ddlPatientType"], formCollection["DateofBirth"], id, Convert.ToInt32(Session["LoginUserID"]));
-                if (ids.ToList().Count != 0)
-                {
-                    id = ids.ToList()[1];
+                //if (ids.ToList().Count != 0)
+                //{
+                //    id = Convert.ToInt32(ids.ToList()[1]);
                     
-                }
+                //}
                 
                 nextOfKin = new NextOfKin();
                 if (formCollection["RelativeName"] != "" && formCollection["RelativeTelNo"] != "" && formCollection["Relationship"] != "")
@@ -1168,7 +1190,7 @@ namespace NHS.Controllers
             {
                 throw ex;
             }
-            return RedirectToAction("MedicalExaminerReview", new { id = ids.ToList()[1] });
+            return RedirectToAction("MedicalExaminerReview", new { id = id });
         }
 
         /// <summary>
@@ -1178,6 +1200,7 @@ namespace NHS.Controllers
         /// <returns></returns>
         public ActionResult MedicalExaminerReview(int? id)
         {
+            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
             if (Session["FullName"] != null)
             {
                 if (string.IsNullOrEmpty(Session["FullName"].ToString()))
@@ -1222,6 +1245,11 @@ namespace NHS.Controllers
                     if (Request.HttpMethod != "POST")
                     {
                         medicalExaminerReview = dBEngine.GetMedicalExaminerReview(id);
+                     
+                        patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
+                        medicalExaminerReview.PatientId = patientDetails.ToList()[0].PatientId.ToString();
+                        medicalExaminerReview.PatientName = patientDetails.ToList()[0].PatientName;
+                        medicalExaminerReview.DOB = patientDetails.ToList()[0].DOB;
                     }
                     if (medicalExaminerReview.Patient_ID == 0 || medicalExaminerReview.Patient_ID == null)
                         medicalExaminerReview.Patient_ID = Convert.ToInt32(id);
@@ -1235,11 +1263,7 @@ namespace NHS.Controllers
             {
                 throw ex;
             }
-            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
-            patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
-            medicalExaminerReview.PatientId = patientDetails.ToList()[0].PatientId.ToString();
-            medicalExaminerReview.PatientName = patientDetails.ToList()[0].PatientName;
-            medicalExaminerReview.DOB = patientDetails.ToList()[0].DOB;
+           
             return View(medicalExaminerReview);
         }
 
@@ -1354,7 +1378,7 @@ namespace NHS.Controllers
             string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
             DBEngine dBEngine = new DBEngine(connectionString);
             int commentTypeID = 0, id = 0;
-
+            string Comments = comments;
             commentTypeID = Convert.ToInt32(CommentType);
 
 
@@ -1366,7 +1390,7 @@ namespace NHS.Controllers
                 { }
                     //return RedirectToAction("Index", "Account");
             }
-            int retVal = dBEngine.MRESaveComments(comments, id, Convert.ToInt32(Session["LoginUserID"]), commentTypeID);
+            int retVal = dBEngine.MRESaveComments(Comments, id, Convert.ToInt32(Session["LoginUserID"]), commentTypeID);
             return retVal;
         }
 
@@ -1425,6 +1449,7 @@ namespace NHS.Controllers
         /// <returns></returns>
         public ActionResult MedicalExaminerDecision(int? id)
         {
+            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
             if (Session["FullName"] != null)
             {
                 if (string.IsNullOrEmpty(Session["FullName"].ToString()))
@@ -1449,7 +1474,13 @@ namespace NHS.Controllers
                 {
                     int medtriage = 0;
                     medicalExaminerDecision = dBEngine.GetMedicalExaminerDecision(id);
-                    if(medicalExaminerDecision.MedTriage == 0)
+                  
+                    patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
+
+                    medicalExaminerDecision.Patient_Id = patientDetails.ToList()[0].PatientId;
+                    medicalExaminerDecision.PatientName = patientDetails.ToList()[0].PatientName;
+                    medicalExaminerDecision.DOB = patientDetails.ToList()[0].DOB;
+                    if (medicalExaminerDecision.MedTriage == 0)
                     {
                         medtriage = dBEngine.GetMedTriageByPatientID(id);
                         medicalExaminerDecision.MedTriage = medtriage;
@@ -1471,12 +1502,7 @@ namespace NHS.Controllers
             {
                 throw ex;
             }
-            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
-            patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
-
-            medicalExaminerDecision.Patient_Id = patientDetails.ToList()[0].PatientId;
-            medicalExaminerDecision.PatientName = patientDetails.ToList()[0].PatientName;
-            medicalExaminerDecision.DOB = patientDetails.ToList()[0].DOB;
+           
             return View(medicalExaminerDecision);
         }
 
@@ -1591,6 +1617,7 @@ namespace NHS.Controllers
         /// <returns></returns>
         public ActionResult SJRAssessmentTriage(int? id)
         {
+            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
             if (Session["FullName"] != null)
             {
                 if (string.IsNullOrEmpty(Session["FullName"].ToString()))
@@ -1616,6 +1643,12 @@ namespace NHS.Controllers
                 try
                 {
                     sJRAssement = dBEngine.GetSJRAssesmentTraige(id);
+                   
+                    patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
+
+                    sJRAssement.PatientID = patientDetails.ToList()[0].PatientId;
+                    sJRAssement.PatientName = patientDetails.ToList()[0].PatientName;
+                    sJRAssement.DOB = patientDetails.ToList()[0].DOB;
                     if (sJRAssement.Patient_ID == 0 || sJRAssement.Patient_ID == null)
                         sJRAssement.Patient_ID = Convert.ToInt32(id);
                     ViewBag.Specialities = dBEngine.GetSpecialitiesForDropDown();
@@ -1634,12 +1667,7 @@ namespace NHS.Controllers
             {
                 throw ex;
             }
-            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
-            patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
-
-            sJRAssement.PatientID = patientDetails.ToList()[0].PatientId;
-            sJRAssement.PatientName = patientDetails.ToList()[0].PatientName;
-            sJRAssement.DOB = patientDetails.ToList()[0].DOB;
+          
             return View(sJRAssement);
         }
 
@@ -1719,6 +1747,7 @@ namespace NHS.Controllers
         /// <returns>ActionResult</returns>
         public ActionResult OtherReferrals(int? id)
         {
+            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
             if (Session["FullName"] != null)
             {
                 if (string.IsNullOrEmpty(Session["FullName"].ToString()))
@@ -1744,6 +1773,12 @@ namespace NHS.Controllers
                 try
                 {
                     sJRAssement = dBEngine.GetOtherReferrals(id);
+                    
+                    patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
+
+                    sJRAssement.PatientID = patientDetails.ToList()[0].PatientId;
+                    sJRAssement.PatientName = patientDetails.ToList()[0].PatientName;
+                    sJRAssement.DOB = patientDetails.ToList()[0].DOB;
                     if (sJRAssement.Patient_ID == 0 || sJRAssement.Patient_ID == null)
                         sJRAssement.Patient_ID = Convert.ToInt32(id);
                 }
@@ -1761,12 +1796,7 @@ namespace NHS.Controllers
             {
                 throw ex;
             }
-            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
-            patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
-
-            sJRAssement.PatientID = patientDetails.ToList()[0].PatientId;
-            sJRAssement.PatientName = patientDetails.ToList()[0].PatientName;
-            sJRAssement.DOB = patientDetails.ToList()[0].DOB;
+           
             return View(sJRAssement);
         }
 
@@ -1777,6 +1807,7 @@ namespace NHS.Controllers
         /// <returns>ActionResult</returns>
         public ActionResult Declaration(int? id)
         {
+            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
             if (Session["FullName"] != null)
             {
                 if (string.IsNullOrEmpty(Session["FullName"].ToString()))
@@ -1800,6 +1831,12 @@ namespace NHS.Controllers
                 try
                 {
                     declaration = dBEngine.GetDeclaration(id);
+                
+                    patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
+
+                    declaration.PatientID = patientDetails.ToList()[0].PatientId;
+                    declaration.PatientName = patientDetails.ToList()[0].PatientName;
+                    declaration.DOB = patientDetails.ToList()[0].DOB;
                     if (declaration.Patient_ID == 0 || declaration.Patient_ID == null)
                         declaration.Patient_ID = Convert.ToInt32(id);
                 }
@@ -1812,12 +1849,7 @@ namespace NHS.Controllers
             {
                 throw ex;
             }
-            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
-            patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
-
-            declaration.PatientID = patientDetails.ToList()[0].PatientId;
-            declaration.PatientName = patientDetails.ToList()[0].PatientName;
-            declaration.DOB = patientDetails.ToList()[0].DOB;
+           
             return View(declaration);
         }
         /// <summary>
@@ -1827,6 +1859,7 @@ namespace NHS.Controllers
         /// <returns>ActionResult</returns>
         public ActionResult FinalOutcome(int? id)
         {
+            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
             if (Session["FullName"] != null)
             {
                 if (string.IsNullOrEmpty(Session["FullName"].ToString()))
@@ -1850,6 +1883,12 @@ namespace NHS.Controllers
                 try
                 {
                     medicalExaminerDecision = dBEngine.GetMedicalExaminerDecision(id);
+           
+                    patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
+
+                    medicalExaminerDecision.Patient_Id = patientDetails.ToList()[0].PatientId;
+                    medicalExaminerDecision.PatientName = patientDetails.ToList()[0].PatientName;
+                    medicalExaminerDecision.DOB = patientDetails.ToList()[0].DOB;
                     medicalExaminerDecision.a = "1a";
                     medicalExaminerDecision.b = "1b";
                     medicalExaminerDecision.c = "1c";
@@ -1867,12 +1906,7 @@ namespace NHS.Controllers
             {
                 throw ex;
             }
-            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
-            patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
-
-            medicalExaminerDecision.Patient_Id = patientDetails.ToList()[0].PatientId;
-            medicalExaminerDecision.PatientName = patientDetails.ToList()[0].PatientName;
-            medicalExaminerDecision.DOB = patientDetails.ToList()[0].DOB;
+          
 
             return View(medicalExaminerDecision);
         }
@@ -2093,6 +2127,7 @@ namespace NHS.Controllers
             bool isUser = GetUserDetailsFromAD();
             clsFeedBackModel feedback = new clsFeedBackModel();
             List<clsFeedBackModel> lstFBM = new List<clsFeedBackModel>();
+            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
             string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
             DBEngine dBEngine = new DBEngine(connectionString);
             try
@@ -2108,10 +2143,17 @@ namespace NHS.Controllers
                 //{
                 try
                 {
+                    Session["PatientID"] = id;
                     ViewBag.CommentType = dBEngine.GetCommentType("Feedback");
                     ViewBag.Comments = dBEngine.GetComments(id, "Feedback");
                     //ViewBag.CommentType = dBEngine.GetCommentType();
                     feedback = dBEngine.GetFeedback(id);
+                 
+                    patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
+
+                    feedback.PatientID = patientDetails.ToList()[0].PatientId;
+                    feedback.PatientName = patientDetails.ToList()[0].PatientName;
+                    feedback.DOB = patientDetails.ToList()[0].DOB;
                     //ViewBag.Feedback = feedback;
                     CultureInfo enUS = new CultureInfo("en-US");
                     CultureInfo provider = CultureInfo.InvariantCulture;
@@ -2165,12 +2207,7 @@ namespace NHS.Controllers
             {
                 throw ex;
             }
-            List<clsPatientDetails> patientDetails = new List<clsPatientDetails>();
-            patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
-
-            feedback.PatientID = patientDetails.ToList()[0].PatientId;
-            feedback.PatientName = patientDetails.ToList()[0].PatientName;
-            feedback.DOB = patientDetails.ToList()[0].DOB;
+           
             return View(feedback);
         }
 
@@ -2186,6 +2223,8 @@ namespace NHS.Controllers
         public ActionResult PositiveFeedback(FormCollection formCollection, string BtnPrevious, string BtnSave, string BtnFinish, string BtnNext, int id)
         {
             string actionName = "";
+            string CommentType = "";
+            string comments = "";
             bool isFormCompleted = false;
             bool isComplementsFedBack = false;
             string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
@@ -2217,14 +2256,13 @@ namespace NHS.Controllers
                     {
                         FBTypeID = 0;
                     }
-
+                  
                     if (formCollection["IsComment"] != "")
                     {
                         bool IsComment = Convert.ToBoolean(formCollection["IsComment"]);
                         if (IsComment)
                         {
-                            string CommentType = "";
-                            string comments = "";
+                           
                             CommentType = formCollection["ddlFeedbackType"].ToString();
                             comments = formCollection["cmnt"].ToString();
                             int result = SaveComment(CommentType, comments);
@@ -2621,7 +2659,8 @@ namespace NHS.Controllers
             try
             {
                 patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
-                ViewBag.PatientHistoryLink = "'" + "http://rbhdbsred011/TIPSTest/ReportViewer.aspx?ReportPath=R720_CORS_PatientHistory&MRN=" + patientDetails[0].PatientId + ":iid=" + id.ToString() + "'";
+                ViewBag.PatientHistoryLink = "'" + "http://rbhdbsred011/TIPSTest/ReportViewer.aspx?ReportPath=R720_CORS_PatientHistory&MRN=" + patientDetails[0].PatientId + "'";
+                //ViewBag.PatientHistoryLink = "'" + "http://rbhdbsred011/TIPSTest/ReportViewer.aspx?ReportPath=R720_CORS_PatientHistory&MRN=" + patientDetails[0].PatientId + ":iid=" + id.ToString() + "'";
                 patientDetails.ToList()[0].MedTriage = patientDetails.ToList()[0].MedTriage == 0 ? 2 : patientDetails.ToList()[0].MedTriage;
                 patientDetails.ToList()[0].QAPReview = patientDetails.ToList()[0].QAPReview == 0 ? 2 : patientDetails.ToList()[0].QAPReview;
                 //patientDetails.ToList()[0].SJR1 = patientDetails.ToList()[0].SJR1 == 0 ? 2 : patientDetails.ToList()[0].SJR1;

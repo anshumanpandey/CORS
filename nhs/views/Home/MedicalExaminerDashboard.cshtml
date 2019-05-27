@@ -119,14 +119,14 @@
                                         }
                                         @foreach (var item in ViewBag.PatientTypeDDM)
                                         {
-                                            if (item.PatientType == Convert.ToString(Session["PatientType"]) && Convert.ToString(Session["PatientType"]) != "0"
+                                            if (item.ID == Convert.ToInt32(Session["PatientType"]) && Convert.ToString(Session["PatientType"]) != "0"
                                                 && Convert.ToString(Session["PatientType"]) != "")
                                             {
-                                                <option selected value="@item.PatientType">@item.PatientTypeLongText</option>
+                                                <option selected value="@item.ID">@item.PatientTypeLongText</option>
                                             }
                                             else
                                             {
-                                                <option value="@item.PatientType">@item.PatientTypeLongText</option>
+                                                <option value="@item.ID">@item.PatientTypeLongText</option>
                                             }
                                         }
                                     </select>
@@ -505,43 +505,43 @@
 
     //added
     $(document).ready(function () {
-        $('#tblPatientDetails').DataTable(
-            {
-            "ordering": true,
-            "paging": true,
-            "searching": true,
-            "pageLength": 10,
-          //  "order": [[4, "desc"]],
-            "aoColumns": [
-                { "sName": "PatientId", "sTitle": "Patient ID", "bSortable": "true" },
-                { "sName": "PatientName", "sTitle": "Name", "bSortable": "true" },
-                { "sName": "DOB", "sTitle": "DOB", "sType": "date", "bSortable": "true" },
-                { "sName": "DateOfAdmission", "sTitle": "Date Of Admission", "sType": "date", "bSortable": "true" },
-                { "sName": "DateOfDeath", "sTitle": "Date Of Death", "sType": "date-uk","bSortable": "true" },
-                { "sName": "WardofDeath", "sTitle": "Ward Of Death", "bSortable": "true" },
-                { "sName": "DischargeConsultant", "sTitle": "Discharge Consultant", "bSortable": "true" },
-                { "sName": "DischargeSpeciality", "sTitle": "Discharge Specilaity", "bSortable": "true" },
-                { "sName": "PatientType", "sTitle": "Patient Type", "bSortable": "true" },
-                { "sName": "QAPReviewStatus", "sTitle": "QAP Review Status", "bSortable": "true" },
-                { "sName": "MedicalExaminerTriage", "sTitle": "Medical Examiner Triage", "bSortable": "true" },
-                { "sName": "SJRReviewStatus", "sTitle": "SJR Review Status", "bSortable": "true" },
-                { "sName": "SJRReviewOutcome", "sTitle": "SJR Review Outcome", "bSortable": "true" },
-                { "sName": "SJR2ReviewStatus", "sTitle": "SJR 2 Review Status", "bSortable": "true" },
-                { "sName": "CodingReviewStatus", "sTitle": "Coding Review Status", "bSortable": "true" },
-            ],
-            "lengthMenu": [
-                [10, 20, 50, 100, -1],
-                ['10 rows', '20 rows', '50 rows', '100 rows', 'Show all']],
-            "scrollX": true,
-            //language: '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
-            //"language": {
-            //    "emptyTable": '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
-            //    //"zeroRecords": '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
-            //},
-            //"scrollY": true,
+        //$('#tblPatientDetails').DataTable(
+        //    {
+        //    "ordering": true,
+        //    "paging": true,
+        //    "searching": true,
+        //    "pageLength": 10,
+        //  //  "order": [[4, "desc"]],
+        //    "aoColumns": [
+        //        { "sName": "PatientId", "sTitle": "Patient ID", "bSortable": "true" },
+        //        { "sName": "PatientName", "sTitle": "Name", "bSortable": "true" },
+        //        { "sName": "DOB", "sTitle": "DOB", "sType": "date", "bSortable": "true" },
+        //        { "sName": "DateOfAdmission", "sTitle": "Date Of Admission", "sType": "date", "bSortable": "true" },
+        //        { "sName": "DateOfDeath", "sTitle": "Date Of Death", "sType": "date-uk","bSortable": "true" },
+        //        { "sName": "WardofDeath", "sTitle": "Ward Of Death", "bSortable": "true" },
+        //        { "sName": "DischargeConsultant", "sTitle": "Discharge Consultant", "bSortable": "true" },
+        //        { "sName": "DischargeSpeciality", "sTitle": "Discharge Specilaity", "bSortable": "true" },
+        //        { "sName": "PatientType", "sTitle": "Patient Type", "bSortable": "true" },
+        //        { "sName": "QAPReviewStatus", "sTitle": "QAP Review Status", "bSortable": "true" },
+        //        { "sName": "MedicalExaminerTriage", "sTitle": "Medical Examiner Triage", "bSortable": "true" },
+        //        { "sName": "SJRReviewStatus", "sTitle": "SJR Review Status", "bSortable": "true" },
+        //        { "sName": "SJRReviewOutcome", "sTitle": "SJR Review Outcome", "bSortable": "true" },
+        //        { "sName": "SJR2ReviewStatus", "sTitle": "SJR 2 Review Status", "bSortable": "true" },
+        //        { "sName": "CodingReviewStatus", "sTitle": "Coding Review Status", "bSortable": "true" },
+        //    ],
+        //    "lengthMenu": [
+        //        [10, 20, 50, 100, -1],
+        //        ['10 rows', '20 rows', '50 rows', '100 rows', 'Show all']],
+        //    "scrollX": true,
+        //    //language: '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
+        //    //"language": {
+        //    //    "emptyTable": '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
+        //    //    //"zeroRecords": '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
+        //    //},
+        //    //"scrollY": true,
 
-            //"columnDefs": [{ "targets": 4, "type": "date-eu" }],
-        });
+        //    //"columnDefs": [{ "targets": 4, "type": "date-eu" }],
+        //});
 
         //var table = $('#tblPatientDetails').DataTable({
         //    'language': {

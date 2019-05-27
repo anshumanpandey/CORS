@@ -275,6 +275,18 @@
                         <div class="col-md-3">
                             <div class="row_bar">
                                 <span>@Model.TimeofDeath</span>
+
+                               @if (!String.IsNullOrEmpty(Model.TimeofDeath))
+                               {
+                                   if (Convert.ToInt32(Model.TimeofDeath.Split(':')[0]) < 12)
+                                   {
+                                    <span> AM </span>
+                                   }
+                                   else
+                                   {
+                                    <span> PM </span>
+                                   }
+                               }
                             </div>
                         </div>
 

@@ -163,7 +163,11 @@
                                     @{
                                         var countcomments = @ViewBag.Comments.Count;
                                     }
-                                    Available Feedbacks (<span id="com" name="0" value="0" onclick="OpenFilterComment(999)" style="cursor:pointer;">@countcomments</span>)
+                                    Available Feedbacks (
+                                    @if (countcomments!=null)
+                                    {
+                                    <span id="com" name="0" value="0" onclick="OpenFilterComment(999)" style="cursor:pointer;">@countcomments</span>
+                                    })
                                     <div class="clearfix" style="height:5px"></div>
                                     <div class="row">
                                         <div class="col-md-12">
@@ -451,6 +455,7 @@ window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.
 
 
         function SaveComment() {
+            debugger;
             var CommentType = $("#ddlFeedbackType").val();
             var comments = $("#cmnt").val();
             if (CommentType == "0") {

@@ -1167,12 +1167,12 @@ namespace NHS.Data
                     feedback.Patient_ID = Convert.ToInt32(dataReader["Patient_ID"]);
                     feedback.FormCompleted = Convert.ToBoolean(dataReader["FormCompleted"]);
                     feedback.ComplementsFedBack = Convert.ToBoolean(dataReader["ComplementsFedBack"]);
-                    if (!string.IsNullOrEmpty(dataReader["DOB"].ToString()))
-                    {
-                        feedback.DOB = Convert.ToDateTime(dataReader["DOB"]).ToString("dd/MM/yyyy");
-                    }
-                    else
-                        feedback.DOB = "Pending";
+                    //if (!string.IsNullOrEmpty(dataReader["DOB"].ToString()))
+                    //{
+                    //    feedback.DOB = Convert.ToDateTime(dataReader["DOB"]).ToString("dd/MM/yyyy");
+                    //}
+                    //else
+                    //    feedback.DOB = "Pending";
                     if (!string.IsNullOrEmpty(dataReader["MedTriage"].ToString()))
                         feedback.MedTriage = Convert.ToInt32(dataReader["MedTriage"]);
                     else
@@ -1748,10 +1748,10 @@ namespace NHS.Data
                     dbCommand.Parameters.AddWithValue("@DischargeSpecialityCode", dischargeSpecialityCode);
                 else
                     dbCommand.Parameters.AddWithValue("@DischargeSpecialityCode", "");
-                if (patientType != null)
-                    dbCommand.Parameters.AddWithValue("@PatientType", patientType);
+                if (patientType != null && patientType!="")
+                    dbCommand.Parameters.AddWithValue("@PatientType", Convert.ToInt32(patientType));
                 else
-                    dbCommand.Parameters.AddWithValue("@PatientType", "");
+                    dbCommand.Parameters.AddWithValue("@PatientType", 0);
                 dataReader = dbCommand.ExecuteReader();
 
                 while (dataReader.Read())
@@ -2331,14 +2331,15 @@ namespace NHS.Data
         /// <param name="comments">string</param>
         /// <param name="id">int</param>
         /// <returns>int</returns>
-        public List<int> UpdatePatientDetailsV2(bool isDataQualityIssuesIdentified, string dataqualitycomments, bool isCodingIssueIdentified, string comments, string occupation, bool isUrgentMEReview,
+        public int UpdatePatientDetailsV2(bool isDataQualityIssuesIdentified, string dataqualitycomments, bool isCodingIssueIdentified, string comments, string occupation, bool isUrgentMEReview,
             string UrgentMEReviewComments, string RelativeName, string RelativeTelNo, string Relationship, string GPSurgery, string fname, string lname, string gender, string DOD, string patientType,string DOB,int? id,int UserId)
         {
             var connection = GetConnection();
             int retVal = 0;
             SqlCommand dbCommand = new SqlCommand("usp_UpdatePatientDetails", connection);
-            SqlDataReader dataReader = null;
-            List<int> ids = new List<int>();
+            SqlDataReader dataReader = null;int PK = 0;
+            List<string> ids = new List<string>();
+            string PatientID = "";
             try
             {
                 if (occupation == null) occupation = "";
@@ -2366,16 +2367,16 @@ namespace NHS.Data
                 //changes
                 dbCommand.Parameters.AddWithValue("@ID", id);
                 //dbCommand.Parameters.AddWithValue("@patientID", patientID);
-                
+
                 //retVal = dbCommand.ExecuteNonQuery();
                 dataReader = dbCommand.ExecuteReader();
 
                 while (dataReader.Read())
                 {
-                    ids.Add(Convert.ToInt32(dataReader["PID"]));
-                    ids.Add(Convert.ToInt32(dataReader["PKID"]));
+                    retVal = Convert.ToInt32(dataReader["ID"]);
+                    //PK=(Convert.ToInt32(dataReader["PKID"]));
                 }
-                }
+            }
             catch (Exception ex)
             {
                 LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now);
@@ -2385,7 +2386,7 @@ namespace NHS.Data
                 if (!dataReader.IsClosed)
                     dataReader.Close();
             }
-            return ids;
+            return retVal;
         }
         //changse
 
@@ -3041,10 +3042,10 @@ namespace NHS.Data
                     otherReferralModel.Other = Convert.ToBoolean(dbReader["Other"]);
                     otherReferralModel.OtherReason = Convert.ToString(dbReader["OtherReason"]);
                     otherReferralModel.SafeGuardTeamNotified = Convert.ToBoolean(dbReader["SafeGuard"]);
-                    if (!string.IsNullOrEmpty(dbReader["DOB"].ToString()))
-                        otherReferralModel.DOB = Convert.ToDateTime(dbReader["DOB"]).ToString("dd/MM/yyyy");
-                    else
-                        otherReferralModel.DOB = "Pending";
+                    //if (!string.IsNullOrEmpty(dbReader["DOB"].ToString()))
+                    //    otherReferralModel.DOB = Convert.ToDateTime(dbReader["DOB"]).ToString("dd/MM/yyyy");
+                    //else
+                    //    otherReferralModel.DOB = "Pending";
                     if (!string.IsNullOrEmpty(dbReader["MedTriage"].ToString()))
                         otherReferralModel.MedTriage = Convert.ToInt32(dbReader["MedTriage"]);
                     else
@@ -3348,10 +3349,10 @@ namespace NHS.Data
                     sJRReview.Comments = Convert.ToString(dbReader["Comments"]);
                     sJRReview.FullSJRRequired = Convert.ToBoolean(dbReader["FullSJRRequired"]);
                     sJRReview.SpecialityID = Convert.ToInt32(dbReader["SpecialityID"]);
-                    if (!string.IsNullOrEmpty(dbReader["DOB"].ToString()))
-                        sJRReview.DOB = Convert.ToDateTime(dbReader["DOB"]).ToString("dd/MM/yyyy");
-                    else
-                        sJRReview.DOB = "Pending";
+                    //if (!string.IsNullOrEmpty(dbReader["DOB"].ToString()))
+                    //    sJRReview.DOB = Convert.ToDateTime(dbReader["DOB"]).ToString("dd/MM/yyyy");
+                    //else
+                    //    sJRReview.DOB = "Pending";
                     if (!string.IsNullOrEmpty(dbReader["MedTriage"].ToString()))
                         sJRReview.MedTriage = Convert.ToInt32(dbReader["MedTriage"]);
                     else

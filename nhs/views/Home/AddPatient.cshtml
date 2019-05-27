@@ -49,7 +49,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="row_bar checkbox-row">
-                                    @Html.EditorFor(model => model.PatientId, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.PatientId, new { htmlAttributes = new { @class = "form-control" , @maxlength = "10" , onkeypress = "return numbersonly(event)", } })
                                 </div>
                             </div>
                             <div id="msglabel" class="col-md-4">
@@ -151,6 +151,14 @@
             $("#modelClose").modal();
         });
     });
+    function numbersonly(e) {
+        //debugger;
+        var unicode = e.charCode ? e.charCode : e.keyCode
+        if (unicode != 8) { //if the key isn't the backspace key (which we should allow)
+            if (unicode < 46 || unicode > 57) //if not a number
+                return false //disable key press
+        }
+    }
     (function ($) {
         $(".datepicker").datepicker({
             changeMonth: true,
