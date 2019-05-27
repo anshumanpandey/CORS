@@ -703,3 +703,15 @@ td a {
 .row_bar_margin {
     margin: 0 0 0 -14px;
 }
+.dstable {
+    margin:50px 0 0 0;
+}
+.dstable2 {
+    margin: 0 0 0 0;
+}
+.dstable3 {
+    margin: -38px 0 0 0;
+}
+.dstable4 {
+    margin: -38px 0 30px 0;
+}
