@@ -140,7 +140,7 @@
             }
             else
             {
-                <a href="@Url.Action("QAPReviewFirstStep", "home", new { id = Model.ID })" class="box3" style="top: -10%; left: 47%;transform: translate(-40%, -30%);"><img src="~/images/63.png?v=1.1" title="QAP Review" width="150" height="150" /></a>
+                <a href="@Url.Action("QAPReviewFirstStep", "home", new { id = Model.ID })" class="box3" style="top: -10%; left: 47%;transform: translate(-40%, -30%);"><img src="~/images/64.png?v=1.1" title="QAP Review" width="150" height="150" /></a>
             }
 
             @if (Model.MedTriage == 1)
@@ -282,9 +282,10 @@
             {
                 <a href="@Url.Action("CodingReview", "home", new { id = Model.ID })" class="box3" style="top: 10%; left: 5%;transform: translate(-50%);"><img src="~/images/12.png?v=1.1" title="Coding Review" width="150" height="150" /></a>
             }
-            else if (Model.CodingReview == 0)
+            else if (Model.CodingReview == 0 || Model.PrimaryDiagnosis.ToUpper().Equals("AWAITING CODING") || Model.PrimaryDiagnosis.ToUpper().Equals("PENDING"))
             {
-                <a href="#" class="box3" style="top: 10%; left: 5%;transform: translate(-50%);"><img src="~/images/14.png?v=1.1" title="Coding Review" width="150" height="150" /></a>
+                <a href="@Url.Action("CodingReview", "home", new { id = Model.ID })" class="box3" style="top: 10%; left: 5%;transform: translate(-50%);">
+            <img src="~/images/14.png?v=1.1" title="Coding Review" width="150" height="150" /></a>
                 @*<a href='@Url.Action("PatientDetails", "home", new {id=Model.ID})' class="box3 ClrAmber" style="top: -60px; left: 50%;transform: translate(-50%);" id="jqMedicalExaminerTriage">
                 <p style="position: relative;top: 30%">Medical Examiner Triage </p>
                 <img src="~/images/53.png" />

@@ -107,7 +107,7 @@
                                     <select style="font-size:12px;" class="form-control" id="ddlPatientType" name="ddlPatientType">
                                         @if (Convert.ToString(Session["PatientType"]) == "0")
                                         {
-                                            <option selected value="">
+                                            <option selected value="0">
                                                 All Patient Type
                                             </option>
                                         }
@@ -119,14 +119,14 @@
                                         }
                                         @foreach (var item in ViewBag.PatientTypeDDM)
                                         {
-                                            if (item.ID == Convert.ToInt32(Session["PatientType"]) && Convert.ToString(Session["PatientType"]) != "0"
+                                            if (item.PatientType == Convert.ToString(Session["PatientType"]) && Convert.ToString(Session["PatientType"]) != "0"
                                                 && Convert.ToString(Session["PatientType"]) != "")
                                             {
-                                                <option selected value="@item.ID">@item.PatientTypeLongText</option>
+                                                <option selected value="@item.PatientType">@item.PatientTypeLongText</option>
                                             }
                                             else
                                             {
-                                                <option value="@item.ID">@item.PatientTypeLongText</option>
+                                                <option value="@item.PatientType">@item.PatientTypeLongText</option>
                                             }
                                         }
                                     </select>
@@ -238,9 +238,9 @@
                         <th align="left" width="10%" style="">Discharge Consultant</th>
                         <th align="center" width="10%" style="display:none;">Discharge Speciality</th>
                         <th align="center" width="3%" style="">Patient Type </th>
-                        <th align="right" width="10%" style="">&nbsp;&nbsp;&nbsp;QAP Review<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Status</th>
-                        <th align="right" width="10%" style="">&nbsp;&nbsp;&nbsp;ME Triage <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Review</th>
-                        <th align="right" width="10%" style="">&nbsp;&nbsp;&nbsp;SJR Review <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Status</th>
+                        <th align="right" width="10%" style="">QAP Review<br/>Status</th>
+                        <th align="right" width="10%" style="">ME Triage <br />Review</th>
+                        <th align="right" width="10%" style="">SJR Review <br />Status</th>
                         <th align="right" width="5%" style="">SJR  Review Outcome</th>
                         <th align="center" width="5%" style="">SJR 2 Review Status</th>
                         <th align="center" width="5%" style="">Coding Review Status</th>
@@ -253,9 +253,9 @@
                         {
                             <tr class="Entries">
                                 <td align="center" class="PID"> <u>@Html.ActionLink(item.PatientId.Trim(), "MortalityReview", new { id = item.ID }, new { @style = "color:blue;" })</u></td>
-                                <td align="left">@item.PatientName.Trim()   <br /> (@item.AgeAtDeath Yrs)</td>
+                                <td align="left">@item.PatientName.Trim() (@item.AgeAtDeath Yrs)</td>
                                 <td align="left" style="display:none">@item.DOB</td>
-                                    <td align="center" style="display:none">@item.DateofAdmission.ToString("dd/MM/yyyy")</td>
+                                <td align="center" style="display:none">@item.DateofAdmission.ToString("dd/MM/yyyy")</td>
                                 @*changes*@
                                 <td align="left" id="DateOfDeath">@item.DateofDeath.ToString("dd/MM/yyyy")</td>
                                 <td align="center" style="display:none">@item.WardofDeath.Trim()</td>
@@ -382,9 +382,9 @@
                                         <a href='@Url.Action("CodingReview", "home", new { id = item.ID })'><img src="~/images/amber.png" width="18" height="18" title="Click to open Coding review form"></a>
                                     }
 
-                                    else if (item.CodingReview == 0)
+                                    else if (item.CodingReview == 0 || item.PrimaryDiagnosis.ToUpper().Equals("AWAITING CODING") || item.PrimaryDiagnosis.ToUpper().Equals("PENDING"))
                                     {
-                                        <a href='#'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open Coding review form"></a>
+                                        <a href='@Url.Action("CodingReview", "home", new { id = item.ID })'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open Coding review form"></a>
                                     }
                                     else if (item.CodingReview == 2)
                                     {
@@ -393,6 +393,12 @@
                                 </td>
                             </tr>
                         }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="14" class="text-center" align="center">No Records Found.</td>
+                        </tr>
                     }
                 </tbody>
             </table>
@@ -505,49 +511,49 @@
 
     //added
     $(document).ready(function () {
-        //$('#tblPatientDetails').DataTable(
-        //    {
-        //    "ordering": true,
-        //    "paging": true,
-        //    "searching": true,
-        //    "pageLength": 10,
-        //  //  "order": [[4, "desc"]],
-        //    "aoColumns": [
-        //        { "sName": "PatientId", "sTitle": "Patient ID", "bSortable": "true" },
-        //        { "sName": "PatientName", "sTitle": "Name", "bSortable": "true" },
-        //        { "sName": "DOB", "sTitle": "DOB", "sType": "date", "bSortable": "true" },
-        //        { "sName": "DateOfAdmission", "sTitle": "Date Of Admission", "sType": "date", "bSortable": "true" },
-        //        { "sName": "DateOfDeath", "sTitle": "Date Of Death", "sType": "date-uk","bSortable": "true" },
-        //        { "sName": "WardofDeath", "sTitle": "Ward Of Death", "bSortable": "true" },
-        //        { "sName": "DischargeConsultant", "sTitle": "Discharge Consultant", "bSortable": "true" },
-        //        { "sName": "DischargeSpeciality", "sTitle": "Discharge Specilaity", "bSortable": "true" },
-        //        { "sName": "PatientType", "sTitle": "Patient Type", "bSortable": "true" },
-        //        { "sName": "QAPReviewStatus", "sTitle": "QAP Review Status", "bSortable": "true" },
-        //        { "sName": "MedicalExaminerTriage", "sTitle": "Medical Examiner Triage", "bSortable": "true" },
-        //        { "sName": "SJRReviewStatus", "sTitle": "SJR Review Status", "bSortable": "true" },
-        //        { "sName": "SJRReviewOutcome", "sTitle": "SJR Review Outcome", "bSortable": "true" },
-        //        { "sName": "SJR2ReviewStatus", "sTitle": "SJR 2 Review Status", "bSortable": "true" },
-        //        { "sName": "CodingReviewStatus", "sTitle": "Coding Review Status", "bSortable": "true" },
-        //    ],
-        //    "lengthMenu": [
-        //        [10, 20, 50, 100, -1],
-        //        ['10 rows', '20 rows', '50 rows', '100 rows', 'Show all']],
-        //    "scrollX": true,
-        //    //language: '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
-        //    //"language": {
-        //    //    "emptyTable": '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
-        //    //    //"zeroRecords": '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
-        //    //},
-        //    //"scrollY": true,
+        $('#tblPatientDetails').DataTable(
+            {
+            "ordering": true,
+            "paging": true,
+            "searching": true,
+            "pageLength": 10,
+          //  "order": [[4, "desc"]],
+            "aoColumns": [
+                { "sName": "PatientId", "sTitle": "Patient ID", "bSortable": "true" },
+                { "sName": "PatientName", "sTitle": "Name", "bSortable": "true" },
+                { "sName": "DOB", "sTitle": "DOB", "sType": "date", "bSortable": "true" },
+                { "sName": "DateOfAdmission", "sTitle": "Date Of Admission", "sType": "date", "bSortable": "true" },
+                { "sName": "DateOfDeath", "sTitle": "Date Of Death", "sType": "date-uk","bSortable": "true" },
+                { "sName": "WardofDeath", "sTitle": "Ward Of Death", "bSortable": "true" },
+                { "sName": "DischargeConsultant", "sTitle": "Discharge Consultant", "bSortable": "true" },
+                { "sName": "DischargeSpeciality", "sTitle": "Discharge Specilaity", "bSortable": "true" },
+                { "sName": "PatientType", "sTitle": "Patient Type", "bSortable": "true" },
+                { "sName": "QAPReviewStatus", "sTitle": "QAP Review Status", "bSortable": "true" },
+                { "sName": "MedicalExaminerTriage", "sTitle": "Medical Examiner Triage", "bSortable": "true" },
+                { "sName": "SJRReviewStatus", "sTitle": "SJR Review Status", "bSortable": "true" },
+                { "sName": "SJRReviewOutcome", "sTitle": "SJR Review Outcome", "bSortable": "true" },
+                { "sName": "SJR2ReviewStatus", "sTitle": "SJR 2 Review Status", "bSortable": "true" },
+                { "sName": "CodingReviewStatus", "sTitle": "Coding Review Status", "bSortable": "true" },
+            ],
+            "lengthMenu": [
+                [10, 20, 50, 100, -1],
+                ['10 rows', '20 rows', '50 rows', '100 rows', 'Show all']],
+            "scrollX": true,
+            //language: '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
+            //"language": {
+            //    "emptyTable": '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
+            //    //"zeroRecords": '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
+            //},
+            //"scrollY": true,
 
-        //    //"columnDefs": [{ "targets": 4, "type": "date-eu" }],
-        //});
+            //"columnDefs": [{ "targets": 4, "type": "date-eu" }],
+        });
 
-        //var table = $('#tblPatientDetails').DataTable({
-        //    'language': {
-        //        'emptyTable': '<a href="/path/' + 1 + '">Add new user</a>'
-        //    }
-        //});
+        var table = $('#tblPatientDetails').DataTable({
+            'language': {
+                'emptyTable': '<a href="/path/' + 1 + '">Add new user</a>'
+            }
+        });
         
     });
     //"language": {

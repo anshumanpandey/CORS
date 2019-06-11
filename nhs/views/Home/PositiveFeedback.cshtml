@@ -299,7 +299,7 @@
                                                     @Html.TextArea("cmnt", null, 10, 100, new { @class = "form-control" })
                                                 </div>
                                                 <div class="pull-right">
-                                                    <button id="BtnSaveComment" name="BtnSaveComment" class="btn btn-primary btn-lg" onclick="SaveComment(); return false;">Save Comment</button>
+                                                    <button id="BtnSaveComment" name="BtnSaveComment" class="btn btn-primary btn-lg" onclick="SaveComment(); return false;">Save Feedback</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -309,7 +309,7 @@
                                             <button id="BtnOpenComment" name="BtnOpenComment" class="btn btn-primary" onclick="OpenComment(); return false;">Add New Feedback</button>
                                         </div>
                                         <div class="pull-right">
-                                            <button id="BtnCloseComment" name="BtnCloseComment" class="btn btn-primary" style="display:none;height: 48px;font-size: large;" onclick="CloseComment(); return false;">Close Feedback</button>
+                                            <button id="BtnCloseComment" name="BtnCloseComment" class="btn btn-primary" style="display:none;height: 48px;font-size: large;margin-right:6px; " onclick="CloseComment(); return false;">Close Feedback</button>
                                         </div>
                                         @*</div>*@
                                     </div>
@@ -459,7 +459,7 @@ window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.
             var CommentType = $("#ddlFeedbackType").val();
             var comments = $("#cmnt").val();
             if (CommentType == "0") {
-                alert("Please Select Comment Type");
+                alert("Please Select Feedback Type");
             }
             else if (comments == "") {
                 alert("Please Enter Comment");

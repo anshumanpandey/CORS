@@ -99,10 +99,10 @@
 
                             <div class="row">
                                 @*<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-            <div class="row_bar">
-                <span>Synopsis of circumstances, medical history and preliminary view of the cause of death</span>
-            </div>
-        </div>*@
+                                        <div class="row_bar">
+                                            <span>Synopsis of circumstances, medical history and preliminary view of the cause of death</span>
+                                        </div>
+                                    </div>*@
                                 <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
                                     <div class="row_bar">
                                         <span>Synopsis of circumstances, medical history and preliminary view of the cause of death</span>
@@ -870,9 +870,12 @@
                         </div>
                     </div>
                     <div class="pull-right">
+                        @*<button id="BtnCancel" name="BtnCancel" class="btn btn-primary btn-lg" onclick="location.href='@Url.Action("MortalityReview", "Home", new { id=Model.Patient_ID })'">Cancel</button>
+                            <button id="BtnNext" type="submit" name="BtnNext" class="btn btn-primary btn-lg">Save</button>
+                            <span id="btnSave" name="btnSave" class="btn btn-primary btn-lg">Next</span>*@
                         <button id="BtnCancel" name="BtnCancel" class="btn btn-primary btn-lg" onclick="location.href='@Url.Action("MortalityReview", "Home", new { id=Model.Patient_ID })'">Cancel</button>
                         <button id="BtnNext" type="submit" name="BtnNext" class="btn btn-primary btn-lg">Save</button>
-                        <span id="btnSave" name="btnSave" class="btn btn-primary btn-lg">Next</span>
+                        <span id="btnSave" name="btnSave" class="btn btn-primary btn-lg">Exit</span>
                     </div>
                 }
 
@@ -931,7 +934,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="row_bar">
-                                    <div>Please note all the unsaved data will be lost. Please click save to save the data</div>
+                                    <div>Do you want to exit without saving your changes?</div>
                                 </div>
                             </div>
                             <br />

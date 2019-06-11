@@ -74,7 +74,7 @@
                         role = Session["Role"].ToString();
                     }
 
-                    @if (role == "Consultant")
+                    @*@if (role == "Consultant")
                     {
                         if (!string.IsNullOrEmpty(Model.sourceReview))
                         {
@@ -134,8 +134,8 @@
                         }
                     }
                     else
-                    {
-                        if (!string.IsNullOrEmpty(Model.sourceReview))
+                    {*@
+                        @if (!string.IsNullOrEmpty(Model.sourceReview))
                         {
 
                             <select class="form-control" id="ddlSourceReview" name="ddlSourceReview" style="width: 50%;">
@@ -191,7 +191,7 @@
                                 </option>
                             </select>
                         }
-                    }
+                    @*}*@
 
 
 
@@ -206,7 +206,7 @@
                 </div>
                 <div class="col-md-6">
 
-                    @if (role == "Consultant")
+                    @*@if (role == "Consultant")
                     {
                         if (Model.ReviewDate != null)
                         {
@@ -225,8 +225,8 @@
                         }
                     }
                     else
-                    {
-                        if (Model.ReviewDate != null)
+                    {*@
+                        @if (Model.ReviewDate != null)
                         {
                             if (Convert.ToInt32(Model.ReviewDate.Year) > 1)
                             {
@@ -241,7 +241,7 @@
                         {
                             <input class="form-control input_datepicker" type="text" id="ReviewDate" name="ReviewDate" value="" placeholder="Select Date" style="width: 50%;">
                         }
-                    }
+                    @*}*@
 
 
 
@@ -258,14 +258,14 @@
 
                     }
 
-                    @if (role == "Consultant")
+                    @*@if (role == "Consultant")
                     {
                         @Html.TextBox("ReviewerName", fullname, new { style = "width:50%", @class = "form-control", @readonly = "readonly" })
                     }
                     else
-                    {
+                    {*@
                         @Html.TextBox("ReviewerName", fullname, new { style = "width:50%", @class = "form-control", @readonly = "readonly" })
-                    }
+                    @*}*@
 
 
                         </div>
@@ -304,7 +304,7 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        @if (role == "Consultant")
+                        @*@if (role == "Consultant")
                         {
                         if (!string.IsNullOrEmpty(Model.Spell))
                         {
@@ -316,8 +316,8 @@
                         }
                         }
                         else
-                        {
-                        if (!string.IsNullOrEmpty(Model.Spell))
+                        {*@
+                        @if (!string.IsNullOrEmpty(Model.Spell))
                         {
                         @Html.TextArea("Spell", Model.Spell, new { style = "width:50%", @class = "form-control", onkeypress = "return numbersonly(event)" })
                         }
@@ -325,7 +325,7 @@
                         {
                         @Html.TextArea("Spell", null, new { style = "width:50%", @class = "form-control" })
                         }
-                        }
+                        @*}*@
 
 
 
@@ -340,7 +340,7 @@
             <div class="row">
                 <div class="col-md-12">
 
-                    @if (role == "Consultant")
+                    @*@if (role == "Consultant")
                     {
 
                         if (!string.IsNullOrEmpty(Model.Summary))
@@ -353,9 +353,9 @@
                         }
                     }
                     else
-                    {
+                    {*@
 
-                        if (!string.IsNullOrEmpty(Model.Summary))
+                        @if (!string.IsNullOrEmpty(Model.Summary))
                         {
                             @Html.TextArea("Summary", Model.Summary, new { style = "width:50%", @class = "form-control" })
                         }
@@ -363,7 +363,7 @@
                         {
                             @Html.TextArea("Summary", null, new { style = "width:50%", @class = "form-control" })
                         }
-                    }
+                    @*}*@
 
                 </div>
             </div>
@@ -375,7 +375,7 @@
                     <div class="col-md-6">@Html.Label("Coding issue")</div>
                     <div class="col-md-6">
 
-                    @if (role == "Consultant")
+                    @*@if (role == "Consultant")
                     {
                         if (!string.IsNullOrEmpty(Model.isCodingIssue))
                         {
@@ -408,8 +408,8 @@
 
                     }
                     else
-                    {
-                        if (!string.IsNullOrEmpty(Model.isCodingIssue))
+                    {*@
+                        @if (!string.IsNullOrEmpty(Model.isCodingIssue))
                         {
                             if (Model.isCodingIssue.Equals("N/A"))
                             {
@@ -438,7 +438,7 @@
                             <input type="radio" id="isCodingIssueNo" name="isCodingIssue" value="No"><span> No </span>
                         }
 
-                    }
+                    @*}*@
 
 
 
@@ -457,7 +457,7 @@
                 <div class="col-md-6">
 
 
-                    @if (role == "Consultant")
+                    @*@if (role == "Consultant")
                     {
                         if (!string.IsNullOrEmpty(Model.isTimingIssue))
                         {
@@ -488,8 +488,8 @@
                         }
                     }
                     else
-                    {
-                        if (!string.IsNullOrEmpty(Model.isTimingIssue))
+                    {*@
+                        @if (!string.IsNullOrEmpty(Model.isTimingIssue))
                         {
                             if (Model.isTimingIssue.Equals("N/A"))
                             {
@@ -516,7 +516,7 @@
                             <input type="radio" id="isTimingIssueYes" name="isTimingIssue" value="Yes"><span> Yes </span>
                             <input type="radio" id="isTimingIssueNo" name="isTimingIssue" value="No"><span> No </span>
                         }
-                    }
+                    @*}*@
 
 
                 </div>
@@ -527,7 +527,7 @@
                 <div class="col-md-6">
 
 
-                    @if (role == "Consultant")
+                    @*@if (role == "Consultant")
                     {
                         if (!string.IsNullOrEmpty(Model.isDataSysIssue))
                         {
@@ -558,8 +558,8 @@
                         }
                     }
                     else
-                    {
-                        if (!string.IsNullOrEmpty(Model.isDataSysIssue))
+                    {*@
+                        @if (!string.IsNullOrEmpty(Model.isDataSysIssue))
                         {
                             if (Model.isDataSysIssue.Equals("N/A"))
                             {
@@ -586,7 +586,7 @@
                             <input type="radio" id="isDataSysYes" name="isDataSysIssue" value="Yes"><span> Yes </span>
                             <input type="radio" id="isDataSysNo" name="isDataSysIssue" value="No"><span> No </span>
                         }
-                    }
+                    @*}*@
 
 
 
@@ -597,7 +597,7 @@
                 <div class="col-md-6">@Html.Label("Forward          For Clinical review")</div>
                 <div class="col-md-6">
 
-                    @if (role == "Consultant")
+                    @*@if (role == "Consultant")
                     {
                         if (!string.IsNullOrEmpty(Model.isClinicalReview))
                         {
@@ -628,8 +628,8 @@
                         }
                     }
                     else
-                    {
-                        if (!string.IsNullOrEmpty(Model.isClinicalReview))
+                    {*@
+                        @if (!string.IsNullOrEmpty(Model.isClinicalReview))
                         {
                             if (Model.isClinicalReview.Equals("N/A"))
                             {
@@ -656,7 +656,7 @@
                             <input type="radio" id="isClinicalReviewYes" name="isClinicalReview" value="Yes"><span> Yes </span>
                             <input type="radio" id="isClinicalReviewNo" name="isClinicalReview" value="No"><span> No </span>
                         }
-                    }
+                    @*}*@
 
 
 
@@ -668,7 +668,7 @@
                 <div class="col-md-6">
 
 
-                    @if (role == "Consultant")
+                    @*@if (role == "Consultant")
                     {
                         if (!string.IsNullOrEmpty(Model.isProcessReview))
                         {
@@ -699,8 +699,8 @@
                         }
                     }
                     else
-                    {
-                        if (!string.IsNullOrEmpty(Model.isProcessReview))
+                    {*@
+                        @if (!string.IsNullOrEmpty(Model.isProcessReview))
                         {
                             if (Model.isCodingIssue.Equals("N/A"))
                             {
@@ -727,7 +727,7 @@
                             <input type="radio" id="isProcessReviewYes" name="isProcessReview" value="Yes"><span> Yes </span>
                             <input type="radio" id="isProcessReviewNo" name="isProcessReview" value="No"><span> No </span>
                         }
-                    }
+                    @*}*@
 
 
 
@@ -739,7 +739,7 @@
             <div class="row">
                 <div class="col-md-12">
 
-                    @if (role == "Consultant")
+                    @*@if (role == "Consultant")
                     {
                          if (!string.IsNullOrEmpty(Model.Recom))
                         {
@@ -751,8 +751,8 @@
                         }
                     }
                     else
-                    {
-                        if (!string.IsNullOrEmpty(Model.Recom))
+                    {*@
+                        @if (!string.IsNullOrEmpty(Model.Recom))
                         {
                             @Html.TextArea("Recom", Model.Recom, new { style = "width:50%", @class = "form-control" })
                         }
@@ -760,7 +760,7 @@
                         {
                             @Html.TextArea("Recom", null, new { style = "width:50%", @class = "form-control" })
                         }
-                    }
+                    @*}*@
 
                 </div>
             </div>
@@ -772,7 +772,7 @@
                 <div class="col-md-6">
 
 
-                    @if (role == "Consultant")
+                    @*@if (role == "Consultant")
                     {
                         if (Model.isReviewCompleted != null)
                         {
@@ -794,8 +794,8 @@
                         }
                     }
                     else
-                    {
-                        if (Model.isReviewCompleted != null)
+                    {*@
+                        @if (Model.isReviewCompleted != null)
                         {
                             if (Model.isReviewCompleted.Equals(true))
                             {
@@ -813,7 +813,7 @@
                             <input type="radio" id="isReviewCompletedYes" name="isReviewCompleted" value="Yes" checked> <span> Yes </span>
                             <input type="radio" id="isReviewCompletedNo" name="isReviewCompleted" value="No"><span> NO </span>
                         }
-                    }
+                    @*}*@
 
 
 

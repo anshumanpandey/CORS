@@ -2539,6 +2539,14 @@ namespace NHS.Controllers
                 Session["QAPCount"] = patientDetails[0].QAPCount;
                 Session["MedCount"] = patientDetails[0].MedCount;
                 Session.Timeout = 4000;
+                 
+                foreach(var item in patientDetails)
+                {
+                    if(string.IsNullOrEmpty(item.PrimaryDiagnosis)||item.PrimaryDiagnosis.Equals("Pending"))
+                    {
+                        item.CodingReview = 0;
+                    }
+                }
             }
             else
             {

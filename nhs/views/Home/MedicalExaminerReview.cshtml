@@ -341,53 +341,53 @@
                                                 @*@for (var i = 0; i < ViewBag.Comments.Count; i++)
                             {*@
                                                 @*@if (i == 0)
-                                                {*@
-                                                    <tr style="color:black;" bgcolor="ffffff">
-                                                        <td>
-                                                            @if (Convert.ToInt32(ViewBag.Comments[i].CreatedTime.Substring(0, 2)) >= 12)
-                                                            {
-                                                                <div class="pull-left col-md-6" style="padding-left:0px">
-                                                                    <b>By:</b> @ViewBag.Comments[i].Name
-                                                                </div>
-                                                                <div class="pull-left col-md-6">
-                                                                    <b>Role:</b>  @ViewBag.Comments[i].Role
-                                                                </div>
-                                                                <div class="pull-left col-md-6" style="padding-left:0px">
-                                                                    <b>Date:</b> @ViewBag.Comments[i].CreatedDate
-                                                                </div>
-                                                                <div class="pull-left col-md-6">
-                                                                    <b>Time:</b> @ViewBag.Comments[i].CreatedTime PM
-                                                                </div>
-                                                                <div class="pull-left col-md-12" style="padding-left:0px">
-                                                                    <b>Comment Type:</b> @ViewBag.Comments[i].CommentType
-                                                                </div>
-                                                                <div class="pull-left col-md-12" style="padding-left:0px">
-                                                                    <b>Comment:</b> @ViewBag.Comments[i].Comments
-                                                                </div>
-                                                            }
-                                                            else
-                                                            {
-                                                                <div class="pull-left col-md-6" style="padding-left:0px">
-                                                                    <b>By:</b> @ViewBag.Comments[i].Name
-                                                                </div>
-                                                                <div class="pull-left col-md-6">
-                                                                    <b>Role:</b>  @ViewBag.Comments[i].Role
-                                                                </div>
-                                                                <div class="pull-left col-md-6" style="padding-left:0px">
-                                                                    <b>Date:</b> @ViewBag.Comments[i].CreatedDate
-                                                                </div>
-                                                                <div class="pull-left col-md-6">
-                                                                    <b>Time:</b> @ViewBag.Comments[i].CreatedTime AM
-                                                                </div>
-                                                                <div class="pull-left col-md-12" style="padding-left:0px">
-                                                                    <b>Comment Type:</b> @ViewBag.Comments[i].CommentType
-                                                                </div>
-                                                                <div class="pull-left col-md-12" style="padding-left:0px">
-                                                                    <b>Comment:</b> @ViewBag.Comments[i].Comments
-                                                                </div>
-                                                            }
-                                                        </td>
-                                                    </tr>
+                            {*@
+                                                <tr style="color:black;" bgcolor="ffffff">
+                                                    <td>
+                                                        @if (Convert.ToInt32(ViewBag.Comments[i].CreatedTime.Substring(0, 2)) >= 12)
+                                                        {
+                                                            <div class="pull-left col-md-6" style="padding-left:0px">
+                                                                <b>By:</b> @ViewBag.Comments[i].Name
+                                                            </div>
+                                                            <div class="pull-left col-md-6">
+                                                                <b>Role:</b>  @ViewBag.Comments[i].Role
+                                                            </div>
+                                                            <div class="pull-left col-md-6" style="padding-left:0px">
+                                                                <b>Date:</b> @ViewBag.Comments[i].CreatedDate
+                                                            </div>
+                                                            <div class="pull-left col-md-6">
+                                                                <b>Time:</b> @ViewBag.Comments[i].CreatedTime PM
+                                                            </div>
+                                                            <div class="pull-left col-md-12" style="padding-left:0px">
+                                                                <b>Comment Type:</b> @ViewBag.Comments[i].CommentType
+                                                            </div>
+                                                            <div class="pull-left col-md-12" style="padding-left:0px">
+                                                                <b>Comment:</b> @ViewBag.Comments[i].Comments
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="pull-left col-md-6" style="padding-left:0px">
+                                                                <b>By:</b> @ViewBag.Comments[i].Name
+                                                            </div>
+                                                            <div class="pull-left col-md-6">
+                                                                <b>Role:</b>  @ViewBag.Comments[i].Role
+                                                            </div>
+                                                            <div class="pull-left col-md-6" style="padding-left:0px">
+                                                                <b>Date:</b> @ViewBag.Comments[i].CreatedDate
+                                                            </div>
+                                                            <div class="pull-left col-md-6">
+                                                                <b>Time:</b> @ViewBag.Comments[i].CreatedTime AM
+                                                            </div>
+                                                            <div class="pull-left col-md-12" style="padding-left:0px">
+                                                                <b>Comment Type:</b> @ViewBag.Comments[i].CommentType
+                                                            </div>
+                                                            <div class="pull-left col-md-12" style="padding-left:0px">
+                                                                <b>Comment:</b> @ViewBag.Comments[i].Comments
+                                                            </div>
+                                                        }
+                                                    </td>
+                                                </tr>
                                                 @*}*@
                                                 @*}*@
                                             </tbody>
@@ -395,74 +395,84 @@
                                     </div>
                                 }
                             }
-                                <div id="comment" style="display:none;">
+                            <div id="comment" style="display:none;">
 
-                                    <div class="col-md-12" style="background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;border-radius: .25rem;transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;">
-                                        <div class="row">
-                                            <div class="col-md-12" style="padding: 0 !important;">
-                                                <div class="col-md-6">
-                                                    @*<div class="row_bar">*@
-                                                    Role
-                                                </div>
-                                                <div class="col-md-6">
-                                                    @{
-                                                        var role = TempData["Role"];
-                                                    }
-                                                    @Html.TextBox("role", role.ToString(), new { @readonly = "readonly", @class = "form-control", style = "width: 50%;cursor:not-allowed" })
-                                                    @*</div>*@
-                                                </div>
+                                <div class="col-md-12" style="background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;border-radius: .25rem;transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;">
+                                    <div class="row">
+                                        <div class="col-md-12" style="padding: 0 !important;">
+                                            <div class="col-md-6">
+                                                @*<div class="row_bar">*@
+                                                Role
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12" style="padding: 0 !important;">
-                                                <div class="col-md-6" style="padding: 0 !important;">
-                                                    <div class="col-md-6">
-                                                        Comment Type
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <select class="form-control" id="ddlCommentType" name="ddlCommentType">
-                                                            <option value="0">Select Comment Type</option>
-                                                            @foreach (var item in ViewBag.CommentType)
-                                                            {
-                                                                <option value="@item.CommonTypeID">@item.Type</option>
-                                                            }
-                                                        </select>
-                                                    </div>
-
-                                                </div>
+                                            <div class="col-md-6">
+                                                @{
+                                                    var role = TempData["Role"];
+                                                }
+                                                @Html.TextBox("role", role.ToString(), new { @readonly = "readonly", @class = "form-control", style = "width: 50%;cursor:not-allowed" })
+                                                @*</div>*@
                                             </div>
-                                        </div>
-                                        @*newly added*@
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                Comment
-                                            </div>
-                                            <div class="col-md-12">
-                                                @Html.TextArea("txtComments", null, 10, 100, new { @class = "form-control" })
-                                            </div>
-
-                                        </div>
-
-
-                                        <div class="pull-right">
-                                            <button id="BtnSaveComment" name="BtnSaveComment" class="btn btn-primary btn-lg" onclick="SaveComment(); return false;">Save Comment</button>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-md-12" style="padding: 0 !important;">
+                                            <div class="col-md-6" style="padding: 0 !important;">
+                                                <div class="col-md-6">
+                                                    Comment Type
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <select class="form-control" id="ddlCommentType" name="ddlCommentType">
+                                                        <option value="0">Select Comment Type</option>
+                                                        @foreach (var item in ViewBag.CommentType)
+                                                        {
+                                                            <option value="@item.CommonTypeID">@item.Type</option>
+                                                        }
+                                                    </select>
+                                                </div>
 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*newly added*@
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            Comment
+                                        </div>
+                                        <div class="col-md-12">
+                                            @Html.TextArea("txtComments", null, 10, 100, new { @class = "form-control" })
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="pull-right">
+                                        <button id="BtnSaveComment" name="BtnSaveComment" class="btn btn-primary btn-lg" onclick="SaveComment(); return false;">Save Comment</button>
+                                    </div>
                                 </div>
 
-                                <input id="IsComment" type="hidden" class="form-control" value="" name="IsComment">
-                                <div class="pull-right">
+                            </div>
+
+                            <input id="IsComment" type="hidden" class="form-control" value="" name="IsComment">
+                            <div class="pull-right">
+                                <button id="BtnOpenComment" name="BtnOpenComment" class="btn btn-primary" onclick="OpenComment(); return false;">Add New Comment</button>
+                            </div>
+                            <div class="pull-right">
+                                <button id="BtnCloseComment" name="BtnCloseComment" class="btn btn-primary" style="display:none;padding-top: 12px !important;font-size: large;margin-right: 6px;" onclick="CloseComment(); return false;">Close Comment</button>
+                            </div>
+                            @*@Html.ValidationMessageFor(model => model.objclsMedicalExaminerReview.Comments, "", new { @class = "text-danger" })*@
+                        </div>
+
+
+                                @*<div class="pull-right">
                                     <button id="BtnOpenComment" name="BtnOpenComment" class="btn btn-primary btn-lg" onclick="OpenComment(); return false;">Add New Comment</button>
-                                </div>
-                                <div class="pull-right">
+                                </div>*@
+                                @*<div class="pull-right">
                                     <button id="BtnCloseComment" name="BtnCloseComment" class="btn btn-primary btn-lg" style="display:none;" onclick="CloseComment(); return false;">Close Comment</button>
-                                </div>
+                                </div>*@
                                 @*@Html.ValidationMessageFor(model => model.objclsMedicalExaminerReview.Comments, "", new { @class = "text-danger" })*@
 
                             </div>
                     </div>
-                </div>
+             
                 <div class="pull-right">
                     <button id="BtnPrevious" name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
                     <button id="BtnNext" name="BtnNext" class="btn btn-primary btn-lg">Save & Next</button>
@@ -684,15 +694,7 @@
     {
         var CommentType = $("#ddlCommentType").val();
         var comments = $("#txtComments").val();
-        //$.ajax({
-        //    type: 'POST',
-        //    dataType: 'json',
-        //    data: { CommentType: CommentType, comments: comments },
-        //    url: 'MERSaveComment',
-        //    success: function (result) {
-
-        //    }
-        //});
+        
 
         if (CommentType == "0") {
             alert("Please Select Comment Type");
