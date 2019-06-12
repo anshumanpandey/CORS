@@ -21,3 +21,19 @@ C:\NHS\NHS.Data\bin\Release\NHS.Common.pdb
 C:\NHS\NHS.Data\obj\Release\NHS.Data.csprojResolveAssemblyReference.cache
 C:\NHS\NHS.Data\obj\Release\NHS.Data.dll
 C:\NHS\NHS.Data\obj\Release\NHS.Data.pdb
+C:\Users\pujas\Desktop\24_05_19_CORS_RBH\cors-rbh\NHS.Data\bin\Release\NHS.Data.dll
+C:\Users\pujas\Desktop\24_05_19_CORS_RBH\cors-rbh\NHS.Data\bin\Release\NHS.Data.pdb
+C:\Users\pujas\Desktop\24_05_19_CORS_RBH\cors-rbh\NHS.Data\bin\Release\NHS.Common.dll
+C:\Users\pujas\Desktop\24_05_19_CORS_RBH\cors-rbh\NHS.Data\bin\Release\NHS.Common.pdb
+C:\Users\pujas\Desktop\24_05_19_CORS_RBH\cors-rbh\NHS.Data\obj\Release\NHS.Data.csprojAssemblyReference.cache
+C:\Users\pujas\Desktop\24_05_19_CORS_RBH\cors-rbh\NHS.Data\obj\Release\NHS.Data.csproj.CoreCompileInputs.cache
+C:\Users\pujas\Desktop\24_05_19_CORS_RBH\cors-rbh\NHS.Data\obj\Release\NHS.Data.csproj.CopyComplete
+C:\Users\pujas\Desktop\24_05_19_CORS_RBH\cors-rbh\NHS.Data\obj\Release\NHS.Data.dll
+C:\Users\pujas\Desktop\24_05_19_CORS_RBH\cors-rbh\NHS.Data\obj\Release\NHS.Data.pdb
+C:\cors-rbh 07_06_19 (1)\cors-rbh\NHS.Data\bin\Release\NHS.Data.dll
+C:\cors-rbh 07_06_19 (1)\cors-rbh\NHS.Data\bin\Release\NHS.Data.pdb
+C:\cors-rbh 07_06_19 (1)\cors-rbh\NHS.Data\bin\Release\NHS.Common.dll
+C:\cors-rbh 07_06_19 (1)\cors-rbh\NHS.Data\bin\Release\NHS.Common.pdb
+C:\cors-rbh 07_06_19 (1)\cors-rbh\NHS.Data\obj\Release\NHS.Data.csprojResolveAssemblyReference.cache
+C:\cors-rbh 07_06_19 (1)\cors-rbh\NHS.Data\obj\Release\NHS.Data.dll
+C:\cors-rbh 07_06_19 (1)\cors-rbh\NHS.Data\obj\Release\NHS.Data.pdb

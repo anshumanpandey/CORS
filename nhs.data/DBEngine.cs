@@ -1749,7 +1749,7 @@ namespace NHS.Data
                 else
                     dbCommand.Parameters.AddWithValue("@DischargeSpecialityCode", "");
                 if (patientType != null && patientType!="")
-                    dbCommand.Parameters.AddWithValue("@PatientType", Convert.ToInt32(patientType));
+                    dbCommand.Parameters.AddWithValue("@PatientType", patientType);
                 else
                     dbCommand.Parameters.AddWithValue("@PatientType", 0);
                 dataReader = dbCommand.ExecuteReader();
@@ -2583,7 +2583,7 @@ namespace NHS.Data
             return retVal;
         }
 
-        public int AddNewPatient(string PatientName, string PatientId, DateTime DateofDeath, int PatientType, string DeathTime)
+        public int AddNewPatient(string PatientName, string PatientId, DateTime DateofDeath, int PatientType, string gender)
         {
             var connection = GetConnection();
             int retVal = 0;
@@ -2598,7 +2598,7 @@ namespace NHS.Data
                 dbCommand.Parameters.AddWithValue("@PatientID", PatientId);
                 dbCommand.Parameters.AddWithValue("@DateOfDeath", DateofDeath);
                 dbCommand.Parameters.AddWithValue("@PatientTypeActual", PatientType);
-                dbCommand.Parameters.AddWithValue("@TimeOfDeath", Convert.ToDateTime(DeathTime).TimeOfDay);
+                dbCommand.Parameters.AddWithValue("@Gender", gender);
                 dbCommand.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
                 retVal = dbCommand.ExecuteNonQuery();
                 id = Convert.ToInt32(dbCommand.Parameters["@id"].Value.ToString());
@@ -3102,10 +3102,10 @@ namespace NHS.Data
                         declaration.CreatedDate = "";
                     else
                         declaration.CreatedDate = Convert.ToDateTime(dbReader["CreatedDate"]).ToString("dd/MM/yyyy");
-                    if (string.IsNullOrEmpty(dbReader["DOB"].ToString()))
-                        declaration.DOB = Convert.ToDateTime(dbReader["DOB"]).ToString("dd/MM/yyyy");
-                    else
-                        declaration.DOB = "Pending";
+                    //if (string.IsNullOrEmpty(dbReader["DOB"].ToString()))
+                    //    declaration.DOB = Convert.ToDateTime(dbReader["DOB"]).ToString("dd/MM/yyyy");
+                    //else
+                    //    declaration.DOB = "Pending";
                     if (!string.IsNullOrEmpty(dbReader["MedTriage"].ToString()))
                         declaration.MedTriage = Convert.ToInt32(dbReader["MedTriage"]);
                     else

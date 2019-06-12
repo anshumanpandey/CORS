@@ -65,19 +65,19 @@ namespace NHS.Controllers
                 if (formCollection["DateOfDeath"] != "")
                 {
                     retVal = dBEngine.AddNewPatient(formCollection["PatientName"], formCollection["PatientId"],
-                        DateTime.ParseExact(formCollection["DateOfDeath"], "dd/MM/yyyy", CultureInfo.InvariantCulture),Convert.ToInt32(formCollection["ddlPatientType"]), formCollection["DeathTime"]);
+                        DateTime.ParseExact(formCollection["DateOfDeath"], "dd/MM/yyyy", CultureInfo.InvariantCulture),Convert.ToInt32(formCollection["ddlPatientType"]), formCollection["ddlGender"]);
                 }
                 else
                 {
                     retVal = dBEngine.AddNewPatient(formCollection["PatientName"], formCollection["PatientId"],
-                        DateTime.ParseExact("01/01/1754", "dd/MM/yyyy", CultureInfo.InvariantCulture), Convert.ToInt32(formCollection["ddlPatientType"]), formCollection["DeathTime"]);
+                        DateTime.ParseExact("01/01/1754", "dd/MM/yyyy", CultureInfo.InvariantCulture), Convert.ToInt32(formCollection["ddlPatientType"]), formCollection["ddlGender"]);
                 }
                 if(retVal == 0)
                 {
                     Alert alertMessage = new Alert();
                     alertMessage.AlertType = ALERTTYPE.Error;
                     alertMessage.MessageType = ALERTMESSAGETYPE.TextWithClose;
-                    alertMessage.Message = "Patient ID already exists in the EPR data. Please search on the grid to find the patient and proceed further.";
+                    alertMessage.Message = "Patient ID already exists in the EPR data. Please search on the dashboard to find the patient and proceed further.";
                     TempData["AlertMessage"] = alertMessage.Message;
                     actionName = "AddPatient";
                 }
@@ -2540,13 +2540,13 @@ namespace NHS.Controllers
                 Session["MedCount"] = patientDetails[0].MedCount;
                 Session.Timeout = 4000;
                  
-                foreach(var item in patientDetails)
-                {
-                    if(string.IsNullOrEmpty(item.PrimaryDiagnosis)||item.PrimaryDiagnosis.Equals("Pending"))
-                    {
-                        item.CodingReview = 0;
-                    }
-                }
+                //foreach(var item in patientDetails)
+                //{
+                //    if(string.IsNullOrEmpty(item.PrimaryDiagnosis)||item.PrimaryDiagnosis.Equals("Pending"))
+                //    {
+                //        item.CodingReview = 0;
+                //    }
+                //}
             }
             else
             {
@@ -2667,7 +2667,7 @@ namespace NHS.Controllers
             try
             {
                 patientDetails = dBEngine.GetPatientDetails(id, Convert.ToInt32(Session["LoginUserID"]));
-                ViewBag.PatientHistoryLink = "'" + "http://rbhdbsred011/TIPSTest/ReportViewer.aspx?ReportPath=R720_CORS_PatientHistory&MRN=" + patientDetails[0].PatientId + "'";
+                ViewBag.PatientHistoryLink = "'" + "http://rbhdbsred011/TIPS/ReportViewer.aspx?ReportPath=R720_CORS_PatientHistory&MRN=" + patientDetails[0].PatientId + "'";
                 //ViewBag.PatientHistoryLink = "'" + "http://rbhdbsred011/TIPSTest/ReportViewer.aspx?ReportPath=R720_CORS_PatientHistory&MRN=" + patientDetails[0].PatientId + ":iid=" + id.ToString() + "'";
                 patientDetails.ToList()[0].MedTriage = patientDetails.ToList()[0].MedTriage == 0 ? 2 : patientDetails.ToList()[0].MedTriage;
                 patientDetails.ToList()[0].QAPReview = patientDetails.ToList()[0].QAPReview == 0 ? 2 : patientDetails.ToList()[0].QAPReview;

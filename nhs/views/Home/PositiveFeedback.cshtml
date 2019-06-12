@@ -467,7 +467,7 @@ window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.
             else {
                 $.ajax({
                     type: "POST",
-                    url: "/Home/PFBSaveComment",
+                    url: "@Url.Action("PFBSaveComment", "Home")",
                     //  contentType: "application/json; charset=utf-8",
                     data: { CommentType: CommentType, comments: comments },
 
@@ -506,7 +506,7 @@ window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.
         for (var i = 0; i < @ViewBag.Comments.Count; i++)
         {
             var typeIDFilter = e;
-            
+
             var newElement = document.createElement("tr");
             if (typeIDFilter != null)
             {
@@ -535,9 +535,9 @@ window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.
                             "<div class='pull-left col-md-12' style='padding-left:0px'><b>Feedback: </b>" + data[i].Comments + "</div>" +
                             "</td>");
                     }
-                       
 
-                      
+
+
                     newElement.innerHTML = div;
                     newElement.id = 'Cmnt';
                     newElement.style.color = "black";
@@ -583,7 +583,7 @@ window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.
                     newElement.style.marginTop = "5px !Important";
                     tableF.appendChild(newElement);
                 }
-                
+
             }
         }
 

@@ -148,6 +148,10 @@
                             {
                                 <span>Pending</span>
                             }
+                            else if (Model.Gender.Trim().ToUpper().Equals("OTHER"))
+                            {
+                                <span>Other</span>
+                            }
                             else
                             {
                                 if (Model.Gender.Trim().ToUpper().IndexOf("FEMALE") > 0)

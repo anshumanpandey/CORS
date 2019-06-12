@@ -82,24 +82,9 @@
                     <div class="col-md-12 well text-center">
                         <div class="form-section" style="text-align:left">
                             <h3 class="stage_title">STAGE 2: STRUCTURED JUDGEMENT REVIEW </h3><br />
-                            <div class="lable_title">
-                                <h2>PHASE OF CARE: INITIAL MANAGEMENT (FIRST 24 HOURS) </h2>
-                            </div>
-                            <input type="hidden" id="hdfInitialManagementCareRating" name="hdfInitialManagementCareRating" value="" />
-                            <input type="hidden" id="hdfOnGoingCareRating" name="hdfOnGoingCareRating" value="" />
-                            <input type="hidden" id="hdfCareDuringProcedureCareRating" name="hdfCareDuringProcedureCareRating" value="" />
-                            <input type="hidden" id="hdfEndLifeCareRating" name="hdfEndLifeCareRating" value="" />
-                            <input type="hidden" id="hdfOverAllAssessmentCareRating" name="hdfOverAllAssessmentCareRating" value="" />
-                            <input type="hidden" id="hdfQualityDocumentationCareRating" name="hdfQualityDocumentationCareRating" value="" />
-
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
-                                    <div class="row_bar">
-                                        @Html.TextAreaFor(model => model.InitialManagement, 5, 200, new { @class = "form-control", placeholder = "Please record your explicit judgements about the quality of care the patient received and whether it was in accordance with current good practice (for example, your professional standards or your professional perspective). If there is any other information that you think is important or relevant that you wish to comment on then please do so." })
-                                    </div>
-                                </div>
-
-                                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5 dstable2">
+							
+							<div class="row">
+							<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5" style="margin:0 0 20px 0;">
                                     <table style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;" width="100%">
                                         <tbody>
                                             <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
@@ -119,6 +104,26 @@
                                     </table>
 
                                 </div>
+							
+							</div>
+                            <div class="lable_title">
+                                <h2>PHASE OF CARE: INITIAL MANAGEMENT (FIRST 24 HOURS) </h2>
+                            </div>
+                            <input type="hidden" id="hdfInitialManagementCareRating" name="hdfInitialManagementCareRating" value="" />
+                            <input type="hidden" id="hdfOnGoingCareRating" name="hdfOnGoingCareRating" value="" />
+                            <input type="hidden" id="hdfCareDuringProcedureCareRating" name="hdfCareDuringProcedureCareRating" value="" />
+                            <input type="hidden" id="hdfEndLifeCareRating" name="hdfEndLifeCareRating" value="" />
+                            <input type="hidden" id="hdfOverAllAssessmentCareRating" name="hdfOverAllAssessmentCareRating" value="" />
+                            <input type="hidden" id="hdfQualityDocumentationCareRating" name="hdfQualityDocumentationCareRating" value="" />
+
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="row_bar">
+                                        @Html.TextAreaFor(model => model.InitialManagement, 5, 200, new { @class = "form-control", placeholder = "Please record your explicit judgements about the quality of care the patient received and whether it was in accordance with current good practice (for example, your professional standards or your professional perspective). If there is any other information that you think is important or relevant that you wish to comment on then please do so." })
+                                    </div>
+                                </div>
+
+                                
 
                                 <div class="col-md-6">
                                     <div class="row_bar">

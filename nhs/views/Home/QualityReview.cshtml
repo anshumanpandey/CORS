@@ -319,11 +319,11 @@
                         {*@
                         @if (!string.IsNullOrEmpty(Model.Spell))
                         {
-                        @Html.TextArea("Spell", Model.Spell, new { style = "width:50%", @class = "form-control", onkeypress = "return numbersonly(event)" })
+                        @Html.TextArea("Spell", Model.Spell, new { style = "width:100%", @class = "form-control", onkeypress = "return numbersonly(event)" })
                         }
                         else
                         {
-                        @Html.TextArea("Spell", null, new { style = "width:50%", @class = "form-control" })
+                        @Html.TextArea("Spell", null, new { style = "width:100%", @class = "form-control" })
                         }
                         @*}*@
 
@@ -357,11 +357,11 @@
 
                         @if (!string.IsNullOrEmpty(Model.Summary))
                         {
-                            @Html.TextArea("Summary", Model.Summary, new { style = "width:50%", @class = "form-control" })
+                            @Html.TextArea("Summary", Model.Summary, 10, 100, new { style = "width:100%", @class = "form-control" })
                         }
                         else
                         {
-                            @Html.TextArea("Summary", null, new { style = "width:50%", @class = "form-control" })
+                            @Html.TextArea("Summary", null, 10, 100, new { style = "width:100%", @class = "form-control" })
                         }
                     @*}*@
 
@@ -754,11 +754,11 @@
                     {*@
                         @if (!string.IsNullOrEmpty(Model.Recom))
                         {
-                            @Html.TextArea("Recom", Model.Recom, new { style = "width:50%", @class = "form-control" })
+                            @Html.TextArea("Recom", Model.Recom, new { style = "width:100%", @class = "form-control" })
                         }
                         else
                         {
-                            @Html.TextArea("Recom", null, new { style = "width:50%", @class = "form-control" })
+                            @Html.TextArea("Recom", null, new { style = "width:100%", @class = "form-control" })
                         }
                     @*}*@
 
@@ -800,18 +800,18 @@
                             if (Model.isReviewCompleted.Equals(true))
                             {
                                 <input type="radio" id="isReviewCompletedYes" name="isReviewCompleted" value="Yes" checked> <span> Yes </span>
-                                <input type="radio" id="isReviewCompletedNo" name="isReviewCompleted" value="No"><span> NO </span>
+                                <input type="radio" id="isReviewCompletedNo" name="isReviewCompleted" value="No"><span> No </span>
                             }
                             else
                             {
                                 <input type="radio" id="isReviewCompletedYes" name="isReviewCompleted" value="Yes"> <span> Yes </span>
-                                <input type="radio" id="isReviewCompletedNo" name="isReviewCompleted" value="No" checked><span> NO </span>
+                                <input type="radio" id="isReviewCompletedNo" name="isReviewCompleted" value="No" checked><span> No </span>
                             }
                         }
                         else
                         {
                             <input type="radio" id="isReviewCompletedYes" name="isReviewCompleted" value="Yes" checked> <span> Yes </span>
-                            <input type="radio" id="isReviewCompletedNo" name="isReviewCompleted" value="No"><span> NO </span>
+                            <input type="radio" id="isReviewCompletedNo" name="isReviewCompleted" value="No"><span> No </span>
                         }
                     @*}*@
 

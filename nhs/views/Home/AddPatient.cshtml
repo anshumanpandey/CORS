@@ -69,9 +69,7 @@
                             <div class="col-md-6">
                                 <div class="row_bar checkbox-row">
                                     <select style="font-size:inherit;" class="form-control" id="ddlPatientType" name="ddlPatientType">
-                                        <option value="0">
-                                            All Patient Type
-                                        </option>
+                                        <option value="0">All Patient Type</option>
                                         @foreach (var item in ViewBag.PatientTypeDDM)
                                         {
                                             @*if (item.PatientType == Convert.ToString(Session["PatientType"]) && Convert.ToString(Session["PatientType"]) != "0"
@@ -89,13 +87,17 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="row_bar">
-                                    Time of Death
+                                    Gender
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="row_bar checkbox-row">
-                                    <input class="form-control" name="DeathTime" id="DeathTime" type="text" maxlength="5" placeholder="00:00" />
-
+                                    <select class="form-control" id="ddlGender" name="ddlGender">
+                                        <option value="" selected>Please Select</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
                                 </div>
                             </div>
 
@@ -245,8 +247,8 @@
                 alert("Patient type is a mandatory field to create a new patient.");
                 return false;
             }
-            if ($("#DeathTime").val() == '') {
-                alert("Time of death is a mandatory field to create a new patient..");
+            if ($("#ddlGender").val() == '') {
+                alert("Gender is a mandatory field to create a new patient.");
                 return false;
             }
         });
