@@ -130,6 +130,10 @@ namespace NHS.Common
     public class clsPatientDetails
     {
         public int ID { get; set; }
+
+        public string SHMICode { get; set; }
+
+        public string SHMIGroup { get; set; }
         public string PatientId { get; set; }
         public string SpellNumber { get; set; }
         //[Display(Name = "Patient Name")]
@@ -170,7 +174,6 @@ namespace NHS.Common
         public int DiagnosisCount { get; set; }
         //[Display(Name = "Primary Diagnosis")]
         public Nullable<int> ComorbiditiesCount { get; set; }
-        public string SHMIGroup { get; set; }
         public bool CodingIssueIdentified { get; set; }
         //[Display(Name = "Comments on coding")]
         public string Comments { get; set; }

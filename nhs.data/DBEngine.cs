@@ -863,7 +863,14 @@ namespace NHS.Data
                         patientDashboard.PrimaryProcedure = "";
                     else
                         patientDashboard.PrimaryProcedure = Convert.ToString(dbReader["PrimaryProcedure"]);
-
+                    if (string.IsNullOrEmpty(dbReader["SHMICode"].ToString()))
+                        patientDashboard.GPSurgery = "";
+                    else
+                        patientDashboard.SHMICode = Convert.ToString(dbReader["SHMICode"]);
+                    if (string.IsNullOrEmpty(dbReader["SHMIGroup"].ToString()))
+                        patientDashboard.GPSurgery = "";
+                    else
+                        patientDashboard.SHMIGroup = Convert.ToString(dbReader["SHMIGroup"]);
                     lstPatientDetails.Add(patientDashboard);
                 }
                 
