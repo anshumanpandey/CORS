@@ -107,24 +107,24 @@
                     </div>
                     <div class="col-md-3">
                         <div class="row_bar">
-                            NHS Number
+                            Patient ID
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="row_bar">
-                            <span>@Model.NHSNumber</span>
+                            <span>@Model.PatientId</span>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="row_bar">
-                            Patient age at time of death
+                            Date of Birth
                         </div>
                     </div>
-                    @if (Model.Age != 0)
+                    @if (Model.DOB != "")
                     {
                         <div class="col-md-3">
                             <div class="row_bar">
-                                <span>@Model.AgeAtDeath</span>
+                                <span>@Model.DOB</span>
                             </div>
                         </div>
                     }

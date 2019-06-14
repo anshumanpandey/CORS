@@ -169,14 +169,15 @@
                                     </div>
 
                                 }
-
+                                
                                 @if (Model.MedTriage == 3)
                                 {
                                     if (Model.CoronerReferral == true)
                                     {
+                                        
                                         <div id="CoronerReason2" style="display:block" class="col-md-12">
-                                            <div class="row_bar row_bar_margin row_bar_padding">
-                                                @Html.EditorFor(model => model.CoronerReferralReason, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                                            <div class="row_bar row_bar_margin row_bar_padding"><br />
+                                                @Html.TextAreaFor(model => model.CoronerReferralReason, 5,100, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
 
                                             </div>
                                         </div>
@@ -184,9 +185,10 @@
                                     }
                                     else
                                     {
+                                        
                                         <div id="CoronerReason2" style="display:none" class="col-md-12">
-                                            <div class="row_bar row_bar_margin row_bar_padding">
-                                                @Html.EditorFor(model => model.CoronerReferralReason, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                                            <div class="row_bar row_bar_margin row_bar_padding"><br />
+                                                @Html.TextAreaFor(model => model.CoronerReferralReason, 5, 100, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
 
                                             </div>
                                         </div>
@@ -194,11 +196,12 @@
                                 }
                                 else
                                 {
+                                    
                                     if (Model.CoronerReferral == true)
                                     {
                                         <div id="CoronerReason2" style="display:block" class="col-md-12">
-                                            <div class="row_bar row_bar_margin row_bar_padding">
-                                                @Html.EditorFor(model => model.CoronerReferralReason, new { htmlAttributes = new { @class = "form-control" } })
+                                            <div class="row_bar row_bar_margin row_bar_padding"><br />
+                                                @Html.TextAreaFor(model => model.CoronerReferralReason, 5, 100, new { htmlAttributes = new { @class = "form-control" } })
 
                                             </div>
                                         </div>
@@ -206,9 +209,10 @@
                                     }
                                     else
                                     {
+                                        
                                         <div id="CoronerReason2" style="display:none" class="col-md-12">
-                                            <div class="row_bar row_bar_margin row_bar_padding">
-                                                @Html.EditorFor(model => model.CoronerReferralReason, new { htmlAttributes = new { @class = "form-control" } })
+                                            <div class="row_bar row_bar_margin row_bar_padding"><br />
+                                                @Html.TextAreaFor(model => model.CoronerReferralReason,5, 100, new { htmlAttributes = new { @class = "form-control" } })
 
                                             </div>
                                         </div>
