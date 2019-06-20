@@ -506,7 +506,7 @@ namespace NHS.Controllers
                 int retVal = dBEngine.UpdateSJROutcome(Convert.ToBoolean(formCollection["Stage2SJRRequired"]), formCollection["Stage2SJRDateSent"],
                     formCollection["Stage2SJRSentTo"], formCollection["ReferenceNumber"], formCollection["DateReceived"], formCollection["SIRIComments"],
                     Convert.ToBoolean(formCollection["MSGRequired"]), formCollection["MSGDiscussionDate"], Convert.ToInt32(formCollection["AvoidabilityScoreID"]),
-                    formCollection["Comments"], formCollection["FeedbackToNoK"], id);
+                    formCollection["Comments"], formCollection["FeedbackToNoK"], id, Convert.ToInt32(Session["LoginUserID"]));
                 actionName = "MortalityReview";
             }
             catch (Exception ex)
@@ -733,7 +733,7 @@ namespace NHS.Controllers
                 int retVal = dBEngine.UpdateSJRFormInitial(formCollection["InitialManagement"], formCollection["hdfInitialManagementCareRating"],
                     formCollection["OngoingCare"], formCollection["hdfOnGoingCareRating"], formCollection["CareDuringProcedure"], formCollection["hdfCareDuringProcedureCareRating"],
                     formCollection["EndLifeCare"], formCollection["hdfEndLifeCareRating"], formCollection["OverAllAssessment"], formCollection["hdfOverAllAssessmentCareRating"],
-                    formCollection["hdfQualityDocumentationCareRating"], id);
+                    formCollection["hdfQualityDocumentationCareRating"], id, Convert.ToInt32(Session["LoginUserID"]));
                 actionName = "Stage2SJRFormSecondStep";
             }
             catch (Exception ex)
@@ -778,7 +778,7 @@ namespace NHS.Controllers
                         Convert.ToInt32(formCollection["ProcedureResponseID"]), Convert.ToInt32(formCollection["ProcedureCarePhaseID"]),
                         Convert.ToInt32(formCollection["MonitoringResponseID"]), Convert.ToInt32(formCollection["ResuscitationResponseID"]),
                         Convert.ToInt32(formCollection["OthertypeResponseID"]), Convert.ToInt32(formCollection["OthertypeCarePhaseID"]), Convert.ToInt32(formCollection["AvoidabilityScoreID"]),
-                        formCollection["Comments"], formCollection["SIRIComments"], Convert.ToBoolean(formCollection["hdfProblemOccured"]), id);
+                        formCollection["Comments"], formCollection["SIRIComments"], Convert.ToBoolean(formCollection["hdfProblemOccured"]), id, Convert.ToInt32(Session["LoginUserID"]));
                     actionName = "MortalityReview";
                 }
             }
@@ -881,7 +881,7 @@ namespace NHS.Controllers
                 int retVal = dBEngine.UpdateSJR2FormInitial(formCollection["InitialManagement"], formCollection["hdfInitialManagementCareRating"],
                     formCollection["OngoingCare"], formCollection["hdfOnGoingCareRating"], formCollection["CareDuringProcedure"], formCollection["hdfCareDuringProcedureCareRating"],
                     formCollection["EndLifeCare"], formCollection["hdfEndLifeCareRating"], formCollection["OverAllAssessment"], formCollection["hdfOverAllAssessmentCareRating"],
-                    formCollection["hdfQualityDocumentationCareRating"], id);
+                    formCollection["hdfQualityDocumentationCareRating"], id, Convert.ToInt32(Session["LoginUserID"]));
                 actionName = "Stage3SJRFormSecondStep";
             }
             catch (Exception ex)
@@ -928,7 +928,7 @@ namespace NHS.Controllers
                         Convert.ToInt32(formCollection["ProcedureResponseID"]), Convert.ToInt32(formCollection["ProcedureCarePhaseID"]),
                         Convert.ToInt32(formCollection["MonitoringResponseID"]), Convert.ToInt32(formCollection["ResuscitationResponseID"]),
                         Convert.ToInt32(formCollection["OthertypeResponseID"]), Convert.ToInt32(formCollection["OthertypeCarePhaseID"]), Convert.ToInt32(formCollection["AvoidabilityScoreID"]),
-                        formCollection["Comments"], formCollection["SIRIComments"], Convert.ToBoolean(formCollection["hdfProblemOccured"]), id);
+                        formCollection["Comments"], formCollection["SIRIComments"], Convert.ToBoolean(formCollection["hdfProblemOccured"]), id, Convert.ToInt32(Session["LoginUserID"]));
                     actionName = "MortalityReview";
                 }
             }

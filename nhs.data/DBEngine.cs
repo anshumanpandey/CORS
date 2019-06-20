@@ -2530,7 +2530,7 @@ namespace NHS.Data
         /// <returns>int</returns>
         public int UpdateSJRFormInitial(string initialManagement, string initialManagementRating, string ongoingCare, string ongoingCareRating,
             string careduringProcedure, string careduringProcedureRating, string endlifeCare, string endlifecareRating, string overallAssessment,
-            string overallAssessmentRating, string qualitOfDocumentation, int? id)
+            string overallAssessmentRating, string qualitOfDocumentation, int? id, int userID)
         {
             var connection = GetConnection();
             int retVal = 0;
@@ -2550,6 +2550,7 @@ namespace NHS.Data
                 dbCommand.Parameters.AddWithValue("@OverallAssessmentRating", overallAssessmentRating);
                 dbCommand.Parameters.AddWithValue("@QualitOfDocumentation", qualitOfDocumentation);
                 dbCommand.Parameters.AddWithValue("@ID", id);
+                dbCommand.Parameters.AddWithValue("@UserID", userID);
                 retVal = dbCommand.ExecuteNonQuery();
             }
             catch (Exception ex)
@@ -2561,7 +2562,7 @@ namespace NHS.Data
 
         public int UpdateSJR2FormInitial(string initialManagement, string initialManagementRating, string ongoingCare, string ongoingCareRating,
             string careduringProcedure, string careduringProcedureRating, string endlifeCare, string endlifecareRating, string overallAssessment,
-            string overallAssessmentRating, string qualitOfDocumentation, int? id)
+            string overallAssessmentRating, string qualitOfDocumentation, int? id, int userID)
         {
             var connection = GetConnection();
             int retVal = 0;
@@ -2581,6 +2582,7 @@ namespace NHS.Data
                 dbCommand.Parameters.AddWithValue("@OverallAssessmentRating", overallAssessmentRating);
                 dbCommand.Parameters.AddWithValue("@QualitOfDocumentation", qualitOfDocumentation);
                 dbCommand.Parameters.AddWithValue("@ID", id);
+                dbCommand.Parameters.AddWithValue("@UserID", userID);
                 retVal = dbCommand.ExecuteNonQuery();
             }
             catch (Exception ex)
@@ -2639,7 +2641,7 @@ namespace NHS.Data
         /// <returns>int</returns>
         public int UpdateSJROutcome(bool SJR2Required, string Stage2SJRDateSent, string Stage2SJRSentTo, string ReferenceNumber,
             string DateReceived, string SIRIComments, bool MSGRequired, string MSGDiscussionDate, int AvoidabilityScoreID,
-            string Comments, string FeedbackToNoK, int? id)
+            string Comments, string FeedbackToNoK, int? id, int userID)
         {
             var connection = GetConnection();
             int retVal = 0;
@@ -2659,6 +2661,7 @@ namespace NHS.Data
                 dbCommand.Parameters.AddWithValue("@Comments", Comments);
                 dbCommand.Parameters.AddWithValue("@FeedbackToNoK", FeedbackToNoK);
                 dbCommand.Parameters.AddWithValue("@ID", id);
+                dbCommand.Parameters.AddWithValue("@UserID", userID);
                 retVal = dbCommand.ExecuteNonQuery();
             }
             catch (Exception ex)
@@ -2787,7 +2790,7 @@ namespace NHS.Data
         public int UpdateSJR1ProblemType(int AssessmentResponseID, int AssessmentCarePhaseID, int MedicationResponseID, int MedicationCarePhaseID,
             int TreatmentResponseID, int TreatmentCarePhaseID, int InfectionResponseID, int InfectionCarePhaseID, int ProcedureResponseID,
             int ProcedureCarePhaseID, int MonitoringResponseID, int ResuscitationResponseID, int OthertypeResponseID, int OthertypeCarePhaseID, int AvoidabilityScoreID, 
-            string Comments, string SIRIComments, bool ProblemOccured, int? id)
+            string Comments, string SIRIComments, bool ProblemOccured, int? id, int userID)
         {
             var connection = GetConnection();
             int retVal = 0;
@@ -2813,6 +2816,7 @@ namespace NHS.Data
                 dbCommand.Parameters.AddWithValue("@Comments", Comments);
                 dbCommand.Parameters.AddWithValue("@ProblemOccured", ProblemOccured);
                 dbCommand.Parameters.AddWithValue("@ID", id);
+                dbCommand.Parameters.AddWithValue("@UserID", userID);
                 retVal = dbCommand.ExecuteNonQuery();
             }
             catch (Exception ex)
@@ -2825,7 +2829,7 @@ namespace NHS.Data
         public int UpdateSJR2ProblemType(int AssessmentResponseID, int AssessmentCarePhaseID, int MedicationResponseID, int MedicationCarePhaseID,
             int TreatmentResponseID, int TreatmentCarePhaseID, int InfectionResponseID, int InfectionCarePhaseID, int ProcedureResponseID,
             int ProcedureCarePhaseID, int MonitoringResponseID, int ResuscitationResponseID, int OthertypeResponseID, int OthertypeCarePhaseID, int AvoidabilityScoreID,
-            string Comments, string SIRIComments, bool ProblemOccured, int? id)
+            string Comments, string SIRIComments, bool ProblemOccured, int? id, int userID)
         {
             var connection = GetConnection();
             int retVal = 0;
@@ -2851,6 +2855,7 @@ namespace NHS.Data
                 dbCommand.Parameters.AddWithValue("@Comments", Comments);
                 dbCommand.Parameters.AddWithValue("@ProblemOccured", ProblemOccured);
                 dbCommand.Parameters.AddWithValue("@ID", id);
+                dbCommand.Parameters.AddWithValue("@UserID", userID);
                 retVal = dbCommand.ExecuteNonQuery();
             }
             catch (Exception ex)

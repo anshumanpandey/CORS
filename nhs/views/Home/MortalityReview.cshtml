@@ -175,7 +175,7 @@
                 @*<a href='@Url.Action("Stage2SJRformFirstStep", "home", new { id = Model.ID })' class="box3 clrGrey" style="top: 50%;left: 100%; transform: translate(-50%,-50%);" id="jqSJRStage1">
                 <p style="position: relative;top: 30%"> SJR Stage<br /> 1</p>
             </a>*@
-                <div href='#' class="box3" style="top: 80%;left: 95%; transform: translate(-50%,-50%);" id="jqSJRStage1">
+                <div href='@Url.Action("Stage2SJRformFirstStep", "home", new { id = Model.ID })' class="box3" style="top: 80%;left: 95%; transform: translate(-50%,-50%);" id="jqSJRStage1">
                     <img src="~/images/31.png?v=1.1" title="SJR Stage 1" width="150" height="150" />
                 </div>
             }
@@ -208,10 +208,10 @@
 
             @if (Model.SJR2 == 0)
             {
-                <div href='#' class="box3" style="top: 80%; left: 5%;transform: translate(-50%,-50%);" id="jqSJRStage2">
+                <a href='@Url.Action("Stage3SJRFormFirstStep", "home", new { id = Model.ID })' class="box3" style="top: 80%; left: 5%;transform: translate(-50%,-50%);" id="jqSJRStage2">
                     @*<p style="position: relative;top: 30%"> SJR Stage <br />2</p>*@
                     <img src="~/images/44.png?v=1.1" title="SJR Stage 2" width="150" height="150" />
-                </div>
+                </a>
             }
             else if (Model.SJR2 == 1)
             {
@@ -243,9 +243,9 @@
 
             @if (Model.SJROutcome == 0)
             {
-                <div href='#' class="box3" style="top: 100%;left: 50%;transform: translate(-50%,-50%);" id="jqSJROutcome">
+                <a href='@Url.Action("SJROutcome", "home", new { id = Model.ID })' class="box3" style="top: 100%;left: 50%;transform: translate(-50%,-50%);" id="jqSJROutcome">
                     <img src="~/images/1.png?v=1.1" title="SJR Outcome" width="150" height="150" />
-                </div>
+                </a>
                 @*<div href="#" class="box2" style="top: 50%; left: 50%;transform: translate(-50%,-50%);" id="jqMortality">
                 <p style="position: relative;top: 38px;font-size: 22px;"> Mortality<br /> review</p>
             </div>*@
