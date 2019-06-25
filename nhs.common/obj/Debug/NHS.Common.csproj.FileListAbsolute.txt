@@ -30,4 +30,3 @@ C:\cors-rbh 07_06_19 (1)\cors-rbh\NHS.Common\bin\Debug\NHS.Common.dll
 C:\cors-rbh 07_06_19 (1)\cors-rbh\NHS.Common\bin\Debug\NHS.Common.pdb
 C:\cors-rbh 07_06_19 (1)\cors-rbh\NHS.Common\obj\Debug\NHS.Common.dll
 C:\cors-rbh 07_06_19 (1)\cors-rbh\NHS.Common\obj\Debug\NHS.Common.pdb
-C:\cors-rbh 07_06_19 (1)\cors-rbh\NHS.Common\obj\Debug\NHS.Common.csprojResolveAssemblyReference.cache

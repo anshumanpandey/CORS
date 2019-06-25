@@ -2592,7 +2592,7 @@ namespace NHS.Data
             return retVal;
         }
 
-        public int AddNewPatient(string PatientName, string PatientId, DateTime DateofDeath, int PatientType, string gender)
+        public int AddNewPatient(string PatientName, string PatientId, DateTime DateofDeath, int PatientType, string gender, int userID)
         {
             var connection = GetConnection();
             int retVal = 0;
@@ -2608,6 +2608,7 @@ namespace NHS.Data
                 dbCommand.Parameters.AddWithValue("@DateOfDeath", DateofDeath);
                 dbCommand.Parameters.AddWithValue("@PatientTypeActual", PatientType);
                 dbCommand.Parameters.AddWithValue("@Gender", gender);
+                dbCommand.Parameters.AddWithValue("@UserID", userID);
                 dbCommand.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
                 retVal = dbCommand.ExecuteNonQuery();
                 id = Convert.ToInt32(dbCommand.Parameters["@id"].Value.ToString());

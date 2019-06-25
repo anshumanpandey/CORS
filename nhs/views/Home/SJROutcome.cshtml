@@ -250,7 +250,15 @@
                             <div class="col-md-8">
                                 <div class="row_bar">
                                     <select class="form-control" id="AvoidabilityScoreID" name="AvoidabilityScoreID">
-                                        <option value="0">--Select--</option>
+                                        <option value="-1">--Select--</option>
+                                        @if (Model.AvoidabilityScoreID == 0)
+                                        {
+                                            <option selected value="0">0</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="0">0</option>
+                                        }
                                         @if (Model.AvoidabilityScoreID == 1)
                                         {
                                             <option selected value="1">1</option>

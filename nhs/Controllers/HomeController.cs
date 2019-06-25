@@ -65,12 +65,12 @@ namespace NHS.Controllers
                 if (formCollection["DateOfDeath"] != "")
                 {
                     retVal = dBEngine.AddNewPatient(formCollection["PatientName"], formCollection["PatientId"],
-                        DateTime.ParseExact(formCollection["DateOfDeath"], "dd/MM/yyyy", CultureInfo.InvariantCulture),Convert.ToInt32(formCollection["ddlPatientType"]), formCollection["ddlGender"]);
+                        DateTime.ParseExact(formCollection["DateOfDeath"], "dd/MM/yyyy", CultureInfo.InvariantCulture),Convert.ToInt32(formCollection["ddlPatientType"]), formCollection["ddlGender"], Convert.ToInt32(Session["LoginUserID"]));
                 }
                 else
                 {
                     retVal = dBEngine.AddNewPatient(formCollection["PatientName"], formCollection["PatientId"],
-                        DateTime.ParseExact("01/01/1754", "dd/MM/yyyy", CultureInfo.InvariantCulture), Convert.ToInt32(formCollection["ddlPatientType"]), formCollection["ddlGender"]);
+                        DateTime.ParseExact("01/01/1754", "dd/MM/yyyy", CultureInfo.InvariantCulture), Convert.ToInt32(formCollection["ddlPatientType"]), formCollection["ddlGender"], Convert.ToInt32(Session["LoginUserID"]));
                 }
                 if(retVal == 0)
                 {
@@ -455,7 +455,10 @@ namespace NHS.Controllers
                         sjrOutcome.DOB = patientDetails.ToList()[0].DOB;
                     }
                     if (sjrOutcome.Patient_ID == 0 || sjrOutcome.Patient_ID == null)
+                    {
                         sjrOutcome.Patient_ID = Convert.ToInt32(id);
+                        sjrOutcome.AvoidabilityScoreID = -1;    
+                    }
                 }
                 catch (Exception ex)
                 {
