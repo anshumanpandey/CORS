@@ -1,0 +1,580 @@
+﻿@model List<NHS.Common.clsPatientDetails>
+@using NHS.Models;
+@{
+    ViewBag.Title = "Medical Examiner Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>*@
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>*@
+
+@*<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />*@
+
+<style>
+    #Newpatient {
+        font-size: 13px;
+    }
+
+        #Newpatient:hover {
+            text-decoration: underline;
+            color: cornflowerblue !important;
+        }
+
+    #DOD_ToolTip {
+        display: none;
+        position: absolute;
+        border: 1px solid gray;
+        WIDTH: 254PX;
+        HEIGHT: 100PX;
+        Z-INDEX: 999999;
+        background-color: white;
+    }
+
+    #DRow {
+        padding-right: 1px !Important;
+    }
+
+    #DateOfDeath:hover {
+        cursor: context-menu;
+    }
+    /*.tooltip {
+        border:1px solid gray;
+        padding:5px !important;
+    }*/
+    #DateOfDeath.tooltip {
+        border: 1px solid gray;
+        padding: 5px !important;
+    }
+</style>
+
+
+<br />
+<br />
+@*<script src="cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>*@
+
+<!-- DataTables -->
+<div class="col-sm-12">
+    <div class="row">
+        <div class="col-md-12">
+            <form action="@Url.Action("MedicalExaminerDashboard", "Home", new { id = 0, qapreview = false, medtriage = false })" method="post">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-1">
+                                <div class="row_bar">
+                                    <input style="font-size:10px;height:38px;width:125%" class="form-control  datepicker" readonly="readonly" type="text" id="txtStartDate" name="txtStartDate" placeholder="All Dates" value="@Convert.ToString(Session["StartDate"])">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="row_bar">
+                                    <input style="font-size:10px;height:38px;width:125%" class="form-control  datepicker" readonly="readonly" type="text" id="txtEndDate" name="txtEndDate" placeholder="All Dates" value="@Convert.ToString(Session["EndDate"])">&nbsp;&nbsp;
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="row_bar">
+                                    <select style="font-size:12px;" class="form-control" id="ddlDischargeSpeciality" name="ddlDischargeSpeciality">
+                                        @if (Convert.ToString(Session["Speciality"]) == "0")
+                                        {
+                                            <option selected value="0">
+                                                All Specialities
+                                            </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="0">
+                                                All Specialities
+                                            </option>
+                                        }
+                                        @foreach (var item in ViewBag.LoadDischargeSpecialityDropdown)
+                                        {
+                                            if (item.DischargeSpeciality == Convert.ToString(Session["Speciality"]) && Convert.ToString(Session["Speciality"]) != "0"
+                                                && Convert.ToString(Session["Speciality"]) != "")
+                                            {
+                                                <option selected value="@item.DischargeSpeciality">@item.DischargeSpeciality</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.DischargeSpeciality">@item.DischargeSpeciality</option>
+                                            }
+
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="row_bar">
+                                    <select style="font-size:12px;" class="form-control" id="ddlPatientType" name="ddlPatientType">
+                                        @if (Convert.ToString(Session["PatientType"]) == "0")
+                                        {
+                                            <option selected value="0">
+                                                All Patient Type
+                                            </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="0">
+                                                All Patient Type
+                                            </option>
+                                        }
+                                        @foreach (var item in ViewBag.PatientTypeDDM)
+                                        {
+                                            if (item.PatientType == Convert.ToString(Session["PatientType"]) && Convert.ToString(Session["PatientType"]) != "0"
+                                                && Convert.ToString(Session["PatientType"]) != "")
+                                            {
+                                                <option selected value="@item.PatientType">@item.PatientTypeLongText</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.PatientType">@item.PatientTypeLongText</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="row_bar">
+                                    <select style="font-size:12px;" class="form-control" id="ddlWardDeath" name="ddlWardDeath">
+                                        @if (Convert.ToString(Session["WardDeath"]) == "0")
+                                        {
+                                            <option selected value="">
+                                                All Ward of Death
+                                            </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="0">
+                                                All Ward of Death
+                                            </option>
+                                        }
+                                        @foreach (var item in ViewBag.wardDeathDropdown)
+                                        {
+                                            if (item.WardOfDeath == Convert.ToString(Session["WardDeath"]) && Convert.ToString(Session["WardDeath"]) != "0"
+                                                && Convert.ToString(Session["WardDeath"]) != "")
+                                            {
+                                                <option selected value="@item.WardOfDeath">@item.WardOfDeath</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.WardOfDeath">@item.WardOfDeath</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="row_bar">
+                                    <select style="font-size:12px;" class="form-control" id="ddlDischargeConsultant" name="ddlDischargeConsultant">
+                                        @if (Convert.ToString(Session["DischargeConsultant"]) == "0")
+                                        {
+                                            <option selected value="">
+                                                All Consultants
+                                            </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="0">
+                                                All Consultants
+                                            </option>
+                                        }
+                                        @foreach (var item in ViewBag.dischargeConsultantDropdown)
+                                        {
+                                            if (item.DischargeConsultantCode == Convert.ToString(Session["DischargeConsultant"]) && Convert.ToString(Session["DischargeConsultant"]) != "0"
+                                                && Convert.ToString(Session["DischargeConsultant"]) != "")
+                                            {
+                                                <option selected value="@item.DischargeConsultantCode">@item.DischargeConsultantName</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.DischargeConsultantCode">@item.DischargeConsultantName</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="row_bar">
+                                    <button id="btnSearch" type="submit" class="btn btn-primary btn-md" name="btnSearch">Search </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div align="left">
+        <table style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;width:90%">
+            <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                <td align="center" style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%"><b>Total Deaths</b></td>
+                <td align="center" style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%  "><a href="@Url.Action("MedicalExaminerDashboard", "home", new { id = 0, qapreview = false, medtriage = false } )"><span><b><u> @Session["TotalDeaths"] </u></b></span></a></td>
+                <td align="center" style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%"><b>Outstanding<br />QAP Review</b></td>
+                <td align="center" style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%;"><a href="@Url.Action("MedicalExaminerDashboard", "home", new { id = 0, qapreview = true, medtriage = false  })"><span style="color:red; "><b><u> @Session["QAPCount"] </u></b></span></a></td>
+                <td align="center" style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%"><b>Outstanding<br />MedTriage</b></td>
+                <td align="center" style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%; color:red; "><a href="@Url.Action("MedicalExaminerDashboard", "home", new { id = 0, qapreview = false, medtriage = true  })"><span style="color:red; "><b><u> @Session["MedCount"] </u></b></span></a></td>
+            </tr>
+        </table>
+    </div>
+    <br />
+    @if (Session["Role"].ToString().ToUpper().Equals("ADMIN") || Session["Role"].ToString().ToUpper().Equals("MEO"))
+    {
+        <div align="center" style="width:90%">
+            Could not find the patient you are looking for?&nbsp;<a href='@Url.Action("AddPatient", "home")'>Add New Patient</a>
+        </div>
+    }
+    <br />
+    <div class="row">
+        <div style="width:90%;">
+            <table class="stripe row-border order-column" style="overflow:auto;" id="tblPatientDetails">
+                <thead>
+                    <tr bgcolor="#a9d7cc" style="color:black;  font-size:11px;">
+                        <th align="left" width="8%" style="text-align:center;">Patient ID</th>
+                        <th align="left" width="15%" style="">Name</th>
+                        <th align="center" width="5%" style="display:none;">DOB</th>
+                        <th align="center" width="5%" style="display:none;">Date of Admission</th>
+                        <th align="center" width="8%" style="">Date of Death</th>
+                        <th align="left" width="10%" style="display:none;">Ward of Death</th>
+                        <th align="left" width="10%" style="">Discharge Consultant</th>
+                        <th align="center" width="10%" style="display:none;">Discharge Speciality</th>
+                        <th align="center" width="10%" style="">  Patient Type </th>
+                        <th align="center" width="5%" style="">QAP<br /> Review<br/>Status</th>
+                        <th align="center" width="5%" style="">ME<br /> Triage <br />Review</th>
+                        <th align="center" width="5%" style="">SJR<br /> Review <br />Status</th>
+                        <th align="center" width="5%" style="">SJR <br /> Review Outcome</th>
+                        <th align="center" width="5%" style="">SJR 2 <br />Review Status</th>
+                        <th align="center" width="5%" style="">Coding Review Status</th>
+                    </tr>
+                </thead>
+                <tbody style="font-size:11px;padding:0px;">
+                    @if (Model.Count > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr class="Entries">
+                                <td align="center" class="PID"> <u>@Html.ActionLink(item.PatientId.Trim(), "MortalityReview", new { id = item.ID }, new { @style = "color:blue;" })</u></td>
+                                <td align="left">@item.PatientName.Trim() (@item.AgeAtDeath Yrs)</td>
+                                <td align="left" style="display:none">@item.DOB</td>
+                                <td align="center" style="display:none">@item.DateofAdmission.ToString("dd/MM/yyyy")</td>
+                                @*changes*@
+                                <td align="left" id="DateOfDeath">@item.DateofDeath.ToString("dd/MM/yyyy")</td>
+                                <td align="center" style="display:none">@item.WardofDeath.Trim()</td>
+                                <td align="center">@item.DischargeConsutantName.Trim()</td>
+                                <td align="center" style="display:none">@item.DischargeSpeciality.Trim()</td>
+                                <td align="left">@item.PatientTypeLongText</td>
+                                <td align="center">
+                                    @if (item.QAPReview == 0)
+                                    {
+                                        <a href='#'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open Medical Examiner Triage form"></a>
+                                    }
+                                    else if (item.QAPReview == 1)
+                                    {
+                                        <a href='@Url.Action("QAPReviewFirstStep", "home", new { id = item.ID })'><img src="~/images/amber.png" width="18" height="18" title="Click to open QAP review form"></a>
+                                    }
+
+                                    else if (item.QAPReview == 2)
+                                    {
+                                        <a href='@Url.Action("QAPReviewFirstStep", "home", new { id = item.ID })'><img src="~/images/RedC.png" width="18" height="18" title="Click to open QAP review form"></a>
+                                    }
+                                    else if (item.QAPReview == 3)
+                                    {
+                                        <a href='@Url.Action("QAPReviewFirstStep", "home", new { id = item.ID })'><img src="~/images/GreenCircle.png" width="18" height="18" title="Click to open QAP review form"></a>
+                                    }
+                                </td>
+                                <td align="center">
+                                    @if (item.MedTriage == 0)
+                                    {
+                                        <a href='#'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open Medical Examiner Triage form"></a>
+                                    }
+                                    else if (item.MedTriage == 1)
+                                    {
+                                        <a href='@Url.Action("PatientDetails", "home", new { id = item.ID })'><img src="~/images/amber.png" width="18" height="18" title="Click to open Medical Examiner Triage form"></a>
+                                    }
+
+                                    else if (item.MedTriage == 2)
+                                    {
+                                        <a href='@Url.Action("PatientDetails", "home", new { id = item.ID })'><img src="~/images/RedC.png" width="18" height="18" title="Click to open Medical Examiner Triage form"></a>
+                                    }
+                                    else if (item.MedTriage == 3)
+                                    {
+                                        <a href='@Url.Action("PatientDetails", "home", new { id = item.ID })'><img src="~/images/GreenCircle.png" width="18" height="18" title="Click to open Medical Examiner Triage form"></a>
+                                    }
+                                </td>
+                                <td align="center">
+                                    @if (item.SJR1 == 0)
+                                    {
+                                        <a href='@Url.Action("Stage2SJRformFirstStep", "home", new { id = item.ID })'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open SJR Stage 1 form"></a>
+                                    }
+                                    else if (item.SJR1 == 1)
+                                    {
+                                        <a href='@Url.Action("Stage2SJRformFirstStep", "home", new { id = item.ID })'><img src="~/images/amber.png" width="18" height="18" title="Click to open SJR Stage 1 form"></a>
+                                    }
+
+                                    else if (item.SJR1 == 2)
+                                    {
+                                        <a href='@Url.Action("Stage2SJRformFirstStep", "home", new { id = item.ID })'><img src="~/images/RedC.png" width="18" height="18" title="Click to open SJR Stage 1 form"></a>
+                                    }
+
+                                    else if (item.SJR1 == 3)
+                                    {
+                                        <a href='@Url.Action("Stage2SJRformFirstStep", "home", new { id = item.ID })'><img src="~/images/GreenCircle.png" width="18" height="18" title="Click to open SJR Stage 1 form"></a>
+                                    }
+                                    else
+                                    {
+                                        <a href='@Url.Action("Stage2SJRformFirstStep", "home", new { id = item.ID })'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open SJR Stage 1 form"></a>
+                                    }
+                                </td>
+                                <td align="center">
+                                    @if (item.SJROutcome == 0)
+                                    {
+                                        <a href='@Url.Action("SJROutcome", "home", new { id = item.ID })'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open SJR Outcome form"></a>
+                                    }
+                                    else if (item.SJROutcome == 1)
+                                    {
+                                        <a href='@Url.Action("SJROutcome", "home", new { id = item.ID })'><img src="~/images/amber.png" width="18" height="18" title="Click to open SJR Outcome form"></a>
+                                    }
+
+                                    else if (item.SJROutcome == 2)
+                                    {
+                                        <a href='@Url.Action("SJROutcome", "home", new { id = item.ID })'><img src="~/images/RedC.png" width="18" height="18" title="Click to open SJR Outcome form"></a>
+                                    }
+
+                                    else if (item.SJROutcome == 3)
+                                    {
+                                        <a href='@Url.Action("SJROutcome", "home", new { id = item.ID })'><img src="~/images/GreenCircle.png" width="18" height="18" title="Click to open SJR Outcome form"></a>
+                                    }
+                                    else
+                                    {
+                                        <a href='@Url.Action("SJROutcome", "home", new { id = item.ID })'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open SJR Outcome form"></a>
+                                    }
+                                </td>
+                                <td align="center">
+                                    @if (item.SJR2 == 0)
+                                    {
+                                        <a href='@Url.Action("Stage3SJRFormFirstStep", "home", new { id = item.ID })'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open SJR Stage 2 form"></a>
+                                    }
+                                    else if (item.SJR2 == 1)
+                                    {
+                                        <a href='@Url.Action("Stage3SJRFormFirstStep", "home", new { id = item.ID })'><img src="~/images/amber.png" width="18" height="18" title="Click to open SJR Stage 2 form"></a>
+                                    }
+
+                                    else if (item.SJR2 == 2)
+                                    {
+                                        <a href='@Url.Action("Stage3SJRFormFirstStep", "home", new { id = item.ID })'><img src="~/images/RedC.png" width="18" height="18" title="Click to open SJR Stage 2 form"></a>
+                                    }
+
+                                    else if (item.SJR2 == 3)
+                                    {
+                                        <a href='@Url.Action("Stage3SJRFormFirstStep", "home", new { id = item.ID })'><img src="~/images/GreenCircle.png" width="18" height="18" title="Click to open SJR Stage 2 form"></a>
+                                    }
+                                    else
+                                    {
+                                        <a href='@Url.Action("Stage3SJRFormFirstStep", "home", new { id = item.ID })'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open SJR Stage 2 form"></a>
+                                    }
+                                </td>
+                                <td align="center">
+                                    @if (item.CodingReview == 3)
+                                    {
+                                        <a href='@Url.Action("CodingReview", "home", new { id = item.ID })'><img src="~/images/GreenCircle.png" width="18" height="18" title="Click to open Coding review form"></a>
+                                    }
+                                    else if (item.CodingReview == 2)
+                                    {
+                                        <a href='@Url.Action("CodingReview", "home", new { id = item.ID })'><img src="~/images/RedC.png" width="18" height="18" title="Click to open Coding review form"></a>
+                                    }
+                                    else if (item.CodingReview == 1)
+                                    {
+                                        <a href='@Url.Action("CodingReview", "home", new { id = item.ID })'><img src="~/images/amber.png" width="18" height="18" title="Click to open Coding review form"></a>
+                                    }
+
+                                    else if (item.CodingReview == 0 || item.PrimaryDiagnosis.ToUpper().Equals("AWAITING CODING") || item.PrimaryDiagnosis.ToUpper().Equals("PENDING"))
+                                    {
+                                        <a href='@Url.Action("CodingReview", "home", new { id = item.ID })'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open Coding review form"></a>
+                                    }
+                                    
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="14" class="text-center" align="center">No Records Found.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<script>
+
+
+    $(document).ready(function () {
+
+        var columns = ['DOB   ', 'Date of Admission', 'Ward of Death', 'Discharge Speciality']
+        $('#tblPatientDetails tbody tr').each(function () {
+            var cells = $('td', this);
+            var titleArr = cells.map(function (index) {
+                if (index == 2) {
+                    var div = document.createElement("div");
+                    div.innerHTML = columns[index - 2] + '                           : ' + this.innerHTML;
+                    div.style.fontSize = "bold";
+                    return div.innerHTML;
+                    index++;
+                }
+                else if (index == 3) {
+                    return columns[index - 2] + '      : ' + this.innerHTML;
+                    index++;
+                }
+                else if (index == 5) {
+                    return columns[index - 3] + '             : ' + this.innerHTML;
+                    index++;
+                }
+                else if (index == 7) {
+                    return columns[index - 4] + '   : ' + this.innerHTML;
+                    index++;
+                }
+                else {
+                }
+            });
+            cells.each(function (index) {
+                if (index == 0) {
+                    $(this).attr('title', titleArr.toArray().join('\r\n'))
+                }
+            })
+            var DOB = cells[0];
+            var DateOfAdmission = cells[1];
+            var DateOfDeath = cells[2];
+        });
+        var oTable = $('#tblPatientDetails').dataTable(
+            {
+                "ordering": true,
+                "paging": true,
+                "searching": true,
+                "pageLength": 10,
+                "order": [[4, "desc"]],
+                "aoColumns": [
+                    { "sName": "PatientId", "sTitle": "Patient ID", "bSortable": "true" },
+                    { "sName": "PatientName", "sTitle": "Name", "bSortable": "true" },
+                    { "sName": "DOB", "sTitle": "DOB", "sType": "date", "bSortable": "true" },
+                    { "sName": "DateOfAdmission", "sTitle": "Date Of Admission", "sType": "date", "bSortable": "true" },
+                    { "sName": "DateOfDeath", "sTitle": "Date Of Death", "sType": "date-uk", "bSortable": "true" },
+                    { "sName": "WardofDeath", "sTitle": "Ward Of Death", "bSortable": "true" },
+                    { "sName": "DischargeConsultant", "sTitle": "Discharge Consultant", "bSortable": "true" },
+                    { "sName": "DischargeSpeciality", "sTitle": "Discharge Specilaity", "bSortable": "true" },
+                    { "sName": "PatientType", "sTitle": "Patient Type", "bSortable": "true" },
+                    { "sName": "QAPReviewStatus", "sTitle": "QAP Review Status", "bSortable": "true" },
+                    { "sName": "MedicalExaminerTriage", "sTitle": "Medical Examiner Triage", "bSortable": "true" },
+                    { "sName": "SJRReviewStatus", "sTitle": "SJR Review Status", "bSortable": "true" },
+                    { "sName": "SJRReviewOutcome", "sTitle": "SJR Review Outcome", "bSortable": "true" },
+                    { "sName": "SJR2ReviewStatus", "sTitle": "SJR 2 Review Status", "bSortable": "true" },
+                    { "sName": "CodingReviewStatus", "sTitle": "Coding Review Status", "bSortable": "true" },
+                ],
+                "lengthMenu": [
+                    [10, 20, 50, 100, -1],
+                    ['10 rows', '20 rows', '50 rows', '100 rows', 'Show all']],
+                "scrollX": true,
+                //language: '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
+                //"language": {
+                //    "emptyTable": '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
+                //    //"zeroRecords": '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
+                //},
+                //"scrollY": true,
+
+                //"columnDefs": [{ "targets": 4, "type": "date-eu" }],
+            });
+        $(oTable.fnGetNodes()).tooltip({
+            "delay": 0,
+            "track": true,
+            "fade": 250
+        });
+    });
+</script>
+<script>
+
+    
+    //newly added script
+    jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+        "date-uk-pre": function (a) {
+            var ukDatea = a.split('-');
+            return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
+        },
+        "date-uk-asc": function (a, b) {
+            return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+        },
+        "date-uk-desc": function (a, b) {
+            return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+        }
+    });
+
+
+    //added
+    $(document).ready(function () {
+        $('#tblPatientDetails').DataTable(
+            {
+            "ordering": true,
+            "paging": true,
+            "searching": true,
+            "pageLength": 10,
+          //  "order": [[4, "desc"]],
+            "aoColumns": [
+                { "sName": "PatientId", "sTitle": "Patient ID", "bSortable": "true" },
+                { "sName": "PatientName", "sTitle": "Name", "bSortable": "true" },
+                { "sName": "DOB", "sTitle": "DOB", "sType": "date", "bSortable": "true" },
+                { "sName": "DateOfAdmission", "sTitle": "Date Of Admission", "sType": "date", "bSortable": "true" },
+                { "sName": "DateOfDeath", "sTitle": "Date Of Death", "sType": "date-uk","bSortable": "true" },
+                { "sName": "WardofDeath", "sTitle": "Ward Of Death", "bSortable": "true" },
+                { "sName": "DischargeConsultant", "sTitle": "Discharge Consultant", "bSortable": "true" },
+                { "sName": "DischargeSpeciality", "sTitle": "Discharge Specilaity", "bSortable": "true" },
+                { "sName": "PatientType", "sTitle": "Patient Type", "bSortable": "true" },
+                { "sName": "QAPReviewStatus", "sTitle": "QAP Review Status", "bSortable": "true" },
+                { "sName": "MedicalExaminerTriage", "sTitle": "Medical Examiner Triage", "bSortable": "true" },
+                { "sName": "SJRReviewStatus", "sTitle": "SJR Review Status", "bSortable": "true" },
+                { "sName": "SJRReviewOutcome", "sTitle": "SJR Review Outcome", "bSortable": "true" },
+                { "sName": "SJR2ReviewStatus", "sTitle": "SJR 2 Review Status", "bSortable": "true" },
+                { "sName": "CodingReviewStatus", "sTitle": "Coding Review Status", "bSortable": "true" },
+            ],
+            "lengthMenu": [
+                [10, 20, 50, 100, -1],
+                ['10 rows', '20 rows', '50 rows', '100 rows', 'Show all']],
+            "scrollX": true,
+            //language: '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
+            //"language": {
+            //    "emptyTable": '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
+            //    //"zeroRecords": '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
+            //},
+            //"scrollY": true,
+
+            //"columnDefs": [{ "targets": 4, "type": "date-eu" }],
+        });
+
+        var table = $('#tblPatientDetails').DataTable({
+            'language': {
+                'emptyTable': '<a href="/path/' + 1 + '">Add new user</a>'
+            }
+        });
+        
+    });
+    //"language": {
+    //    'emptyTable': '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
+    //},
+</script>
+<script type="text/javascript">
+$(function () {
+    $("#btnSearch").click(function(){
+window.location.href = "@Url.Action("MedicalExaminerDashboard", "Home")";
+    });
+});
+    (function ($) {
+        $(".datepicker").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy'
+        });
+    })(jQuery)
+</script>
+
+
+

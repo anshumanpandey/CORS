@@ -1,0 +1,57 @@
+﻿@model NHS.Common.Wards
+@{
+    ViewBag.Title = "Add Ward";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br /><br /><br /><br />
+<div class="container">
+    <form action="@Url.Action("CreateWard", "Home" )" id="login-form" class="sky-form" method="post" novalidate="novalidate">
+        <div class="lable_title">
+            <h2>Add Ward</h2><span style="color:red"><i>&nbsp;&nbsp;* marked fields are mandatory fields.</i></span><br />
+        </div>
+        <fieldset>
+            <section>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span>Ward Code</span>&nbsp;&nbsp;<span style="color:red;font-size:20px">*</span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="row_bar checkbox-row">
+                            @Html.EditorFor(model => model.WardCode, new { htmlAttributes = new { @class = "form-control", @id="WardCode" } })
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span>Ward Name</span>&nbsp;&nbsp;<span style="color:red;font-size:20px">*</span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="row_bar checkbox-row">
+                            @Html.EditorFor(model => model.WardName, new { htmlAttributes = new { @class = "form-control", @id="WardName" } })
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </fieldset>
+        <div class="col-md-12" align="center">
+            <button id="activate-step-2" type="submit" name="BtnFinish" class="btn btn-primary btn-lg">Submit</button>
+            <button id="activate-step-3" type="button" name="BtnCancel" class="btn btn-primary btn-lg" onclick="location.href='@Url.Action("Wards","Home")'">Cancel</button>
+        </div>
+    </form>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#activate-step-2").click(function () {
+            if ($.trim($("#WardCode").val()) == "") {
+                alert("Ward Code is a mandatory field.");
+                return false;
+            }
+            if ($.trim($("#WardName").val()) == "") {
+                alert("Ward Name is a mandatory field.");
+                return false;
+            }
+        });
+    });
+</script>

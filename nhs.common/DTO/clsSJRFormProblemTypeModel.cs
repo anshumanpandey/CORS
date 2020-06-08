@@ -66,13 +66,20 @@ namespace NHS.Common
         public string Comments { get; set; }
         public Nullable<int> Stage { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreateDate { get; set; }
+        public string CreateDate { get; set; }
         public string UpdatedBy { get; set; }
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public string UpdatedDate { get; set; }
 
         public bool ProblemOccured { get; set; }
         public string PatientId { get; set; }
         public string DOB { get; set; }
         public string PatientName { get; set; }
+
+        public int SJR1 { get; set; }
+        public int SJR2 { get; set; }
+
+        public bool ReviewCompleted { get; set; }
+
+        public int SpecialityID { get; set; }
     }
 }

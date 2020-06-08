@@ -93,51 +93,163 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="row_bar checkbox-row">
-                                    @if (Model.MedTriage == 3)
+                                    @if (Convert.ToBoolean(ViewBag.IsReadOnly))
                                     {
-                                        if (Model.FormCompleted == true)
+                                        if (Model.MedTriage == 3)
                                         {
+                                        
+                                            if (Model.FormCompleted == true)
+                                            {
                                             <input type="checkbox" disabled="disabled" id="FormCompleted" checked name="FormCompleted"><span> Above & Beyond form completed   </span>
-                                        }
-                                        else
-                                        {
+                                            }
+                                            else
+                                            {
                                             <input type="checkbox" disabled="disabled" id="FormCompleted" name="FormCompleted"><span> Above & Beyond form completed  </span>
+                                            }
+                                        }
+                                        else if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() 
+                                            || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN"
+                                            || Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper())
+                                        {
+                                            if (Model.FormCompleted == true)
+                                            {
+                                                <input type="checkbox" disabled id="FormCompleted" checked name="FormCompleted"><span> Above & Beyond form completed   </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" disabled  id="FormCompleted" name="FormCompleted"><span> Above & Beyond form completed  </span>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (Model.FormCompleted == true)
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="FormCompleted" checked name="FormCompleted"><span> Above & Beyond form completed   </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="FormCompleted" name="FormCompleted"><span> Above & Beyond form completed  </span>
+                                            }
                                         }
                                     }
                                     else
                                     {
-                                        if (Model.FormCompleted == true)
+                                        if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() 
+                                            || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN"
+                                            || Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper())
                                         {
-                                            <input type="checkbox" id="FormCompleted" checked name="FormCompleted"><span> Above & Beyond form completed   </span>
+                                            if (Model.FormCompleted == true)
+                                            {
+                                                <input type="checkbox" id="FormCompleted" checked name="FormCompleted"><span> Above & Beyond form completed   </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" id="FormCompleted" name="FormCompleted"><span> Above & Beyond form completed  </span>
+                                            }
                                         }
-                                        else
+                                        else if(Model.MedTriage == 3)
                                         {
-                                            <input type="checkbox" id="FormCompleted" name="FormCompleted"><span> Above & Beyond form completed  </span>
-                                        }
-                                    }
+
+                                            if (Model.FormCompleted == true)
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="FormCompleted" checked name="FormCompleted"><span> Above & Beyond form completed   </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="FormCompleted" name="FormCompleted"><span> Above & Beyond form completed  </span>
+                                            }
+                                            }
+
+                                            else
+                                            {
+                                                if (Model.FormCompleted == true)
+                                                {
+                                                <input type="checkbox" id="FormCompleted" checked name="FormCompleted"><span> Above & Beyond form completed   </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" id="FormCompleted" name="FormCompleted"><span> Above & Beyond form completed  </span>
+                                            }
+                                                }
+                                            }
                                     <br />
-                                    @if (Model.MedTriage == 3)
+                                    @if (Convert.ToBoolean(ViewBag.IsReadOnly))
                                     {
-                                        if (Model.ComplementsFedBack == true)
-                                        {
+                                    if (Model.MedTriage == 3)
+                                    {
+                                        
+                                            if (Model.ComplementsFedBack == true)
+                                            {
                                             <input type="checkbox" disabled="disabled" id="ComplementsFedBack" checked name="ComplementsFedBack"><span> Compliments fed back to clinical team    </span>
+                                            }
+                                            else
+                                            {
+                                            <input type="checkbox" disabled="disabled" id="ComplementsFedBack" name="ComplementsFedBack"><span> Compliments fed back to clinical team   </span>
+                                            }
+                                        }
+                                        else if (Model.CreatedBy == Convert.ToString(Session["UserName"]) || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                                        {
+                                            if (Model.ComplementsFedBack == true)
+                                            {
+                                                <input type="checkbox" disabled id="ComplementsFedBack" checked name="ComplementsFedBack"><span> Compliments fed back to clinical team    </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" disabled id="ComplementsFedBack" name="ComplementsFedBack"><span> Compliments fed back to clinical team   </span>
+                                            }
                                         }
                                         else
                                         {
-                                            <input type="checkbox" disabled="disabled" id="ComplementsFedBack" name="ComplementsFedBack"><span> Compliments fed back to clinical team   </span>
+                                            if (Model.ComplementsFedBack == true)
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="ComplementsFedBack" checked name="ComplementsFedBack"><span> Compliments fed back to clinical team    </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="ComplementsFedBack" name="ComplementsFedBack"><span> Compliments fed back to clinical team   </span>
+                                            }
                                         }
                                     }
                                     else
                                     {
-                                        if (Model.ComplementsFedBack == true)
+                                        if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() 
+                                            || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN"
+                                            || Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper())
                                         {
-                                            <input type="checkbox" id="ComplementsFedBack" checked name="ComplementsFedBack"><span> Compliments fed back to clinical team    </span>
+                                            if (Model.ComplementsFedBack == true)
+                                            {
+                                                <input type="checkbox" id="ComplementsFedBack" checked name="ComplementsFedBack"><span> Compliments fed back to clinical team    </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" id="ComplementsFedBack" name="ComplementsFedBack"><span> Compliments fed back to clinical team   </span>
+                                            }
                                         }
-                                        else
+                                        else if(Model.MedTriage == 3)
                                         {
-                                            <input type="checkbox" id="ComplementsFedBack" name="ComplementsFedBack"><span> Compliments fed back to clinical team   </span>
-                                        }
-                                    }
+
+                                            if (Model.ComplementsFedBack == true)
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="ComplementsFedBack" checked name="ComplementsFedBack"><span> Compliments fed back to clinical team    </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="ComplementsFedBack" name="ComplementsFedBack"><span> Compliments fed back to clinical team   </span>
+                                            }
+                                            }
+
+                                            else
+                                            {
+                                                if (Model.ComplementsFedBack == true)
+                                                {
+                                                <input type="checkbox" id="ComplementsFedBack" checked name="ComplementsFedBack"><span> Compliments fed back to clinical team    </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" id="ComplementsFedBack" name="ComplementsFedBack"><span> Compliments fed back to clinical team   </span>
+                                            }
+                                                }
+                                            }
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -304,25 +416,73 @@
                                             </div>
                                         </div>
                                         @*  <div class="col-md-12">*@
+
                                         <input id="IsComment" type="hidden" class="form-control" value="" name="IsComment">
-                                        <div class="pull-right">
-                                            <button id="BtnOpenComment" name="BtnOpenComment" class="btn btn-primary" onclick="OpenComment(); return false;">Add New Feedback</button>
-                                        </div>
-                                        <div class="pull-right">
-                                            <button id="BtnCloseComment" name="BtnCloseComment" class="btn btn-primary" style="display:none;height: 48px;font-size: large;margin-right:6px; " onclick="CloseComment(); return false;">Close Feedback</button>
-                                        </div>
+                                                <div class="pull-right">
+                                                    <button id="BtnOpenComment" name="BtnOpenComment" class="btn btn-primary" onclick="OpenComment(); return false;">Add New Feedback</button>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <button id="BtnCloseComment" name="BtnCloseComment" class="btn btn-primary" style="display:none;height: 48px;font-size: large;margin-right:6px; " onclick="CloseComment(); return false;">Close Feedback</button>
+                                                </div>
                                         @*</div>*@
                                     </div>
                         </div>
                     @*</div>*@
                 </div>
-                <div class="pull-right">
-                    <button id="activate-prev-1" name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
-                    <button id="activate-step-2" @*type="submit"*@ name="BtnFinish" class="btn btn-primary btn-lg">Save & Next</button>
-                </div>
+                if (Convert.ToBoolean(ViewBag.IsReadOnly))
+                {
+                    if (Model.MedTriage == 3)
+                    {
 
-            }
+                        <div class="pull-right">
+                            <button id="activate-prev-1" disabled name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
+                            <button id="activate-step-2" disabled @*type="submit"*@ name="BtnFinish" class="btn btn-primary btn-lg">Save & Next</button>
+                        </div>
+                    }
+                    else if (Model.CreatedBy == Convert.ToString(Session["UserName"]) || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                    {
+                        <div class="pull-right">
+                            <button id="activate-prev-1" disabled name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
+                            <button id="activate-step-2" disabled @*type="submit"*@ name="BtnFinish" class="btn btn-primary btn-lg">Save & Next</button>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="pull-right">
+                            <button id="activate-prev-1" disabled name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
+                            <button id="activate-step-2" disabled name="BtnFinish" class="btn btn-primary btn-lg">Save & Next</button>
+                        </div>
+                        }
+                    }
+                    else
+                    {
+                        if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() 
+                            || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN"
+                            || Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper())
+                        {
+                            <div class="pull-right">
+                                <button id="activate-prev-1" name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
+                                <button id="activate-step-2" @*type="submit"*@ name="BtnFinish" class="btn btn-primary btn-lg">Save & Next</button>
+                            </div>
+                        }
+                        else if(Model.MedTriage == 3)
+                        {
 
+                        <div class="pull-right">
+                            <button id="activate-prev-1" disabled name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
+                            <button id="activate-step-2" disabled @*type="submit"*@ name="BtnFinish" class="btn btn-primary btn-lg">Save & Next</button>
+                        </div>
+                        }
+                     
+                        else
+                        {
+                            <div class="pull-right">
+                                <button id="activate-prev-1" name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
+                                <button id="activate-step-2" name="BtnFinish" class="btn btn-primary btn-lg">Save & Next</button>
+                            </div>
+                        }
+                    }
+                }
         </div>
 
             <br />

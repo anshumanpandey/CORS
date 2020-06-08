@@ -1,0 +1,703 @@
+﻿@model NHS.Common.DTO.COVIDComms
+
+@{
+    /**/
+
+    ViewBag.Title = "COVID 19 Comms";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .square {
+        height: 30px;
+        width: 100px;
+        background-color: forestgreen;
+    }
+</style>
+<br />
+<br />
+<div class="container">
+    <div class="row form-group">
+        <div class="col-xs-12 col-lg-12">
+            <div class="row" align="right">
+                <div class="col-md-12">
+                    <input type="image" src="~/images/Delete.png" width="30" height="30" alt="Submit" id="btnClose1" title="Close" />
+                </div>
+            </div>
+            <ul class="nav nav-pills nav-justified thumbnail setup-panel">
+                <li class="active">
+                    <a href="@Url.Action("COVIDComms", "home", new { id=Model.Test_ID, patientID = Model.PatientID })">
+                        <h4 class="list-group-item-heading">
+                            <b>Internal Communication</b>
+                        </h4>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href="@Url.Action("COVIDExternalComms", "home", new { id=Model.Test_ID, patientID = Model.PatientID })">
+                        <h4 class="list-group-item-heading">
+                            <b>External Communication</b>
+                        </h4>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row setup-content" id="step-1">
+        <div class="col-xs-12 col-lg-12">
+            <div class="lable_title">
+                <h2>Result Notification</h2>
+            </div><br />
+            @using (Html.BeginForm("COVIDComms", "Home", FormMethod.Post, new { @id = Model.Test_ID, @patientID = Model.PatientID }))
+            {
+                @Html.Hidden("hdnPatientID", Model.PatientID)
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="col-md-12">
+                            <div class="row_bar">
+                                <span><b>POSITIVE RESULT</b></span>
+                            </div>
+                        </div>
+                        @if (ViewBag.IsReadOnly || Model.TestResult.ToUpper().Equals("PENDING"))
+                        {
+                            if (Model.IsPositiveWardContacted)
+                            {
+                                <div class="col-md-12">
+                                    <div class="col-md-2">
+                                        <div class="row_bar">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="row_bar">
+                                            <input type="checkbox" disabled checked id="IsPositiveWardContacted" name="IsPositiveWardContacted"><span> Have you contacted the ward if admitted? </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else if (!string.IsNullOrEmpty(Model.UpdatedBy) && !Model.IsNone && !Model.IsPositivePatientContacted && !Model.IsPositiveWardContacted && !Model.IsNegativeLetterSent)
+                            {
+                                <div class="col-md-12">
+                                    <div class="col-md-2">
+                                        <div class="row_bar">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="row_bar">
+                                            <input type="checkbox" disabled id="IsPositiveWardContacted" name="IsPositiveWardContacted"><span> Have you contacted the ward if admitted? </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else if (!string.IsNullOrEmpty(Model.UpdatedBy))
+                            {
+                                <div class="col-md-12">
+                                    <div class="col-md-2">
+                                        <div class="row_bar">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="row_bar">
+                                            <input type="checkbox" disabled id="IsPositiveWardContacted" name="IsPositiveWardContacted"><span> Have you contacted the ward if admitted? </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-md-12">
+                                    <div class="col-md-2">
+                                        <div class="row_bar">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="row_bar">
+                                            <input type="checkbox" disabled id="IsPositiveWardContacted" name="IsPositiveWardContacted"><span> Have you contacted the ward if admitted? </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            if (Model.IsPositiveWardContacted)
+                            {
+                                <div class="col-md-12">
+                                    <div class="col-md-2">
+                                        <div class="row_bar">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="row_bar">
+                                            <input type="checkbox" checked id="IsPositiveWardContacted" name="IsPositiveWardContacted"><span> Have you contacted the ward if admitted? </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else if (!string.IsNullOrEmpty(Model.UpdatedBy) && !Model.IsNone && !Model.IsPositivePatientContacted && !Model.IsPositiveWardContacted && !Model.IsNegativeLetterSent)
+                            {
+                                <div class="col-md-12">
+                                    <div class="col-md-2">
+                                        <div class="row_bar">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="row_bar">
+                                            <input type="checkbox" id="IsPositiveWardContacted" name="IsPositiveWardContacted"><span> Have you contacted the ward if admitted? </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else if (!string.IsNullOrEmpty(Model.UpdatedBy))
+                            {
+                                <div class="col-md-12">
+                                    <div class="col-md-2">
+                                        <div class="row_bar">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="row_bar">
+                                            <input type="checkbox" disabled id="IsPositiveWardContacted" name="IsPositiveWardContacted"><span> Have you contacted the ward if admitted? </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-md-12">
+                                    <div class="col-md-2">
+                                        <div class="row_bar">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="row_bar">
+                                            <input type="checkbox" id="IsPositiveWardContacted" name="IsPositiveWardContacted"><span> Have you contacted the ward if admitted? </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        @if (ViewBag.IsReadOnly || Model.TestResult.ToUpper().Equals("PENDING"))
+                        {
+                            if (Model.IsPositivePatientContacted)
+                            {
+                                <div class="col-md-12">
+                                    <div class="col-md-2">
+                                        <div class="row_bar">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="row_bar">
+                                            <input type="checkbox" disabled checked id="IsPositivePatientContacted" name="IsPositivePatientContacted"><span> Have you called the patient/sent a letter if discharged? </span>
+                                        </div>
+                                    </div>
+                                </div><br />
+                            }
+                            else if (!string.IsNullOrEmpty(Model.UpdatedBy) && !Model.IsNone && !Model.IsPositivePatientContacted && !Model.IsPositiveWardContacted && !Model.IsNegativeLetterSent)
+                            {
+                                <div class="col-md-12">
+                                    <div class="col-md-2">
+                                        <div class="row_bar">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="row_bar">
+                                            <input type="checkbox" disabled id="IsPositivePatientContacted" name="IsPositivePatientContacted"><span> Have you called the patient/sent a letter if discharged? </span>
+                                        </div>
+                                    </div>
+                                </div><br />
+                            }
+                            else if (!string.IsNullOrEmpty(Model.UpdatedBy))
+                            {
+                                <div class="col-md-12">
+                                    <div class="col-md-2">
+                                        <div class="row_bar">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="row_bar">
+                                            <input type="checkbox" disabled id="IsPositivePatientContacted" name="IsPositivePatientContacted"><span> Have you called the patient/sent a letter if discharged? </span>
+                                        </div>
+                                    </div>
+                                </div><br />
+                            }
+                            else
+                            {
+                                <div class="col-md-12">
+                                    <div class="col-md-2">
+                                        <div class="row_bar">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="row_bar">
+                                            <input type="checkbox" disabled id="IsPositivePatientContacted" name="IsPositivePatientContacted"><span> Have you called the patient/sent a letter if discharged? </span>
+                                        </div>
+                                    </div>
+                                </div><br />
+                            }
+                        }
+                        else
+                        {
+                            if (Model.IsPositivePatientContacted)
+                            {
+                                <div class="col-md-12">
+                                    <div class="col-md-2">
+                                        <div class="row_bar">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="row_bar">
+                                            <input type="checkbox" checked id="IsPositivePatientContacted" name="IsPositivePatientContacted"><span> Have you called the patient/sent a letter if discharged? </span>
+                                        </div>
+                                    </div>
+                                </div><br />
+                            }
+                            else if (!string.IsNullOrEmpty(Model.UpdatedBy) && !Model.IsNone && !Model.IsPositivePatientContacted && !Model.IsPositiveWardContacted && !Model.IsNegativeLetterSent)
+                            {
+                                <div class="col-md-12">
+                                    <div class="col-md-2">
+                                        <div class="row_bar">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="row_bar">
+                                            <input type="checkbox" id="IsPositivePatientContacted" name="IsPositivePatientContacted"><span> Have you called the patient/sent a letter if discharged? </span>
+                                        </div>
+                                    </div>
+                                </div><br />
+                            }
+                            else if (!string.IsNullOrEmpty(Model.UpdatedBy))
+                            {
+                                <div class="col-md-12">
+                                    <div class="col-md-2">
+                                        <div class="row_bar">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="row_bar">
+                                            <input type="checkbox" disabled id="IsPositivePatientContacted" name="IsPositivePatientContacted"><span> Have you called the patient/sent a letter if discharged? </span>
+                                        </div>
+                                    </div>
+                                </div><br />
+                            }
+                            else
+                            {
+                                <div class="col-md-12">
+                                    <div class="col-md-2">
+                                        <div class="row_bar">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="row_bar">
+                                            <input type="checkbox" id="IsPositivePatientContacted" name="IsPositivePatientContacted"><span> Have you called the patient/sent a letter if discharged? </span>
+                                        </div>
+                                    </div>
+                                </div><br />
+                            }
+                        }
+                        <div class="col-md-12">
+                            <div class="row_bar">
+                                <span><b>NEGATIVE RESULT</b></span>
+                            </div>
+                        </div>
+                        @if (ViewBag.IsReadOnly || Model.TestResult.ToUpper().Equals("PENDING"))
+                        {
+                            if (Model.IsNegativeLetterSent)
+                            {
+                                <div class="col-md-12">
+                                    <div class="col-md-2">
+                                        <div class="row_bar">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="row_bar">
+                                            <input type="checkbox" disabled checked id="IsNegativeLetterSent" name="IsNegativeLetterSent"><span> Have you sent a letter if discharged-if negative-no call? </span>
+                                        </div>
+                                    </div>
+                                </div><br />
+                            }
+                            else if (!string.IsNullOrEmpty(Model.UpdatedBy) && !Model.IsNone && !Model.IsPositivePatientContacted && !Model.IsPositiveWardContacted && !Model.IsNegativeLetterSent)
+                            {
+                                <div class="col-md-12">
+                                    <div class="col-md-2">
+                                        <div class="row_bar">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="row_bar">
+                                            <input type="checkbox" disabled id="IsNegativeLetterSent" name="IsNegativeLetterSent"><span> Have you sent a letter if discharged-if negative-no call? </span>
+                                        </div>
+                                    </div>
+                                </div><br />
+                            }
+                            else if (!string.IsNullOrEmpty(Model.UpdatedBy))
+                            {
+                                <div class="col-md-12">
+                                    <div class="col-md-2">
+                                        <div class="row_bar">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="row_bar">
+                                            <input type="checkbox" disabled id="IsNegativeLetterSent" name="IsNegativeLetterSent"><span> Have you sent a letter if discharged-if negative-no call? </span>
+                                        </div>
+                                    </div>
+                                </div><br />
+                            }
+                            else
+                            {
+                                <div class="col-md-12">
+                                    <div class="col-md-2">
+                                        <div class="row_bar">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="row_bar">
+                                            <input type="checkbox" disabled id="IsNegativeLetterSent" name="IsNegativeLetterSent"><span> Have you sent a letter if discharged-if negative-no call? </span>
+                                        </div>
+                                    </div></div><br />
+                            }
+                        }
+                        else
+                        {
+                            if (Model.IsNegativeLetterSent)
+                            {
+                                <div class="col-md-12">
+                                    <div class="col-md-2">
+                                        <div class="row_bar">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="row_bar">
+                                            <input type="checkbox" checked id="IsNegativeLetterSent" name="IsNegativeLetterSent"><span> Have you sent a letter if discharged-if negative-no call? </span>
+                                        </div>
+                                    </div>
+                                </div><br />
+                            }
+                            else if (!string.IsNullOrEmpty(Model.UpdatedBy) && !Model.IsNone && !Model.IsPositivePatientContacted && !Model.IsPositiveWardContacted && !Model.IsNegativeLetterSent)
+                            {
+                                <div class="col-md-12">
+                                    <div class="col-md-2">
+                                        <div class="row_bar">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="row_bar">
+                                            <input type="checkbox" id="IsNegativeLetterSent" name="IsNegativeLetterSent"><span> Have you sent a letter if discharged-if negative-no call? </span>
+                                        </div>
+                                    </div>
+                                </div><br />
+                            }
+                            else if (!string.IsNullOrEmpty(Model.UpdatedBy))
+                            {
+                                <div class="col-md-12">
+                                    <div class="col-md-2">
+                                        <div class="row_bar">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="row_bar">
+                                            <input type="checkbox" disabled id="IsNegativeLetterSent" name="IsNegativeLetterSent"><span> Have you sent a letter if discharged-if negative-no call? </span>
+                                        </div>
+                                    </div>
+                                </div><br />
+                            }
+                            else
+                            {
+                                <div class="col-md-12">
+                                    <div class="col-md-2">
+                                        <div class="row_bar">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="row_bar">
+                                            <input type="checkbox" id="IsNegativeLetterSent" name="IsNegativeLetterSent"><span> Have you sent a letter if discharged-if negative-no call? </span>
+                                        </div>
+                                    </div>
+                                </div><br />
+                            }
+                        }
+                        </div>
+                    
+
+                                <div class="col-md-4">
+                                    <div class="table_margin">
+                                        <table width="100%" style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;">
+                                            <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                                <td width="40%" style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Patient ID</b></td>
+                                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.PatientID </td>
+                                            </tr>
+                                            <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Patient Name</b></td>
+                                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.PatientName</td>
+
+                                            </tr>
+                                            <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Test Result</b></td>
+                                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.TestResult</td>
+                                            </tr>
+                                            <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Age</b></td>
+                                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.Age</td>
+                                            </tr>
+                                            <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Gender</b></td>
+                                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.Gender</td>
+                                            </tr>
+                                            <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Spell Number</b></td>
+                                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.SpellNumber</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div><br /><br />
+                    <div id="Comments" style="display:block; padding-top:10px;" class="col-md-8">
+                        @if (ViewBag.IsReadOnly || Model.TestResult.ToUpper().Equals("PENDING"))
+                        {
+                            <div class="row_bar">
+                                Comments
+                                @Html.TextAreaFor(model => model.Comments, 10, 50, new { @class = "form-control", @readonly = true })
+                                @*@Html.ValidationMessageFor(model => model.objclsMedicalExaminerReview.Comments, "", new { @class = "text-danger" })*@
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="row_bar">
+                                Comments
+                                @Html.TextAreaFor(model => model.Comments, 10, 50, new { @class = "form-control" })
+                                @*@Html.ValidationMessageFor(model => model.objclsMedicalExaminerReview.Comments, "", new { @class = "text-danger" })*@
+                            </div>
+                        }
+                    </div>
+                                @if (!string.IsNullOrEmpty(Model.UpdatedBy))
+                                {
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="row_bar">
+                                                <br /><br /><span><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Updated By:</b>&nbsp;</span>
+                                                <span><b><i>@Model.UpdatedBy</i></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                                <span><b>Updated Date:</b>&nbsp;</span>
+                                                <span><b><i>@Model.UpdatedDate</i></b></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div><br /><br />                            
+                if (ViewBag.IsReadOnly || Model.TestResult.ToUpper().Equals("PENDING"))
+                {
+                    <div class="pull-right">
+                        <button id="BtnNext" disabled type="submit" name="BtnNext" class="btn btn-primary btn-lg">Save</button>
+                        <button id="btnSave" disabled name="btnSave" class="btn btn-primary btn-lg">Exit</button>
+                    </div>
+                }
+                else
+                {
+                    <div class="pull-right">
+                        <button id="BtnNext" type="submit" name="BtnNext" class="btn btn-primary btn-lg">Save</button>
+                        <span id="btnSave" name="btnSave" class="btn btn-primary btn-lg">Exit</span>
+                    </div>
+                }
+            }
+        </div>
+        <br />
+        <br />
+
+    </div>
+</div>
+<div class="modal fade" id="modelClose1">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Message</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+
+                <div class="form-section" style="text-align:left">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row_bar">
+                                <div>Do you want to exit without saving your changes?</div>
+                            </div>
+                        </div>
+
+
+                        @*<div class="col-md-12">
+                                <div class="row_bar">
+                                    <div><input type="checkbox" id="QAPReview" name="QAPReview" checked disabled="disabled"><span>Review Completed?</span>?</div>
+                                </div>
+                            </div>*@
+                        <br />
+                        <br />
+                        <div class="col-md-4">
+                                <button type="button" class="btn btn-primary btn-block" id="btnModelClose1" data-dismiss="modal" formmethod="post" onclick="location.href='@Url.Action("COVIDReviewCycle", "Home", new { id = Model.Test_ID, patientID = Model.PatientID })'">Yes</button>
+                            </div>
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-primary btn-block" name="btnCloseYes" id="btnCloseYes">No</button>
+                                </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modelCloseNext">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Message</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="form-section" style="text-align:left">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row_bar">
+                                <div>Do you want to exit without saving your changes?</div>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-primary btn-block" id="btnModelClose2" data-dismiss="modal" formmethod="post" onclick="location.href='@Url.Action("COVIDReviewCycle", "Home", new { id=Model.Test_ID, patientID = Model.PatientID })'">Yes</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary btn-block" name="btnCloseYes2" id="btnCloseYes2">No</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        //$('#dvPatientDetailsCimment').hide();
+        $("#myBtnProcedures").click(function () {
+            $("#myModalProcedures").modal();
+        });
+        $("#myBtnSecondaryDiagnoses").click(function () {
+            $("#myModalSecondaryDiagnoses").modal();
+        });
+        $("#btnClose1").click(function () {
+            $("#modelClose1").modal();
+        });
+        //$("#BtnNext").click(function (event) {
+        //    if (!confirm('Are you sure that you want to submit the form'))
+        //        event.preventDefault();
+        //});
+    });
+</script>
+<script type="text/javascript">
+$(function () {
+    $("#btnModelClose1").click(function(){
+window.location.href = "@Url.Action("COVIDReviewCycle", "Home", new { id = Model.Test_ID, patientID = Model.PatientID })";
+    });
+});
+</script>
+<script>
+        $(document).ready(function () {
+            $("#btnCloseYes").click(function () {
+                $("#modelClose1").modal('hide');
+            });
+            $("#btnSave").click(function () {
+                $("#modelCloseNext").modal();
+            });
+        });
+</script>
+<script>
+        $(document).ready(function () {
+            $("#IsNone").click(function () {
+                if ($(this).is(":checked"))
+                {
+                    $("#IsPositiveWardContacted").prop("disabled", true);
+                    $("#IsPositivePatientContacted").prop("disabled", true);
+                    $("#IsNegativeLetterSent").prop("disabled", true);                    
+                }
+                else
+                {
+                    $("#IsPositiveWardContacted").prop("disabled", false);
+                    $("#IsPositivePatientContacted").prop("disabled", false);
+                    $("#IsNegativeLetterSent").prop("disabled", false);
+                }
+            });
+            $("#IsPositiveWardContacted").click(function () {
+                if ($(this).is(":checked")) {
+                    $("#IsNone").prop("disabled", true);
+                    $("#IsPositivePatientContacted").prop("disabled", true);
+                    $("#IsNegativeLetterSent").prop("disabled", true);
+                    $("#IsNone").prop("checked", false);
+                }
+                else {
+                    $("#IsNone").prop("disabled", false);
+                    $("#IsPositivePatientContacted").prop("disabled", false);
+                    $("#IsNegativeLetterSent").prop("disabled", false);
+                }
+            });
+            $("#IsPositivePatientContacted").click(function () {
+                if ($(this).is(":checked")) {
+                    $("#IsPositiveWardContacted").prop("disabled", true);
+                    $("#IsNone").prop("disabled", true);
+                    $("#IsNegativeLetterSent").prop("disabled", true);
+                    $("#IsNone").prop("checked", false);
+                }
+                else {
+                    $("#IsPositiveWardContacted").prop("disabled", false);
+                    $("#IsNone").prop("disabled", false);
+                    $("#IsNegativeLetterSent").prop("disabled", false);
+                }
+            });
+            $("#IsNegativeLetterSent").click(function () {
+                if ($(this).is(":checked")) {
+                    $("#IsNone").prop("disabled", true);
+                    $("#IsPositiveWardContacted").prop("disabled", true);
+                    $("#IsPositivePatientContacted").prop("disabled", true);
+                    $("#IsNone").prop("checked", false);
+                }
+                else {
+                    $("#IsNone").prop("disabled", false);
+                    $("#IsPositiveWardContacted").prop("disabled", false);
+                    $("#IsPositivePatientContacted").prop("disabled", false);
+                }
+            });            
+        });
+</script>
+<script>
+$(document).ready(function () {
+    $("#btnCloseYes").click(function () {
+        $("#modelClose1").modal('hide');
+    });
+    $("#btnCloseYes2").click(function () {
+        $("#modelCloseNext").modal('hide');
+    });
+});
+</script>
+

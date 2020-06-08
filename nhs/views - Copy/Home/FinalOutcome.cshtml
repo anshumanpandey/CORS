@@ -1,0 +1,567 @@
+﻿@model NHS.Common.clsMedicalExaminerDecision
+@{
+    ViewBag.Title = "FinalOutcome";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<br />
+<div class="container">
+    <div class="row form-group">
+        <div class="col-xs-12 col-lg-12">
+            <div class="row" align="right">
+                <div class="col-md-12">
+                    <input type="image" src="~/images/Delete.png" width="30" height="30" alt="Submit" id="btnClose3" title="Close" />
+                </div>
+            </div>
+            <ul class="nav nav-pills nav-justified thumbnail setup-panel">
+                <li class="disabled">
+                    <a href='@Url.Action("PatientDetails", "home", new { id=Model.ID })'>
+                        <h4 class="list-group-item-heading">
+                            Patient details
+                        </h4>
+                    </a>
+
+                </li>
+                <li class="disabled">
+                    <a href='@Url.Action("MedicalExaminerReview", "home", new { id=Model.ID })'>
+                        <h4 class="list-group-item-heading">
+                            Medical Examiner<br /> Scrutiny
+                        </h4>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href='@Url.Action("MedicalExaminerDecision", "home", new { id = Model.ID})'>
+                        <h4 class="list-group-item-heading">
+                            Medical Examiner Decision
+                        </h4>
+                    </a>
+                </li>
+                
+                <li class="disabled">
+                    <a href='@Url.Action("SJRAssessmentTriage", "home", new { id = Model.ID})'>
+                        <h4 class="list-group-item-heading">
+                            SJR Assessment<br /> Triage
+                        </h4>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href='@Url.Action("OtherReferrals", "home", new { id = Model.ID})'>
+                        <h4 class="list-group-item-heading">
+                            Other Referrals
+                        </h4>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href='@Url.Action("PositiveFeedback", "home", new { id = Model.ID})'>
+                        <h4 class="list-group-item-heading">
+                            Positive Feedback
+                        </h4>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href='@Url.Action("Declaration", "home", new { id = Model.ID})'>
+                        <h4 class="list-group-item-heading">
+                            Declaration
+                        </h4>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href='@Url.Action("FinalOutcome", "home", new { id = Model.ID})'>
+                        <h4 class="list-group-item-heading">
+                            Final Outcome<br />(MEO)
+                        </h4>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row setup-content" id="step-3">
+        @using (Html.BeginForm("FinalOutcome", "Home", FormMethod.Post, new { @id = Model.ID }))
+        {
+            AntiForgeryConfig.SuppressXFrameOptionsHeader = true;
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="col-xs-12 col-lg-12">
+                @*<form action="/Home/MedExamFormStep3" method="post" id="frmMedExamFormStep3">*@
+                <div class="col-md-12 well">
+                    <div class="form-section">
+                        <div class="lable_title">
+                            <h2>MEO Final Outcome</h2>
+                        </div>
+                        <div class="row">
+
+
+                            <br /><br />
+
+                                  <div class="col-md-6">
+                                      <div class="row">
+                                          <div class="col-md-12">
+                                              <div class="row_bar">
+                                                  Cause of Death
+                                              </div>
+                                          </div>
+
+                                              <div class="col-md-6">
+                                                  <div class="row_bar">
+                                                      1a
+                                                      @Html.EditorFor(model => model.CauseOfDeath1Final, new { htmlAttributes = new { @class = "form-control" } })
+
+                                                  </div>
+                                              </div>
+                                          
+                                          <div class="col-md-6">
+                                              <div class="row_bar">
+                                                  1b
+                                                 
+                                                      @Html.EditorFor(model => model.CauseOfDeath2Final, new { htmlAttributes = new { @class = "form-control" } })
+                                                  
+                                              </div>
+                                          </div>
+                                          <div class="col-md-6">
+                                              <div class="row_bar">
+                                                  1c
+                                                 
+                                                      @Html.EditorFor(model => model.CauseOfDeath3Final, new { htmlAttributes = new { @class = "form-control" } })
+                                                  
+                                              </div>
+                                          </div>
+                                          <div class="col-md-6">
+                                              <div class="row_bar">
+                                                  2
+                                                  
+                                                      @Html.EditorFor(model => model.CauseOfDeath4Final, new { htmlAttributes = new { @class = "form-control" } })
+                                                  
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                      <div class="col-md-12" style="margin-top: 44px !important;">
+                                          <div class="row_bar"></div>
+                                      </div>
+                                      <div class="table_margin">
+                                          <table width="100%" style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;">
+                                              <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                                  <td width="40%" style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Patient ID</b></td>
+                                                  <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.Patient_Id </td>
+                                              </tr>
+                                              <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                                  <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Patient Name</b></td>
+                                                  <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.PatientName</td>
+
+                                              </tr>
+                                              <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                                                  <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>DOB</b></td>
+                                                  <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.DOB</td>
+                                              </tr>
+                                          </table>
+                                      </div>
+                                  </div>
+
+
+                            <div class="col-md-4">
+                                <div class="row_bar">
+
+                                        @if (Model.DeathCertificate == true)
+                                        {
+                                            <input type="checkbox" checked id="DeathCertificate" name="DeathCertificate"><span> Death Certificate Complete? </span>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" id="DeathCertificate" name="DeathCertificate"><span> Death Certificate Complete? </span>
+                                        }
+                                   
+                                </div>
+                            </div>
+                            @if (Model.DeathCertificate == true)
+                            {
+                                <div id="deathdate" class="col-md-4" style="display:block;">
+                                    <div class="row_bar">
+
+                                            @*@if (string.IsNullOrEmpty(Model.DeathCertificateDate))
+                                            {*@
+                                                <input class="form-control input_datepicker" readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="@Model.DeathCertificateDate" placeholder="Select Date">
+                                            @*}
+                                            else
+                                            {
+                                                <input class="form-control input_datepicker" disabled="disabled" readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="@Model.DeathCertificateDate" placeholder="Select Date">
+                                            }*@
+                                        
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div id="deathdate" class="col-md-4" style="display:none;">
+                                    <div class="row_bar">
+                                        
+                                            @if (string.IsNullOrEmpty(Model.DeathCertificateDate))
+                                            {
+                                                <input class="form-control datepicker" readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="" placeholder="Select Date">
+                                            }
+                                            else
+                                            {
+                                                <input class="form-control datepicker" readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="@Model.DeathCertificateDate" placeholder="Select Date">
+                                            }
+                                        
+                                    </div>
+                                </div>
+                            }
+                            @if (Model.DeathCertificate == true)
+                            {
+                                <div id="deathtime" class="col-md-2" style="display:block;">
+                                    <div class="row_bar">
+                                        
+                                            <input class="form-control" name="DeathCertificateTime" type="text" maxlength="5" id="txtTime" placeholder="00:00"
+                                                   value="@Model.DeathCertificateTime" />
+                                        
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div id="deathtime" class="col-md-2" style="display:none;">
+                                    <div class="row_bar">
+                                        
+                                            @if (string.IsNullOrEmpty(Model.DeathCertificateTime))
+                                            {
+                                                <input class="form-control" name="DeathCertificateTime" type="text" maxlength="5" id="txtTime" placeholder="00:00"
+                                                       value="" />
+                                            }
+                                            else
+                                            {
+                                                <input class="form-control" name="DeathCertificateTime" type="text" maxlength="5" id="txtTime" placeholder="00:00"
+                                                       value="@Model.DeathCertificateTime" />
+                                            }
+                                       
+                                    </div>
+                                </div>
+                            }
+                            @if (Model.DeathCertificate == true)
+                            {
+                                
+                                    <div id="deathtimetype" class="col-md-2" style="display:block;">
+                                        <div class="row_bar">
+                                            @if (Model.TimeType == "0")
+                                            {
+                                                <span>&nbsp;</span>
+                                            }
+                                            else
+                                            {
+                                                <span>@Model.TimeType</span>
+                                            }
+                                        </div>
+                                    </div>
+                                
+                            }
+                            else
+                            {
+                                
+                                    <div id="deathtimetype" class="col-md-2" style="display:none;">
+                                        <div class="row_bar">
+                                            @if (Model.TimeType == "0")
+                                            {
+                                                <span>&nbsp;</span>
+                                            }
+                                            else
+                                            {
+                                                <span>@Model.TimeType</span>
+                                            }
+                                        </div>
+                                    </div>
+                                
+                            }
+                            <br /><br />
+                            <div class="col-md-12">
+                                <div class="row_bar">
+                                    <label class="label_part" for="defaultCheck1">(If Applicable) Coroner's decision </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row_bar">
+                                    
+                                        @if (Model.CoronerDecisionInquest == true)
+                                        {
+                                            <input type="checkbox" checked id="Inquest" name="Inquest"><span> Inquest </span>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" id="Inquest" name="Inquest"><span> Inquest </span>
+                                        }
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row_bar">
+                                    
+                                        @if (Model.CoronerDecisionPostMortem == true)
+                                        {
+                                            <input type="checkbox" checked id="Post-Mortem" name="Post-Mortem"><span> Post-Mortem </span>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" id="Post-Mortem" name="Post-Mortem"><span> Post-Mortem </span>
+                                        }
+                                   
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row_bar">
+                                    
+                                        @if (Model.CoronerDecision100A == true)
+                                        {
+                                            <input type="checkbox" checked id="100A" name="100A"><span> 100 A </span>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" id="100A" name="100A"><span> 100 A </span>
+                                        }
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row_bar">
+                                    
+                                        @if (Model.CoronerDecisionGPissue == true)
+                                        {
+                                            <input type="checkbox" checked id="GPIssue" name="GPIssue"><span> GP Issue </span>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" id="GPIssue" name="GPIssue"><span> GP Issue </span>
+                                        }
+                                    
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="row_bar">
+                                    
+                                        @if (Model.NoFurtherAction == true)
+                                        {
+                                            <input type="checkbox" checked id="NoFurAction" name="NoFurAction"><span> No Further Action </span>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" id="NoFurAction" name="NoFurAction"><span> No Further Action</span>
+                                        }
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row_bar">
+                                    
+                                    @if (Model.CoronerDecisionForensicPM == true)
+                                    {
+                                    <input type="checkbox" checked id="ForensicPM" name="ForensicPM"><span> Forensic PM </span>
+                                    }
+                                    else
+                                    {
+                                    <input type="checkbox" id="ForensicPM" name="ForensicPM"><span> Forensic PM</span>
+                                    }                                  
+                
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pull-right">
+                    <button id="activate-prev-1" name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
+                    <button id="activate-step-2" id="BtnNext" name="BtnNext" class="btn btn-primary btn-lg">Save & Finish</button>
+                </div>
+                @*</form>*@
+            </div>
+        }
+    </div>
+</div>
+<br />
+<br />
+@*<div class="pull-right">
+        <button class="btn btn-primary btn-lg" id="btnClose3">Close</button>
+    </div>*@
+<div class="modal fade" id="modelClose3">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Message</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="form-section" style="text-align:left">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row_bar">
+                                <div>Do you want to exit without saving your changes?</div>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-primary btn-block" id="btnModelClose1" data-dismiss="modal" formmethod="post" onclick="location.href='@Url.Action("MortalityReview", "Home", new { id=Model.ID })'">Yes</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary btn-block" name="btnCloseYes" id="btnCloseYes">No</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>*@
+
+        </div>
+    </div>
+</div>
+<script>
+    //$(document).ready(function () {
+
+    //    $("#DeathCertificateTime").change(function () {
+    $(document).ready(function () {
+        $("#txtTime").mouseleave(function () {
+             
+            debugger;
+            var data = $("#txtTime").val();
+            if (parseInt(data) >= 12 && parseInt(data)<24) {
+                $("#TimeType").val("PM");
+            }
+            else {
+                $("#TimeType").val("AM");
+            }
+        });
+    });
+</script>
+<script>
+   
+  
+    $(document).ready(function () {
+        $.ajax({
+            type: "post",
+            url: "/Home/GetReferralReasons",
+            data: { groupid: $('#ddlCoronerReferralGrp').val() },
+            datatype: "json",
+            traditional: true,
+            success: function (data) {
+                var district = "<select id='ddlCoronerReferral'>";
+                district = district + '<option value="">--Select Reason--</option>';
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].Reason_ID == $('#reasonid').val())
+                        district = district + '<option selected value=' + data[i].Reason_ID + '>' + data[i].ReasonName + '</option>';
+                    else
+                        district = district + '<option value=' + data[i].Reason_ID + '>' + data[i].ReasonName + '</option>';
+                }
+                district = district + '</select>';
+                $('#ddlCoronerReferral').html(district);
+            }
+        });
+        $("#btnClose3").click(function () {
+            $("#modelClose3").modal();
+        });
+        $('#ddlCoronerReferralGrp').change(function () {
+            $.ajax({
+                type: "post",
+                url: "/Home/GetReferralReasons",
+                data: { groupid: $('#ddlCoronerReferralGrp').val() },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    var district = "<select id='ddlCoronerReferral'>";
+                    district = district + '<option value="">--Select Reason--</option>';
+                    //alert(data[i].Value + ',' + data[i].Text);
+                    for (var i = 0; i < data.length; i++) {
+                            district = district + '<option value=' + data[i].Reason_ID + '>' + data[i].ReasonName + '</option>';
+                    }
+                    district = district + '</select>';
+                    $('#ddlCoronerReferral').html(district);
+                }
+            });
+        });
+
+
+       
+    });
+</script>
+<script type="text/javascript">
+$(function () {
+
+     $("#btnModelClose3").click(function(){
+window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.ID }))";
+    });
+
+});
+</script>
+<script>
+        $(document).ready(function () {
+            $("#btnCloseYes").click(function () {
+                $("#modelClose3").modal('hide');
+            });
+        });
+        (function ($) {
+            $(".datepicker").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd/mm/yy'
+            });
+        })(jQuery)
+</script>
+<script>
+        $(document).ready(function () {
+            $("#CoronerReferral").click(function () {
+                if ($(this).is(":checked"))
+                {
+                    $("#CoronerReason1").css("display", "block");
+                    $("#CoronerReason2").css("display", "block");
+                    $("#HOCBlank").css("display", "none");
+                }
+                else
+                {
+                    $("#CoronerReason1").css("display", "none");
+                    $("#CoronerReason2").css("display", "none");
+                    $("#HOCBlank").css("display", "block");
+                }
+            });
+        });
+</script>
+<script>
+        $(document).ready(function () {
+            $("#DeathCertificate").click(function () {
+                if ($(this).is(":checked"))
+                {
+                    $("#deathdate").css("display", "block");
+                    $("#deathtime").css("display", "block");
+                    $("#deathtimetype").css("display", "block");
+                }
+                else
+                {
+                    $("#deathdate").css("display", "none");
+                    $("#deathtime").css("display", "none");
+                    $("#deathtimetype").css("display", "none");
+                }
+            });
+        });
+</script>
+<script type="text/javascript">
+    $("#BtnNext").click(function () {
+        alert("hi");
+            $('[id*=DeathCertificateTime]').mask('00:00');
+            $('[id*=DeathCertificateTime]').on("change", function () {
+                var reg = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
+                if (!reg.test($('[id*=DeathCertificateTime]').val())) {
+                    alert("Please enter valid time in 24 hour format");
+                    $('[id*=DeathCertificateTime]').val('');
+                    $('[id*=DeathCertificateTime]').focus();
+                }
+            });
+        });
+</script>
+
+
+
+
+

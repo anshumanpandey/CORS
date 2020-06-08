@@ -1,0 +1,83 @@
+﻿@model NHS.Common.RolePermission
+@{
+    ViewBag.Title = "Add Permission";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br /><br /><br /><br />
+<div class="container">
+    <form action="@Url.Action("CreatePermission", "Home" )" id="login-form" class="sky-form" method="post" novalidate="novalidate">
+        <div class="lable_title">
+            <h2>Add Permission</h2><span style="color:red"><i>&nbsp;&nbsp;* marked fields are mandatory fields.</i></span><br />
+        </div>
+        <fieldset>
+            <section>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span>Module Name</span>&nbsp;&nbsp;<span style="color:red;font-size:20px">*</span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="row_bar checkbox-row">
+                            <select class="form-control" id="ddlModule" name="ddlModule">
+                                <option value="-1" selected="">Please Select</option>
+                                @foreach (var item in ViewBag.ModuleDDM)
+                                {
+                                    <option value="@item.ID">@item.ModuleName</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span>Role Name</span>&nbsp;&nbsp;<span style="color:red;font-size:20px">*</span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="row_bar checkbox-row">
+                            <select class="form-control" id="ddlRole" name="ddlRole">
+                                <option value="-1" selected="">Please Select</option>
+                                @foreach (var item in ViewBag.RoleDDM)
+                                {
+                                    <option value="@item.ID">@item.RoleName</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span>Permission</span>&nbsp;&nbsp;<span style="color:red;font-size:20px">*</span>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="row_bar checkbox-row">
+                            <input type="radio" name="Access" id="Access" value="1">Full Access
+                            <input type="radio" name="Access" id="Access" value="2">Read Only
+                            <input type="radio" name="Access" id="Access" value="3" checked>No Access
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </fieldset>
+        <div class="col-md-12" align="center">
+            <button id="activate-step-2" type="submit" name="BtnFinish" class="btn btn-primary btn-lg">Submit</button>
+            <button id="activate-step-3" type="button" name="BtnCancel" class="btn btn-primary btn-lg" onclick="location.href='@Url.Action("RolePermission","Home")'">Cancel</button>
+        </div>
+    </form>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#activate-step-2").click(function () {
+            if ($.trim($("#ddlModule").val()) == "-1") {
+                alert("Module Name is a mandatory field.");
+                return false;
+            }
+            if ($.trim($("#ddlRole").val()) == "-1") {
+                alert("Role Name is a mandatory field.");
+                return false;
+            }
+        });
+    });
+</script>

@@ -36,5 +36,46 @@ namespace NHS.Common
         public int ID { get; set; }
 
         public string Role { get; set; }
+
+        public int RoleID { get; set; }
+
+        public string EmailID { get; set; }
+
+        public string Code { get; set; }
+
+        public string Speciality { get; set; }
+
+        public bool IsApproved { get; set; }
+
+        public DateTime CreatedDate { get; set; }
+    }
+
+    public class CORSUsers
+    {
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public string UserName { get; set; }
+
+        public string LastLoginDateTime { get; set; }
+
+        public int ID { get; set; }
+
+        public string Role { get; set; }
+
+        public string EmailID { get; set; }
+
+        public string Code { get; set; }
+
+        public string Speciality { get; set; }
+
+        public bool IsApproved { get; set; }
+
+        public string CreatedDate { get; set; }
+
+        public string Action { get; set; }
+
+        public int TotalRecords { get; set; }
     }
 }

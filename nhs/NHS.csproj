@@ -52,6 +52,14 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NHS.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\nhs.data\bin\Debug\NHS.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="NHS.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\nhs.data\bin\Debug\NHS.Data.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <Private>True</Private>
     </Reference>
@@ -157,6 +165,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\PagedData.cs" />
+    <Compile Include="Helper\Pagination.cs" />
     <Compile Include="Models\AvoidabilityScore.cs">
       <DependentUpon>NHSDbmsModel.tt</DependentUpon>
     </Compile>
@@ -605,6 +615,17 @@
     <Content Include="images\back-158491_640.png" />
     <Content Include="images\BackArrowimages.png" />
     <Content Include="images\BackArrowimages_old.png" />
+    <Content Include="images\blue.jpg" />
+    <Content Include="images\breathing-1.png" />
+    <Content Include="images\breathing-2.png" />
+    <Content Include="images\breathing-3.png" />
+    <Content Include="images\breathing-4.png" />
+    <Content Include="images\breathing-5.png" />
+    <Content Include="images\comms-1.png" />
+    <Content Include="images\comms-2.png" />
+    <Content Include="images\comms-3.png" />
+    <Content Include="images\comms-4.png" />
+    <Content Include="images\comms-5.png" />
     <Content Include="images\CORS LOGO-01.png" />
     <Content Include="images\cors-11.png" />
     <Content Include="images\CORS-GIF-lg.gif" />
@@ -616,6 +637,16 @@
     <Content Include="images\CORSimg2.PNG" />
     <Content Include="images\CorsImg3.PNG" />
     <Content Include="images\CORSImg4.PNG" />
+    <Content Include="images\COVID-1.png" />
+    <Content Include="images\COVID-2.png" />
+    <Content Include="images\COVID-3.png" />
+    <Content Include="images\COVID-4.png" />
+    <Content Include="images\COVID-5.png" />
+    <Content Include="images\data-assurance-1.png" />
+    <Content Include="images\data-assurance-2.png" />
+    <Content Include="images\data-assurance-3.png" />
+    <Content Include="images\data-assurance-4.png" />
+    <Content Include="images\data-assurance-5.png" />
     <Content Include="images\Delete.png" />
     <Content Include="images\Delete_1.png" />
     <Content Include="images\edit-icon.png" />
@@ -625,6 +656,7 @@
     <Content Include="images\GeryImg.png" />
     <Content Include="images\GreenCircle-old.png" />
     <Content Include="images\GreenCircle.png" />
+    <Content Include="images\hide-arrow.png" />
     <Content Include="images\icon-noScript.gif" />
     <Content Include="images\IndexImageNHS-1.jpg" />
     <Content Include="images\IndexImageNHS-old.jpg" />
@@ -635,13 +667,32 @@
     <Content Include="images\IndexImageNHS_4.jpg" />
     <Content Include="images\IndexImageNHS_old.jpeg" />
     <Content Include="images\IndexImageNHS_p.jpg" />
+    <Content Include="images\level-care-1.png" />
+    <Content Include="images\level-care-2.png" />
+    <Content Include="images\level-care-3.png" />
+    <Content Include="images\level-care-4.png" />
+    <Content Include="images\level-care-5.png" />
     <Content Include="images\madical-img.png" />
     <Content Include="images\NHS-Logo.png" />
     <Content Include="images\preloader.gif" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="images\profile-1.png" />
+    <Content Include="images\profile-2.png" />
+    <Content Include="images\profile-3.png" />
+    <Content Include="images\profile-4.png" />
+    <Content Include="images\profile-5.png" />
+    <Content Include="images\purple.png" />
     <Content Include="images\RedC-old.png" />
     <Content Include="images\RedC.png" />
+    <Content Include="images\refresh-icon.png" />
+    <Content Include="images\search-icon.png" />
+    <Content Include="images\show-arrow.png" />
+    <Content Include="images\test-results-1.png" />
+    <Content Include="images\test-results-2.png" />
+    <Content Include="images\test-results-3.png" />
+    <Content Include="images\test-results-4.png" />
+    <Content Include="images\test-results-5.png" />
     <Content Include="images\user-old.png" />
     <Content Include="images\user.png" />
     <Content Include="Models\NHSDbmsModel.Context.tt">
@@ -767,6 +818,12 @@
     <Content Include="assets\plugins\sky-forms\version-2.0.1\icons\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\beautyathomesadmin - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\beautyathomesadmin - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\corsrbh - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\corsrbh - ReadOnly - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\corsrbh - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\covidrbhapp - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\covidrbhapp - ReadOnly - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\covidrbhapp - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mortalitydemo - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\mortalitydemo - Web Deploy.pubxml" />
@@ -832,6 +889,9 @@
     <None Include="Properties\PublishProfiles\nhsforms - Web Deploy3.pubxml" />
     <None Include="Properties\PublishProfiles\nhsforms - Web Deploy4.pubxml" />
     <None Include="Properties\PublishProfiles\nhsforms - Web Deploy5.pubxml" />
+    <None Include="Properties\PublishProfiles\sinhacoerp - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\sinhacoerp - ReadOnly - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\sinhacoerp - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -845,9 +905,13 @@
     <Content Include="Scripts\js\bootstrap.min.js" />
     <Content Include="Scripts\js\custom.js" />
     <Content Include="Scripts\js\dataTables.responsive.min.js" />
+    <Content Include="Scripts\js\html2canvas.js" />
+    <Content Include="Scripts\js\html2pdf.js" />
     <Content Include="Scripts\js\jquery-1.12.4.min.js" />
     <Content Include="Scripts\js\jquery-ui.min.js" />
     <Content Include="Scripts\js\jquery.dataTables.min.js" />
+    <Content Include="Scripts\js\jspdf.min.js" />
+    <Content Include="Scripts\js\jspdf.plugin.autotable.min.js" />
     <Content Include="Scripts\js\modernizr-2.8.3.min.js" />
     <Content Include="Scripts\js\respond-1.4.2.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
@@ -893,6 +957,91 @@
     <Content Include="Views\Home\FinalOutcome.cshtml" />
     <Content Include="Views\Home\QualityReview.cshtml" />
     <Content Include="Views\Home\AddPatient.cshtml" />
+    <Content Include="Views\Home\NotAuthorizedSJR.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Home\Setting.cshtml" />
+    <Content Include="Views\Home\Speciality.cshtml" />
+    <Content Include="Views\Home\NoK.cshtml" />
+    <Content Include="Views\Home\FeedbackType.cshtml" />
+    <Content Include="Views\Home\CommentType.cshtml" />
+    <Content Include="Views\Home\AddFeedbackType.cshtml" />
+    <Content Include="Views\Home\EditFeedbackType.cshtml" />
+    <Content Include="Views\Home\EditCommentType.cshtml" />
+    <Content Include="Views\Home\AddCommentType.cshtml" />
+    <Content Include="Views\Home\AddSpeciality.cshtml" />
+    <Content Include="Views\Home\EditSpeciality.cshtml" />
+    <Content Include="Views\Home\Roles.cshtml" />
+    <Content Include="Views\Home\AddRole.cshtml" />
+    <Content Include="Views\Home\EditRole.cshtml" />
+    <Content Include="Views\Home\Users.cshtml" />
+    <Content Include="Views\Home\AddUser.cshtml" />
+    <Content Include="Views\Home\EditUser.cshtml" />
+    <Content Include="Views\Home\Wards.cshtml" />
+    <Content Include="Views\Home\AddWard.cshtml" />
+    <Content Include="Views\Home\EditWard.cshtml" />
+    <Content Include="Views\Home\AddConsultant.cshtml" />
+    <Content Include="Views\Home\EditConsultant.cshtml" />
+    <Content Include="Views\Home\Consultants.cshtml" />
+    <Content Include="Views\Home\MROutcomeDashboard.cshtml" />
+    <Content Include="Views\Home\QAPReport.cshtml" />
+    <Content Include="Views\Home\MEReport.cshtml" />
+    <Content Include="Views\Home\MEReviewTrackingReport.cshtml" />
+    <Content Include="Views\Home\SJR1Report.cshtml" />
+    <Content Include="Views\Home\SJR2Report.cshtml" />
+    <Content Include="Views\Home\FeedbackReport.cshtml" />
+    <Content Include="Views\Home\SJRReviewStatus.cshtml" />
+    <Content Include="Views\Home\SJRTracking.cshtml" />
+    <Content Include="Views\Home\MEOReport.cshtml" />
+    <Content Include="Views\Home\RolePermission.cshtml" />
+    <Content Include="Views\Home\AddPermission.cshtml" />
+    <Content Include="Views\Home\EditPermission.cshtml" />
+    <Content Include="Views\Home\NotificationSettings.cshtml" />
+    <Content Include="Views\Home\AddNotificationSettings.cshtml" />
+    <Content Include="Views\Home\EditNotificationSettings.cshtml" />
+    <Content Include="Views\Home\CodingIssueSummary.cshtml" />
+    <Content Include="Views\Home\DQIssueSummary.cshtml" />
+    <Content Include="Views\Home\UrgentMESummary.cshtml" />
+    <Content Include="Views\Home\OtherReferralSummary.cshtml" />
+    <Content Include="Views\Home\FullSJR2Summary.cshtml" />
+    <Content Include="Views\Home\FullSJRSummary.cshtml" />
+    <Content Include="Views\Home\PatientDetailView.cshtml" />
+    <Content Include="Views\Shared\_RegistrationLayout.cshtml" />
+    <Content Include="Views\Home\EditPatient.cshtml" />
+    <Content Include="Views\Shared\_PopopLayout.cshtml" />
+    <Content Include="Views\Home\PatientList.cshtml" />
+    <Content Include="Views\Home\PatientReportList.cshtml" />
+    <Content Include="Views\Home\SJROutcomeView.cshtml" />
+    <Content Include="Views\Home\QualityReviewReport.cshtml" />
+    <Content Include="Views\Home\PatientExtract.cshtml" />
+    <Content Include="Views\Home\COVIDDashboard.cshtml" />
+    <Content Include="Views\Home\COVIDReviewCycle.cshtml" />
+    <Content Include="Views\Home\COVIDPatientDetails.cshtml" />
+    <Content Include="Views\Home\COVIDLevelOfCare.cshtml" />
+    <Content Include="Views\Home\NotAuthorizedCOVID.cshtml" />
+    <Content Include="Views\Home\COVIDTestResults.cshtml" />
+    <Content Include="Views\Home\COVIDBreathing.cshtml" />
+    <Content Include="Views\Home\COVIDDataAssurance.cshtml" />
+    <Content Include="Views\Home\COVIDComms.cshtml" />
+    <Content Include="Views\Home\EditCOVIDTest.cshtml" />
+    <Content Include="Views\Shared\_COVIDDetails.cshtml" />
+    <Content Include="Views\Shared\_PagerControl.cshtml" />
+    <Content Include="Views\Shared\_COVIDPatientDetails.cshtml" />
+    <Content Include="Views\Home\COVIDPatientDashboard.cshtml" />
+    <Content Include="Views\Shared\_MortalityDashboard.cshtml" />
+    <Content Include="Views\Shared\_MortalityPagerControl.cshtml" />
+    <Content Include="Views\Shared\_CommonPagerControl.cshtml" />
+    <Content Include="Views\Shared\_UserList.cshtml" />
+    <Content Include="Views\Shared\_PatientDetails.cshtml" />
+    <Content Include="Views\Shared\_PermissionsList.cshtml" />
+    <Content Include="Views\Shared\_PatientExtract.cshtml" />
+    <Content Include="Views\Home\COVIDExternalComms.cshtml" />
+    <Content Include="Views\Home\COVIDExternalCommsReport.cshtml" />
+    <Content Include="Views\Home\COVIDPatientListing.cshtml" />
+    <Content Include="Views\Shared\_COVIDPatientListing.cshtml" />
+    <Content Include="Views\Shared\_PatientListPagerControl.cshtml" />
+    <Content Include="Views\Home\COVIDBreathingSupportReport.cshtml" />
+    <Content Include="Views\Shared\_BreathingTracker.cshtml" />
+    <Content Include="Views\Shared\_BreathingReportPagerControl.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -908,14 +1057,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NHS.Common\NHS.Common.csproj">
-      <Project>{a44e2abe-d8c8-4a81-859d-5846b3565e2e}</Project>
-      <Name>NHS.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NHS.Data\NHS.Data.csproj">
-      <Project>{c63c7f2d-4fb2-4d55-a56b-428c41098c08}</Project>
-      <Name>NHS.Data</Name>
-    </ProjectReference>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

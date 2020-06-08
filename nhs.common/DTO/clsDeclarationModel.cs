@@ -21,5 +21,7 @@ namespace NHS.Common.DTO
 
         public string DOB { get; set; }
         public string PatientName { get; set; }
+
+        public int SpecialityID { get; set; }
     }
 }

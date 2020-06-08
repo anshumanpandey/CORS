@@ -65,7 +65,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
 
-                                        Primary Diagnosis
+                                        Admitting Primary Diagnosis
                                     </div>
 
 
@@ -83,7 +83,17 @@
 
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-6">
 
+                                        SHMI Diagnosis Code
+                                    </div>
+
+                                    <div class="col-md-6">
+
+                                        <span>@Model.SHMICode</span>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
 
@@ -135,46 +145,244 @@
 
                             </div>
 
-                            <div class="row">
-                                
-                                <br />
-                                <br />
-                                <div class="col-md-6">
-                                    <button type="button" class="btn btn-primary btn-block" id="myBtnDiagnosis">View Diagnoses (@Model.DiagnosisCount)</button>
-                                </div>
-                                <div class="col-md-6">
-                                    <button type="button" class="btn btn-primary btn-block" id="myBtnProcedures">View Procedures (@Model.ProcedureCount)</button>
-                                </div>
-                                <br /><br />
-                                <div class="col-md-4">
-                                    @*<label class="label_part">Coding issue identified?</label>*@
-                                    Coding Issue Identified
-                                </div>
-                                <div class="col-md-8">
-                                    @if (Model.CodingIssueIdentified == true)
+                        <div class="row">
+
+                            <br />
+                            <br />
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-primary btn-block" id="myBtnDiagnosis">View Diagnoses (@Model.DiagnosisCount)</button>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-primary btn-block" id="myBtnProcedures">View Procedures (@Model.ProcedureCount)</button>
+                            </div>
+                            <br /><br />
+                            <div class="col-md-4">
+                                Coding Issue Identified
+                            </div>
+                            @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+                            {
+                                if (Model.CodingReview == 3 || Model.CodingIssueIdentified == true)
+                                {
+                                    if (Model.CRCreatedBy == Convert.ToInt32(Session["LoginUserID"]) || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
                                     {
-                                        <input type="checkbox" checked id="CodingIssueIdentified" name="CodingIssueIdentified"><span> Yes </span>
+                                        <div class="col-md-8">
+                                                @if (Model.CodingIssueIdentified == true)
+                                                {
+                                                    <input type="checkbox" disabled checked id="CodingIssueIdentified" name="CodingIssueIdentified"><span> Yes </span>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" disabled id="CodingIssueIdentified" name="CodingIssueIdentified"><span> Yes </span>
+                                                } 
+                                        </div>
                                     }
                                     else
                                     {
-                                        <input type="checkbox" id="CodingIssueIdentified" name="CodingIssueIdentified"><span> Yes </span>
+                                        <div class="col-md-8">
+                                            @if (Model.CodingIssueIdentified == true)
+                                            {
+                                                <input  disabled type="checkbox" checked id="CodingIssueIdentified" name="CodingIssueIdentified"><span> Yes </span>
+                                            }
+                                            else
+                                            {
+                                                <input disabled type="checkbox" disabled id="CodingIssueIdentified" name="CodingIssueIdentified"><span> Yes </span>
+                                            }
+                                        </div>
                                     }
-                                    @*@Html.CheckBoxFor(model => model.CodingIssueIdentified, new { htmlAttributes = new { @class = "form-control" } })<span> Yes </span>*@
-                                </div>
-                                <br />
-                                <br />
-                                @if (Model.CodingIssueIdentified == true)
-                                {
-                                    <div class="col-md-12" id="dvPatientDetailsCimment" style="display:block;">
-                                        Comments
-                                        @*<textarea rows="5" name="Comments" id="Comments" />*@
-                                    </div>
-                                    <div class="col-md-12" style="display:block;">
-                                        @Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control" })
-                                    </div>
                                 }
                                 else
                                 {
+                                    <div class="col-md-8">
+                                        @if (Model.CodingIssueIdentified == true)
+                                        {
+                                            <input type="checkbox" disabled checked id="CodingIssueIdentified" name="CodingIssueIdentified"><span> Yes </span>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" disabled id="CodingIssueIdentified" name="CodingIssueIdentified"><span> Yes </span>
+                                        }
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                if (Model.CodingReview == 3 || Model.CodingIssueIdentified == true)
+                                {
+                                    if (Model.CRCreatedBy == Convert.ToInt32(Session["LoginUserID"]) || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                                    {
+                                        <div class="col-md-8">
+                                            @if (Model.CodingIssueIdentified == true)
+                                            {
+                                                <input type="checkbox" checked id="CodingIssueIdentified" name="CodingIssueIdentified"><span> Yes </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" id="CodingIssueIdentified" name="CodingIssueIdentified"><span> Yes </span>
+                                            }
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-8">
+                                            @if (Model.CodingIssueIdentified == true)
+                                            {
+                                                <input type="checkbox" checked id="CodingIssueIdentified" name="CodingIssueIdentified"><span> Yes </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" id="CodingIssueIdentified" name="CodingIssueIdentified"><span> Yes </span>
+                                            }
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="col-md-8">
+                                        @if (Model.CodingIssueIdentified == true)
+                                        {
+                                            <input type="checkbox" checked id="CodingIssueIdentified" name="CodingIssueIdentified"><span> Yes </span>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" id="CodingIssueIdentified" name="CodingIssueIdentified"><span> Yes </span>
+                                        }
+                                    </div>
+                                }
+                            }
+                            <br />
+                            <br />
+                           @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+                           {
+                               if (Model.CodingReview == 3 || Model.CodingIssueIdentified == true)
+                               {
+                                   if (Model.CRCreatedBy == Convert.ToInt32(Session["LoginUserID"]) || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                                   {
+                                       if (Model.CodingIssueIdentified == true)
+                                       {
+                                        <div class="col-md-12" id="dvPatientDetailsCimmentlbl" style="display:block;">
+                                            Comments
+                                        </div>
+                                        <div class="col-md-12" style="display:block;" id="dvPatientDetailsCimment">
+                                            @Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control", @readonly="readonly" })
+                                        </div>
+                                       }
+                                       else
+                                       {
+                                        <div class="col-md-12" id="dvPatientDetailsCimmentlbl" style="display:none;">
+                                            Comments
+                                        </div>
+                                        <div class="col-md-12" id="dvPatientDetailsCimment" style="display:none;">
+                                            @Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control", @readonly = "readonly" })
+                                        </div>
+                                       }
+                                   }
+                                   else
+                                   {
+                                       if (Model.CodingIssueIdentified == true)
+                                       {
+                                        <div class="col-md-12" id="dvPatientDetailsCimmentlbl" style="display:block;">
+                                            Comments
+                                        </div>
+                                        <div class="col-md-12" style="display:block;" id="dvPatientDetailsCimment">
+                                            @Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control", @readonly = true })
+                                        </div>
+                                       }
+                                       else
+                                       {
+                                        <div class="col-md-12" id="dvPatientDetailsCimmentlbl" style="display:none;">
+                                            Comments
+                                        </div>
+                                        <div class="col-md-12" id="dvPatientDetailsCimment" style="display:none;">
+                                            @Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control", @readonly = "readonly" })
+                                        </div>
+                                       }
+                                   }
+                               }
+                               else
+                               {
+                                   if (Model.CodingIssueIdentified == true)
+                                   {
+                                <div class="col-md-12" id="dvPatientDetailsCimmentlbl" style="display:block;">
+                                    Comments
+                                    @*<textarea rows="5" name="Comments" id="Comments" />*@
+                                </div>
+                                    <div class="col-md-12" style="display:block;" id="dvPatientDetailsCimment">
+                                        @Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control", @readonly = "readonly" })
+                                    </div>
+                                   }
+                                   else
+                                   {
+                                <div class="col-md-12" id="dvPatientDetailsCimmentlbl" style="display:none;">
+                                    Comments
+                                    @*<textarea rows="5" name="Comments" id="Comments" />*@
+                                </div>
+                                    <div class="col-md-12" id="dvPatientDetailsCimment" style="display:none;">
+                                        @Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control", @readonly = "readonly" })
+                                    </div>
+                                   }
+                               }
+                           }
+                           else
+                           {
+                               if (Model.CodingReview == 3 || Model.CodingIssueIdentified == true)
+                               {
+                                   if (Model.CRCreatedBy == Convert.ToInt32(Session["LoginUserID"]) || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                                   {
+                                       if (Model.CodingIssueIdentified == true)
+                                       {
+                                        <div class="col-md-12" id="dvPatientDetailsCimmentlbl" style="display:block;">
+                                            Comments
+                                        </div>
+                                        <div class="col-md-12" style="display:block;" id="dvPatientDetailsCimment">
+                                            @Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control" })
+                                        </div>
+                                       }
+                                       else
+                                       {
+                                        <div class="col-md-12" id="dvPatientDetailsCimmentlbl" style="display:none;">
+                                            Comments
+                                        </div>
+                                        <div class="col-md-12" id="dvPatientDetailsCimment" style="display:none;">
+                                            @Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control" })
+                                        </div>
+                                       }
+                                   }
+                                   else
+                                   {
+                                       if (Model.CodingIssueIdentified == true)
+                                       {
+                                        <div class="col-md-12" id="dvPatientDetailsCimmentlbl" style="display:block;">
+                                            Comments
+                                        </div>
+                                        <div class="col-md-12" style="display:block;" id="dvPatientDetailsCimment">
+                                            @Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control" })
+                                        </div>
+                                       }
+                                       else
+                                       {
+                                        <div class="col-md-12" id="dvPatientDetailsCimmentlbl" style="display:none;">
+                                            Comments
+                                        </div>
+                                        <div class="col-md-12" id="dvPatientDetailsCimment" style="display:none;">
+                                            @Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control" })
+                                        </div>
+                                       }
+                                   }
+                               }
+                               else
+                               {
+                                   if (Model.CodingIssueIdentified == true)
+                                   {
+                                    <div class="col-md-12" id="dvPatientDetailsCimmentlbl" style="display:block;">
+                                        Comments
+                                        @*<textarea rows="5" name="Comments" id="Comments" />*@
+                                    </div>
+                                    <div class="col-md-12" style="display:block;" id="dvPatientDetailsCimment">
+                                        @Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control" })
+                                    </div>
+                                   }
+                                   else
+                                   {
                                     <div class="col-md-12" id="dvPatientDetailsCimmentlbl" style="display:none;">
                                         Comments
                                         @*<textarea rows="5" name="Comments" id="Comments" />*@
@@ -182,11 +390,58 @@
                                     <div class="col-md-12" id="dvPatientDetailsCimment" style="display:none;">
                                         @Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control" })
                                     </div>
+                                   }
+                               }
+                           }
+                        </div>
+                        @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+                        {
+                            if (Model.CodingReview == 3 || Model.CodingIssueIdentified == true)
+                            {
+                                if (Model.CRCreatedBy == Convert.ToInt32(Session["LoginUserID"]) || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                                {
+                                <div class="col-md-12" align="right">
+                                    <button id="activate-step-2" type="submit" name="BtnFinish" class="btn btn-primary btn-lg">Save</button>
+                                </div>
                                 }
-                            </div>
+                                else
+                                {
+                                <div class="col-md-12" align="right">
+                                    <button disabled id="activate-step-2" type="submit" name="BtnFinish" class="btn btn-primary btn-lg">Save</button>
+                                </div>
+                                }
+                            }
+                            else
+                            {
                             <div class="col-md-12" align="right">
                                 <button id="activate-step-2" type="submit" name="BtnFinish" class="btn btn-primary btn-lg">Save</button>
                             </div>
+                            }
+                        }
+                        else
+                        {
+                            if (Model.CodingReview == 3 || Model.CodingIssueIdentified == true)
+                            {
+                                if (Model.CRCreatedBy == Convert.ToInt32(Session["LoginUserID"]) || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                                {
+                                    <div class="col-md-12" align="right">
+                                        <button id="activate-step-2" type="submit" name="BtnFinish" class="btn btn-primary btn-lg">Save</button>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-md-12" align="right">
+                                        <button id="activate-step-2" type="submit" name="BtnFinish" class="btn btn-primary btn-lg">Save</button>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <div class="col-md-12" align="right">
+                                    <button id="activate-step-2" type="submit" name="BtnFinish" class="btn btn-primary btn-lg">Save</button>
+                                </div>
+                            }
+                        }
                         </div>
                 </div>
             </div>

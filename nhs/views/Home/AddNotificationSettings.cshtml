@@ -1,0 +1,69 @@
+﻿@model NHS.Common.NotificationSettings
+@{
+    ViewBag.Title = "Add Permission";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br /><br /><br /><br />
+<div class="container">
+    <form action="@Url.Action("CreateNotificationSettings", "Home" )" id="login-form" class="sky-form" method="post" novalidate="novalidate">
+        <div class="lable_title">
+            <h2>Add Notification Settings</h2><span style="color:red"><i>&nbsp;&nbsp;* marked fields are mandatory fields.</i></span><br />
+        </div>
+        <fieldset>
+            <section>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span>Notification Trigger</span>&nbsp;&nbsp;<span style="color:red;font-size:20px">*</span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="row_bar checkbox-row">
+                            <select class="form-control" id="ddlNotification" name="ddlNotification">
+                                <option value="-1" selected="">Please Select</option>
+                                @foreach (var item in ViewBag.NotificationTriggerDDM)
+                                {
+                                    <option value="@item.ID">@item.NotificationTrigger</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span>Role Name</span>&nbsp;&nbsp;<span style="color:red;font-size:20px">*</span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="row_bar checkbox-row">
+                            <select class="form-control" id="ddlRole" name="ddlRole">
+                                <option value="-1" selected="">Please Select</option>
+                                @foreach (var item in ViewBag.RoleDDM)
+                                {
+                                    <option value="@item.ID">@item.RoleName</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </fieldset>
+        <div class="col-md-12" align="center">
+            <button id="activate-step-2" type="submit" name="BtnFinish" class="btn btn-primary btn-lg">Submit</button>
+            <button id="activate-step-3" type="button" name="BtnCancel" class="btn btn-primary btn-lg" onclick="location.href='@Url.Action("NotificationSettings","Home")'">Cancel</button>
+        </div>
+    </form>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#activate-step-2").click(function () {
+            if ($.trim($("#ddlNotification").val()) == "-1") {
+                alert("Notification Trigger is a mandatory field.");
+                return false;
+            }
+            if ($.trim($("#ddlRole").val()) == "-1") {
+                alert("Role Name is a mandatory field.");
+                return false;
+            }
+        });
+    });
+</script>

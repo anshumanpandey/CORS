@@ -1,0 +1,130 @@
+﻿@model NHS.Common.Consultant
+@{
+    ViewBag.Title = "Add Clinician";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br /><br /><br /><br />
+<div class="container">
+    <form action="@Url.Action("CreateConsultant", "Home" )" id="login-form" class="sky-form" method="post" novalidate="novalidate">
+        <div class="lable_title">
+            <h2>Add Clinician</h2><span style="color:red"><i>&nbsp;&nbsp;* marked fields are mandatory fields.</i></span><br />
+        </div>
+        <fieldset>
+            <section>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span>Email ID</span>&nbsp;&nbsp;<span style="color:red;font-size:20px">*</span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="row_bar checkbox-row">
+                            @Html.EditorFor(model => model.EmailID, new { htmlAttributes = new { @class = "form-control", @id = "EmailID" } })
+                            <span class="custom-errorcolor" id="spnEmailExists" style="display:none; color:#ee9393; font-size:14px;">Email already exists</span>
+                            <img src="@Url.Content("~/assets/img/AjaxLoader.gif")" class="control-loader" id="email-loader" style="display:none;right: 5px;bottom: 5px;width: 20px;position: absolute;" />
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span>First Name</span>&nbsp;&nbsp;<span style="color:red;font-size:20px">*</span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="row_bar checkbox-row">
+                            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @id="FirstName" } })
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span>Last Name</span>&nbsp;&nbsp;<span style="color:red;font-size:20px">*</span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="row_bar checkbox-row">
+                            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @id = "LastName" } })
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span>GMC Code (If Applicable)</span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="row_bar checkbox-row">
+                            @Html.EditorFor(model => model.GMCCode, new { htmlAttributes = new { @class = "form-control", @id = "GMCCode" } })
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+        </fieldset>
+        <div class="col-md-12" align="center">
+            <button id="activate-step-2" type="submit" name="BtnFinish" class="btn btn-primary btn-lg">Submit</button>
+            <button id="activate-step-3" type="button" name="BtnCancel" class="btn btn-primary btn-lg" onclick="location.href='@Url.Action("Consultants","Home")'">Cancel</button>
+        </div>
+    </form>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#activate-step-2").click(function () {
+            if ($.trim($("#FirstName").val()) == "") {
+                alert("First Name is a mandatory field.");
+                return false;
+
+            }
+        });
+        $("#activate-step-2").click(function () {
+            if ($.trim($("#LastName").val()) == "") {
+                alert("Last Name is a mandatory field.");
+                return false;
+
+            }
+        });
+        $("#activate-step-2").click(function () {
+            if ($.trim($("#EmailID").val()) == "") {
+                alert("Email ID is a mandatory field.");
+                return false;
+
+            }
+        });
+    });
+    var isValidEmail;
+    $('#EmailID').change(function () {
+        //debugger;
+        isValidEmail = false;
+        var Email = $("#EmailID").val();
+        //alert(Email);
+        if (Email != "") {
+
+            $("#email-loader").show();
+            var dataActionUrl = '@Url.Action("IsClinicianEmailExists","Home")';
+
+            $.ajax({
+                url: dataActionUrl,
+                type: 'POST',
+                data: { Email: Email },
+                success: function (data) {
+                    if (data == "SUCCESS") {
+                        $("#signUpEmail-wrapper").removeClass("has-error").addClass("has-success");
+                        $("#spnEmailExists").hide();
+                        isValidEmail = true;
+                        $("#email-loader").hide();
+                    }
+                    else {
+                        $("#signUpEmail-wrapper").addClass("has-success").removeClass("has-error");
+                        $("#spnEmailExists").show();
+                        isValidEmail = false;
+                        $("#email-loader").hide();
+                    }
+                },
+                error: function (data) {
+                    $("#email-loader").hide();
+                }
+            });
+        }
+    });
+</script>

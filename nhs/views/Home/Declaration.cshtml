@@ -88,28 +88,95 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="row_bar checkbox-row">
-                                    @if (Model.MedTriage == 3)
+                                    @if (Convert.ToBoolean(ViewBag.IsReadOnly))
                                     {
-                                        if (Model.Declaration == true)
+                                    if (Model.MedTriage == 3)
+                                    {
+
+                                            if (Model.Declaration == true)
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="Declaration" checked name="Declaration"><span>I confirm that I have carried out an independent and proportionate scrutiny of this death in a way that complies with the relevant standards and procedures.</span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="Declaration" checked name="Declaration"><span>I confirm that I have carried out an independent and proportionate scrutiny of this death in a way that complies with the relevant standards and procedures.</span>
+                                            }
+                                        }
+                                        else if (Model.CreatedBy == Convert.ToString(Session["UserName"]) || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
                                         {
-                                            <input type="checkbox" disabled="disabled" id="Declaration" checked name="Declaration"><span>I confirm that I have carried out an independent and proportionate scrutiny of this death in a way that complies with the relevant standards and procedures.</span>
+                                            if (Model.Declaration == true)
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="Declaration" checked name="Declaration"><span>I confirm that I have carried out an independent and proportionate scrutiny of this death in a way that complies with the relevant standards and procedures.</span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="Declaration" checked name="Declaration"><span>I confirm that I have carried out an independent and proportionate scrutiny of this death in a way that complies with the relevant standards and procedures.</span>
+                                            }
                                         }
                                         else
                                         {
-                                            <input type="checkbox" disabled="disabled" id="Declaration" checked name="Declaration"><span>I confirm that I have carried out an independent and proportionate scrutiny of this death in a way that complies with the relevant standards and procedures.</span>
+                                            if (Model.Declaration == true)
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="Declaration" checked name="Declaration"><span>I confirm that I have carried out an independent and proportionate scrutiny of this death in a way that complies with the relevant standards and procedures.</span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="Declaration" checked name="Declaration"><span>I confirm that I have carried out an independent and proportionate scrutiny of this death in a way that complies with the relevant standards and procedures.</span>
+                                            }
                                         }
                                     }
                                     else
                                     {
-                                        if (Model.Declaration == true)
+                                        if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
                                         {
-                                            <input type="checkbox" id="Declaration" checked name="Declaration"><span>I confirm that I have carried out an independent and proportionate scrutiny of this death in a way that complies with the relevant standards and procedures.</span>
+                                            if (Model.Declaration == true)
+                                            {
+                                                if (Model.Declaration == true)
+                                                {
+                                                    <input type="checkbox" disabled id="Declaration" checked name="Declaration"><span>I confirm that I have carried out an independent and proportionate scrutiny of this death in a way that complies with the relevant standards and procedures.</span>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" disabled id="Declaration" name="Declaration"><span>I confirm that I have carried out an independent and proportionate scrutiny of this death in a way that complies with the relevant standards and procedures.</span>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (Model.Declaration == true)
+                                                {
+                                                <input type="checkbox" id="Declaration" checked name="Declaration"><span>I confirm that I have carried out an independent and proportionate scrutiny of this death in a way that complies with the relevant standards and procedures.</span>
+                                                }
+                                                else
+                                                {
+                                                <input type="checkbox" id="Declaration" name="Declaration"><span>I confirm that I have carried out an independent and proportionate scrutiny of this death in a way that complies with the relevant standards and procedures.</span>
+                                                }
+                                            }
                                         }
+                                        else if(Model.MedTriage == 3)
+                                        {
+
+                                            if (Model.Declaration == true)
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="Declaration" checked name="Declaration"><span>I confirm that I have carried out an independent and proportionate scrutiny of this death in a way that complies with the relevant standards and procedures.</span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="Declaration" checked name="Declaration"><span>I confirm that I have carried out an independent and proportionate scrutiny of this death in a way that complies with the relevant standards and procedures.</span>
+                                            }
+                                                }
+                                         
                                         else
                                         {
-                                            <input type="checkbox" id="Declaration" name="Declaration"><span>I confirm that I have carried out an independent and proportionate scrutiny of this death in a way that complies with the relevant standards and procedures.</span>
-                                        }
-                                    }
+                                                    if (Model.Declaration == true)
+                                                    {
+                                                <input type="checkbox" id="Declaration" checked name="Declaration"><span>I confirm that I have carried out an independent and proportionate scrutiny of this death in a way that complies with the relevant standards and procedures.</span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" id="Declaration" name="Declaration"><span>I confirm that I have carried out an independent and proportionate scrutiny of this death in a way that complies with the relevant standards and procedures.</span>
+                                            }
+                                                    }
+                                                }
                                 </div>
                             </div>
                             <div class="col-md-8">
@@ -194,6 +261,29 @@
                                                 }
                                             </div>
                                         </div>
+                                        <div class="col-md-6" id="dvSpeciality" style="display:none">
+                                            <div class="row_bar">
+                                                <span><b><i>Reviewer Speciality</i></b></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" id="dvddlSpeciality" style="display:none">
+                                            <div class="row_bar checkbox-row">
+                                                <select class="form-control" id="ddlSpeciality" disabled name="ddlSpeciality">
+                                                    <option value="" selected="">Please Select</option>
+                                                    @foreach (var item in ViewBag.SpecialityDDM)
+                                                    {
+                                                        if (Model.SpecialityID == item.SpecialityID)
+                                                        {
+                                                            <option selected value="@item.SpecialityID">@item.SpecialityName</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.SpecialityID">@item.SpecialityName</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
                                         <div class="col-md-6" id="dvOfficeLabel" style="display:block">
                                             <div class="row_bar">
                                                 <span><b><i>Office</i></b></span>
@@ -248,8 +338,30 @@
                     </div>
                 </div>
                 <div class="pull-right">
-                    <button id="activate-prev-1" name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
-                    <button id="activate-step-3" name="BtnSave" class="btn btn-primary btn-lg">Finish</button>
+                    @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+                    {
+                    <button id="activate-prev-1" disabled name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
+                        if (Model.Declaration == true)
+                        {
+                        <button disabled="disabled" id="activate-step-3" name="BtnSave" class="btn btn-primary btn-lg">Finish</button>
+                        }
+                        else
+                        {
+                        <button id="activate-step-3" disabled name="BtnSave" class="btn btn-primary btn-lg">Finish</button>
+                        }
+                    }
+                    else
+                    {
+                        <button id="activate-prev-1" name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
+                        if (Model.Declaration == true)
+                        {
+                            <button id="activate-step-3" disabled name="BtnSave" class="btn btn-primary btn-lg">Finish</button>
+                        }
+                        else
+                        {
+                            <button id="activate-step-3" name="BtnSave" class="btn btn-primary btn-lg">Finish</button>
+                        }
+                    }
                 </div>
             @*}*@
         </div>
@@ -312,12 +424,12 @@
     $("#activate-step-3").on("click", function ()
     {
         var declaration = $("#Declaration").is(":checked");
-        
+        var specialityid = 0;
         $.ajax({
             type: "POST",
             url: "@Url.Action("SaveDeclaration", "Home")",
           //  contentType: "application/json; charset=utf-8",
-            data: { Isdec: declaration, id: @Model.Patient_ID },
+            data: { Isdec: declaration, id: @Model.Patient_ID, specialityid: specialityid },
 
             success: function (result) {
                 if (result == false) {
@@ -361,6 +473,8 @@ window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.
                     $("#dvOfficeSpan").css("display", "block");
                     $("#dvDateLabel").css("display", "block");
                     $("#dvDateSpan").css("display", "block");
+                    //$("#dvddlSpeciality").css("display", "block");
+                    //$("#dvSpeciality").css("display", "block");
                 }
                 else {
                     $("#dvNameLabel").css("display", "none");
@@ -369,6 +483,8 @@ window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.
                     $("#dvOfficeSpan").css("display", "none");
                     $("#dvDateLabel").css("display", "none");
                     $("#dvDateSpan").css("display", "none");
+                    //$("#dvddlSpeciality").css("display", "none");
+                    //$("#dvSpeciality").css("display", "none");
                 }
             });
         });

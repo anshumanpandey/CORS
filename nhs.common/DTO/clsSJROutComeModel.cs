@@ -30,12 +30,24 @@ namespace NHS.Common
         public string Comments { get; set; }
         public string SIRIComments { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreateDate { get; set; }
+        public string CreateDate { get; set; }
         public string UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
         public string PatientId { get; set; }
         public string DOB { get; set; }
         public string PatientName { get; set; }
+
+        public int SJROutcome { get; set; }
+
+        public int SpecialityID { get; set; }
+
+        public bool ReviewCompleted { get; set; }
+
+        public string DateSJR1Requested { get; set; }
+
+        public string SJR1RequestSentTo { get; set; }
+
+        public bool RandomSampleReview { get; set; }
     }
 
     public class clsMortalitySurveillance

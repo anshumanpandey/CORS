@@ -75,6 +75,24 @@ namespace NHS.Common
         public string Patient_Id { get; set; }
         public string DOB { get; set; }
         public string PatientName { get; set; }
+
+        public string UserRole { get; set; }
+
+        public bool MEOReviewCompleted { get; set; }
+
+        public string MEOReviewCreatedBy { get; set; }
+
+        public string MEOReviewCreatedDate { get; set; }
+
+        public int MEOSpecialityID { get; set; }
+
+        public bool IsCremated { get; set; }
+
+        public bool IsBuried { get; set; }
+
+        public bool IsBypassedMESystem { get; set; }
+
+        public int FuneralArrangement { get; set; }
     }
     public class ReasonGroups
     {

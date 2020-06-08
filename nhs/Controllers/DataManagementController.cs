@@ -22,7 +22,7 @@ namespace NHS.Controllers
             List<clsDataManagement> datamanagement = new List<clsDataManagement>();
             string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
             DBEngine dBEngine = new DBEngine(connectionString);
-            datamanagement = dBEngine.GetDataSets();
+            datamanagement = dBEngine.GetDataSets(Convert.ToInt32(Session["LoginUserID"]));
             return View(datamanagement);
         }
 

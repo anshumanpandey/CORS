@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+    <title>@ViewBag.Title</title>
+    @*@Styles.Render("~/css/css")*@
+    @*<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">*@
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    @*<link href="~/css/jquery-ui.min.css" rel="stylesheet" />*@
+    <link href="~/css/bootstrap.min.css?v=1.1" rel="stylesheet" />
+    <link href="~/css/font-awesome.min.css?v=1.1" rel="stylesheet" />
+    <link href="~/css/responsive.css?v=1.1" rel="stylesheet" />
+    <link href="~/css/style.css?v=1.1" rel="stylesheet" />
+
+
+    @*<link href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css" />*@
+    <link href="~/css/datatables.min.css" rel="stylesheet" />
+    <link href="~/css/responsive.bootstrap.min.css" rel="stylesheet" />
+    @*<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css?v=1.1" />*@
+    <style>
+        .navbar-nav.side-nav ul .sub-menu li:before, .navbar-nav.side-nav li .sub-menu li:before {
+            font-family: 'Font Awesome 5 Free';
+            content: none !important;
+        }
+
+        .navbar-nav.side-nav ul .sub-menu li, .navbar-nav.side-nav li .sub-menu li {
+            background-color: #a9d7cc;
+            border-bottom: 1px solid #bbbbbb;
+        }
+
+        a.ex3:hover, a.ex3:active {
+            background:;
+        }
+    </style>
+    <script src="~/Scripts/js/jquery-1.12.4.min.js"></script>
+    @*<script src="~/Scripts/jquery-3.3.1.min.js"></script>*@
+    <script src="~/Scripts/js/jquery-ui.min.js"></script>
+    <script src="~/Scripts/js/bootstrap.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="~/Scripts/js/jquery.dataTables.min.js?v=1.1"></script>
+    <script type="text/javascript" charset="utf8" src="~/Scripts/js/dataTables.responsive.min.js?v=1.1"></script>
+    @*<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>*@
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <script src="~/Scripts/js/respond-1.4.2.min.js"></script>
+    <script src="~/Scripts/js/custom.js?v=1.1"></script>
+    <script src="~/Scripts/js/html2canvas.js"></script>
+    <script src="~/Scripts/js/jspdf.min.js"></script>
+    <script src="~/Scripts/js/jspdf.plugin.autotable.min.js"></script>
+    <script src="~/Scripts/js/html2pdf.js"></script>
+    <!-- jQuery -->
+    @*<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>*@
+</head>
+
+<body style="background-color:#ffffff">
+    <!--== Start loader Section ==-->
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+    </div>
+
+    <!--== end loader Section ==-->
+    <!--== Start header Section ==-->
+    
+    <br /><br />
+    <!--== end header Section ==-->
+    @*<div class="main-container">*@
+        @RenderBody()
+    @*</div>*@
+    @RenderSection("scripts", required: false)    
+</body>
+
+</html>

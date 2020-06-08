@@ -1,0 +1,630 @@
+﻿@model NHS.Common.NoKFeedback
+@{
+    ViewBag.Title = "NoK Feedback";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<br />
+
+<div class="container">
+  <div class="row form-group">
+        <div class="col-xs-12 col-lg-12">
+            <div class="row" align="right">
+                <div class="col-md-12">
+                    <input type="image" src="~/images/Delete.png" width="30" height="30" alt="Submit" id="btnClose1" title="Close" />
+                </div>
+            </div>
+            <ul class="nav nav-pills nav-justified thumbnail setup-panel">
+                <li class="disabled">
+                    <a href="@Url.Action("SJROutcome","Home", new { id = Model.Patient_ID})">
+                        <h4 class="list-group-item-heading">
+                            SJR Outcome
+                        </h4>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="@Url.Action("NoK","Home", new { id = Model.Patient_ID})">
+                        <h4 class="list-group-item-heading">
+                            NoK Feedback
+                        </h4>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+	
+<br/>	
+<br />	
+
+@using (Html.BeginForm("NoKFeedback", "Home", FormMethod.Post, new { @id = Model.Patient_ID }))
+{
+<div class="row">
+
+<div class="col-md-3">
+<div class="row_bar">
+NoK concerns about death? 
+</div>
+</div>
+<div class="col-md-3">
+<div class="row_bar checkbox-row">
+@if (Convert.ToBoolean(ViewBag.IsReadOnly))
+{
+    if (Model.NoKConcerns == true)
+    {
+        <input type="radio" id="NoKConcerns" checked name="NoKConcerns" value="Yes" disabled><span> Yes </span>
+        <input type="radio" id="NoKConcerns" name="NoKConcerns" value="No" disabled><span> No </span>
+    }
+    else
+    {
+        <input type="radio" id="NoKConcerns" name="NoKConcerns" value="Yes" disabled><span> Yes </span>
+        <input type="radio" id="NoKConcerns" checked name="NoKConcerns" value="No" disabled><span> No </span>
+    }
+}
+else
+{
+        if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+        {
+            if (Model.NoKConcerns == true)
+            {
+                <input type="radio" id="NoKConcerns" disabled checked name="NoKConcerns" value="Yes"><span> Yes </span>
+                <input type="radio" id="NoKConcerns" disabled name="NoKConcerns" value="No"><span> No </span>
+            }
+            else
+            {
+                <input type="radio" id="NoKConcerns" disabled name="NoKConcerns" value="Yes"><span> Yes </span>
+                <input type="radio" id="NoKConcerns" disabled checked name="NoKConcerns" value="No"><span> No </span>
+            }
+        }
+        else if (Model.NokCompleted)
+        {
+            if (Model.NoKConcerns == true)
+            {
+                <input type="radio" id="NoKConcerns" checked name="NoKConcerns" value="Yes" disabled><span> Yes </span>
+                    <input type="radio" id="NoKConcerns" name="NoKConcerns" value="No" disabled><span> No </span>
+            }
+            else
+            {
+                <input type="radio" id="NoKConcerns" name="NoKConcerns" value="Yes" disabled><span> Yes </span>
+                <input type="radio" id="NoKConcerns" checked name="NoKConcerns" value="No" disabled><span> No </span>
+            }
+        }
+        else
+        {
+            if (Model.NoKConcerns == true)
+            {
+                <input type="radio" id="NoKConcerns" disabled checked name="NoKConcerns" value="Yes"><span> Yes </span>
+                    <input type="radio" id="NoKConcerns" disabled name="NoKConcerns" value="No"><span> No </span>
+            }
+            else
+            {
+                <input type="radio" id="NoKConcerns" disabled name="NoKConcerns" value="Yes"><span> Yes </span>
+                    <input type="radio" id="NoKConcerns" disabled checked name="NoKConcerns" value="No"><span> No </span>
+            }
+        }
+}
+
+</div>
+</div>
+    <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5 dstable3" style="padding-bottom: 10px !important;">
+        <table style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;" width="100%">
+            <tbody>
+                <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;" width="40%"><b>Patient ID</b></td>
+                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.PatientID</td>
+                </tr>
+                <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Patient Name</b></td>
+                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.PatientName</td>
+
+                </tr>
+                <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>DOB</b></td>
+                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.DOB</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+
+
+<div class="col-md-4">
+<div class="row_bar">
+Comments
+</div>
+</div>
+<div class="col-md-8">
+<div class="row_bar checkbox-row">
+@if (Convert.ToBoolean(ViewBag.IsReadOnly))
+{
+    @Html.TextAreaFor(model => model.NokConcernComments, 10, 150, new { @class = "form-control", @readonly = "readonly", @disabled="disabled" })
+}
+else
+{
+    if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+    {
+        @Html.TextAreaFor(model => model.NokConcernComments, 10, 150, new { @class = "form-control" })
+    }
+    else if (Model.NokCompleted)
+    {
+        @Html.TextAreaFor(model => model.NokConcernComments, 10, 150, new { @class = "form-control", @readonly = "readonly", disabled = "disabled" })
+    }
+    else
+    {
+        @Html.TextAreaFor(model => model.NokConcernComments, 10, 150, new { @class = "form-control" })
+    }
+}
+</div>
+</div>	
+
+
+<div id="msglabel" class="col-md-4">
+<span>Date initial letter sent</span>
+</div>
+    @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+    {
+    <div class="col-md-8">
+        <input class="form-control datepicker" disabled readonly="readonly" type="text" id="InitialLetterDate" value="@Model.InitialLetterDate" name="InitialLetterDate" placeholder="Select Date">
+    </div>
+    }
+    else
+    {
+        if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+        {
+            <div class="col-md-8">
+                <input class="form-control datepicker" readonly="readonly" type="text" id="InitialLetterDate" value="@Model.InitialLetterDate" name="InitialLetterDate" placeholder="Select Date">
+            </div>
+        }
+        else if (Model.NokCompleted)
+        {
+            <div class="col-md-8">
+                <input class="form-control datepicker" disabled readonly="readonly" type="text" id="InitialLetterDate" value="@Model.InitialLetterDate" name="InitialLetterDate" placeholder="Select Date">
+            </div>
+        }
+        else
+        {
+            <div class="col-md-8">
+                <input class="form-control datepicker" readonly="readonly" type="text" id="InitialLetterDate" value="@Model.InitialLetterDate" name="InitialLetterDate" placeholder="Select Date">
+            </div>
+        }
+    }
+
+
+<div class="col-md-4">
+<div class="row_bar">
+SJR Due Date
+</div>
+</div>
+    <div class="col-md-8">
+        <input class="form-control datepicker" readonly="readonly" type="text" id="SJRDueDate" value="@Model.SJRDueDate" name="SJRDueDate" disabled placeholder="Select Date">
+    </div>	
+
+
+
+<div id="msglabel" class="col-md-4">
+<span>Date SJR 1 Completed </span>
+</div>
+    <div class="col-md-8">
+        <input class="form-control datepicker" readonly="readonly" type="text" id="SJR1CompletedDate" value="@Model.SJR1CompletedDate" name="SJR1CompletedDate" disabled placeholder="Select Date">
+    </div>	
+
+    <div id="msglabel" class="col-md-4">
+        <span>Holding letter sent to NoK </span>
+    </div>
+
+@if (Convert.ToBoolean(ViewBag.IsReadOnly))
+{
+    <div class="col-md-8">
+        <input class="form-control datepicker" disabled readonly="readonly" type="text" id="HoldingLetterDate" value="@Model.HoldingLetterDate" name="HoldingLetterDate" placeholder="Select Date">
+    </div>
+}
+else
+{
+    if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+    {
+        <div class="col-md-8">
+            <input class="form-control datepicker" readonly="readonly" type="text" id="HoldingLetterDate" value="@Model.HoldingLetterDate" name="HoldingLetterDate" placeholder="Select Date">
+        </div>
+    }
+    else if (Model.NokCompleted)
+    {
+        <div class="col-md-8">
+            <input class="form-control datepicker" disabled readonly="readonly" type="text" id="HoldingLetterDate" value="@Model.HoldingLetterDate" name="HoldingLetterDate" placeholder="Select Date">
+        </div>
+    }
+    else
+    {
+        <div class="col-md-8">
+            <input class="form-control datepicker" readonly="readonly" type="text" id="HoldingLetterDate" value="@Model.HoldingLetterDate" name="HoldingLetterDate" placeholder="Select Date">
+        </div>
+    }
+}
+<div class="col-md-4">
+<div class="row_bar">
+Comments
+</div>
+</div>
+<div class="col-md-8">
+<div class="row_bar checkbox-row">
+@if (Convert.ToBoolean(ViewBag.IsReadOnly))
+{
+    @Html.TextAreaFor(model => model.HoldingLetterComments, 10, 150, new { @class = "form-control", @readonly="readonly", disabled = "disabled" })
+}
+else
+{
+    if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+    {
+        @Html.TextAreaFor(model => model.HoldingLetterComments, 10, 150, new { @class = "form-control" })
+    }
+    else if (Model.NokCompleted)
+    {
+        @Html.TextAreaFor(model => model.HoldingLetterComments, 10, 150, new { @class = "form-control", @readonly = "readonly", disabled = "disabled" })
+    }
+    else
+    {
+        @Html.TextAreaFor(model => model.HoldingLetterComments, 10, 150, new { @class = "form-control" })
+    }
+}
+</div>
+</div>
+
+
+<div class="col-md-4">
+<div class="row_bar">
+Suboptimal care identified 
+</div>
+</div>
+<div class="col-md-8">
+<div class="row_bar checkbox-row">
+@if (Convert.ToBoolean(ViewBag.IsReadOnly))
+{
+    if (Model.SuboptimalCareIdentified == true)
+    {
+        <input type="radio" disabled id="SuboptimalCareIdentified" checked name="SuboptimalCareIdentified" value="true"><span> Yes </span>
+        <input type="radio" disabled id="SuboptimalCareIdentified" name="SuboptimalCareIdentified" value="false"><span> No </span>
+    }
+    else
+    {
+        <input type="radio" disabled id="SuboptimalCareIdentified" name="SuboptimalCareIdentified" value="true"><span> Yes </span>
+        <input type="radio" disabled id="SuboptimalCareIdentified" checked name="SuboptimalCareIdentified" value="false"><span> No </span>
+    }
+}
+else
+{
+    if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+    {
+        if (Model.SuboptimalCareIdentified == true)
+        {
+            <input type="radio" id="SuboptimalCareIdentified" checked name="SuboptimalCareIdentified" value="true"><span> Yes </span>
+            <input type="radio" id="SuboptimalCareIdentified" name="SuboptimalCareIdentified" value="false"><span> No </span>
+        }
+        else
+        {
+            <input type="radio" id="SuboptimalCareIdentified" name="SuboptimalCareIdentified" value="true"><span> Yes </span>
+            <input type="radio" id="SuboptimalCareIdentified" checked name="SuboptimalCareIdentified" value="false"><span> No </span>
+        }
+    }
+    else if (Model.NokCompleted)
+    {
+        if (Model.SuboptimalCareIdentified == true)
+        {
+            <input type="radio" id="SuboptimalCareIdentified" disabled checked name="SuboptimalCareIdentified" value="true"><span> Yes </span>
+            <input type="radio" id="SuboptimalCareIdentified" disabled name="SuboptimalCareIdentified" value="false"><span> No </span>
+        }
+        else
+        {
+            <input type="radio" id="SuboptimalCareIdentified" disabled name="SuboptimalCareIdentified" value="true"><span> Yes </span>
+            <input type="radio" id="SuboptimalCareIdentified" disabled checked name="SuboptimalCareIdentified" value="false"><span> No </span>
+        }
+    }
+    else
+    {
+        if (Model.SuboptimalCareIdentified == true)
+        {
+            <input type="radio" id="SuboptimalCareIdentified" checked name="SuboptimalCareIdentified" value="true"><span> Yes </span>
+            <input type="radio" id="SuboptimalCareIdentified" name="SuboptimalCareIdentified" value="false"><span> No </span>
+        }
+        else
+        {
+            <input type="radio" id="SuboptimalCareIdentified" name="SuboptimalCareIdentified" value="true"><span> Yes </span>
+            <input type="radio" id="SuboptimalCareIdentified" checked name="SuboptimalCareIdentified" value="false"><span> No </span>
+        }
+    }
+}
+</div>
+</div>
+<div id="msglabel" class="col-md-4">
+<span>Follow up phone call complete </span>
+</div>
+@if (Convert.ToBoolean(ViewBag.IsReadOnly))
+{
+    <div class="col-md-8">
+        <input class="form-control datepicker" disabled readonly="readonly" type="text" id="FollowUpCallDate" value="@Model.FollowUpCallDate" name="FollowUpCallDate" placeholder="Select Date">
+    </div>
+}
+else
+{
+    if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+    {
+        <div class="col-md-8">
+            <input class="form-control datepicker" readonly="readonly" type="text" id="FollowUpCallDate" value="@Model.FollowUpCallDate" name="FollowUpCallDate" placeholder="Select Date">
+        </div>
+    }
+    else if (Model.NokCompleted)
+    {
+        <div class="col-md-8">
+            <input class="form-control datepicker" disabled readonly="readonly" type="text" id="FollowUpCallDate" value="@Model.FollowUpCallDate" name="FollowUpCallDate" placeholder="Select Date">
+        </div>
+    }
+    else
+    {
+        <div class="col-md-8">
+            <input class="form-control datepicker" readonly="readonly" type="text" id="FollowUpCallDate" value="@Model.FollowUpCallDate" name="FollowUpCallDate" placeholder="Select Date">
+        </div>
+    }
+}
+
+<div id="msglabel" class="col-md-4">
+<span>Follow up letter sent </span>
+</div>
+@if (Convert.ToBoolean(ViewBag.IsReadOnly))
+{
+    <div class="col-md-8">
+        <input class="form-control datepicker" disabled readonly="readonly" type="text" id="FollowUpLetterSent" value="@Model.FollowUpLetterSent" name="FollowUpLetterSent" placeholder="Select Date">
+    </div>
+}
+else
+{
+    if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+    {
+        <div class="col-md-8">
+            <input class="form-control datepicker" readonly="readonly" type="text" id="FollowUpLetterSent" value="@Model.FollowUpLetterSent" name="FollowUpLetterSent" placeholder="Select Date">
+        </div>
+    }
+    else if (Model.NokCompleted)
+    {
+        <div class="col-md-8">
+            <input class="form-control datepicker" disabled readonly="readonly" type="text" id="FollowUpLetterSent" value="@Model.FollowUpLetterSent" name="FollowUpLetterSent" placeholder="Select Date">
+        </div>
+    }
+    else
+    {
+        <div class="col-md-8">
+            <input class="form-control datepicker" readonly="readonly" type="text" id="FollowUpLetterSent" value="@Model.FollowUpLetterSent" name="FollowUpLetterSent" placeholder="Select Date">
+        </div>
+    }
+}
+<div class="col-md-4">
+<div class="row_bar">
+Comments
+</div>
+</div>
+<div class="col-md-8">
+<div class="row_bar checkbox-row">
+@if (Convert.ToBoolean(ViewBag.IsReadOnly))
+{
+    @Html.TextAreaFor(model => model.FollowLetterComments, 10, 150, new { @class = "form-control", @readonly = "readonly", disabled = "disabled" }) 
+}
+else
+{
+    if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+    {
+        @Html.TextAreaFor(model => model.FollowLetterComments, 10, 150, new { @class = "form-control" })
+    }
+    else if (Model.NokCompleted)
+    {
+        @Html.TextAreaFor(model => model.FollowLetterComments, 10, 150, new { @class = "form-control", @readonly = "readonly", disabled = "disabled" })
+    }
+    else
+    {
+        @Html.TextAreaFor(model => model.FollowLetterComments, 10, 150, new { @class = "form-control" })
+    }
+}
+</div>
+</div>
+    <div class="col-md-12 IsRevCom">
+        <div class="row_bar">
+            @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+            {
+                if (Model.NokCompleted)
+                {
+                    if (Model.CreatedBy == Convert.ToString(Session["FullName"]) || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                    {
+                        if (Model.NokCompleted == true)
+                        {
+                            <input type="checkbox" id="NOK" name="NOK" checked disabled="disabled"><span>NoK Form Completed?</span>
+                        }
+                        else
+                        {
+                            <input type="checkbox" id="NOK" name="NOK" disabled="disabled"><span>NoK Form Completed?</span>
+                        }
+                    }
+                    else
+                    {
+                        if (Model.NokCompleted)
+                        {
+                            <input type="checkbox" id="NOK" name="NOK" disabled="disabled" checked><span>NoK Form Completed?</span>
+                        }
+                        else
+                        {
+                            <input type="checkbox" id="NOK" name="NOK" disabled="disabled"><span>NoK Form Completed?</span>
+                        }
+                    }
+                }
+                else
+                {
+                    <input type="checkbox" id="NOK" name="NOK" disabled="disabled"><span>NoK Form Completed?</span>
+                }
+
+            }
+            else
+            {
+                if (Model.NokCompleted)
+                {
+                    if (Model.CreatedBy == Convert.ToString(Session["FullName"]) || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                    {
+                        if (Model.NokCompleted)
+                        {
+                            <input type="checkbox" id="NOK" name="NOK" disabled="disabled" checked><span>NoK Form Completed?</span>
+                        }
+                        else
+                        {
+                            <input type="checkbox" id="NOK" name="NOK"><span>NoK Form Completed?</span>
+                        }
+                    }
+                    else
+                    {
+                        if (Model.NokCompleted)
+                        {
+                            <input type="checkbox" id="NOK" name="NOK" disabled="disabled" checked><span>NoK Form Completed?</span>
+                        }
+                        else
+                        {
+                            <input type="checkbox" id="NOK" name="NOK" disabled="disabled"><span>NoK Form Completed?</span>
+                        }
+                    }
+                }
+                else
+                {
+                    <input type="checkbox" id="NOK" name="NOK"><span>NoK Form Completed?</span>
+                }
+
+            }
+
+        </div>
+    </div>
+@if (Model.NokCompleted)
+{
+    <div id="dvnamelable" class="col-md-3">
+        <span><b><i>Completed By: </i></b></span>
+    </div>
+    <div class="col-md-3" id="namelabel">
+        <span><b><i>@Model.CreatedBy</i></b></span>
+    </div>	    
+    <div id="dvdatelabel" class="col-md-3">
+        <span><b><i>Completed Date: </i></b></span>
+    </div>
+    <div class="col-md-3" id="datelabel">
+        <span><b><i>@Model.CreatedDate</i></b></span>
+    </div>
+}
+else
+{
+    <div id="dvnamelable" class="col-md-3" style="display:none">
+        <span><b><i>Completed By: </i></b></span>
+    </div>
+    <div class="col-md-3" id="namelabel" style="display:none">
+        <span><b><i>@Session["FullName"]</i></b></span>
+    </div>
+    <div id="dvdatelabel" class="col-md-3" style="display:none">
+        <span><b><i>Completed Date: </i></b></span>
+    </div>
+    <div class="col-md-3" id="datelabel" style="display:none">
+        <span><b><i>@System.DateTime.Now.ToString()</i></b></span>
+    </div>
+}
+<br />
+<br />
+@if (Convert.ToBoolean(ViewBag.IsReadOnly))
+{
+    <div class="col-md-12" align="right">
+        <button id="activate-step-2" disabled type="submit" name="BtnSave" class="btn btn-primary btn-lg">Save</button>
+        @*<button id="activate-step-2" disabled type="submit" name="BtnFinish" class="btn btn-primary btn-lg">Finish</button>*@
+    </div>
+}
+else
+{
+    <div class="col-md-12" align="right">
+        <button id="activate-step-2" type="submit" name="BtnPrevious" class="btn btn-primary btn-lg">Save</button>
+        @*<button id="activate-step-2" type="submit" name="BtnFinish" class="btn btn-primary btn-lg">Finish</button>*@
+    </div>
+}
+<br />
+<br />
+</div>
+}	
+</div>
+<div class="modal fade" id="modelClose">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Message</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="form-section" style="text-align:left">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row_bar">
+                                <div>Do you want to exit without saving your changes?</div>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-primary btn-block" id="btnModelClose1" data-dismiss="modal" formmethod="post" onclick="location.href='@Url.Action("MortalityReview", "Home", new { id=Model.Patient_ID })'">Yes</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary btn-block" name="btnCloseYes" id="btnCloseYes">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    (function ($) {
+        $(".datepicker").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy'
+        });
+    })(jQuery)
+</script>
+<script>
+        $(document).ready(function () {
+            $("#btnCloseYes").click(function () {
+                $("#modelClose").modal('hide');
+            });
+        });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#btnClose1").click(function () {
+            $("#modelClose").modal();
+        });
+    });
+</script>
+<script>
+
+
+    $(document).ready(function () {
+        //changes
+
+
+        $("#NOK").click(function () {
+            if ($(this).is(":checked")) {
+                $("#dvnamelabel").css("display", "block");
+                $("#namelabel").css("display", "block");
+                $("#dvdatelabel").css("display", "block");
+                $("#datelabel").css("display", "block");
+                //$("#dvSpeciality").css("display", "block");
+                //$("#dvddlSpeciality").css("display", "block");
+            }
+            else {
+                $("#dvnamelabel").css("display", "none");
+                $("#namelabel").css("display", "none");
+                $("#dvdatelabel").css("display", "none");
+                $("#datelabel").css("display", "none");
+                //$("#dvSpeciality").css("display", "none");
+                //$("#dvddlSpeciality").css("display", "none");
+            }
+        });
+
+        //changes
+    });
+</script>

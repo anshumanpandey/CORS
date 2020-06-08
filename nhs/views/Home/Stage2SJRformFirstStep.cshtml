@@ -81,8 +81,8 @@
                 {
                     <div class="col-md-12 well text-center">
                         <div class="form-section" style="text-align:left">
-                            <h3 class="stage_title">STAGE 1: STRUCTURED JUDGEMENT REVIEW </h3><br />
-							
+                            <h3 class="stage_title">STAGE 1: STRUCTURED JUDGEMENT REVIEW </h3>
+							<span style="color:red"><i>* marked fields are mandatory fields.</i></span><br/>
 							<div class="row">
 							<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5" style="margin:0 0 20px 0;">
                                     <table style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;" width="100%">
@@ -108,7 +108,7 @@
 								
 							
                             <div class="lable_title">
-                                <h2>PHASE OF CARE: INITIAL MANAGEMENT (FIRST 24 HOURS) </h2>
+                                <h2>PHASE OF CARE: INITIAL MANAGEMENT (FIRST 24 HOURS) </h2><h5 style="color:red">*</h5>
                             </div>
                             <input type="hidden" id="hdfInitialManagementCareRating" name="hdfInitialManagementCareRating" value="" />
                             <input type="hidden" id="hdfOnGoingCareRating" name="hdfOnGoingCareRating" value="" />
@@ -120,15 +120,70 @@
                             <div class="row">
 							
 							
-							
-							
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div class="row_bar">
-                                        @Html.TextAreaFor(model => model.InitialManagement, 5, 200, new { @class = "form-control", placeholder = "Please record your explicit judgements about the quality of care the patient received and whether it was in accordance with current good practice (for example, your professional standards or your professional perspective). If there is any other information that you think is important or relevant that you wish to comment on then please do so." })
+							    @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+                                {
+                                    if (Model.SJR1 == 3)
+                                    {
+                                        if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() 
+                                            || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN"
+                                            || Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper())
+                                        {
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <div class="row_bar">
+                                                @Html.TextAreaFor(model => model.InitialManagement, 5, 200, new { @class = "form-control", @readonly = "readonly", placeholder = "Please record your explicit judgements about the quality of care the patient received and whether it was in accordance with current good practice (for example, your professional standards or your professional perspective). If there is any other information that you think is important or relevant that you wish to comment on then please do so." })
+                                            </div>
+                                        </div>
+                                        }
+                                        else
+                                        {
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <div class="row_bar">
+                                                @Html.TextAreaFor(model => model.InitialManagement, 5, 200, new { @class = "form-control", @readonly = "readonly", placeholder = "Please record your explicit judgements about the quality of care the patient received and whether it was in accordance with current good practice (for example, your professional standards or your professional perspective). If there is any other information that you think is important or relevant that you wish to comment on then please do so." })
+                                            </div>
+                                        </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="row_bar">
+                                            @Html.TextAreaFor(model => model.InitialManagement, 5, 200, new { @class = "form-control", @readonly = "readonly", placeholder = "Please record your explicit judgements about the quality of care the patient received and whether it was in accordance with current good practice (for example, your professional standards or your professional perspective). If there is any other information that you think is important or relevant that you wish to comment on then please do so." })
+                                        </div>
                                     </div>
-                                </div>
-
-                                
+                                    }
+                                }
+                                else
+                                {
+                                    if (Model.SJR1 == 3)
+                                    {
+                                        if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() 
+                                            || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN"
+                                            || Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper())
+                                        {
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="row_bar">
+                                                    @Html.TextAreaFor(model => model.InitialManagement, 5, 200, new { @class = "form-control", placeholder = "Please record your explicit judgements about the quality of care the patient received and whether it was in accordance with current good practice (for example, your professional standards or your professional perspective). If there is any other information that you think is important or relevant that you wish to comment on then please do so." })
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="row_bar">
+                                                    @Html.TextAreaFor(model => model.InitialManagement, 5, 200, new { @class = "form-control", @readonly = true, placeholder = "Please record your explicit judgements about the quality of care the patient received and whether it was in accordance with current good practice (for example, your professional standards or your professional perspective). If there is any other information that you think is important or relevant that you wish to comment on then please do so." })
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <div class="row_bar">
+                                                @Html.TextAreaFor(model => model.InitialManagement, 5, 200, new { @class = "form-control", placeholder = "Please record your explicit judgements about the quality of care the patient received and whether it was in accordance with current good practice (for example, your professional standards or your professional perspective). If there is any other information that you think is important or relevant that you wish to comment on then please do so." })
+                                            </div>
+                                        </div>
+                                    }
+                                }
 
                                 <div class="col-md-6">
                                     <div class="row_bar">
@@ -137,56 +192,250 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="row">
-                                        @if (Model.InitialManagementCareRatingID == Convert.ToInt32(ViewBag.VeryPoorRatingID) && Model.InitialManagementCareRatingID != 0)
+                                    @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+                                    {
+                                        if (Model.InitialManagementCareRatingID == Convert.ToInt32(ViewBag.VeryPoorRatingID) && Model.InitialManagementCareRatingID != 0)
                                         {
-                                            <div class="square1" onclick=selected1(this) style="color:white;background-color:#70a397; text-align:center;border-style:solid; border-color:#000000">Very Poor</div>
+                                            <div class="square1" style="color:white;background-color:#70a397; text-align:center;border-style:solid; border-color:#000000">Very Poor</div>
                                         }
                                         else
                                         {
-                                            <div class="square1" onclick=selected1(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid; border-color:#000000">Very Poor</div>
+                                            <div class="square1" style="color:#70a397;background-color:white;text-align:center;border-style:solid; border-color:#000000">Very Poor</div>
                                         }
-                                        @if (Model.InitialManagementCareRatingID == Convert.ToInt32(ViewBag.PoorRatingID) && Model.InitialManagementCareRatingID != 0)
+                                        if (Model.InitialManagementCareRatingID == Convert.ToInt32(ViewBag.PoorRatingID) && Model.InitialManagementCareRatingID != 0)
                                         {
-                                            <div class="square1" onclick=selected1(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid; border-color:#000000">Poor</div>
+                                            <div class="square1" style="color:white;background-color:#70a397;text-align:center;border-style:solid; border-color:#000000">Poor</div>
                                         }
                                         else
                                         {
-                                            <div class="square1" onclick=selected1(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid; border-color:#000000">Poor</div>
+                                            <div class="square1" style="color:#70a397;background-color:white;text-align:center;border-style:solid; border-color:#000000">Poor</div>
                                         }
-                                        @if (Model.InitialManagementCareRatingID == Convert.ToInt32(ViewBag.AdequateRatingID) && Model.InitialManagementCareRatingID != 0)
+                                        if (Model.InitialManagementCareRatingID == Convert.ToInt32(ViewBag.AdequateRatingID) && Model.InitialManagementCareRatingID != 0)
                                         {
-                                            <div class="square1" onclick=selected1(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid; border-color:#000000">Adequate</div>
+                                            <div class="square1" style="color:white;background-color:#70a397;text-align:center;border-style:solid; border-color:#000000">Adequate</div>
                                         }
                                         else
                                         {
-                                            <div class="square1" onclick=selected1(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid; border-color:#000000">Adequate</div>
+                                            <div class="square1" style="color:#70a397;background-color:white;text-align:center;border-style:solid; border-color:#000000">Adequate</div>
                                         }
-                                        @if (Model.InitialManagementCareRatingID == Convert.ToInt32(ViewBag.GoodRatingID) && Model.InitialManagementCareRatingID != 0)
+                                        if (Model.InitialManagementCareRatingID == Convert.ToInt32(ViewBag.GoodRatingID) && Model.InitialManagementCareRatingID != 0)
                                         {
-                                            <div class="square1" onclick=selected1(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid; border-color:#000000">Good</div>
+                                            <div class="square1" style="color:white;background-color:#70a397;text-align:center;border-style:solid; border-color:#000000">Good</div>
                                         }
                                         else
                                         {
-                                            <div class="square1" onclick=selected1(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid; border-color:#000000">Good</div>
+                                            <div class="square1" style="color:#70a397;background-color:white;text-align:center;border-style:solid; border-color:#000000">Good</div>
                                         }
-                                        @if (Model.InitialManagementCareRatingID == Convert.ToInt32(ViewBag.ExcellentRatingID) && Model.InitialManagementCareRatingID != 0)
+                                        if (Model.InitialManagementCareRatingID == Convert.ToInt32(ViewBag.ExcellentRatingID) && Model.InitialManagementCareRatingID != 0)
                                         {
-                                            <div class="square1" onclick=selected1(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid; border-color:#000000">Excellent</div>
+                                            <div class="square1" style="color:white;background-color:#70a397;text-align:center;border-style:solid; border-color:#000000">Excellent</div>
                                         }
                                         else
                                         {
-                                            <div class="square1" onclick=selected1(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid; border-color:#000000">Excellent</div>
+                                            <div class="square1" style="color:#70a397;background-color:white;text-align:center;border-style:solid; border-color:#000000">Excellent</div>
                                         }
+                                    }
+                                    else
+                                    {
+                                        if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() 
+                                            || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN"
+                                            || Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper())
+                                        {
+                                            if (Model.InitialManagementCareRatingID == Convert.ToInt32(ViewBag.VeryPoorRatingID) && Model.InitialManagementCareRatingID != 0)
+                                            {
+                                                <div class="square1" onclick=selected1(this) style="color:white;background-color:#70a397; text-align:center;border-style:solid; border-color:#000000">Very Poor</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="square1" onclick=selected1(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid; border-color:#000000">Very Poor</div>
+                                            }
+                                            if (Model.InitialManagementCareRatingID == Convert.ToInt32(ViewBag.PoorRatingID) && Model.InitialManagementCareRatingID != 0)
+                                            {
+                                                <div class="square1" onclick=selected1(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid; border-color:#000000">Poor</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="square1" onclick=selected1(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid; border-color:#000000">Poor</div>
+                                            }
+                                            if (Model.InitialManagementCareRatingID == Convert.ToInt32(ViewBag.AdequateRatingID) && Model.InitialManagementCareRatingID != 0)
+                                            {
+                                                <div class="square1" onclick=selected1(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid; border-color:#000000">Adequate</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="square1" onclick=selected1(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid; border-color:#000000">Adequate</div>
+                                            }
+                                            if (Model.InitialManagementCareRatingID == Convert.ToInt32(ViewBag.GoodRatingID) && Model.InitialManagementCareRatingID != 0)
+                                            {
+                                                <div class="square1" onclick=selected1(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid; border-color:#000000">Good</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="square1" onclick=selected1(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid; border-color:#000000">Good</div>
+                                            }
+                                            if (Model.InitialManagementCareRatingID == Convert.ToInt32(ViewBag.ExcellentRatingID) && Model.InitialManagementCareRatingID != 0)
+                                            {
+                                                <div class="square1" onclick=selected1(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid; border-color:#000000">Excellent</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="square1" onclick=selected1(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid; border-color:#000000">Excellent</div>
+                                            }
+                                        }
+                                        else if (Model.SJR1 == 3)
+                                        {
+                                            if (Model.InitialManagementCareRatingID == Convert.ToInt32(ViewBag.VeryPoorRatingID) && Model.InitialManagementCareRatingID != 0)
+                                            {
+                                                <div class="square1" style="color:white;background-color:#70a397; text-align:center;border-style:solid; border-color:#000000">Very Poor</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="square1" style="color:#70a397;background-color:white;text-align:center;border-style:solid; border-color:#000000">Very Poor</div>
+                                            }
+                                            if (Model.InitialManagementCareRatingID == Convert.ToInt32(ViewBag.PoorRatingID) && Model.InitialManagementCareRatingID != 0)
+                                            {
+                                                <div class="square1" style="color:white;background-color:#70a397;text-align:center;border-style:solid; border-color:#000000">Poor</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="square1" style="color:#70a397;background-color:white;text-align:center;border-style:solid; border-color:#000000">Poor</div>
+                                            }
+                                            if (Model.InitialManagementCareRatingID == Convert.ToInt32(ViewBag.AdequateRatingID) && Model.InitialManagementCareRatingID != 0)
+                                            {
+                                                <div class="square1" style="color:white;background-color:#70a397;text-align:center;border-style:solid; border-color:#000000">Adequate</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="square1" style="color:#70a397;background-color:white;text-align:center;border-style:solid; border-color:#000000">Adequate</div>
+                                            }
+                                            if (Model.InitialManagementCareRatingID == Convert.ToInt32(ViewBag.GoodRatingID) && Model.InitialManagementCareRatingID != 0)
+                                            {
+                                                <div class="square1" style="color:white;background-color:#70a397;text-align:center;border-style:solid; border-color:#000000">Good</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="square1" style="color:#70a397;background-color:white;text-align:center;border-style:solid; border-color:#000000">Good</div>
+                                            }
+                                            if (Model.InitialManagementCareRatingID == Convert.ToInt32(ViewBag.ExcellentRatingID) && Model.InitialManagementCareRatingID != 0)
+                                            {
+                                                <div class="square1" style="color:white;background-color:#70a397;text-align:center;border-style:solid; border-color:#000000">Excellent</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="square1" style="color:#70a397;background-color:white;text-align:center;border-style:solid; border-color:#000000">Excellent</div>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (Model.InitialManagementCareRatingID == Convert.ToInt32(ViewBag.VeryPoorRatingID) && Model.InitialManagementCareRatingID != 0)
+                                            {
+                                                <div class="square1" onclick=selected1(this) style="color:white;background-color:#70a397; text-align:center;border-style:solid; border-color:#000000">Very Poor</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="square1" onclick=selected1(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid; border-color:#000000">Very Poor</div>
+                                            }
+                                            if (Model.InitialManagementCareRatingID == Convert.ToInt32(ViewBag.PoorRatingID) && Model.InitialManagementCareRatingID != 0)
+                                            {
+                                                <div class="square1" onclick=selected1(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid; border-color:#000000">Poor</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="square1" onclick=selected1(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid; border-color:#000000">Poor</div>
+                                            }
+                                            if (Model.InitialManagementCareRatingID == Convert.ToInt32(ViewBag.AdequateRatingID) && Model.InitialManagementCareRatingID != 0)
+                                            {
+                                                <div class="square1" onclick=selected1(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid; border-color:#000000">Adequate</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="square1" onclick=selected1(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid; border-color:#000000">Adequate</div>
+                                            }
+                                            if (Model.InitialManagementCareRatingID == Convert.ToInt32(ViewBag.GoodRatingID) && Model.InitialManagementCareRatingID != 0)
+                                            {
+                                                <div class="square1" onclick=selected1(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid; border-color:#000000">Good</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="square1" onclick=selected1(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid; border-color:#000000">Good</div>
+                                            }
+                                            if (Model.InitialManagementCareRatingID == Convert.ToInt32(ViewBag.ExcellentRatingID) && Model.InitialManagementCareRatingID != 0)
+                                            {
+                                                <div class="square1" onclick=selected1(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid; border-color:#000000">Excellent</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="square1" onclick=selected1(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid; border-color:#000000">Excellent</div>
+                                            }
+                                        }
+                                    }
                                     </div>
                                 </div>
                                 <div class="lable_title">
-                                    <h2>&nbsp;&nbsp;&nbsp;PHASE OF CARE: ONGOING CARE</h2>
+                                    <h2>&nbsp;&nbsp;&nbsp;PHASE OF CARE: ONGOING CARE</h2><h5 style="color:red">&nbsp;&nbsp;&nbsp;*</h5>
                                 </div>
-                                <div class="col-md-12">
-                                    <div class="row_bar">
-                                        @Html.TextAreaFor(model => model.OngoingCare, 5, 200, new { @class = "form-control" })
+                                @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+                                {
+                                    if (Model.SJR1 == 3)
+                                    {
+                                        if (Model.CreatedBy == Convert.ToString(Session["UserName"]) || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                                        {
+                                        <div class="col-md-12">
+                                            <div class="row_bar">
+                                                @Html.TextAreaFor(model => model.OngoingCare, 5, 200, new { @class = "form-control", @readonly = true })
+                                            </div>
+                                        </div>
+                                        }
+                                        else
+                                        {
+                                        <div class="col-md-12">
+                                            <div class="row_bar">
+                                                @Html.TextAreaFor(model => model.OngoingCare, 5, 200, new { @class = "form-control", @readonly = true })
+                                            </div>
+                                        </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                    <div class="col-md-12">
+                                        <div class="row_bar">
+                                            @Html.TextAreaFor(model => model.OngoingCare, 5, 200, new { @class = "form-control", @readonly = true })
+                                        </div>
                                     </div>
-                                </div>
+                                    }
+                                }
+                                else
+                                {
+                                    if (Model.SJR1 == 3)
+                                    {
+                                        if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() 
+                                            || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN"
+                                            || Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper())
+                                        {
+                                            <div class="col-md-12">
+                                                <div class="row_bar">
+                                                    @Html.TextAreaFor(model => model.OngoingCare, 5, 200, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-md-12">
+                                                <div class="row_bar">
+                                                    @Html.TextAreaFor(model => model.OngoingCare, 5, 200, new { @class = "form-control", @readonly=true })
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-12">
+                                            <div class="row_bar">
+                                                @Html.TextAreaFor(model => model.OngoingCare, 5, 200, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    }
+                                }
                                 <div class="col-md-6">
                                     <div class="row_bar">
                                         <span>Please rate the care received by the patient during this phase</span>
@@ -195,59 +444,253 @@
                                 <div class="col-md-6">
                                     <div class="row_bar">
                                         <div class="row">
-                                            @if (Model.OngoingCareRatingID == Convert.ToInt32(ViewBag.VeryPoorRatingID) && Model.OngoingCareRatingID != 0)
+                                        @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+                                        {
+                                            if (Model.OngoingCareRatingID == Convert.ToInt32(ViewBag.VeryPoorRatingID) && Model.OngoingCareRatingID != 0)
                                             {
-                                                <div class="square2" onclick=selected2(this) style="color:white;background-color:#70a397; text-align:center;border-style:solid">Very Poor</div>
+                                                <div class="square2" style="color:white;background-color:#70a397; text-align:center;border-style:solid">Very Poor</div>
                                             }
                                             else
                                             {
-                                                <div class="square2" onclick=selected2(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Very Poor</div>
+                                                <div class="square2" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Very Poor</div>
                                             }
-                                            @if (Model.OngoingCareRatingID == Convert.ToInt32(ViewBag.PoorRatingID) && Model.OngoingCareRatingID != 0)
+                                            if (Model.OngoingCareRatingID == Convert.ToInt32(ViewBag.PoorRatingID) && Model.OngoingCareRatingID != 0)
                                             {
-                                                <div class="square2" onclick=selected2(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Poor</div>
+                                                <div class="square2" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Poor</div>
                                             }
                                             else
                                             {
-                                                <div class="square2" onclick=selected2(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Poor</div>
+                                                <div class="square2" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Poor</div>
                                             }
-                                            @if (Model.OngoingCareRatingID == Convert.ToInt32(ViewBag.AdequateRatingID) && Model.OngoingCareRatingID != 0)
+                                            if (Model.OngoingCareRatingID == Convert.ToInt32(ViewBag.AdequateRatingID) && Model.OngoingCareRatingID != 0)
                                             {
-                                                <div class="square2" onclick=selected2(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Adequate</div>
+                                                <div class="square2" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Adequate</div>
                                             }
                                             else
                                             {
-                                                <div class="square2" onclick=selected2(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Adequate</div>
+                                                <div class="square2" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Adequate</div>
                                             }
-                                            @if (Model.OngoingCareRatingID == Convert.ToInt32(ViewBag.GoodRatingID) && Model.OngoingCareRatingID != 0)
+                                            if (Model.OngoingCareRatingID == Convert.ToInt32(ViewBag.GoodRatingID) && Model.OngoingCareRatingID != 0)
                                             {
-                                                <div class="square2" onclick=selected2(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Good</div>
+                                                <div class="square2" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Good</div>
                                             }
                                             else
                                             {
-                                                <div class="square2" onclick=selected2(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Good</div>
+                                                <div class="square2" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Good</div>
                                             }
-                                            @if (Model.OngoingCareRatingID == Convert.ToInt32(ViewBag.ExcellentRatingID) && Model.OngoingCareRatingID != 0)
+                                            if (Model.OngoingCareRatingID == Convert.ToInt32(ViewBag.ExcellentRatingID) && Model.OngoingCareRatingID != 0)
                                             {
-                                                <div class="square2" onclick=selected2(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Excellent</div>
+                                                <div class="square2" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Excellent</div>
                                             }
                                             else
                                             {
-                                                <div class="square2" onclick=selected2(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Excellent</div>
+                                                <div class="square2" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Excellent</div>
                                             }
+                                        }
+                                        else
+                                        {
+                                            if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() 
+                                                || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN"
+                                                || Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper())
+                                            {
+                                                if (Model.OngoingCareRatingID == Convert.ToInt32(ViewBag.VeryPoorRatingID) && Model.OngoingCareRatingID != 0)
+                                                {
+                                                    <div class="square2" onclick=selected2(this) style="color:white;background-color:#70a397; text-align:center;border-style:solid">Very Poor</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square2" onclick=selected2(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Very Poor</div>
+                                                }
+                                                if (Model.OngoingCareRatingID == Convert.ToInt32(ViewBag.PoorRatingID) && Model.OngoingCareRatingID != 0)
+                                                {
+                                                    <div class="square2" onclick=selected2(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Poor</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square2" onclick=selected2(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Poor</div>
+                                                }
+                                                if (Model.OngoingCareRatingID == Convert.ToInt32(ViewBag.AdequateRatingID) && Model.OngoingCareRatingID != 0)
+                                                {
+                                                    <div class="square2" onclick=selected2(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Adequate</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square2" onclick=selected2(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Adequate</div>
+                                                }
+                                                if (Model.OngoingCareRatingID == Convert.ToInt32(ViewBag.GoodRatingID) && Model.OngoingCareRatingID != 0)
+                                                {
+                                                    <div class="square2" onclick=selected2(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Good</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square2" onclick=selected2(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Good</div>
+                                                }
+                                                if (Model.OngoingCareRatingID == Convert.ToInt32(ViewBag.ExcellentRatingID) && Model.OngoingCareRatingID != 0)
+                                                {
+                                                    <div class="square2" onclick=selected2(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Excellent</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square2" onclick=selected2(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Excellent</div>
+                                                }
+                                            }
+                                            else if (Model.SJR1 == 3)
+                                            {
+                                                if (Model.OngoingCareRatingID == Convert.ToInt32(ViewBag.VeryPoorRatingID) && Model.OngoingCareRatingID != 0)
+                                                {
+                                                    <div class="square2" style="color:white;background-color:#70a397; text-align:center;border-style:solid">Very Poor</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square2" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Very Poor</div>
+                                                }
+                                                if (Model.OngoingCareRatingID == Convert.ToInt32(ViewBag.PoorRatingID) && Model.OngoingCareRatingID != 0)
+                                                {
+                                                    <div class="square2" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Poor</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square2" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Poor</div>
+                                                }
+                                                if (Model.OngoingCareRatingID == Convert.ToInt32(ViewBag.AdequateRatingID) && Model.OngoingCareRatingID != 0)
+                                                {
+                                                    <div class="square2" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Adequate</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square2" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Adequate</div>
+                                                }
+                                                if (Model.OngoingCareRatingID == Convert.ToInt32(ViewBag.GoodRatingID) && Model.OngoingCareRatingID != 0)
+                                                {
+                                                    <div class="square2" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Good</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square2" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Good</div>
+                                                }
+                                                if (Model.OngoingCareRatingID == Convert.ToInt32(ViewBag.ExcellentRatingID) && Model.OngoingCareRatingID != 0)
+                                                {
+                                                    <div class="square2" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Excellent</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square2" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Excellent</div>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (Model.OngoingCareRatingID == Convert.ToInt32(ViewBag.VeryPoorRatingID) && Model.OngoingCareRatingID != 0)
+                                                {
+                                                    <div class="square2" onclick=selected2(this) style="color:white;background-color:#70a397; text-align:center;border-style:solid">Very Poor</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square2" onclick=selected2(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Very Poor</div>
+                                                }
+                                                if (Model.OngoingCareRatingID == Convert.ToInt32(ViewBag.PoorRatingID) && Model.OngoingCareRatingID != 0)
+                                                {
+                                                    <div class="square2" onclick=selected2(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Poor</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square2" onclick=selected2(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Poor</div>
+                                                }
+                                                if (Model.OngoingCareRatingID == Convert.ToInt32(ViewBag.AdequateRatingID) && Model.OngoingCareRatingID != 0)
+                                                {
+                                                    <div class="square2" onclick=selected2(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Adequate</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square2" onclick=selected2(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Adequate</div>
+                                                }
+                                                if (Model.OngoingCareRatingID == Convert.ToInt32(ViewBag.GoodRatingID) && Model.OngoingCareRatingID != 0)
+                                                {
+                                                    <div class="square2" onclick=selected2(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Good</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square2" onclick=selected2(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Good</div>
+                                                }
+                                                if (Model.OngoingCareRatingID == Convert.ToInt32(ViewBag.ExcellentRatingID) && Model.OngoingCareRatingID != 0)
+                                                {
+                                                    <div class="square2" onclick=selected2(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Excellent</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square2" onclick=selected2(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Excellent</div>
+                                                }
+                                            }
+                                        }
                                         </div>
                                     </div>
                                 </div>
                                 <br />
                                 <br />
                                 <div class="lable_title">
-                                    <h2>&nbsp;&nbsp;&nbsp;PHASE OF CARE: CARE DURING A PROCEDURE (EXCLUDING IV CANNULATION)</h2>
+                                    <h2>&nbsp;&nbsp;&nbsp;PHASE OF CARE: CARE DURING A PROCEDURE (EXCLUDING IV CANNULATION)</h2><h5 style="color:red">&nbsp;&nbsp;&nbsp;*</h5>
                                 </div>
-                                <div class="col-md-12">
-                                    <div class="row_bar">
-                                        @Html.TextAreaFor(model => model.CareDuringProcedure, 5, 200, new { @class = "form-control" })
+                                @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+                                {
+                                    if (Model.SJR1 == 3)
+                                    {
+                                        if (Model.CreatedBy == Convert.ToString(Session["UserName"]) || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                                        {
+                                        <div class="col-md-12">
+                                            <div class="row_bar">
+                                                @Html.TextAreaFor(model => model.CareDuringProcedure, 5, 200, new { @class = "form-control", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-md-12">
+                                                <div class="row_bar">
+                                                    @Html.TextAreaFor(model => model.CareDuringProcedure, 5, 200, new { @class = "form-control", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                    <div class="col-md-12">
+                                        <div class="row_bar">
+                                            @Html.TextAreaFor(model => model.CareDuringProcedure, 5, 200, new { @class = "form-control", @readonly = "readonly" })
+                                        </div>
                                     </div>
-                                </div>
+                                    }
+                                }
+                                else
+                                {
+                                    if (Model.SJR1 == 3)
+                                    {
+                                        if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() 
+                                            || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN"
+                                            || Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper())
+                                        {
+                                            <div class="col-md-12">
+                                                <div class="row_bar">
+                                                    @Html.TextAreaFor(model => model.CareDuringProcedure, 5, 200, new {  @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-md-12">
+                                                <div class="row_bar">
+                                                    @Html.TextAreaFor(model => model.CareDuringProcedure, 5, 200, new {  @class = "form-control", @readonly = true })
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-12">
+                                            <div class="row_bar">
+                                                @Html.TextAreaFor(model => model.CareDuringProcedure, 5, 200, new {  @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    }
+                                }
                                 <div class="col-md-6">
                                     <div class="row_bar">
                                         <span>Please rate the care received by the patient during this phase</span>
@@ -256,57 +699,251 @@
                                 <div class="col-md-6">
                                     <div class="row_bar">
                                         <div class="row">
-                                            @if (Model.CareDuringProcedureCareRatingID == Convert.ToInt32(ViewBag.VeryPoorRatingID) && Model.CareDuringProcedureCareRatingID != 0)
+                                        @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+                                        {
+                                            if (Model.CareDuringProcedureCareRatingID == Convert.ToInt32(ViewBag.VeryPoorRatingID) && Model.CareDuringProcedureCareRatingID != 0)
                                             {
-                                                <div class="square3" onclick=selected3(this) style="color:white;background-color:#70a397; text-align:center;border-style:solid">Very Poor</div>
+                                                <div class="square3" style="color:white;background-color:#70a397; text-align:center;border-style:solid">Very Poor</div>
                                             }
                                             else
                                             {
-                                                <div class="square3" onclick=selected3(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Very Poor</div>
+                                                <div class="square3" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Very Poor</div>
                                             }
-                                            @if (Model.CareDuringProcedureCareRatingID == Convert.ToInt32(ViewBag.PoorRatingID) && Model.CareDuringProcedureCareRatingID != 0)
+                                            if (Model.CareDuringProcedureCareRatingID == Convert.ToInt32(ViewBag.PoorRatingID) && Model.CareDuringProcedureCareRatingID != 0)
                                             {
-                                                <div class="square3" onclick=selected3(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Poor</div>
+                                                <div class="square3" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Poor</div>
                                             }
                                             else
                                             {
-                                                <div class="square3" onclick=selected3(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Poor</div>
+                                                <div class="square3" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Poor</div>
                                             }
-                                            @if (Model.CareDuringProcedureCareRatingID == Convert.ToInt32(ViewBag.AdequateRatingID) && Model.CareDuringProcedureCareRatingID != 0)
+                                            if (Model.CareDuringProcedureCareRatingID == Convert.ToInt32(ViewBag.AdequateRatingID) && Model.CareDuringProcedureCareRatingID != 0)
                                             {
-                                                <div class="square3" onclick=selected3(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Adequate</div>
+                                                <div class="square3" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Adequate</div>
                                             }
                                             else
                                             {
-                                                <div class="square3" onclick=selected3(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Adequate</div>
+                                                <div class="square3" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Adequate</div>
                                             }
-                                            @if (Model.CareDuringProcedureCareRatingID == Convert.ToInt32(ViewBag.GoodRatingID) && Model.CareDuringProcedureCareRatingID != 0)
+                                            if (Model.CareDuringProcedureCareRatingID == Convert.ToInt32(ViewBag.GoodRatingID) && Model.CareDuringProcedureCareRatingID != 0)
                                             {
-                                                <div class="square3" onclick=selected3(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Good</div>
+                                                <div class="square3" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Good</div>
                                             }
                                             else
                                             {
-                                                <div class="square3" onclick=selected3(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Good</div>
+                                                <div class="square3" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Good</div>
                                             }
-                                            @if (Model.CareDuringProcedureCareRatingID == Convert.ToInt32(ViewBag.ExcellentRatingID) && Model.CareDuringProcedureCareRatingID != 0)
+                                            if (Model.CareDuringProcedureCareRatingID == Convert.ToInt32(ViewBag.ExcellentRatingID) && Model.CareDuringProcedureCareRatingID != 0)
                                             {
-                                                <div class="square3" onclick=selected3(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Excellent</div>
+                                                <div class="square3" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Excellent</div>
                                             }
                                             else
                                             {
-                                                <div class="square3" onclick=selected3(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Excellent</div>
+                                                <div class="square3" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Excellent</div>
                                             }
+                                        }
+                                        else
+                                        {
+                                            if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() 
+                                                || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN"
+                                                || Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper())
+                                            {
+                                                if (Model.CareDuringProcedureCareRatingID == Convert.ToInt32(ViewBag.VeryPoorRatingID) && Model.CareDuringProcedureCareRatingID != 0)
+                                                {
+                                                    <div class="square3" onclick=selected3(this) style="color:white;background-color:#70a397; text-align:center;border-style:solid">Very Poor</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square3" onclick=selected3(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Very Poor</div>
+                                                }
+                                                if (Model.CareDuringProcedureCareRatingID == Convert.ToInt32(ViewBag.PoorRatingID) && Model.CareDuringProcedureCareRatingID != 0)
+                                                {
+                                                    <div class="square3" onclick=selected3(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Poor</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square3" onclick=selected3(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Poor</div>
+                                                }
+                                                if (Model.CareDuringProcedureCareRatingID == Convert.ToInt32(ViewBag.AdequateRatingID) && Model.CareDuringProcedureCareRatingID != 0)
+                                                {
+                                                    <div class="square3" onclick=selected3(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Adequate</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square3" onclick=selected3(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Adequate</div>
+                                                }
+                                                if (Model.CareDuringProcedureCareRatingID == Convert.ToInt32(ViewBag.GoodRatingID) && Model.CareDuringProcedureCareRatingID != 0)
+                                                {
+                                                    <div class="square3" onclick=selected3(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Good</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square3" onclick=selected3(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Good</div>
+                                                }
+                                                if (Model.CareDuringProcedureCareRatingID == Convert.ToInt32(ViewBag.ExcellentRatingID) && Model.CareDuringProcedureCareRatingID != 0)
+                                                {
+                                                    <div class="square3" onclick=selected3(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Excellent</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square3" onclick=selected3(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Excellent</div>
+                                                }
+                                            }
+                                            else if (Model.SJR1 == 3)
+                                            {
+                                                if (Model.CareDuringProcedureCareRatingID == Convert.ToInt32(ViewBag.VeryPoorRatingID) && Model.CareDuringProcedureCareRatingID != 0)
+                                                {
+                                                    <div class="square3" style="color:white;background-color:#70a397; text-align:center;border-style:solid">Very Poor</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square3" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Very Poor</div>
+                                                }
+                                                if (Model.CareDuringProcedureCareRatingID == Convert.ToInt32(ViewBag.PoorRatingID) && Model.CareDuringProcedureCareRatingID != 0)
+                                                {
+                                                    <div class="square3" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Poor</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square3" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Poor</div>
+                                                }
+                                                if (Model.CareDuringProcedureCareRatingID == Convert.ToInt32(ViewBag.AdequateRatingID) && Model.CareDuringProcedureCareRatingID != 0)
+                                                {
+                                                    <div class="square3" onclick=selected3(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Adequate</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square3" onclick=selected3(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Adequate</div>
+                                                }
+                                                if (Model.CareDuringProcedureCareRatingID == Convert.ToInt32(ViewBag.GoodRatingID) && Model.CareDuringProcedureCareRatingID != 0)
+                                                {
+                                                    <div class="square3" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Good</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square3" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Good</div>
+                                                }
+                                                if (Model.CareDuringProcedureCareRatingID == Convert.ToInt32(ViewBag.ExcellentRatingID) && Model.CareDuringProcedureCareRatingID != 0)
+                                                {
+                                                    <div class="square3" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Excellent</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square3" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Excellent</div>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (Model.CareDuringProcedureCareRatingID == Convert.ToInt32(ViewBag.VeryPoorRatingID) && Model.CareDuringProcedureCareRatingID != 0)
+                                                {
+                                                    <div class="square3" onclick=selected3(this) style="color:white;background-color:#70a397; text-align:center;border-style:solid">Very Poor</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square3" onclick=selected3(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Very Poor</div>
+                                                }
+                                                if (Model.CareDuringProcedureCareRatingID == Convert.ToInt32(ViewBag.PoorRatingID) && Model.CareDuringProcedureCareRatingID != 0)
+                                                {
+                                                    <div class="square3" onclick=selected3(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Poor</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square3" onclick=selected3(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Poor</div>
+                                                }
+                                                if (Model.CareDuringProcedureCareRatingID == Convert.ToInt32(ViewBag.AdequateRatingID) && Model.CareDuringProcedureCareRatingID != 0)
+                                                {
+                                                    <div class="square3" onclick=selected3(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Adequate</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square3" onclick=selected3(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Adequate</div>
+                                                }
+                                                if (Model.CareDuringProcedureCareRatingID == Convert.ToInt32(ViewBag.GoodRatingID) && Model.CareDuringProcedureCareRatingID != 0)
+                                                {
+                                                    <div class="square3" onclick=selected3(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Good</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square3" onclick=selected3(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Good</div>
+                                                }
+                                                if (Model.CareDuringProcedureCareRatingID == Convert.ToInt32(ViewBag.ExcellentRatingID) && Model.CareDuringProcedureCareRatingID != 0)
+                                                {
+                                                    <div class="square3" onclick=selected3(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Excellent</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square3" onclick=selected3(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Excellent</div>
+                                                }
+                                            }
+                                        }
                                         </div>
                                     </div>
                                 </div>
                                 <div class="lable_title">
-                                    <h2>&nbsp;&nbsp;&nbsp;PHASE OF CARE: END OF LIFE CARE</h2>
+                                    <h2>&nbsp;&nbsp;&nbsp;PHASE OF CARE: END OF LIFE CARE</h2><h5 style="color:red">&nbsp;&nbsp;&nbsp;*</h5>
                                 </div>
-                                <div class="col-md-12">
-                                    <div class="row_bar">
-                                        @Html.TextAreaFor(model => model.EndLifeCare, 5, 200, new { @class = "form-control" })
+                                @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+                                {
+                                    if (Model.SJR1 == 3)
+                                    {
+                                        if (Model.CreatedBy == Convert.ToString(Session["UserName"]) || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                                        {
+                                        <div class="col-md-12">
+                                            <div class="row_bar">
+                                                @Html.TextAreaFor(model => model.EndLifeCare, 5, 200, new { @class = "form-control",  @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        }
+                                        else
+                                        {
+                                        <div class="col-md-12">
+                                            <div class="row_bar">
+                                                @Html.TextAreaFor(model => model.EndLifeCare, 5, 200, new { @class = "form-control", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                    <div class="col-md-12">
+                                        <div class="row_bar">
+                                            @Html.TextAreaFor(model => model.EndLifeCare, 5, 200, new { @class = "form-control" })
+                                        </div>
                                     </div>
-                                </div>
+                                    }
+                                }
+                                else
+                                {
+                                    if (Model.SJR1 == 3)
+                                    {
+                                        if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper()
+                                            || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN"
+                                            || Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper())
+                                        {
+                                            <div class="col-md-12">
+                                                <div class="row_bar">
+                                                    @Html.TextAreaFor(model => model.EndLifeCare, 5, 200, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-md-12">
+                                                <div class="row_bar">
+                                                    @Html.TextAreaFor(model => model.EndLifeCare, 5, 200, new { @class = "form-control", @readonly = true })
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-12">
+                                            <div class="row_bar">
+                                                @Html.TextAreaFor(model => model.EndLifeCare, 5, 200, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    }
+                                }
                                 <div class="col-md-6">
                                     <div class="row_bar">
                                         <span>Please rate the care received by the patient during this phase</span>
@@ -315,58 +952,251 @@
                                 <div class="col-md-6">
                                     <div class="row_bar">
                                         <div class="row">
-                                            @if (Model.EndLifeCareRatingID == Convert.ToInt32(ViewBag.VeryPoorRatingID) && Model.EndLifeCareRatingID != 0)
+                                        @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+                                        {
+                                            if (Model.EndLifeCareRatingID == Convert.ToInt32(ViewBag.VeryPoorRatingID) && Model.EndLifeCareRatingID != 0)
                                             {
-                                                <div class="square4" onclick=selected4(this) style="color:white;background-color:#70a397; text-align:center;border-style:solid">Very Poor</div>
+                                                <div class="square4" style="color:white;background-color:#70a397; text-align:center;border-style:solid">Very Poor</div>
                                             }
                                             else
                                             {
-                                                <div class="square4" onclick=selected4(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Very Poor</div>
+                                                <div class="square4" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Very Poor</div>
                                             }
-                                            @if (Model.EndLifeCareRatingID == Convert.ToInt32(ViewBag.PoorRatingID) && Model.EndLifeCareRatingID != 0)
+                                            if (Model.EndLifeCareRatingID == Convert.ToInt32(ViewBag.PoorRatingID) && Model.EndLifeCareRatingID != 0)
                                             {
-                                                <div class="square4" onclick=selected4(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Poor</div>
+                                                <div class="square4" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Poor</div>
                                             }
                                             else
                                             {
-                                                <div class="square4" onclick=selected4(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Poor</div>
+                                                <div class="square4" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Poor</div>
                                             }
-                                            @if (Model.EndLifeCareRatingID == Convert.ToInt32(ViewBag.AdequateRatingID) && Model.EndLifeCareRatingID != 0)
+                                            if (Model.EndLifeCareRatingID == Convert.ToInt32(ViewBag.AdequateRatingID) && Model.EndLifeCareRatingID != 0)
                                             {
-                                                <div class="square4" onclick=selected4(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Adequate</div>
+                                                <div class="square4" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Adequate</div>
                                             }
                                             else
                                             {
-                                                <div class="square4" onclick=selected4(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Adequate</div>
+                                                <div class="square4" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Adequate</div>
                                             }
-                                            @if (Model.EndLifeCareRatingID == Convert.ToInt32(ViewBag.GoodRatingID) && Model.EndLifeCareRatingID != 0)
+                                            if (Model.EndLifeCareRatingID == Convert.ToInt32(ViewBag.GoodRatingID) && Model.EndLifeCareRatingID != 0)
                                             {
-                                                <div class="square4" onclick=selected4(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Good</div>
+                                                <div class="square4" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Good</div>
                                             }
                                             else
                                             {
-                                                <div class="square4" onclick=selected4(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Good</div>
+                                                <div class="square4" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Good</div>
                                             }
-                                            @if (Model.EndLifeCareRatingID == Convert.ToInt32(ViewBag.ExcellentRatingID) && Model.EndLifeCareRatingID != 0)
+                                            if (Model.EndLifeCareRatingID == Convert.ToInt32(ViewBag.ExcellentRatingID) && Model.EndLifeCareRatingID != 0)
                                             {
-                                                <div class="square4" onclick=selected4(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Excellent</div>
+                                                <div class="square4" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Excellent</div>
                                             }
                                             else
                                             {
-                                                <div class="square4" onclick=selected4(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Excellent</div>
+                                                <div class="square4" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Excellent</div>
                                             }
+                                        }
+                                        else
+                                        {
+                                            if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() 
+                                                || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN"
+                                                || Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper())
+                                            {
+                                                if (Model.EndLifeCareRatingID == Convert.ToInt32(ViewBag.VeryPoorRatingID) && Model.EndLifeCareRatingID != 0)
+                                                {
+                                                    <div class="square4" onclick=selected4(this) style="color:white;background-color:#70a397; text-align:center;border-style:solid">Very Poor</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square4" onclick=selected4(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Very Poor</div>
+                                                }
+                                                if (Model.EndLifeCareRatingID == Convert.ToInt32(ViewBag.PoorRatingID) && Model.EndLifeCareRatingID != 0)
+                                                {
+                                                    <div class="square4" onclick=selected4(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Poor</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square4" onclick=selected4(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Poor</div>
+                                                }
+                                                if (Model.EndLifeCareRatingID == Convert.ToInt32(ViewBag.AdequateRatingID) && Model.EndLifeCareRatingID != 0)
+                                                {
+                                                    <div class="square4" onclick=selected4(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Adequate</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square4" onclick=selected4(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Adequate</div>
+                                                }
+                                                if (Model.EndLifeCareRatingID == Convert.ToInt32(ViewBag.GoodRatingID) && Model.EndLifeCareRatingID != 0)
+                                                {
+                                                    <div class="square4" onclick=selected4(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Good</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square4" onclick=selected4(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Good</div>
+                                                }
+                                                if (Model.EndLifeCareRatingID == Convert.ToInt32(ViewBag.ExcellentRatingID) && Model.EndLifeCareRatingID != 0)
+                                                {
+                                                    <div class="square4" onclick=selected4(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Excellent</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square4" onclick=selected4(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Excellent</div>
+                                                }
+                                            }
+                                            else if (Model.SJR1 == 3)
+                                            {
+                                                if (Model.EndLifeCareRatingID == Convert.ToInt32(ViewBag.VeryPoorRatingID) && Model.EndLifeCareRatingID != 0)
+                                                {
+                                                    <div class="square4" style="color:white;background-color:#70a397; text-align:center;border-style:solid">Very Poor</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square4" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Very Poor</div>
+                                                }
+                                                if (Model.EndLifeCareRatingID == Convert.ToInt32(ViewBag.PoorRatingID) && Model.EndLifeCareRatingID != 0)
+                                                {
+                                                    <div class="square4" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Poor</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square4" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Poor</div>
+                                                }
+                                                if (Model.EndLifeCareRatingID == Convert.ToInt32(ViewBag.AdequateRatingID) && Model.EndLifeCareRatingID != 0)
+                                                {
+                                                    <div class="square4" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Adequate</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square4" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Adequate</div>
+                                                }
+                                                if (Model.EndLifeCareRatingID == Convert.ToInt32(ViewBag.GoodRatingID) && Model.EndLifeCareRatingID != 0)
+                                                {
+                                                    <div class="square4" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Good</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square4" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Good</div>
+                                                }
+                                                if (Model.EndLifeCareRatingID == Convert.ToInt32(ViewBag.ExcellentRatingID) && Model.EndLifeCareRatingID != 0)
+                                                {
+                                                    <div class="square4" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Excellent</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square4" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Excellent</div>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (Model.EndLifeCareRatingID == Convert.ToInt32(ViewBag.VeryPoorRatingID) && Model.EndLifeCareRatingID != 0)
+                                                {
+                                                    <div class="square4" onclick=selected4(this) style="color:white;background-color:#70a397; text-align:center;border-style:solid">Very Poor</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square4" onclick=selected4(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Very Poor</div>
+                                                }
+                                                if (Model.EndLifeCareRatingID == Convert.ToInt32(ViewBag.PoorRatingID) && Model.EndLifeCareRatingID != 0)
+                                                {
+                                                    <div class="square4" onclick=selected4(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Poor</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square4" onclick=selected4(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Poor</div>
+                                                }
+                                                if (Model.EndLifeCareRatingID == Convert.ToInt32(ViewBag.AdequateRatingID) && Model.EndLifeCareRatingID != 0)
+                                                {
+                                                    <div class="square4" onclick=selected4(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Adequate</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square4" onclick=selected4(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Adequate</div>
+                                                }
+                                                if (Model.EndLifeCareRatingID == Convert.ToInt32(ViewBag.GoodRatingID) && Model.EndLifeCareRatingID != 0)
+                                                {
+                                                    <div class="square4" onclick=selected4(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Good</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square4" onclick=selected4(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Good</div>
+                                                }
+                                                if (Model.EndLifeCareRatingID == Convert.ToInt32(ViewBag.ExcellentRatingID) && Model.EndLifeCareRatingID != 0)
+                                                {
+                                                    <div class="square4" onclick=selected4(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Excellent</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square4" onclick=selected4(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Excellent</div>
+                                                }
+                                            }
+                                        }
                                         </div>
                                     </div>
                                 </div>
                                 <div class="lable_title">
-                                    <h2>&nbsp;&nbsp;&nbsp;PHASE OF CARE: OVERALL ASSESSMENT</h2>
+                                    <h2>&nbsp;&nbsp;&nbsp;PHASE OF CARE: OVERALL ASSESSMENT</h2><h5 style="color:red">&nbsp;&nbsp;&nbsp;*</h5>
                                 </div>
-                                <div class="col-md-12">
-                                    <div class="row_bar">
-                                        @Html.TextAreaFor(model => model.OverAllAssessment, 5, 200, new { @class = "form-control" })
-
+                                @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+                                {
+                                    if (Model.SJR1 == 3)
+                                    {
+                                        if (Model.CreatedBy == Convert.ToString(Session["UserName"]) || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                                        {
+                                        <div class="col-md-12">
+                                            <div class="row_bar">
+                                                @Html.TextAreaFor(model => model.OverAllAssessment, 5, 200, new { @class = "form-control", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        }
+                                        else
+                                        {
+                                        <div class="col-md-12">
+                                            <div class="row_bar">
+                                                @Html.TextAreaFor(model => model.OverAllAssessment, 5, 200, new { @class = "form-control", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                    <div class="col-md-12">
+                                        <div class="row_bar">
+                                            @Html.TextAreaFor(model => model.OverAllAssessment, 5, 200, new { @class = "form-control", @readonly = "readonly" })
+                                        </div>
                                     </div>
-                                </div>
+                                    }
+                                }
+                                else
+                                {
+                                    if (Model.SJR1 == 3)
+                                    {
+                                        if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() 
+                                            || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN"
+                                            || Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper())
+                                        {
+                                            <div class="col-md-12">
+                                                <div class="row_bar">
+                                                    @Html.TextAreaFor(model => model.OverAllAssessment, 5, 200, new {  @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-md-12">
+                                                <div class="row_bar">
+                                                    @Html.TextAreaFor(model => model.OverAllAssessment, 5, 200, new { @class = "form-control", @readonly = true })
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-12">
+                                            <div class="row_bar">
+                                                @Html.TextAreaFor(model => model.OverAllAssessment, 5, 200, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    }
+                                }
                                 <div class="col-md-6">
                                     <div class="row_bar">
                                         <span>Please rate the care received by the patient during this phase</span>
@@ -375,45 +1205,182 @@
                                 <div class="col-md-6">
                                     <div class="row_bar">
                                         <div class="row">
-                                            @if (Model.OverAllAssessmentCareRatingID == Convert.ToInt32(ViewBag.VeryPoorRatingID) && Model.OverAllAssessmentCareRatingID != 0)
+                                            @if (Convert.ToBoolean(ViewBag.IsReadOnly))
                                             {
-                                                <div class="square5" onclick=selected5(this) style="color:white;background-color:#70a397; text-align:center;border-style:solid">Very Poor</div>
+                                                if (Model.OverAllAssessmentCareRatingID == Convert.ToInt32(ViewBag.VeryPoorRatingID) && Model.OverAllAssessmentCareRatingID != 0)
+                                                {
+                                                <div class="square5" style="color:white;background-color:#70a397; text-align:center;border-style:solid">Very Poor</div>
+                                                }
+                                                else
+                                                {
+                                                <div class="square5" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Very Poor</div>
+                                                }
+                                                if (Model.OverAllAssessmentCareRatingID == Convert.ToInt32(ViewBag.PoorRatingID) && Model.OverAllAssessmentCareRatingID != 0)
+                                                {
+                                                <div class="square5" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Poor</div>
+                                                }
+                                                else
+                                                {
+                                                <div class="square5" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Poor</div>
+                                                }
+                                                if (Model.OverAllAssessmentCareRatingID == Convert.ToInt32(ViewBag.AdequateRatingID) && Model.OverAllAssessmentCareRatingID != 0)
+                                                {
+                                                <div class="square5" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Adequate</div>
+                                                }
+                                                else
+                                                {
+                                                <div class="square5" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Adequate</div>
+                                                }
+                                                if (Model.OverAllAssessmentCareRatingID == Convert.ToInt32(ViewBag.GoodRatingID) && Model.OverAllAssessmentCareRatingID != 0)
+                                                {
+                                                <div class="square5" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Good</div>
+                                                }
+                                                else
+                                                {
+                                                <div class="square5" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Good</div>
+                                                }
+                                                if (Model.OverAllAssessmentCareRatingID == Convert.ToInt32(ViewBag.ExcellentRatingID) && Model.OverAllAssessmentCareRatingID != 0)
+                                                {
+                                                <div class="square5" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Excellent</div>
+                                                }
+                                                else
+                                                {
+                                                <div class="square5" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Excellent</div>
+                                                }
                                             }
                                             else
                                             {
-                                                <div class="square5" onclick=selected5(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Very Poor</div>
-                                            }
-                                            @if (Model.OverAllAssessmentCareRatingID == Convert.ToInt32(ViewBag.PoorRatingID) && Model.OverAllAssessmentCareRatingID != 0)
-                                            {
-                                                <div class="square5" onclick=selected5(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Poor</div>
-                                            }
-                                            else
-                                            {
-                                                <div class="square5" onclick=selected5(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Poor</div>
-                                            }
-                                            @if (Model.OverAllAssessmentCareRatingID == Convert.ToInt32(ViewBag.AdequateRatingID) && Model.OverAllAssessmentCareRatingID != 0)
-                                            {
-                                                <div class="square5" onclick=selected5(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Adequate</div>
-                                            }
-                                            else
-                                            {
-                                                <div class="square5" onclick=selected5(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Adequate</div>
-                                            }
-                                            @if (Model.OverAllAssessmentCareRatingID == Convert.ToInt32(ViewBag.GoodRatingID) && Model.OverAllAssessmentCareRatingID != 0)
-                                            {
-                                                <div class="square5" onclick=selected5(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Good</div>
-                                            }
-                                            else
-                                            {
-                                                <div class="square5" onclick=selected5(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Good</div>
-                                            }
-                                            @if (Model.OverAllAssessmentCareRatingID == Convert.ToInt32(ViewBag.ExcellentRatingID) && Model.OverAllAssessmentCareRatingID != 0)
-                                            {
-                                                <div class="square5" onclick=selected5(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Excellent</div>
-                                            }
-                                            else
-                                            {
-                                                <div class="square5" onclick=selected5(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Excellent</div>
+                                                if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() 
+                                                    || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN"
+                                                    || Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper())
+                                                {
+                                                    if (Model.OverAllAssessmentCareRatingID == Convert.ToInt32(ViewBag.VeryPoorRatingID) && Model.OverAllAssessmentCareRatingID != 0)
+                                                    {
+                                                        <div class="square5" onclick=selected5(this) style="color:white;background-color:#70a397; text-align:center;border-style:solid">Very Poor</div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="square5" onclick=selected5(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Very Poor</div>
+                                                    }
+                                                    if (Model.OverAllAssessmentCareRatingID == Convert.ToInt32(ViewBag.PoorRatingID) && Model.OverAllAssessmentCareRatingID != 0)
+                                                    {
+                                                        <div class="square5" onclick=selected5(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Poor</div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="square5" onclick=selected5(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Poor</div>
+                                                    }
+                                                    if (Model.OverAllAssessmentCareRatingID == Convert.ToInt32(ViewBag.AdequateRatingID) && Model.OverAllAssessmentCareRatingID != 0)
+                                                    {
+                                                        <div class="square5" onclick=selected5(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Adequate</div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="square5" onclick=selected5(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Adequate</div>
+                                                    }
+                                                    if (Model.OverAllAssessmentCareRatingID == Convert.ToInt32(ViewBag.GoodRatingID) && Model.OverAllAssessmentCareRatingID != 0)
+                                                    {
+                                                        <div class="square5" onclick=selected5(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Good</div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="square5" onclick=selected5(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Good</div>
+                                                    }
+                                                    if (Model.OverAllAssessmentCareRatingID == Convert.ToInt32(ViewBag.ExcellentRatingID) && Model.OverAllAssessmentCareRatingID != 0)
+                                                    {
+                                                        <div class="square5" onclick=selected5(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Excellent</div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="square5" onclick=selected5(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Excellent</div>
+                                                    }
+                                                }
+                                                else if (Model.SJR1 == 3)
+                                                {
+                                                    if (Model.OverAllAssessmentCareRatingID == Convert.ToInt32(ViewBag.VeryPoorRatingID) && Model.OverAllAssessmentCareRatingID != 0)
+                                                    {
+                                                        <div class="square5" style="color:white;background-color:#70a397; text-align:center;border-style:solid">Very Poor</div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="square5" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Very Poor</div>
+                                                    }
+                                                    if (Model.OverAllAssessmentCareRatingID == Convert.ToInt32(ViewBag.PoorRatingID) && Model.OverAllAssessmentCareRatingID != 0)
+                                                    {
+                                                        <div class="square5" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Poor</div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="square5" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Poor</div>
+                                                    }
+                                                    if (Model.OverAllAssessmentCareRatingID == Convert.ToInt32(ViewBag.AdequateRatingID) && Model.OverAllAssessmentCareRatingID != 0)
+                                                    {
+                                                        <div class="square5" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Adequate</div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="square5" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Adequate</div>
+                                                    }
+                                                    if (Model.OverAllAssessmentCareRatingID == Convert.ToInt32(ViewBag.GoodRatingID) && Model.OverAllAssessmentCareRatingID != 0)
+                                                    {
+                                                        <div class="square5" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Good</div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="square5" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Good</div>
+                                                    }
+                                                    if (Model.OverAllAssessmentCareRatingID == Convert.ToInt32(ViewBag.ExcellentRatingID) && Model.OverAllAssessmentCareRatingID != 0)
+                                                    {
+                                                        <div class="square5" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Excellent</div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="square5" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Excellent</div>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    if (Model.OverAllAssessmentCareRatingID == Convert.ToInt32(ViewBag.VeryPoorRatingID) && Model.OverAllAssessmentCareRatingID != 0)
+                                                    {
+                                                        <div class="square5" onclick=selected5(this) style="color:white;background-color:#70a397; text-align:center;border-style:solid">Very Poor</div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="square5" onclick=selected5(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Very Poor</div>
+                                                    }
+                                                    if (Model.OverAllAssessmentCareRatingID == Convert.ToInt32(ViewBag.PoorRatingID) && Model.OverAllAssessmentCareRatingID != 0)
+                                                    {
+                                                        <div class="square5" onclick=selected5(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Poor</div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="square5" onclick=selected5(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Poor</div>
+                                                    }
+                                                    if (Model.OverAllAssessmentCareRatingID == Convert.ToInt32(ViewBag.AdequateRatingID) && Model.OverAllAssessmentCareRatingID != 0)
+                                                    {
+                                                        <div class="square5" onclick=selected5(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Adequate</div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="square5" onclick=selected5(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Adequate</div>
+                                                    }
+                                                    if (Model.OverAllAssessmentCareRatingID == Convert.ToInt32(ViewBag.GoodRatingID) && Model.OverAllAssessmentCareRatingID != 0)
+                                                    {
+                                                        <div class="square5" onclick=selected5(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Good</div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="square5" onclick=selected5(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Good</div>
+                                                    }
+                                                    if (Model.OverAllAssessmentCareRatingID == Convert.ToInt32(ViewBag.ExcellentRatingID) && Model.OverAllAssessmentCareRatingID != 0)
+                                                    {
+                                                        <div class="square5" onclick=selected5(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Excellent</div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="square5" onclick=selected5(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Excellent</div>
+                                                    }
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -433,57 +1400,240 @@
                                         <div class="row">
                                             <br />
                                             <br />
-                                            @if (Model.QualityDocumentation == Convert.ToInt32(ViewBag.VeryPoorRatingID) && Model.QualityDocumentation != 0)
+                                        @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+                                        {
+                                            if (Model.QualityDocumentation == Convert.ToInt32(ViewBag.VeryPoorRatingID) && Model.QualityDocumentation != 0)
                                             {
-                                                <div class="square6" onclick=selected6(this) style="color:white;background-color:#70a397; text-align:center;border-style:solid">Very Poor</div>
+                                                <div class="square6" style="color:white;background-color:#70a397; text-align:center;border-style:solid">Very Poor</div>
                                             }
                                             else
                                             {
-                                                <div class="square6" onclick=selected6(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Very Poor</div>
+                                                <div class="square6" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Very Poor</div>
                                             }
-                                            @if (Model.QualityDocumentation == Convert.ToInt32(ViewBag.PoorRatingID) && Model.QualityDocumentation != 0)
+                                            if (Model.QualityDocumentation == Convert.ToInt32(ViewBag.PoorRatingID) && Model.QualityDocumentation != 0)
                                             {
-                                                <div class="square6" onclick=selected6(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Poor</div>
-                                            }
-                                            else
-                                            {
-                                                <div class="square6" onclick=selected6(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Poor</div>
-                                            }
-                                            @if (Model.QualityDocumentation == Convert.ToInt32(ViewBag.AdequateRatingID) && Model.QualityDocumentation != 0)
-                                            {
-                                                <div class="square6" onclick=selected6(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Adequate</div>
+                                                <div class="square6" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Poor</div>
                                             }
                                             else
                                             {
+                                                <div class="square6" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Poor</div>
+                                            }
+                                            if (Model.QualityDocumentation == Convert.ToInt32(ViewBag.AdequateRatingID) && Model.QualityDocumentation != 0)
+                                            {
+                                                <div class="square6" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Adequate</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="square6" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Adequate</div>
+                                            }
+                                            if (Model.QualityDocumentation == Convert.ToInt32(ViewBag.GoodRatingID) && Model.QualityDocumentation != 0)
+                                            {
+                                                <div class="square6" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Good</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="square6" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Good</div>
+                                            }
+                                            if (Model.QualityDocumentation == Convert.ToInt32(ViewBag.ExcellentRatingID) && Model.QualityDocumentation != 0)
+                                            {
+                                                <div class="square6" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Excellent</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="square6" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Excellent</div>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() 
+                                                || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN"
+                                                || Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper())
+                                            {
+                                                if (Model.QualityDocumentation == Convert.ToInt32(ViewBag.VeryPoorRatingID) && Model.QualityDocumentation != 0)
+                                                {
+                                                    <div class="square6" onclick=selected6(this) style="color:white;background-color:#70a397; text-align:center;border-style:solid">Very Poor</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square6" onclick=selected6(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Very Poor</div>
+                                                }
+                                                if (Model.QualityDocumentation == Convert.ToInt32(ViewBag.PoorRatingID) && Model.QualityDocumentation != 0)
+                                                {
+                                                    <div class="square6" onclick=selected6(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Poor</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square6" onclick=selected6(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Poor</div>
+                                                }
+                                                if (Model.QualityDocumentation == Convert.ToInt32(ViewBag.AdequateRatingID) && Model.QualityDocumentation != 0)
+                                                {
+                                                    <div class="square6" onclick=selected6(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Adequate</div>
+                                                }
+                                                else
+                                                {
                                                 <div class="square6" onclick=selected6(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Adequate</div>
+                                                }
+                                                if (Model.QualityDocumentation == Convert.ToInt32(ViewBag.GoodRatingID) && Model.QualityDocumentation != 0)
+                                                {
+                                                    <div class="square6" onclick=selected6(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Good</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square6" onclick=selected6(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Good</div>
+                                                }
+                                                if (Model.QualityDocumentation == Convert.ToInt32(ViewBag.ExcellentRatingID) && Model.QualityDocumentation != 0)
+                                                {
+                                                    <div class="square6" onclick=selected6(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Excellent</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square6" onclick=selected6(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Excellent</div>
+                                                }
                                             }
-                                            @if (Model.QualityDocumentation == Convert.ToInt32(ViewBag.GoodRatingID) && Model.QualityDocumentation != 0)
+                                            else if (Model.SJR1 == 3)
                                             {
-                                                <div class="square6" onclick=selected6(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Good</div>
+                                                if (Model.QualityDocumentation == Convert.ToInt32(ViewBag.VeryPoorRatingID) && Model.QualityDocumentation != 0)
+                                                {
+                                                    <div class="square6" style="color:white;background-color:#70a397; text-align:center;border-style:solid">Very Poor</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square6" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Very Poor</div>
+                                                }
+                                                if (Model.QualityDocumentation == Convert.ToInt32(ViewBag.PoorRatingID) && Model.QualityDocumentation != 0)
+                                                {
+                                                    <div class="square6" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Poor</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square6" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Poor</div>
+                                                }
+                                                if (Model.QualityDocumentation == Convert.ToInt32(ViewBag.AdequateRatingID) && Model.QualityDocumentation != 0)
+                                                {
+                                                    <div class="square6" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Adequate</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square6" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Adequate</div>
+                                                }
+                                                if (Model.QualityDocumentation == Convert.ToInt32(ViewBag.GoodRatingID) && Model.QualityDocumentation != 0)
+                                                {
+                                                    <div class="square6" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Good</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square6" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Good</div>
+                                                }
+                                                if (Model.QualityDocumentation == Convert.ToInt32(ViewBag.ExcellentRatingID) && Model.QualityDocumentation != 0)
+                                                {
+                                                    <div class="square6" style="color:white;background-color:#70a397;text-align:center;border-style:solid">Excellent</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square6" style="color:#70a397;background-color:white;text-align:center;border-style:solid">Excellent</div>
+                                                }
                                             }
                                             else
                                             {
-                                                <div class="square6" onclick=selected6(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Good</div>
+                                                if (Model.QualityDocumentation == Convert.ToInt32(ViewBag.VeryPoorRatingID) && Model.QualityDocumentation != 0)
+                                                {
+                                                    <div class="square6" onclick=selected6(this) style="color:white;background-color:#70a397; text-align:center;border-style:solid">Very Poor</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square6" onclick=selected6(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Very Poor</div>
+                                                }
+                                                if (Model.QualityDocumentation == Convert.ToInt32(ViewBag.PoorRatingID) && Model.QualityDocumentation != 0)
+                                                {
+                                                    <div class="square6" onclick=selected6(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Poor</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square6" onclick=selected6(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Poor</div>
+                                                }
+                                                if (Model.QualityDocumentation == Convert.ToInt32(ViewBag.AdequateRatingID) && Model.QualityDocumentation != 0)
+                                                {
+                                                    <div class="square6" onclick=selected6(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Adequate</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square6" onclick=selected6(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Adequate</div>
+                                                }
+                                                if (Model.QualityDocumentation == Convert.ToInt32(ViewBag.GoodRatingID) && Model.QualityDocumentation != 0)
+                                                {
+                                                    <div class="square6" onclick=selected6(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Good</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square6" onclick=selected6(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Good</div>
+                                                }
+                                                if (Model.QualityDocumentation == Convert.ToInt32(ViewBag.ExcellentRatingID) && Model.QualityDocumentation != 0)
+                                                {
+                                                    <div class="square6" onclick=selected6(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Excellent</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="square6" onclick=selected6(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Excellent</div>
+                                                }
                                             }
-                                            @if (Model.QualityDocumentation == Convert.ToInt32(ViewBag.ExcellentRatingID) && Model.QualityDocumentation != 0)
-                                            {
-                                                <div class="square6" onclick=selected6(this) style="color:white;background-color:#70a397;text-align:center;border-style:solid">Excellent</div>
-                                            }
-                                            else
-                                            {
-                                                <div class="square6" onclick=selected6(this) style="color:#70a397;background-color:white;text-align:center;border-style:solid">Excellent</div>
-                                            }
-
+                                        }
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="pull-right">
-                        <button id="BtnNext" type="submit" name="BtnNext" class="btn btn-primary btn-lg">Save & Next</button>
-                    </div>
-                }
+                    if (Convert.ToBoolean(ViewBag.IsReadOnly))
+                    {
+                        if (Model.SJR1 == 3)
+                        {
+                            if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                            {
+                            <div class="pull-right">
+                                <button id="BtnNext" disabled type="submit" name="BtnNext" class="btn btn-primary btn-lg">Save & Next</button>
+                            </div>
+                            }
+                            else
+                            {
+                                <div class="pull-right">
+                                    <button id="BtnNext" disabled type="submit" name="BtnNext" class="btn btn-primary btn-lg">Save & Next</button>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="pull-right">
+                                <button id="BtnNext" disabled type="submit" name="BtnNext" class="btn btn-primary btn-lg">Save & Next</button>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        if (Model.SJR1 == 3)
+                        {
+                            if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() 
+                                || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN"
+                                || Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper())
+                            {
+                                <div class="pull-right">
+                                    <button id="BtnNext" type="submit" name="BtnNext" class="btn btn-primary btn-lg">Save & Next</button>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="pull-right">
+                                    <button id="BtnNext" disabled type="submit" name="BtnNext" class="btn btn-primary btn-lg">Save & Next</button>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="pull-right">
+                                <button id="BtnNext" type="submit" name="BtnNext" class="btn btn-primary btn-lg">Save & Next</button>
+                            </div>
+                        }
+                    }
+            }
             </div>
         </div>
         <br />

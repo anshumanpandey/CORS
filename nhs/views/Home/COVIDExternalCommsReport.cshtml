@@ -1,0 +1,1163 @@
+﻿@model NHS.Common.DTO.COVIDExternalCommsReport
+@using NHS.Models;
+@{
+    ViewBag.Title = "COVID 19 External Comms Tracker";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+<style>
+    @*.square {
+        height: 120px;
+        width: 240px;
+        border: solid black 1px;
+        border-color: #d3d3d3;
+        border-style: solid;
+        padding: 10px 0 0 0;
+    }
+
+    *@ .square-large {
+        height: 530px;
+        width: 1150px;
+        border: solid black 1px;
+        border-color: #000000;
+        border-style: solid;
+        padding: 40px 0 20px 0;
+    }
+
+    .square-large1 {
+        height: 300px;
+        width: 1050px;
+        border: solid black 1px;
+        border-color: #0072c6;
+        border-style: solid;
+        padding: 6px 0 0 0;
+    }
+
+    @*.square {
+        height: 120px;
+        width: 246px;
+        border-left: solid black 1px;
+        border-bottom: solid black 1px;
+        border-right: solid black 1px;
+        border-color: #d3d3d3;
+        border-style: solid;
+        padding: 10px 0 0 0;
+    }
+
+    *@ .ds_doted_line1 {
+        /* border-bottom: 2px #212529 dotted; */
+        border-right: 2px #212529 solid;
+        padding: 5px 5px 5px 5px;
+        height: 83px;
+    }
+
+    .ds_doted_line2{
+	/*border-bottom:2px #212529 dotted;*/
+	border-right:2px #212529 solid;
+	padding:5px 5px 5px 5px;
+}
+
+    .ds_doted_line2a {
+        /*border-bottom:2px #212529 dotted;*/
+        border: 1px #212529 solid;
+        padding: 5px 5px 5px 5px;
+    }
+
+    .ds_doted_line3 {
+        border-top: 1px #70a397 solid;
+        padding: 5px 5px 5px 5px;
+        margin: 0 0 -9px 0;
+    }
+
+    .ds_doted_line4 {
+        /*border-bottom:2px #212529 dotted;*/
+        border-right: 1px #70a397 solid;
+        padding: 5px 5px 5px 5px;
+        height: 83px;
+    }
+
+    .ds_doted_line5 {
+        /*border-bottom: 1px #70a397 solid;
+    border-right:2px #212529 dotted;*/
+        padding: 5px 5px 5px 5px;
+        height: 83px;
+    }
+</style>
+}
+<div>
+    <h2 align="center">CHESS &amp; CPNS Tracking Dashboard</h2>
+    <div style="width:95%; padding:0 10px 20px 0;min-height: 550px;" class="square-large">
+        <h4 style="color:#70a397;margin: 6px 0 19px 0;font-size: 30px;font-weight: bold;" align="center">CHESS</h4>
+        <table width="100%">
+            <tr></tr>
+            <tr>
+                <td><h6 style="color:#70a397; width:100%;font-size: 17px;font-weight: bold;">Positive Notification</h6></td>
+            </tr>
+            <tr><td>&nbsp;</td></tr>
+            <tr>
+                <td width="33%">
+                    <table width="100%">
+                        @*
+                <tr><td class="ds_doted_line1" style="" align="center"><span style="font-family:verdana;">Deaths <br />(YTD)</span></td></tr>*@
+                        <tr>
+                            <td style="padding:0 5px 0 5px;">
+                                <div class="ds_doted_line2a">
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <td height="30" align="center" valign="middle"><strong>Positives (YTD)</strong> </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                    <tr style="border-bottom:1px #CCCCCC solid; border-top:1px #CCCCCC solid;">
+                                                        <td width="50%" align="center" valign="middle" class="ds_doted_line2">
+                                                            <a href="@Url.Action("COVIDPatientListing", "Home", new { pPageNo = 1, searchfield = "", pageSize = 10, SortColumn = "", frompager = false,
+                                                                    IsExternalComms = true,
+                                                                    IsBreathing = false,
+                                                                    IsLevelOfCare = false,
+                                                                    PatientLocation = "",
+                                                                    IsCurrentIPCount = false,
+                                                                    IsNotUpdatedLast20HoursCount = false,
+                                                                    IsNotUpdatedLast12HoursCount = false,
+                                                                    IsUpdatedLast12HoursCount = false,
+                                                                    NoOxygen = false,
+                                                                    Oxygen = false,
+                                                                    NonInvasiveVentilation = false,
+                                                                    MechanicalVentilation = false,
+                                                                    NotUpdatedAtAll = false,
+                                                                    IsNewPositiveYTD = true,
+                                                                    IsNewPositiveYTDPending = false,
+                                                                    IsICUHDUStepUpYTD = false,
+                                                                    IsICUHDUStepUpYTDPending = false,
+                                                                    IsICUHDUStepDownYTD = false,
+                                                                    IsICUHDUStepDownYTDPending = false,
+                                                                    IsDischargeDeathYTD = false,
+                                                                    IsDischargeDeathYTDPending = false,
+                                                                    IsDischargesYTD = false,
+                                                                    IsDischargesYTDPending = false,
+                                                                    IsPositiveDeathsYTD = false,
+                                                                    IsPositiveDeathsYTDPending = false,
+                                                                    IsDeathYTD = false,
+                                                                    IsDeathYTDPending = false,
+                                                                    IsDeathDetected = false,
+                                                                    IsDeathDetectedPending = false,
+                                                                    IsDeathDiagnosed = false,
+                                                                    IsDeathDiagnosedPending = false,
+                                                                    IsDeathReAdmission = false,
+                                                                    IsDeathReAdmissionPending = false,
+                                                                    fromfilter = true
+                                                                })" style="font-size:30px; color:#0072c6 !important; text-decoration:underline;">@Model.CHESSNewPositiveYTD</a>
+                                        </td>
+                                        <td width="50%" align="center" valign="middle">
+                                            <a href="@Url.Action("COVIDPatientListing", "Home", new { pPageNo = 1, searchfield = "", pageSize = 10, SortColumn = "", frompager = false,
+                                                                    IsExternalComms = true,
+                                                                    IsBreathing = false,
+                                                                    IsLevelOfCare = false,
+                                                                    PatientLocation = "",
+                                                                    IsCurrentIPCount = false,
+                                                                    IsNotUpdatedLast20HoursCount = false,
+                                                                    IsNotUpdatedLast12HoursCount = false,
+                                                                    IsUpdatedLast12HoursCount = false,
+                                                                    NoOxygen = false,
+                                                                    Oxygen = false,
+                                                                    NonInvasiveVentilation = false,
+                                                                    MechanicalVentilation = false,
+                                                                    NotUpdatedAtAll = false,
+                                                                    IsNewPositiveYTD = false,
+                                                                    IsNewPositiveYTDPending = true,
+                                                                    IsICUHDUStepUpYTD = false,
+                                                                    IsICUHDUStepUpYTDPending = false,
+                                                                    IsICUHDUStepDownYTD = false,
+                                                                    IsICUHDUStepDownYTDPending = false,
+                                                                    IsDischargeDeathYTD = false,
+                                                                    IsDischargeDeathYTDPending = false,
+                                                                    IsDischargesYTD = false,
+                                                                    IsDischargesYTDPending = false,
+                                                                    IsPositiveDeathsYTD = false,
+                                                                    IsPositiveDeathsYTDPending = false,
+                                                                    IsDeathYTD = false,
+                                                                    IsDeathYTDPending = false,
+                                                                    IsDeathDetected = false,
+                                                                    IsDeathDetectedPending = false,
+                                                                    IsDeathDiagnosed = false,
+                                                                    IsDeathDiagnosedPending = false,
+                                                                    IsDeathReAdmission = false,
+                                                                    IsDeathReAdmissionPending = false,
+                                                                    fromfilter = true
+                                                                })" style="font-size:30px; color:#fec600 !important; text-decoration:underline;">@Model.CHESSNewPositiveYTDPending</a>
+</td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" valign="middle">Total</td>
+                                        <td align="center" valign="middle">Pending</td>
+                                    </tr>
+                                </table>
+
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+            </tr>
+            </table>
+            </td>
+                <td width="33%">
+                    <table width="100%">
+                        @*
+                <tr><td class="ds_doted_line1" style="" align="center"><span style="font-family:verdana;">Deaths <br />(YTD)</span></td></tr>*@
+                        <tr>
+                            <td style="padding:0 5px 0 5px;">
+                                <div class="ds_doted_line2a">
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <td height="30" align="center" valign="middle"><strong>ICU/HDU Step Up (YTD)</strong> </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                    <tr style="border-bottom:1px #CCCCCC solid; border-top:1px #CCCCCC solid;">
+                                                        <td width="50%" align="center" valign="middle" class="ds_doted_line2">
+                                                            <a href="@Url.Action("COVIDPatientListing", "Home", new { pPageNo = 1, searchfield = "", pageSize = 10, SortColumn = "", frompager = false,
+                                                                    IsExternalComms = true,
+                                                                    IsBreathing = false,
+                                                                    IsLevelOfCare = false,
+                                                                    PatientLocation = "",
+                                                                    IsCurrentIPCount = false,
+                                                                    IsNotUpdatedLast20HoursCount = false,
+                                                                    IsNotUpdatedLast12HoursCount = false,
+                                                                    IsUpdatedLast12HoursCount = false,
+                                                                    NoOxygen = false,
+                                                                    Oxygen = false,
+                                                                    NonInvasiveVentilation = false,
+                                                                    MechanicalVentilation = false,
+                                                                    NotUpdatedAtAll = false,
+                                                                    IsNewPositiveYTD = false,
+                                                                    IsNewPositiveYTDPending = false,
+                                                                    IsICUHDUStepUpYTD = true,
+                                                                    IsICUHDUStepUpYTDPending = false,
+                                                                    IsICUHDUStepDownYTD = false,
+                                                                    IsICUHDUStepDownYTDPending = false,
+                                                                    IsDischargeDeathYTD = false,
+                                                                    IsDischargeDeathYTDPending = false,
+                                                                    IsDischargesYTD = false,
+                                                                    IsDischargesYTDPending = false,
+                                                                    IsPositiveDeathsYTD = false,
+                                                                    IsPositiveDeathsYTDPending = false,
+                                                                    IsDeathYTD = false,
+                                                                    IsDeathYTDPending = false,
+                                                                    IsDeathDetected = false,
+                                                                    IsDeathDetectedPending = false,
+                                                                    IsDeathDiagnosed = false,
+                                                                    IsDeathDiagnosedPending = false,
+                                                                    IsDeathReAdmission = false,
+                                                                    IsDeathReAdmissionPending = false,
+                                                                    fromfilter = true
+                                                                })" style="font-size:30px; color:#0072c6 !important; text-decoration:underline;">@Model.CHESSICUHDUStepUpYTD</a>
+                                                        </td>
+                                                        <td width="50%" align="center" valign="middle">
+                                                            <a href="@Url.Action("COVIDPatientListing", "Home", new { pPageNo = 1, searchfield = "", pageSize = 10, SortColumn = "", frompager = false,
+                                                                    IsExternalComms = true,
+                                                                    IsBreathing = false,
+                                                                    IsLevelOfCare = false,
+                                                                    PatientLocation = "",
+                                                                    IsCurrentIPCount = false,
+                                                                    IsNotUpdatedLast20HoursCount = false,
+                                                                    IsNotUpdatedLast12HoursCount = false,
+                                                                    IsUpdatedLast12HoursCount = false,
+                                                                    NoOxygen = false,
+                                                                    Oxygen = false,
+                                                                    NonInvasiveVentilation = false,
+                                                                    MechanicalVentilation = false,
+                                                                    NotUpdatedAtAll = false,
+                                                                    IsNewPositiveYTD = false,
+                                                                    IsNewPositiveYTDPending = false,
+                                                                    IsICUHDUStepUpYTD = false,
+                                                                    IsICUHDUStepUpYTDPending = true,
+                                                                    IsICUHDUStepDownYTD = false,
+                                                                    IsICUHDUStepDownYTDPending = false,
+                                                                    IsDischargeDeathYTD = false,
+                                                                    IsDischargeDeathYTDPending = false,
+                                                                    IsDischargesYTD = false,
+                                                                    IsDischargesYTDPending = false,
+                                                                    IsPositiveDeathsYTD = false,
+                                                                    IsPositiveDeathsYTDPending = false,
+                                                                    IsDeathYTD = false,
+                                                                    IsDeathYTDPending = false,
+                                                                    IsDeathDetected = false,
+                                                                    IsDeathDetectedPending = false,
+                                                                    IsDeathDiagnosed = false,
+                                                                    IsDeathDiagnosedPending = false,
+                                                                    IsDeathReAdmission = false,
+                                                                    IsDeathReAdmissionPending = false,
+                                                                    fromfilter = true
+                                                                })" style="font-size:30px; color:#fec600 !important; text-decoration:underline;">@Model.CHESSICUHDUStepUpYTDPending</a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" valign="middle">Total</td>
+                                                        <td align="center" valign="middle">Pending</td>
+                                                    </tr>
+                                                </table>
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td width="33%">
+                    <table width="100%">
+                        @*
+                <tr><td class="ds_doted_line1" style="" align="center"><span style="font-family:verdana;">Deaths <br />(YTD)</span></td></tr>*@
+                        <tr>
+                            <td style="padding:0 5px 0 5px;">
+                                <div class="ds_doted_line2a">
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <td height="30" align="center" valign="middle"><strong>ICU/HDU Step Down (YTD)</strong> </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                    <tr style="border-bottom:1px #CCCCCC solid; border-top:1px #CCCCCC solid;">
+                                                        <td width="50%" align="center" valign="middle" class="ds_doted_line2">
+                                                            <a href="@Url.Action("COVIDPatientListing", "Home", new { pPageNo = 1, searchfield = "", pageSize = 10, SortColumn = "", frompager = false,
+                                                                    IsExternalComms = true,
+                                                                    IsBreathing = false,
+                                                                    IsLevelOfCare = false,
+                                                                    PatientLocation = "",
+                                                                    IsCurrentIPCount = false,
+                                                                    IsNotUpdatedLast20HoursCount = false,
+                                                                    IsNotUpdatedLast12HoursCount = false,
+                                                                    IsUpdatedLast12HoursCount = false,
+                                                                    NoOxygen = false,
+                                                                    Oxygen = false,
+                                                                    NonInvasiveVentilation = false,
+                                                                    MechanicalVentilation = false,
+                                                                    NotUpdatedAtAll = false,
+                                                                    IsNewPositiveYTD = false,
+                                                                    IsNewPositiveYTDPending = false,
+                                                                    IsICUHDUStepUpYTD = false,
+                                                                    IsICUHDUStepUpYTDPending = false,
+                                                                    IsICUHDUStepDownYTD = true,
+                                                                    IsICUHDUStepDownYTDPending = false,
+                                                                    IsDischargeDeathYTD = false,
+                                                                    IsDischargeDeathYTDPending = false,
+                                                                    IsDischargesYTD = false,
+                                                                    IsDischargesYTDPending = false,
+                                                                    IsPositiveDeathsYTD = false,
+                                                                    IsPositiveDeathsYTDPending = false,
+                                                                    IsDeathYTD = false,
+                                                                    IsDeathYTDPending = false,
+                                                                    IsDeathDetected = false,
+                                                                    IsDeathDetectedPending = false,
+                                                                    IsDeathDiagnosed = false,
+                                                                    IsDeathDiagnosedPending = false,
+                                                                    IsDeathReAdmission = false,
+                                                                    IsDeathReAdmissionPending = false,
+                                                                    fromfilter = true
+                                                                })" style="font-size:30px; color:#0072c6 !important; text-decoration:underline;">@Model.CHESSICUHDUStepDownYTD</a>
+                                                        </td>
+                                                        <td width="50%" align="center" valign="middle">
+                                                            <a href="@Url.Action("COVIDPatientListing", "Home", new { pPageNo = 1, searchfield = "", pageSize = 10, SortColumn = "", frompager = false,
+                                                                    IsExternalComms = true,
+                                                                    IsBreathing = false,
+                                                                    IsLevelOfCare = false,
+                                                                    PatientLocation = "",
+                                                                    IsCurrentIPCount = false,
+                                                                    IsNotUpdatedLast20HoursCount = false,
+                                                                    IsNotUpdatedLast12HoursCount = false,
+                                                                    IsUpdatedLast12HoursCount = false,
+                                                                    NoOxygen = false,
+                                                                    Oxygen = false,
+                                                                    NonInvasiveVentilation = false,
+                                                                    MechanicalVentilation = false,
+                                                                    NotUpdatedAtAll = false,
+                                                                    IsNewPositiveYTD = false,
+                                                                    IsNewPositiveYTDPending = false,
+                                                                    IsICUHDUStepUpYTD = false,
+                                                                    IsICUHDUStepUpYTDPending = false,
+                                                                    IsICUHDUStepDownYTD = false,
+                                                                    IsICUHDUStepDownYTDPending = true,
+                                                                    IsDischargeDeathYTD = false,
+                                                                    IsDischargeDeathYTDPending = false,
+                                                                    IsDischargesYTD = false,
+                                                                    IsDischargesYTDPending = false,
+                                                                    IsPositiveDeathsYTD = false,
+                                                                    IsPositiveDeathsYTDPending = false,
+                                                                    IsDeathYTD = false,
+                                                                    IsDeathYTDPending = false,
+                                                                    IsDeathDetected = false,
+                                                                    IsDeathDetectedPending = false,
+                                                                    IsDeathDiagnosed = false,
+                                                                    IsDeathDiagnosedPending = false,
+                                                                    IsDeathReAdmission = false,
+                                                                    IsDeathReAdmissionPending = false,
+                                                                    fromfilter = true
+                                                                })" style="font-size:30px; color:#fec600 !important; text-decoration:underline;">@Model.CHESSICUHDUStepDownYTDPending</a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" valign="middle">Total</td>
+                                                        <td align="center" valign="middle">Pending</td>
+                                                    </tr>
+                                                </table>
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                
+                
+            </tr>
+        </table>
+        <br />
+        <table width="100%">
+            <tr>
+                <td><h6 style="color:#70a397; width:100%;font-size: 17px;font-weight: bold;margin: 24px 0 0 0;">Discharge/Death Notification</h6></td>
+            </tr>
+            <tr><td>&nbsp;</td></tr>
+            <tr>
+                <td width="33%">
+                    <table width="100%">
+                        @*
+                <tr><td class="ds_doted_line1" style="" align="center"><span style="font-family:verdana;">Deaths <br />(YTD)</span></td></tr>*@
+                        <tr>
+                            <td style="padding:0 5px 0 5px;">
+                                <div class="ds_doted_line2a">
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <td height="30" align="center" valign="middle"><strong>Discharges / Deaths (YTD)</strong> </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                    <tr style="border-bottom:1px #CCCCCC solid; border-top:1px #CCCCCC solid;">
+                                                        <td width="50%" align="center" valign="middle" class="ds_doted_line2">
+                                                            <a href="@Url.Action("COVIDPatientListing", "Home", new { pPageNo = 1, searchfield = "", pageSize = 10, SortColumn = "", frompager = false,
+                                                                    IsExternalComms = true,
+                                                                    IsBreathing = false,
+                                                                    IsLevelOfCare = false,
+                                                                    PatientLocation = "",
+                                                                    IsCurrentIPCount = false,
+                                                                    IsNotUpdatedLast20HoursCount = false,
+                                                                    IsNotUpdatedLast12HoursCount = false,
+                                                                    IsUpdatedLast12HoursCount = false,
+                                                                    NoOxygen = false,
+                                                                    Oxygen = false,
+                                                                    NonInvasiveVentilation = false,
+                                                                    MechanicalVentilation = false,
+                                                                    NotUpdatedAtAll = false,
+                                                                    IsNewPositiveYTD = false,
+                                                                    IsNewPositiveYTDPending = false,
+                                                                    IsICUHDUStepUpYTD = false,
+                                                                    IsICUHDUStepUpYTDPending = false,
+                                                                    IsICUHDUStepDownYTD = false,
+                                                                    IsICUHDUStepDownYTDPending = false,
+                                                                    IsDischargeDeathYTD = true,
+                                                                    IsDischargeDeathYTDPending = false,
+                                                                    IsDischargesYTD = false,
+                                                                    IsDischargesYTDPending = false,
+                                                                    IsPositiveDeathsYTD = false,
+                                                                    IsPositiveDeathsYTDPending = false,
+                                                                    IsDeathYTD = false,
+                                                                    IsDeathYTDPending = false,
+                                                                    IsDeathDetected = false,
+                                                                    IsDeathDetectedPending = false,
+                                                                    IsDeathDiagnosed = false,
+                                                                    IsDeathDiagnosedPending = false,
+                                                                    IsDeathReAdmission = false,
+                                                                    IsDeathReAdmissionPending = false,
+                                                                    fromfilter = true
+                                                                })" style="font-size:30px; color:#0072c6 !important; text-decoration:underline;">@Model.CHESSDischargeDeathYTD</a>
+                                                        </td>
+                                                        <td width="50%" align="center" valign="middle">
+                                                            <a href="@Url.Action("COVIDPatientListing", "Home", new { pPageNo = 1, searchfield = "", pageSize = 10, SortColumn = "", frompager = false,
+                                                                    IsExternalComms = true,
+                                                                    IsBreathing = false,
+                                                                    IsLevelOfCare = false,
+                                                                    PatientLocation = "",
+                                                                    IsCurrentIPCount = false,
+                                                                    IsNotUpdatedLast20HoursCount = false,
+                                                                    IsNotUpdatedLast12HoursCount = false,
+                                                                    IsUpdatedLast12HoursCount = false,
+                                                                    NoOxygen = false,
+                                                                    Oxygen = false,
+                                                                    NonInvasiveVentilation = false,
+                                                                    MechanicalVentilation = false,
+                                                                    NotUpdatedAtAll = false,
+                                                                    IsNewPositiveYTD = false,
+                                                                    IsNewPositiveYTDPending = false,
+                                                                    IsICUHDUStepUpYTD = false,
+                                                                    IsICUHDUStepUpYTDPending = false,
+                                                                    IsICUHDUStepDownYTD = false,
+                                                                    IsICUHDUStepDownYTDPending = false,
+                                                                    IsDischargeDeathYTD = false,
+                                                                    IsDischargeDeathYTDPending = true,
+                                                                    IsDischargesYTD = false,
+                                                                    IsDischargesYTDPending = false,
+                                                                    IsPositiveDeathsYTD = false,
+                                                                    IsPositiveDeathsYTDPending = false,
+                                                                    IsDeathYTD = false,
+                                                                    IsDeathYTDPending = false,
+                                                                    IsDeathDetected = false,
+                                                                    IsDeathDetectedPending = false,
+                                                                    IsDeathDiagnosed = false,
+                                                                    IsDeathDiagnosedPending = false,
+                                                                    IsDeathReAdmission = false,
+                                                                    IsDeathReAdmissionPending = false,
+                                                                    fromfilter = true
+                                                                })" style="font-size:30px; color:#fec600 !important; text-decoration:underline;">@Model.CHESSDischargeDeathYTDPending</a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" valign="middle">Total</td>
+                                                        <td align="center" valign="middle">Pending</td>
+                                                    </tr>
+                                                </table>
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td width="33%">
+                    <table width="100%">
+                        @*
+                <tr><td class="ds_doted_line1" style="" align="center"><span style="font-family:verdana;">Deaths <br />(YTD)</span></td></tr>*@
+                        <tr>
+                            <td style="padding:0 5px 0 5px;">
+                                <div class="ds_doted_line2a">
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <td height="30" align="center" valign="middle"><strong>Discharges (YTD)</strong> </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                    <tr style="border-bottom:1px #CCCCCC solid; border-top:1px #CCCCCC solid;">
+                                                        <td width="50%" align="center" valign="middle" class="ds_doted_line2">
+                                                            <a href="@Url.Action("COVIDPatientListing", "Home", new { pPageNo = 1, searchfield = "", pageSize = 10, SortColumn = "", frompager = false,
+                                                                    IsExternalComms = true,
+                                                                    IsBreathing = false,
+                                                                    IsLevelOfCare = false,
+                                                                    PatientLocation = "",
+                                                                    IsCurrentIPCount = false,
+                                                                    IsNotUpdatedLast20HoursCount = false,
+                                                                    IsNotUpdatedLast12HoursCount = false,
+                                                                    IsUpdatedLast12HoursCount = false,
+                                                                    NoOxygen = false,
+                                                                    Oxygen = false,
+                                                                    NonInvasiveVentilation = false,
+                                                                    MechanicalVentilation = false,
+                                                                    NotUpdatedAtAll = false,
+                                                                    IsNewPositiveYTD = false,
+                                                                    IsNewPositiveYTDPending = false,
+                                                                    IsICUHDUStepUpYTD = false,
+                                                                    IsICUHDUStepUpYTDPending = false,
+                                                                    IsICUHDUStepDownYTD = false,
+                                                                    IsICUHDUStepDownYTDPending = false,
+                                                                    IsDischargeDeathYTD = false,
+                                                                    IsDischargeDeathYTDPending = false,
+                                                                    IsDischargesYTD = true,
+                                                                    IsDischargesYTDPending = false,
+                                                                    IsPositiveDeathsYTD = false,
+                                                                    IsPositiveDeathsYTDPending = false,
+                                                                    IsDeathYTD = false,
+                                                                    IsDeathYTDPending = false,
+                                                                    IsDeathDetected = false,
+                                                                    IsDeathDetectedPending = false,
+                                                                    IsDeathDiagnosed = false,
+                                                                    IsDeathDiagnosedPending = false,
+                                                                    IsDeathReAdmission = false,
+                                                                    IsDeathReAdmissionPending = false,
+                                                                    fromfilter = true
+                                                                })" style="font-size:30px; color:#0072c6 !important; text-decoration:underline;">@Model.CHESSDischargesYTD</a>
+                                                        </td>
+                                                        <td width="50%" align="center" valign="middle">
+                                                            <a href="@Url.Action("COVIDPatientListing", "Home", new { pPageNo = 1, searchfield = "", pageSize = 10, SortColumn = "", frompager = false,
+                                                                    IsExternalComms = true,
+                                                                    IsBreathing = false,
+                                                                    IsLevelOfCare = false,
+                                                                    PatientLocation = "",
+                                                                    IsCurrentIPCount = false,
+                                                                    IsNotUpdatedLast20HoursCount = false,
+                                                                    IsNotUpdatedLast12HoursCount = false,
+                                                                    IsUpdatedLast12HoursCount = false,
+                                                                    NoOxygen = false,
+                                                                    Oxygen = false,
+                                                                    NonInvasiveVentilation = false,
+                                                                    MechanicalVentilation = false,
+                                                                    NotUpdatedAtAll = false,
+                                                                    IsNewPositiveYTD = false,
+                                                                    IsNewPositiveYTDPending = false,
+                                                                    IsICUHDUStepUpYTD = false,
+                                                                    IsICUHDUStepUpYTDPending = false,
+                                                                    IsICUHDUStepDownYTD = false,
+                                                                    IsICUHDUStepDownYTDPending = false,
+                                                                    IsDischargeDeathYTD = false,
+                                                                    IsDischargeDeathYTDPending = false,
+                                                                    IsDischargesYTD = false,
+                                                                    IsDischargesYTDPending = true,
+                                                                    IsPositiveDeathsYTD = false,
+                                                                    IsPositiveDeathsYTDPending = false,
+                                                                    IsDeathYTD = false,
+                                                                    IsDeathYTDPending = false,
+                                                                    IsDeathDetected = false,
+                                                                    IsDeathDetectedPending = false,
+                                                                    IsDeathDiagnosed = false,
+                                                                    IsDeathDiagnosedPending = false,
+                                                                    IsDeathReAdmission = false,
+                                                                    IsDeathReAdmissionPending = false,
+                                                                    fromfilter = true
+                                                                })" style="font-size:30px; color:#fec600 !important; text-decoration:underline;">@Model.CHESSDischargesYTDPending</a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" valign="middle">Total</td>
+                                                        <td align="center" valign="middle">Pending</td>
+                                                    </tr>
+                                                </table>
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td width="33%">
+                    <table width="100%">
+                        @*
+                <tr><td class="ds_doted_line1" style="" align="center"><span style="font-family:verdana;">Deaths <br />(YTD)</span></td></tr>*@
+                        <tr>
+                            <td style="padding:0 5px 0 5px;">
+                                <div class="ds_doted_line2a">
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <td height="30" align="center" valign="middle"><strong>Deaths (YTD)</strong> </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                    <tr style="border-bottom:1px #CCCCCC solid; border-top:1px #CCCCCC solid;">
+                                                        <td width="50%" align="center" valign="middle" class="ds_doted_line2">
+                                                            <a href="@Url.Action("COVIDPatientListing", "Home", new { pPageNo = 1, searchfield = "", pageSize = 10, SortColumn = "", frompager = false,
+                                                                    IsExternalComms = true,
+                                                                    IsBreathing = false,
+                                                                    IsLevelOfCare = false,
+                                                                    PatientLocation = "",
+                                                                    IsCurrentIPCount = false,
+                                                                    IsNotUpdatedLast20HoursCount = false,
+                                                                    IsNotUpdatedLast12HoursCount = false,
+                                                                    IsUpdatedLast12HoursCount = false,
+                                                                    NoOxygen = false,
+                                                                    Oxygen = false,
+                                                                    NonInvasiveVentilation = false,
+                                                                    MechanicalVentilation = false,
+                                                                    NotUpdatedAtAll = false,
+                                                                    IsNewPositiveYTD = false,
+                                                                    IsNewPositiveYTDPending = false,
+                                                                    IsICUHDUStepUpYTD = false,
+                                                                    IsICUHDUStepUpYTDPending = false,
+                                                                    IsICUHDUStepDownYTD = false,
+                                                                    IsICUHDUStepDownYTDPending = false,
+                                                                    IsDischargeDeathYTD = false,
+                                                                    IsDischargeDeathYTDPending = false,
+                                                                    IsDischargesYTD = false,
+                                                                    IsDischargesYTDPending = false,
+                                                                    IsPositiveDeathsYTD = true,
+                                                                    IsPositiveDeathsYTDPending = false,
+                                                                    IsDeathYTD = false,
+                                                                    IsDeathYTDPending = false,
+                                                                    IsDeathDetected = false,
+                                                                    IsDeathDetectedPending = false,
+                                                                    IsDeathDiagnosed = false,
+                                                                    IsDeathDiagnosedPending = false,
+                                                                    IsDeathReAdmission = false,
+                                                                    IsDeathReAdmissionPending = false,
+                                                                    fromfilter = true
+                                                                })" style="font-size:30px; color:#0072c6 !important; text-decoration:underline;">@Model.CHESSPositiveDeathsYTD</a>
+                                                        </td>
+                                                        <td width="50%" align="center" valign="middle">
+                                                            <a href="@Url.Action("COVIDPatientListing", "Home", new { pPageNo = 1, searchfield = "", pageSize = 10, SortColumn = "", frompager = false,
+                                                                    IsExternalComms = true,
+                                                                    IsBreathing = false,
+                                                                    IsLevelOfCare = false,
+                                                                    PatientLocation = "",
+                                                                    IsCurrentIPCount = false,
+                                                                    IsNotUpdatedLast20HoursCount = false,
+                                                                    IsNotUpdatedLast12HoursCount = false,
+                                                                    IsUpdatedLast12HoursCount = false,
+                                                                    NoOxygen = false,
+                                                                    Oxygen = false,
+                                                                    NonInvasiveVentilation = false,
+                                                                    MechanicalVentilation = false,
+                                                                    NotUpdatedAtAll = false,
+                                                                    IsNewPositiveYTD = false,
+                                                                    IsNewPositiveYTDPending = false,
+                                                                    IsICUHDUStepUpYTD = false,
+                                                                    IsICUHDUStepUpYTDPending = false,
+                                                                    IsICUHDUStepDownYTD = false,
+                                                                    IsICUHDUStepDownYTDPending = false,
+                                                                    IsDischargeDeathYTD = false,
+                                                                    IsDischargeDeathYTDPending = false,
+                                                                    IsDischargesYTD = false,
+                                                                    IsDischargesYTDPending = false,
+                                                                    IsPositiveDeathsYTD = false,
+                                                                    IsPositiveDeathsYTDPending = true,
+                                                                    IsDeathYTD = false,
+                                                                    IsDeathYTDPending = false,
+                                                                    IsDeathDetected = false,
+                                                                    IsDeathDetectedPending = false,
+                                                                    IsDeathDiagnosed = false,
+                                                                    IsDeathDiagnosedPending = false,
+                                                                    IsDeathReAdmission = false,
+                                                                    IsDeathReAdmissionPending = false,
+                                                                    fromfilter = true
+                                                                })" style="font-size:30px; color:#fec600 !important; text-decoration:underline;">@Model.CHESSPositiveDeathsYTDPending</a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" valign="middle">Total</td>
+                                                        <td align="center" valign="middle">Pending</td>
+                                                    </tr>
+                                                </table>
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                
+               
+            </tr>
+        </table>
+        <br />
+    </div>
+    <br />
+    <div align="center" style="width:95%" class="square-large1">
+        <h4 style="color:#70a397;margin: 6px 0 -5px 0;font-size: 30px;font-weight: bold;">CPNS</h4>
+        <table width="100%">
+            <tr></tr>
+            <tr>
+                <td><h6 style="color:#70a397; width:100%;font-size: 17px;font-weight: bold;margin: 24px 0 0 0;">Deaths Notification</h6></td>
+            </tr>
+            <tr><td>&nbsp;</td></tr>
+            <tr>
+                <td width="25%">
+                    <table width="100%">
+                        @*
+                        <tr><td class="ds_doted_line1" style="" align="center"><span style="font-family:verdana;">Deaths <br />(YTD)</span></td></tr>*@
+                        <tr><td style="padding:0 5px 0 5px;">
+                                <div class="ds_doted_line2a">
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <td  height="30" align="center" valign="middle"><strong>Deaths (YTD)</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                    <tr  style="border-bottom:1px #CCCCCC solid; border-top:1px #CCCCCC solid;">
+                                                        <td width="50%" align="center" valign="middle" class="ds_doted_line2"><a href="@Url.Action("COVIDPatientListing", "Home", new { pPageNo = 1, searchfield = "", pageSize = 10, SortColumn = "", frompager = false,
+                                                IsExternalComms = true,
+                                                IsBreathing = false,
+                                                IsLevelOfCare = false,
+                                                PatientLocation = "",
+                                                IsCurrentIPCount = false,
+                                                IsNotUpdatedLast20HoursCount = false,
+                                                IsNotUpdatedLast12HoursCount = false,
+                                                IsUpdatedLast12HoursCount = false,
+                                                NoOxygen = false,
+                                                Oxygen = false,
+                                                NonInvasiveVentilation = false,
+                                                MechanicalVentilation = false,
+                                                NotUpdatedAtAll = false,
+                                                IsNewPositive = false,
+                                                IsPostiveBacklog = false,
+                                                IsPositiveBacklogPending = false,
+                                                IsPositiveLive = false,
+                                                IsPositiveLivePending = false,
+                                                IsDischargeDeath = false,
+                                                IsDischargeDeathBacklog = false,
+                                                IsDischargeDeathBacklogPending = false,
+                                                IsDischargeDeathLive = false,
+                                                IsDischargeDeathLivePending = false,
+                                                IsDeathYTD = true,
+                                                IsDeathYTDPending = false,
+                                                IsDeathDetected = false,
+                                                IsDeathDetectedPending = false,
+                                                IsDeathDiagnosed = false,
+                                                IsDeathDiagnosedPending = false,
+                                                IsDeathReAdmission = false,
+                                                IsDeathReAdmissionPending = false,
+                                                fromfilter = true
+                                            })" style="font-size:30px; color:#0072c6 !important;"><u>@Model.CPNSDeathYTD</u></a></td>
+                                                        <td width="50%" align="center" valign="middle"><a href="@Url.Action("COVIDPatientListing", "Home", new { pPageNo = 1, searchfield = "", pageSize = 10, SortColumn = "", frompager = false,
+                                                IsExternalComms = true,
+                                                IsBreathing = false,
+                                                IsLevelOfCare = false,
+                                                PatientLocation = "",
+                                                IsCurrentIPCount = false,
+                                                IsNotUpdatedLast20HoursCount = false,
+                                                IsNotUpdatedLast12HoursCount = false,
+                                                IsUpdatedLast12HoursCount = false,
+                                                NoOxygen = false,
+                                                Oxygen = false,
+                                                NonInvasiveVentilation = false,
+                                                MechanicalVentilation = false,
+                                                NotUpdatedAtAll = false,
+                                                IsNewPositive = false,
+                                                IsPostiveBacklog = false,
+                                                IsPositiveBacklogPending = false,
+                                                IsPositiveLive = false,
+                                                IsPositiveLivePending = false,
+                                                IsDischargeDeath = false,
+                                                IsDischargeDeathBacklog = false,
+                                                IsDischargeDeathBacklogPending = false,
+                                                IsDischargeDeathLive = false,
+                                                IsDischargeDeathLivePending = false,
+                                                IsDeathYTD = false,
+                                                IsDeathYTDPending = true,
+                                                IsDeathDetected = false,
+                                                IsDeathDetectedPending = false,
+                                                IsDeathDiagnosed = false,
+                                                IsDeathDiagnosedPending = false,
+                                                IsDeathReAdmission = false,
+                                                IsDeathReAdmissionPending = false,
+                                                fromfilter = true
+                                            })" style="font-size:30px; color:#fec600 !important;"><u>@Model.CPNSDeathYTDPending</u></a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" valign="middle">Total</td>
+                                                        <td align="center" valign="middle">Pending</td>
+                                                    </tr>
+                                                </table>
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td></tr>
+                    </table>
+                </td>
+                <td width="25%">
+                    <table width="100%">
+                        @*
+                        <tr><td class="ds_doted_line1" style="" align="center"><span style="font-family:verdana;">Deaths <br />(YTD)</span></td></tr>*@
+                        <tr>
+                            <td style="padding:0 5px 0 0;">
+                                <div class="ds_doted_line2a">
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <td height="30" align="center" valign="middle"><strong>Detected Deaths</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                    <tr style="border-bottom:1px #CCCCCC solid; border-top:1px #CCCCCC solid;">
+                                                        <td width="50%" align="center" valign="middle" class="ds_doted_line2"><a href="@Url.Action("COVIDPatientListing", "Home", new { pPageNo = 1, searchfield = "", pageSize = 10, SortColumn = "", frompager = false,
+                                                IsExternalComms = true,
+                                                IsBreathing = false,
+                                                IsLevelOfCare = false,
+                                                PatientLocation = "",
+                                                IsCurrentIPCount = false,
+                                                IsNotUpdatedLast20HoursCount = false,
+                                                IsNotUpdatedLast12HoursCount = false,
+                                                IsUpdatedLast12HoursCount = false,
+                                                NoOxygen = false,
+                                                Oxygen = false,
+                                                NonInvasiveVentilation = false,
+                                                MechanicalVentilation = false,
+                                                NotUpdatedAtAll = false,
+                                                IsNewPositive = false,
+                                                IsPostiveBacklog = false,
+                                                IsPositiveBacklogPending = false,
+                                                IsPositiveLive = false,
+                                                IsPositiveLivePending = false,
+                                                IsDischargeDeath = false,
+                                                IsDischargeDeathBacklog = false,
+                                                IsDischargeDeathBacklogPending = false,
+                                                IsDischargeDeathLive = false,
+                                                IsDischargeDeathLivePending = false,
+                                                IsDeathYTD = false,
+                                                IsDeathYTDPending = false,
+                                                IsDeathDetected = true,
+                                                IsDeathDetectedPending = false,
+                                                IsDeathDiagnosed = false,
+                                                IsDeathDiagnosedPending = false,
+                                                IsDeathReAdmission = false,
+                                                IsDeathReAdmissionPending = false,
+                                                fromfilter = true
+                                            })" style="font-size:30px; color:#0072c6 !important;"><u>@Model.CPNSDeathDetected</u></a></td>
+                                                        <td width="50%" align="center" valign="middle"><a href="@Url.Action("COVIDPatientListing", "Home", new { pPageNo = 1, searchfield = "", pageSize = 10, SortColumn = "", frompager = false,
+                                                IsExternalComms = true,
+                                                IsBreathing = false,
+                                                IsLevelOfCare = false,
+                                                PatientLocation = "",
+                                                IsCurrentIPCount = false,
+                                                IsNotUpdatedLast20HoursCount = false,
+                                                IsNotUpdatedLast12HoursCount = false,
+                                                IsUpdatedLast12HoursCount = false,
+                                                NoOxygen = false,
+                                                Oxygen = false,
+                                                NonInvasiveVentilation = false,
+                                                MechanicalVentilation = false,
+                                                NotUpdatedAtAll = false,
+                                                IsNewPositive = false,
+                                                IsPostiveBacklog = false,
+                                                IsPositiveBacklogPending = false,
+                                                IsPositiveLive = false,
+                                                IsPositiveLivePending = false,
+                                                IsDischargeDeath = false,
+                                                IsDischargeDeathBacklog = false,
+                                                IsDischargeDeathBacklogPending = false,
+                                                IsDischargeDeathLive = false,
+                                                IsDischargeDeathLivePending = false,
+                                                IsDeathYTD = false,
+                                                IsDeathYTDPending = false,
+                                                IsDeathDetected = false,
+                                                IsDeathDetectedPending = true,
+                                                IsDeathDiagnosed = false,
+                                                IsDeathDiagnosedPending = false,
+                                                IsDeathReAdmission = false,
+                                                IsDeathReAdmissionPending = false,
+                                                fromfilter = true
+                                            })" style="font-size:30px; color:#fec600 !important;"><u>@Model.CPNSDeathDetectedPending</u></a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" valign="middle">Total</td>
+                                                        <td align="center" valign="middle">Pending</td>
+                                                    </tr>
+                                                </table>
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+               
+                <td width="25%">
+                    <table width="100%">
+                        @*
+                        <tr><td class="ds_doted_line1" style="" align="center"><span style="font-family:verdana;">Deaths <br />(YTD)</span></td></tr>*@
+                        <tr>
+                            <td style="padding:0 5px 0 0;">
+                                <div class="ds_doted_line2a">
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <td height="30" align="center" valign="middle"><strong>Diagnosed Deaths</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                    <tr style="border-bottom:1px #CCCCCC solid; border-top:1px #CCCCCC solid;">
+                                                        <td width="50%" align="center" valign="middle" class="ds_doted_line2"><a href="@Url.Action("COVIDPatientListing", "Home", new { pPageNo = 1, searchfield = "", pageSize = 10, SortColumn = "", frompager = false,
+                                                IsExternalComms = true,
+                                                IsBreathing = false,
+                                                IsLevelOfCare = false,
+                                                PatientLocation = "",
+                                                IsCurrentIPCount = false,
+                                                IsNotUpdatedLast20HoursCount = false,
+                                                IsNotUpdatedLast12HoursCount = false,
+                                                IsUpdatedLast12HoursCount = false,
+                                                NoOxygen = false,
+                                                Oxygen = false,
+                                                NonInvasiveVentilation = false,
+                                                MechanicalVentilation = false,
+                                                NotUpdatedAtAll = false,
+                                                IsNewPositive = false,
+                                                IsPostiveBacklog = false,
+                                                IsPositiveBacklogPending = false,
+                                                IsPositiveLive = false,
+                                                IsPositiveLivePending = false,
+                                                IsDischargeDeath = false,
+                                                IsDischargeDeathBacklog = false,
+                                                IsDischargeDeathBacklogPending = false,
+                                                IsDischargeDeathLive = false,
+                                                IsDischargeDeathLivePending = false,
+                                                IsDeathYTD = false,
+                                                IsDeathYTDPending = false,
+                                                IsDeathDetected = false,
+                                                IsDeathDetectedPending = false,
+                                                IsDeathDiagnosed = true,
+                                                IsDeathDiagnosedPending = false,
+                                                IsDeathReAdmission = false,
+                                                IsDeathReAdmissionPending = false,
+                                                fromfilter = true
+                                            })" style="font-size:30px; color:#0072c6 !important;"><u>@Model.CPNSDeathDiagnosed</u></a></td>
+                                                        <td width="50%" align="center" valign="middle"><a href="@Url.Action("COVIDPatientListing", "Home", new { pPageNo = 1, searchfield = "", pageSize = 10, SortColumn = "", frompager = false,
+                                                IsExternalComms = true,
+                                                IsBreathing = false,
+                                                IsLevelOfCare = false,
+                                                PatientLocation = "",
+                                                IsCurrentIPCount = false,
+                                                IsNotUpdatedLast20HoursCount = false,
+                                                IsNotUpdatedLast12HoursCount = false,
+                                                IsUpdatedLast12HoursCount = false,
+                                                NoOxygen = false,
+                                                Oxygen = false,
+                                                NonInvasiveVentilation = false,
+                                                MechanicalVentilation = false,
+                                                NotUpdatedAtAll = false,
+                                                IsNewPositive = false,
+                                                IsPostiveBacklog = false,
+                                                IsPositiveBacklogPending = false,
+                                                IsPositiveLive = false,
+                                                IsPositiveLivePending = false,
+                                                IsDischargeDeath = false,
+                                                IsDischargeDeathBacklog = false,
+                                                IsDischargeDeathBacklogPending = false,
+                                                IsDischargeDeathLive = false,
+                                                IsDischargeDeathLivePending = false,
+                                                IsDeathYTD = false,
+                                                IsDeathYTDPending = false,
+                                                IsDeathDetected = false,
+                                                IsDeathDetectedPending = false,
+                                                IsDeathDiagnosed = false,
+                                                IsDeathDiagnosedPending = true,
+                                                IsDeathReAdmission = false,
+                                                IsDeathReAdmissionPending = false,
+                                                fromfilter = true
+                                            })" style="font-size:30px; color:#fec600 !important;"><u>@Model.CPNSDeathDiagnosedPending</u></a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" valign="middle">Total</td>
+                                                        <td align="center" valign="middle">Pending</td>
+                                                    </tr>
+                                                </table>
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td width="25%">
+                    <table width="100%">
+                        @*
+                        <tr><td class="ds_doted_line1" style="" align="center"><span style="font-family:verdana;">Deaths <br />(YTD)</span></td></tr>*@
+                        <tr>
+                            <td style="padding:0 5px 0 0;">
+                                <div class="ds_doted_line2a">
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <td height="30" align="center" valign="middle"><strong>RE Admission Deaths</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                    <tr style="border-bottom:1px #CCCCCC solid; border-top:1px #CCCCCC solid;">
+                                                        <td width="50%" align="center" valign="middle" class="ds_doted_line2"><a href="@Url.Action("COVIDPatientListing", "Home", new { pPageNo = 1, searchfield = "", pageSize = 10, SortColumn = "", frompager = false,
+                                                IsExternalComms = true,
+                                                IsBreathing = false,
+                                                IsLevelOfCare = false,
+                                                PatientLocation = "",
+                                                IsCurrentIPCount = false,
+                                                IsNotUpdatedLast20HoursCount = false,
+                                                IsNotUpdatedLast12HoursCount = false,
+                                                IsUpdatedLast12HoursCount = false,
+                                                NoOxygen = false,
+                                                Oxygen = false,
+                                                NonInvasiveVentilation = false,
+                                                MechanicalVentilation = false,
+                                                NotUpdatedAtAll = false,
+                                                IsNewPositive = false,
+                                                IsPostiveBacklog = false,
+                                                IsPositiveBacklogPending = false,
+                                                IsPositiveLive = false,
+                                                IsPositiveLivePending = false,
+                                                IsDischargeDeath = false,
+                                                IsDischargeDeathBacklog = false,
+                                                IsDischargeDeathBacklogPending = false,
+                                                IsDischargeDeathLive = false,
+                                                IsDischargeDeathLivePending = false,
+                                                IsDeathYTD = false,
+                                                IsDeathYTDPending = false,
+                                                IsDeathDetected = false,
+                                                IsDeathDetectedPending = false,
+                                                IsDeathDiagnosed = false,
+                                                IsDeathDiagnosedPending = false,
+                                                IsDeathReAdmission = true,
+                                                IsDeathReAdmissionPending = false,
+                                                fromfilter = true
+                                            })" style="font-size:30px; color:#0072c6 !important;"><u>@Model.CPNSDeathReAdmission</u></a></td>
+                                                        <td width="50%" align="center" valign="middle"><a href="@Url.Action("COVIDPatientListing", "Home", new { pPageNo = 1, searchfield = "", pageSize = 10, SortColumn = "", frompager = false,
+                                                IsExternalComms = true,
+                                                IsBreathing = false,
+                                                IsLevelOfCare = false,
+                                                PatientLocation = "",
+                                                IsCurrentIPCount = false,
+                                                IsNotUpdatedLast20HoursCount = false,
+                                                IsNotUpdatedLast12HoursCount = false,
+                                                IsUpdatedLast12HoursCount = false,
+                                                NoOxygen = false,
+                                                Oxygen = false,
+                                                NonInvasiveVentilation = false,
+                                                MechanicalVentilation = false,
+                                                NotUpdatedAtAll = false,
+                                                IsNewPositive = false,
+                                                IsPostiveBacklog = false,
+                                                IsPositiveBacklogPending = false,
+                                                IsPositiveLive = false,
+                                                IsPositiveLivePending = false,
+                                                IsDischargeDeath = false,
+                                                IsDischargeDeathBacklog = false,
+                                                IsDischargeDeathBacklogPending = false,
+                                                IsDischargeDeathLive = false,
+                                                IsDischargeDeathLivePending = false,
+                                                IsDeathYTD = false,
+                                                IsDeathYTDPending = false,
+                                                IsDeathDetected = false,
+                                                IsDeathDetectedPending = false,
+                                                IsDeathDiagnosed = false,
+                                                IsDeathDiagnosedPending = false,
+                                                IsDeathReAdmission = false,
+                                                IsDeathReAdmissionPending = true,
+                                                fromfilter = true
+                                            })" style="font-size:30px; color:#fec600 !important;"><u>@Model.CPNSDeathReAdmissionPending</u></a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" valign="middle">Total</td>
+                                                        <td align="center" valign="middle">Pending</td>
+                                                    </tr>
+                                                </table>
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <br /><br />

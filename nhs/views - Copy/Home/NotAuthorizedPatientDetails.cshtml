@@ -1,0 +1,17 @@
+﻿@model NHS.Common.clsPatientDetails
+@{
+    ViewBag.Title = "Not Authorized";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br /><br /><br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+            <a href="@Url.Action("MortalityReview", "home",  new { id=Model.ID })"><img src="~/images/BackArrowimages.png" width="50" height="40" alt=""></a>
+            @*<a herf="/home/MedicalExaminerDashboard"><img src="~/images/back-158491_640.png" width="120" height="90" alt="" ></a>*@
+        </div>
+    </div>
+    <br /><br /><br /><br /><br /><br /><br />
+    <h2 align="center">Not Authorized. Only Medical Examiners and Administrators have access to this module.</h2>
+</div>

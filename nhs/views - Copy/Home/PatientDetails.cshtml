@@ -1,0 +1,888 @@
+﻿@model NHS.Common.clsPatientDetails
+
+@{
+    /**/
+
+    ViewBag.Title = "Patient details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .square {
+        height: 30px;
+        width: 100px;
+        background-color: forestgreen;
+    }
+</style>
+<br />
+<br />
+<div class="container">
+    <div class="row form-group">
+        <div class="col-xs-12 col-lg-12">
+            <div class="row" align="right">
+                <div class="col-md-12">
+                    <input type="image" src="~/images/Delete.png" width="30" height="30" alt="Submit" id="btnClose1" title="Close" />
+                </div>
+            </div>
+
+            <ul class="nav nav-pills nav-justified thumbnail setup-panel">
+                <li class="active">
+                    <a href='@Url.Action("PatientDetails", "home", new { id=Model.ID })'>
+                        <h4 class="list-group-item-heading">
+                            Patient details
+                        </h4>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href='@Url.Action("MedicalExaminerReview", "home", new { id=Model.ID })'>
+                        <h4 class="list-group-item-heading">
+                            Medical Examiner<br /> Scrutiny
+                        </h4>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href='@Url.Action("MedicalExaminerDecision", "home", new { id = Model.ID})'>
+                        <h4 class="list-group-item-heading">
+                            Medical Examiner Decision
+                        </h4>
+                    </a>
+                </li>
+               
+                <li class="disabled">
+                    <a href='@Url.Action("SJRAssessmentTriage", "home", new { id = Model.ID})'>
+                        <h4 class="list-group-item-heading">
+                            SJR Assessment<br /> Triage
+                        </h4>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href='@Url.Action("OtherReferrals", "home", new { id = Model.ID})'>
+                        <h4 class="list-group-item-heading">
+                            Other Referrals
+                        </h4>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href='@Url.Action("PositiveFeedback", "home", new { id = Model.ID})'>
+                        <h4 class="list-group-item-heading">
+                            Positive Feedback
+                        </h4>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href='@Url.Action("Declaration", "home", new { id = Model.ID})'>
+                        <h4 class="list-group-item-heading">
+                            Declaration
+                        </h4>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href='@Url.Action("FinalOutcome", "home", new { id = Model.ID})'>
+                        <h4 class="list-group-item-heading">
+                            Final Outcome<br />(MEO)
+                        </h4>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row setup-content" id="step-1">
+        <div class="col-xs-12 col-lg-12">
+            <div class="lable_title">
+                <h2>Patient Details (to be pulled from EPR) </h2>
+            </div>
+            @using (Html.BeginForm("PatientDetails", "Home", FormMethod.Post, new { @id = Model.ID }))
+            {
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="row_bar">
+                            Patient Name
+                            @Html.HiddenFor(model => model.ID)
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row_bar">
+                            <span>@Model.PatientName</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row_bar">
+                            Patient ID
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row_bar">
+                            <span>@Model.PatientId</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row_bar">
+                            Date of Birth
+                        </div>
+                    </div>
+                    @if (Model.DOB != "")
+                    {
+                        <div class="col-md-3">
+                            <div class="row_bar">
+                                <span>@Model.DOB</span>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-3">
+                            <div class="row_bar">
+                                <span>Pending</span>
+                            </div>
+                        </div>
+                    }
+                    <div class="col-md-3">
+                        <div class="row_bar">
+                            Gender
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="row_bar">
+                            @if (Model.Gender.Trim().ToUpper().Equals("PENDING"))
+                            {
+                                <span>Pending</span>
+                            }
+                            else if (Model.Gender.Trim().ToUpper().Equals("OTHER"))
+                            {
+                                <span>Other</span>
+                            }
+                            else
+                            {
+                                if (Model.Gender.Trim().ToUpper().IndexOf("FEMALE") > 0)
+                                {
+                                    <span>Female</span>
+                                }
+                                else
+                                {
+                                    <span>Male</span>
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row_bar">
+                            Ward (on discharge)
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row_bar">
+                            <span>@Model.DischargeWard</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row_bar">
+                            Consultant (on discharge)
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row_bar">
+                            <span>@Model.DischargeConsutantName</span>
+                        </div>
+                    </div>
+                    @*<div class="col-md-6">
+    <div class="table_margin">
+        <table width="100%" style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;">
+            <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                <td width="40%" style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Patient ID</b></td>
+                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.PatientId</td>
+            </tr>
+            <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Patient Name</b></td>
+                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.PatientName</td>
+
+            </tr>
+            <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>DOB</b></td>
+                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.DOB</td>
+            </tr>
+        </table>
+    </div>
+    </div>*@
+                        <div class="col-md-3">
+                            <div class="row_bar">
+                                Admission Method
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="row_bar">
+                                <span>@Model.AdmissionType</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row_bar">
+                                &nbsp;
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="row_bar">
+                                Day/ Date of Admission
+                            </div>
+                        </div>
+                        @if (!Model.Gender.Trim().ToUpper().Equals("PENDING"))
+                        {
+                            <div class="col-md-3">
+                                <div class="row_bar">
+                                    <span>@Model.DateofAdmission.ToString("dddd, dd/MM/yyyy")</span>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-3">
+                                <div class="row_bar">
+                                    <span>Pending</span>
+                                </div>
+                            </div>
+                        }
+                        <div class="col-md-3">
+                            <div class="row_bar">
+                                Day/ Date of Death
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="row_bar">
+                                <span>@Model.DateofDeath.ToString("dddd, dd/MM/yyyy")</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="row_bar">
+                                Time of admission
+                            </div>
+                        </div>
+                        @if (Model.TimeofAdmission != "")
+                        {
+                            <div class="col-md-3">
+                                <div class="row_bar">
+                                    <span>@Convert.ToDateTime(Model.TimeofAdmission).ToString("hh:mm tt")</span>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-3">
+                                <div class="row_bar">
+                                    <span>&nbsp;</span>
+                                </div>
+                            </div>
+                        }
+                        <div class="col-md-3">
+                            <div class="row_bar">
+                                Time of death
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="row_bar">
+                                <span>@Model.TimeofDeath</span>
+
+                               @if (!String.IsNullOrEmpty(Model.TimeofDeath))
+                               {
+                                   if (Convert.ToInt32(Model.TimeofDeath.Split(':')[0]) < 12)
+                                   {
+                                    <span> AM </span>
+                                   }
+                                   else
+                                   {
+                                    <span> PM </span>
+                                   }
+                               }
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="row_bar">
+                                Occupation
+                            </div>
+                        </div>
+                        @if (Model.MedTriage == 3)
+                        {
+                            <div class="col-md-3">
+                                <div class="row_bar">
+                                    <span>@Model.Occupation</span>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-3">
+                                <div class="row_bar">
+                                    @Html.EditorFor(model => model.Occupation, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+                        }
+                        <div class="col-md-6">
+                            <div class="row_bar">
+                                <span></span>
+                            </div>
+                        </div>
+                        @if (Model.MedTriage == 3)
+                        {
+                            <div class="col-md-12">
+                                <div class="row_bar">
+                                    @if (Model.DataQualityIssuesIdentified == true)
+                                    {
+                                        <input type="checkbox" disabled="disabled" id="DataQualityIssuesIdentified" checked name="DataQualityIssuesIdentified"><span> Data Quality Issues Identified? </span>
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" disabled="disabled" id="DataQualityIssuesIdentified" name="DataQualityIssuesIdentified"><span> Data Quality Issues Identified? </span>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-12">
+                                <div class="row_bar">
+                                    @if (Model.DataQualityIssuesIdentified == true)
+                                    {
+                                        <input type="checkbox" id="DataQualityIssuesIdentified" checked name="DataQualityIssuesIdentified"><span> Data Quality Issues Identified? </span>
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" id="DataQualityIssuesIdentified" name="DataQualityIssuesIdentified"><span> Data Quality Issues Identified? </span>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        @if (Model.MedTriage == 3)
+                        {
+                            if (Model.DataQualityIssuesIdentified == true)
+                            {
+                                <div id="dataqualitycomment" style="display:block;" class="col-md-12">
+                                    <div class="row_bar">
+                                        Comments
+                                        @Html.TextAreaFor(model => model.DataQualityIssueComments, 10, 100, new { @class = "form-control", @readonly = true })
+                                        @*@Html.ValidationMessageFor(model => model.objclsMedicalExaminerReview.Comments, "", new { @class = "text-danger" })*@
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div id="dataqualitycomment" style="display:none;" class="col-md-12">
+                                    <div class="row_bar">
+                                        Comments
+                                        @Html.TextAreaFor(model => model.DataQualityIssueComments, 10, 100, new { @class = "form-control", @readonly = true })
+                                        @*@Html.ValidationMessageFor(model => model.objclsMedicalExaminerReview.Comments, "", new { @class = "text-danger" })*@
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            if (Model.DataQualityIssuesIdentified == true)
+                            {
+                                <div id="dataqualitycomment" style="display:block;" class="col-md-12">
+                                    <div class="row_bar">
+                                        Comments
+                                        @Html.TextAreaFor(model => model.DataQualityIssueComments, 10, 100, new { @class = "form-control" })
+                                        @*@Html.ValidationMessageFor(model => model.objclsMedicalExaminerReview.Comments, "", new { @class = "text-danger" })*@
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div id="dataqualitycomment" style="display:none;" class="col-md-12">
+                                    <div class="row_bar">
+                                        Comments
+                                        @Html.TextAreaFor(model => model.DataQualityIssueComments, 10, 100, new { @class = "form-control" })
+                                        @*@Html.ValidationMessageFor(model => model.objclsMedicalExaminerReview.Comments, "", new { @class = "text-danger" })*@
+                                    </div>
+                                </div>
+                            }
+                        }
+                        @if (Model.MedTriage == 3)
+                        {
+                            <div class="col-md-12">
+                                <div class="row_bar">
+                                    @if (Model.UrgentMEReview == true)
+                                    {
+                                        <input type="checkbox" disabled="disabled" id="UrgentMEReview" checked name="UrgentMEReview"><span> Urgent ME Review Required? </span>
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" disabled="disabled" id="UrgentMEReview" name="UrgentMEReview"><span> Urgent ME Review Required? </span>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-12">
+                                <div class="row_bar">
+                                    @if (Model.UrgentMEReview == true)
+                                    {
+                                        <input type="checkbox" id="UrgentMEReview" checked name="UrgentMEReview"><span> Urgent ME Review Required? </span>
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" id="UrgentMEReview" name="UrgentMEReview"><span> Urgent ME Review Required? </span>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        @if (Model.MedTriage == 3)
+                        {
+                            if (Model.UrgentMEReview == true)
+                            {
+                                <div id="UrgentMEReviewComment" style="display:block;" class="col-md-12">
+                                    <div class="row_bar">
+                                        Comments
+                                        @Html.TextAreaFor(model => model.UrgentMEReviewComment, 10, 100, new { @class = "form-control", @readonly = true })
+                                        @*@Html.ValidationMessageFor(model => model.objclsMedicalExaminerReview.Comments, "", new { @class = "text-danger" })*@
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div id="UrgentMEReviewComment" style="display:none;" class="col-md-12">
+                                    <div class="row_bar">
+                                        Comments
+                                        @Html.TextAreaFor(model => model.UrgentMEReviewComment, 10, 100, new { @class = "form-control", @readonly = true })
+                                        @*@Html.ValidationMessageFor(model => model.objclsMedicalExaminerReview.Comments, "", new { @class = "text-danger" })*@
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            if (Model.UrgentMEReview == true)
+                            {
+                                <div id="UrgentMEReviewComment" style="display:block;" class="col-md-12">
+                                    <div class="row_bar">
+                                        Comments
+                                        @Html.TextAreaFor(model => model.UrgentMEReviewComment, 10, 100, new { @class = "form-control" })
+                                        @*@Html.ValidationMessageFor(model => model.objclsMedicalExaminerReview.Comments, "", new { @class = "text-danger" })*@
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div id="UrgentMEReviewComment" style="display:none;" class="col-md-12">
+                                    <div class="row_bar">
+                                        Comments
+                                        @Html.TextAreaFor(model => model.UrgentMEReviewComment, 10, 100, new { @class = "form-control" })
+                                        @*@Html.ValidationMessageFor(model => model.objclsMedicalExaminerReview.Comments, "", new { @class = "text-danger" })*@
+                                    </div>
+                                </div>
+                            }
+                        }
+                        <br /><br />
+                        <div class="col-md-12">
+                            <h2 style="font-size:17px; color:#70a397; font-weight:600; margin-bottom:20px;">Next of Kin</h2>
+                        </div>
+                        @*<div class="col-md-3">
+                <div class="row_bar">
+                    Name
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row_bar">
+                    @Html.EditorFor(model => model.RelativeName, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row_bar">
+                    Tel No.
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row_bar">
+                    @Html.EditorFor(model => model.RelativeTelNo, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row_bar">
+                    Relationship
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row_bar">
+                    @Html.EditorFor(model => model.Relationship, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row_bar">
+                    &nbsp;
+                </div>
+            </div>*@
+                        <table style="margin-left: 17px;border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;width:90%">
+                            <thead>
+                                <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                    <th style="text-align:center">Name</th>
+                                    <th style="text-align:center">Relationship</th>
+                                    <th style="text-align:center">Phone No</th>
+                                    <th style="text-align:center">Present at Death</th>
+                                    <th style="text-align:center">Informed</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @Html.HiddenFor(model => model.KinId, new { @class = "form-control next-kin" })
+                                <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                    @if (Model.MedTriage == 3)
+                                    {
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+                                            @Html.TextBoxFor(model => model.RelativeName, new { @class = "form-control next-kin", @readonly = true })
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+                                            @Html.TextBoxFor(model => model.RelativeName, new { @class = "form-control next-kin" })
+                                        </td>
+                                    }
+                                    @if (Model.MedTriage == 3)
+                                    {
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+                                            @Html.TextBoxFor(model => model.Relationship, new { @class = "form-control next-kin", @readonly = true })
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+                                            @Html.TextBoxFor(model => model.Relationship, new { @class = "form-control next-kin" })
+                                        </td>
+                                    }
+                                    @if (Model.MedTriage == 3)
+                                    {
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+                                            @Html.TextBoxFor(model => model.RelativeTelNo, new { @class = "form-control next-kin", @readonly = true })
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+                                            @Html.TextBoxFor(model => model.RelativeTelNo, new { @class = "form-control next-kin" })
+                                        </td>
+                                    }
+                                    @if (Model.MedTriage == 3)
+                                    {
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+
+                                            @Html.CheckBoxFor(model => model.PresentAtDeath, new { @class = "form-control next-kin", @disabled = true, @id = "PDeath", onclick = "Callcheck(this)" })
+                                            @*@Html.CheckBoxFor(model=>model.PresentAtDeath,)*@
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+
+                                            @Html.CheckBoxFor(model => model.PresentAtDeath, new { @class = "form-control next-kin", @id = "PDeath", onclick = "Callcheck(this)" })
+                                            @*@Html.CheckBoxFor(model=>model.PresentAtDeath,)*@
+                                        </td>
+                                    }
+                                    @if (Model.MedTriage == 3)
+                                    {
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+
+                                            @Html.CheckBoxFor(model => model.IsInformed, new { @class = "form-control next-kin", @disabled = true, @id = "PInforme", onclick = "Callcheck(this)" })
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+
+                                            @Html.CheckBoxFor(model => model.IsInformed, new { @class = "form-control next-kin", @id = "PInforme", onclick = "Callcheck(this)" })
+                                        </td>
+                                    }
+                                </tr>
+                                @Html.HiddenFor(model => model.KinId1, new { @class = "form-control next-kin" })
+                                <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                    @if (Model.MedTriage == 3)
+                                    {
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+                                            @Html.TextBoxFor(model => model.RelativeName1, new { @class = "form-control next-kin", @readonly = true })
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+                                            @Html.TextBoxFor(model => model.RelativeName1, new { @class = "form-control next-kin" })
+                                        </td>
+                                    }
+                                    @if (Model.MedTriage == 3)
+                                    {
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+                                            @Html.TextBoxFor(model => model.Relationship1, new { @class = "form-control next-kin", @readonly = true })
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+                                            @Html.TextBoxFor(model => model.Relationship1, new { @class = "form-control next-kin" })
+                                        </td>
+                                    }
+                                    @if (Model.MedTriage == 3)
+                                    {
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+                                            @Html.TextBoxFor(model => model.RelativeTelNo1, new { @class = "form-control next-kin", @readonly = true })
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+                                            @Html.TextBoxFor(model => model.RelativeTelNo1, new { @class = "form-control next-kin" })
+                                        </td>
+                                    }
+                                    @if (Model.MedTriage == 3)
+                                    {
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+
+                                            @Html.CheckBoxFor(model => model.PresentAtDeath1, new { @class = "form-control next-kin", @disabled = true, @id = "PDeath1", onclick = "Callcheck1(this)" })
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+
+                                            @Html.CheckBoxFor(model => model.PresentAtDeath1, new { @class = "form-control next-kin", @id = "PDeath1", onclick = "Callcheck1(this)" })
+                                        </td>
+                                    }
+                                    @if (Model.MedTriage == 3)
+                                    {
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+
+                                            @Html.CheckBoxFor(model => model.IsInformed1, new { @class = "form-control next-kin", @disabled = true, @id = "PInforme1", onclick = "Callcheck1(this)" })
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+
+                                            @Html.CheckBoxFor(model => model.IsInformed1, new { @class = "form-control next-kin", @id = "PInforme1", onclick = "Callcheck1(this)" })
+                                        </td>
+                                    }
+                                </tr>
+                                @Html.HiddenFor(model => model.KinId2, new { @class = "form-control next-kin" })
+                                <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                    @if (Model.MedTriage == 3)
+                                    {
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+                                            @Html.TextBoxFor(model => model.RelativeName2, new { @class = "form-control next-kin", @readonly = true })
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+                                            @Html.TextBoxFor(model => model.RelativeName2, new { @class = "form-control next-kin" })
+                                        </td>
+                                    }
+                                    @if (Model.MedTriage == 3)
+                                    {
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+                                            @Html.TextBoxFor(model => model.Relationship2, new { @class = "form-control next-kin", @readonly = true })
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+                                            @Html.TextBoxFor(model => model.Relationship2, new { @class = "form-control next-kin" })
+                                        </td>
+                                    }
+                                    @if (Model.MedTriage == 3)
+                                    {
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+                                            @Html.TextBoxFor(model => model.RelativeTelNo2, new { @class = "form-control next-kin", @readonly = true })
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+                                            @Html.TextBoxFor(model => model.RelativeTelNo2, new { @class = "form-control next-kin" })
+                                        </td>
+                                    }
+                                    @if (Model.MedTriage == 3)
+                                    {
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+
+                                            @Html.CheckBoxFor(model => model.PresentAtDeath2, new { @class = "form-control next-kin", @disabled = true, @id = "PDeath2", onclick = "Callcheck2(this)" })
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+
+                                            @Html.CheckBoxFor(model => model.PresentAtDeath2, new { @class = "form-control next-kin", @id = "PDeath2", onclick = "Callcheck2(this)" })
+                                        </td>
+                                    }
+                                    @if (Model.MedTriage == 3)
+                                    {
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+                                            @Html.CheckBoxFor(model => model.IsInformed2, new { @class = "form-control next-kin", @disabled = true, @id = "PInforme2", onclick = "Callcheck2(this)" })
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%">
+                                            @Html.CheckBoxFor(model => model.IsInformed2, new { @class = "form-control next-kin", @id = "PInforme2", onclick = "Callcheck2(this)" })
+                                        </td>
+                                    }
+                                </tr>
+                            </tbody>
+                        </table>
+                        @*<div class="col-md-3">
+                <div class="row_bar">
+                    &nbsp;
+                </div>
+            </div>*@
+                        <br />
+                        <br />
+                        <div id="GPSurgery" style="display:block; padding-top:10px;" class="col-md-8">
+                            @if (Model.MedTriage == 3)
+                            {
+                                <div class="row_bar">
+                                    GP Surgery
+                                    @Html.TextAreaFor(model => model.GPSurgery, 10, 50, new { @class = "form-control", @readonly = true })
+                                    @*@Html.ValidationMessageFor(model => model.objclsMedicalExaminerReview.Comments, "", new { @class = "text-danger" })*@
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="row_bar">
+                                    GP Surgery
+                                    @Html.TextAreaFor(model => model.GPSurgery, 10, 50, new { @class = "form-control" })
+                                    @*@Html.ValidationMessageFor(model => model.objclsMedicalExaminerReview.Comments, "", new { @class = "text-danger" })*@
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                <div class="pull-right">
+                    <button id="BtnNext" type="submit" name="BtnNext" class="btn btn-primary btn-lg">Save & Next</button>
+                </div>
+            }
+            @*</form>*@
+        </div>
+    </div>
+    <br />
+    <br />
+
+</div>
+
+<div class="modal fade" id="modelClose1">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Message</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+
+                <div class="form-section" style="text-align:left">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row_bar">
+                                <div>Do you want to exit without saving your changes?</div>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-primary btn-block" id="btnModelClose1" data-dismiss="modal" formmethod="post" onclick="location.href='@Url.Action("MortalityReview", "Home", new { id=Model.ID })'">Yes</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary btn-block" name="btnCloseYes" id="btnCloseYes">No</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        //$('#dvPatientDetailsCimment').hide();
+        $("#myBtnProcedures").click(function () {
+            $("#myModalProcedures").modal();
+        });
+        $("#myBtnSecondaryDiagnoses").click(function () {
+            $("#myModalSecondaryDiagnoses").modal();
+        });
+        $("#btnClose1").click(function () {
+            $("#modelClose1").modal();
+        });
+        //$("#BtnNext").click(function (event) {
+        //    if (!confirm('Are you sure that you want to submit the form'))
+        //        event.preventDefault();
+        //});
+    });
+</script>
+<script type="text/javascript">
+$(function () {
+    $("#btnModelClose1").click(function(){
+window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.ID })";
+    });
+});
+</script>
+<script>
+        $(document).ready(function () {
+            $("#btnCloseYes").click(function () {
+                $("#modelClose1").modal('hide');
+            });
+        });
+</script>
+<script>
+        $(document).ready(function () {
+            $("#DataQualityIssuesIdentified").click(function () {
+                if ($(this).is(":checked"))
+                {
+                    $("#dataqualitycomment").css("display", "block");
+                }
+                else
+                {
+                    $("#dataqualitycomment").css("display", "none");
+                }
+            });
+        });
+</script>
+<script>
+        $(document).ready(function () {
+            $("#UrgentMEReview").click(function () {
+                if ($(this).is(":checked"))
+                {
+                    $("#UrgentMEReviewComment").css("display", "block");
+                }
+                else
+                {
+                    $("#UrgentMEReviewComment").css("display", "none");
+                }
+            });
+        });
+        function Callcheck(e) {
+            debugger;
+            if (e.id == "PDeath") {
+                $("#PInforme").prop("checked", false)
+            }
+            else {
+                $("#PDeath").prop("checked", false)
+            }
+        }
+        function Callcheck1(e) {
+            debugger;
+            if (e.id == "PDeath1") {
+                $("#PInforme1").prop("checked", false)
+            }
+            else {
+                $("#PDeath1").prop("checked", false)
+            }
+        }
+        function Callcheck2(e) {
+            debugger;
+            if (e.id == "PDeath2") {
+                $("#PInforme2").prop("checked", false)
+            }
+            else {
+                $("#PDeath2").prop("checked", false)
+            }
+        }
+</script>
+
+

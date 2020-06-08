@@ -114,59 +114,173 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="row_bar checkbox-row">
-                                    @if (Model.MedTriage == 3)
+                                    @if (Convert.ToBoolean(ViewBag.IsReadOnly))
                                     {
-                                        if (Model.QAP_Discussion == true)
+                                        if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
                                         {
-                                            <input type="checkbox" disabled="disabled" id="QAP_Discussion" checked name="QAP_Discussion"><span> Discussion with QAP Complete? </span>
+                                            if (Model.QAP_Discussion == true)
+                                            {
+                                                <input type="checkbox" disabled id="QAP_Discussion" checked name="QAP_Discussion"><span> Family contacted regarding MCCD </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" disabled id="QAP_Discussion" name="QAP_Discussion"><span> Family contacted regarding MCCD </span>
+                                            }
+                                        }
+                                        else if(Model.MedTriage == 3)
+                                        {
+                                            if (Model.QAP_Discussion == true)
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="QAP_Discussion" checked name="QAP_Discussion"><span> Family contacted regarding MCCD </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="QAP_Discussion" name="QAP_Discussion"><span> Family contacted regarding MCCD </span>
+                                            }
                                         }
                                         else
                                         {
-                                            <input type="checkbox" disabled="disabled" id="QAP_Discussion" name="QAP_Discussion"><span> Issue MCCD </span>
+                                            if (Model.QAP_Discussion == true)
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="QAP_Discussion" checked name="QAP_Discussion"><span> Family contacted regarding MCCD </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="QAP_Discussion" name="QAP_Discussion"><span> Family contacted regarding MCCD </span>
+                                            }
                                         }
                                     }
                                     else
                                     {
-                                        if (Model.QAP_Discussion == true)
+                                        if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
                                         {
-                                            <input type="checkbox" id="QAP_Discussion" checked name="QAP_Discussion"><span> Discussion with QAP Complete? </span>
+                                            if (Model.QAP_Discussion == true)
+                                            {
+                                                <input type="checkbox" id="QAP_Discussion" checked name="QAP_Discussion"><span> Family contacted regarding MCCD </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" id="QAP_Discussion" name="QAP_Discussion"><span> Family contacted regarding MCCD </span>
+                                            }
                                         }
+                                        else if (Model.MedTriage == 3)
+                                        {
+                                            if (Model.QAP_Discussion == true)
+                                            {
+                                                    <input type="checkbox" disabled="disabled" id="QAP_Discussion" checked name="QAP_Discussion"><span> Family contacted regarding MCCD </span>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" disabled="disabled" id="QAP_Discussion" name="QAP_Discussion"><span> Family contacted regarding MCCD </span>
+                                                }
+                                        }                                         
                                         else
                                         {
-                                            <input type="checkbox" id="QAP_Discussion" name="QAP_Discussion"><span> Issue MCCD </span>
+                                            if (Model.QAP_Discussion == true)
+                                            {
+                                                <input type="checkbox" id="QAP_Discussion" checked name="QAP_Discussion"><span> Family contacted regarding MCCD </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" id="QAP_Discussion" name="QAP_Discussion"><span> Family contacted regarding MCCD </span>
+                                            }
                                         }
                                     }
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="row_bar checkbox-row">
-                                    @if (Model.MedTriage == 3)
+                                    @if (Convert.ToBoolean(ViewBag.IsReadOnly))
                                     {
-                                        if (Model.Notes_Review == true)
+                                        if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
                                         {
-                                            <input type="checkbox" disabled="disabled" id="Notes_Review" checked name="Notes_Review"><span> Notes review complete? </span>
+                                            if (Model.Notes_Review == true)
+                                            {
+                                                <input type="checkbox" disabled id="Notes_Review" checked name="Notes_Review"><span> Notes review complete? </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" disabled id="Notes_Review" name="Notes_Review"><span> Notes review complete? </span>
+                                            }
                                         }
+                                        else if(Model.MedTriage == 3)
+                                        {
+                                            if (Model.Notes_Review == true)
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="Notes_Review" checked name="Notes_Review"><span> Notes review complete? </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="Notes_Review" name="Notes_Review"><span> Notes review complete? </span>
+                                            }
+                                        }
+
                                         else
                                         {
-                                            <input type="checkbox" disabled="disabled" id="Notes_Review" name="Notes_Review"><span> Notes review complete? </span>
+                                            if (Model.Notes_Review == true)
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="Notes_Review" checked name="Notes_Review"><span> Notes review complete? </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="Notes_Review" name="Notes_Review"><span> Notes review complete? </span>
+                                            }
                                         }
                                     }
                                     else
                                     {
-                                        if (Model.Notes_Review == true)
+                                        if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
                                         {
-                                            <input type="checkbox" id="Notes_Review" checked name="Notes_Review"><span> Notes review complete? </span>
+                                            if (Model.Notes_Review == true)
+                                            {
+                                                <input type="checkbox" id="Notes_Review" checked name="Notes_Review"><span> Notes review complete? </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" id="Notes_Review" name="Notes_Review"><span> Notes review complete? </span>
+                                            }
+                                        }
+                                        else if(Model.MedTriage == 3)
+                                        {
+                                            if (Model.Notes_Review == true)
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="Notes_Review" checked name="Notes_Review"><span> Notes review complete? </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="Notes_Review" name="Notes_Review"><span> Notes review complete? </span>
+                                            }
                                         }
                                         else
                                         {
-                                            <input type="checkbox" id="Notes_Review" name="Notes_Review"><span> Notes review complete? </span>
+                                            if (Model.Notes_Review == true)
+                                            {
+                                                <input type="checkbox" id="Notes_Review" checked name="Notes_Review"><span> Notes review complete? </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" id="Notes_Review" name="Notes_Review"><span> Notes review complete? </span>
+                                            }
                                         }
                                     }
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="row_bar checkbox-row mb-3">
-                                    @if (Model.MedTriage == 3)
+                                @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+                                {
+                                    if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                                    {
+                                        if (Model.Nok_Discussion == true)
+                                        {
+                                            <input type="checkbox" disabled id="Nok_Discussion" checked name="Nok_Discussion"><span> Discussion with NoK complete? </span>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" disabled id="Nok_Discussion" name="Nok_Discussion"><span> Discussion with NoK complete? </span>
+                                        }
+                                    }
+                                    else if (Model.MedTriage == 3)
                                     {
                                         if (Model.Nok_Discussion == true)
                                         {
@@ -181,6 +295,20 @@
                                     {
                                         if (Model.Nok_Discussion == true)
                                         {
+                                        <input type="checkbox" disabled="disabled" id="Nok_Discussion" checked name="Nok_Discussion"><span> Discussion with NoK complete? </span>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" disabled="disabled" id="Nok_Discussion" name="Nok_Discussion"><span> Discussion with NoK complete? </span>
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                                    {
+                                        if (Model.Nok_Discussion == true)
+                                        {
                                             <input type="checkbox" id="Nok_Discussion" checked name="Nok_Discussion"><span> Discussion with NoK complete? </span>
                                         }
                                         else
@@ -188,53 +316,31 @@
                                             <input type="checkbox" id="Nok_Discussion" name="Nok_Discussion"><span> Discussion with NoK complete? </span>
                                         }
                                     }
+                                    else if (Model.MedTriage == 3)
+                                    {
+                                        if (Model.Nok_Discussion == true)
+                                        {
+                                                <input type="checkbox" disabled="disabled" id="Nok_Discussion" checked name="Nok_Discussion"><span> Discussion with NoK complete? </span>
+                                        }
+                                        else
+                                        {
+                                                <input type="checkbox" disabled="disabled" id="Nok_Discussion" name="Nok_Discussion"><span> Discussion with NoK complete? </span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                    if (Model.Nok_Discussion == true)
+                                    {
+                                            <input type="checkbox" id="Nok_Discussion" checked name="Nok_Discussion"><span> Discussion with NoK complete? </span>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" id="Nok_Discussion" name="Nok_Discussion"><span> Discussion with NoK complete? </span>
+                                        }
+                                    }
+                                }                                    
                                 </div>
                             </div>
-                            @*changes by puja*@
-                            @*<div class="row_bar">
-                                Name of Medical Examiner*@
-                            @*@if (Model.MedTriage == 3)
-                                {
-                                    <select disabled="disabled" class="form-control" id="ddlDischargeSpeciality" name="ddlDischargeSpeciality">
-                                        <option value="">
-                                            Select Medical Examiner
-                                        </option>
-
-                                        @foreach (var item in ViewBag.MedicalExaminers)
-                                        {
-                                            if (item.ID == Model.ME_ID)
-                                            {
-                                                <option selected value="@item.ID">@item.Name</option>
-                                            }
-                                            else
-                                            {
-                                                <option value="@item.ID">@item.Name</option>
-                                            }
-                                        }
-                                    </select>
-                                }
-                                else
-                                {
-                                    <select class="form-control" id="ddlDischargeSpeciality" name="ddlDischargeSpeciality">
-                                        <option value="">
-                                            Select Medical Examiner
-                                        </option>
-                                        @foreach (var item in ViewBag.MedicalExaminers)
-                                        {
-                                            if (item.ID == Model.ME_ID)
-                                            {
-                                                <option selected value="@item.ID">@item.Name</option>
-                                            }
-                                            else
-                                            {
-                                                <option value="@item.ID">@item.Name</option>
-                                            }
-                                        }
-                                    </select>
-                                }*@
-                            @*</div>*@
-
-                            @*changes by puja*@
                         </div>
                         <div class="col-md-6">
 
@@ -259,15 +365,20 @@
 
 
                             @{
-                                //var countcomments = @Model.CommentCount.ToString();
-                                var countcomments = ViewBag.Comments.Count;
-                            }
-                            Available Comments (<span id="com" name="0" value="0" onclick="OpenFilterComment(0)" style="cursor:pointer;">@countcomments</span>)
+                                    //var countcomments = @Model.CommentCount.ToString();
+                                    var countcomments = 0;
+                                    if (ViewBag.Comments != null)
+                                    {
+                                        countcomments = ViewBag.Comments.Count;
+                                    }
+
+                                }
+                                Available Comments (<span id="com" name="0" value="0" onclick="OpenFilterComment(0)" style="cursor:pointer;">@countcomments</span>)
                             <div class="clearfix" style="height:5px"></div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <table width:100% style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;">
-
+                                        
                                         @foreach (var item in ViewBag.CommentType)
                                         {
 
@@ -450,14 +561,14 @@
                                 </div>
 
                             </div>
-
+                             
                             <input id="IsComment" type="hidden" class="form-control" value="" name="IsComment">
-                            <div class="pull-right">
-                                <button id="BtnOpenComment" name="BtnOpenComment" class="btn btn-primary" onclick="OpenComment(); return false;">Add New Comment</button>
-                            </div>
-                            <div class="pull-right">
-                                <button id="BtnCloseComment" name="BtnCloseComment" class="btn btn-primary" style="display:none;padding-top: 12px !important;font-size: large;margin-right: 6px;" onclick="CloseComment(); return false;">Close Comment</button>
-                            </div>
+                                <div class="pull-right">
+                                    <button id="BtnOpenComment" name="BtnOpenComment" class="btn btn-primary" onclick="OpenComment(); return false;">Add New Comment</button>
+                                </div>
+                                <div class="pull-right">
+                                    <button id="BtnCloseComment" name="BtnCloseComment" class="btn btn-primary" style="display:none;padding-top: 12px !important;font-size: large;margin-right: 6px;" onclick="CloseComment(); return false;">Close Comment</button>
+                                </div>
                             @*@Html.ValidationMessageFor(model => model.objclsMedicalExaminerReview.Comments, "", new { @class = "text-danger" })*@
                         </div>
 
@@ -472,11 +583,56 @@
 
                             </div>
                     </div>
-             
-                <div class="pull-right">
-                    <button id="BtnPrevious" name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
-                    <button id="BtnNext" name="BtnNext" class="btn btn-primary btn-lg">Save & Next</button>
-                </div>
+                    if (Convert.ToBoolean(ViewBag.IsReadOnly))
+                    {
+
+                        if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                        {
+                            <div class="pull-right">
+                                <button id="BtnPrevious" disabled name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
+                                <button id="BtnNext" disabled name="BtnNext" class="btn btn-primary btn-lg">Save & Next</button>
+                            </div>
+                        }
+                        else if(Model.MedTriage == 3)
+                        {
+                            <div class="pull-right">
+                                <button id="BtnPrevious" disabled name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
+                                <button id="BtnNext" disabled name="BtnNext" class="btn btn-primary btn-lg">Save & Next</button>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="pull-right">
+                                <button id="BtnPrevious" disabled name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
+                                <button id="BtnNext" disabled name="BtnNext" class="btn btn-primary btn-lg">Save & Next</button>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+
+                        if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                        {
+                            <div class="pull-right">
+                                <button id="BtnPrevious" name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
+                                <button id="BtnNext" name="BtnNext" class="btn btn-primary btn-lg">Save & Next</button>
+                            </div>
+                        }
+                        else if(Model.MedTriage == 3) 
+                        {
+                            <div class="pull-right">
+                                <button id="BtnPrevious" disabled name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
+                                <button id="BtnNext" disabled name="BtnNext" class="btn btn-primary btn-lg">Save & Next</button>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="pull-right">
+                                <button id="BtnPrevious" name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
+                                <button id="BtnNext" name="BtnNext" class="btn btn-primary btn-lg">Save & Next</button>
+                            </div>
+                        }
+                    }
             }
         </div>
     </div>

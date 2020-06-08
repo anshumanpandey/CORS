@@ -1,0 +1,393 @@
+﻿@model List<NHS.Common.clsPatientDetails>
+@using NHS.Models;
+@{
+    ViewBag.Title = "Medical Examiner Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>*@
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>*@
+
+@*<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />*@
+
+<style>
+    #Newpatient {
+        font-size: 13px;
+    }
+
+        #Newpatient:hover {
+            text-decoration: underline;
+            color: cornflowerblue !important;
+        }
+
+    #DOD_ToolTip {
+        display: none;
+        position: absolute;
+        border: 1px solid gray;
+        WIDTH: 254PX;
+        HEIGHT: 100PX;
+        Z-INDEX: 999999;
+        background-color: white;
+    }
+
+    #DRow {
+        padding-right: 1px !Important;
+    }
+
+    #DateOfDeath:hover {
+        cursor: context-menu;
+    }
+    /*.tooltip {
+        border:1px solid gray;
+        padding:5px !important;
+    }*/
+    #DateOfDeath.tooltip {
+        border: 1px solid gray;
+        padding: 5px !important;
+    }
+</style>
+
+
+<br />
+<br />
+@*<script src="cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>*@
+<div>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td width="100%">
+                <div id="showfilterdiv" class="ds_filter_btn" style="display:none !important;">
+                    <a href="javascript:void(0);" onclick="ShowFilter()" id="showfilter" @*class="ds_filter_btn_show"*@> <img src="~/images/show-arrow.png" alt="" />Show Advanced Filters</a>
+                </div>
+                <div id="hidefilterdiv" class="ds_filter_btn" style="display:block !important;">
+                    <a href="javascript:void(0);" onclick="HideFilter()" id="hidefilter" @*class="ds_filter_btn_hide"*@> <img src="~/images/hide-arrow.png" alt="" />Hide Advanced Filters</a>
+                </div>
+            </td>
+            @*<td width="60%" align="right" style="padding:10px 15px"><b>Data Refreshed: From @ViewBag.UpdatedSource at @ViewBag.UpdatedDate @ViewBag.UpdatedTime</b></td>*@
+        </tr>
+
+    </table>
+</div>
+<!-- DataTables -->
+<div class="col-sm-12">
+    <div class="row">
+        <div class="col-md-12">
+                <div class="row" id="filtercondition">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-1">
+                                <div class="row_bar">
+                                    <input style="font-size:10px;height:38px;width:125%" class="form-control  datepicker" readonly="readonly" type="text" id="txtStartDate" name="txtStartDate" placeholder="All Dates" value="@Convert.ToString(Session["StartDate"])">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="row_bar">
+                                    <input style="font-size:10px;height:38px;width:125%" class="form-control  datepicker" readonly="readonly" type="text" id="txtEndDate" name="txtEndDate" placeholder="All Dates" value="@Convert.ToString(Session["EndDate"])">&nbsp;&nbsp;
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="row_bar">
+                                    <select style="font-size:12px;" class="form-control" id="ddlDischargeSpeciality" name="ddlDischargeSpeciality">
+                                        @if (Convert.ToString(Session["Speciality"]) == "0")
+                                        {
+                                            <option selected value="0">
+                                                All Specialities
+                                            </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="0">
+                                                All Specialities
+                                            </option>
+                                        }
+                                        @foreach (var item in ViewBag.LoadDischargeSpecialityDropdown)
+                                        {
+                                            if (!string.IsNullOrEmpty(item.DischargeSpeciality))
+                                            {
+                                                if (item.DischargeSpeciality == Convert.ToString(Session["Speciality"]) && Convert.ToString(Session["Speciality"]) != "0"
+                                                    && Convert.ToString(Session["Speciality"]) != "")
+                                                {
+                                                    <option selected value="@item.DischargeSpeciality">@item.DischargeSpeciality</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.DischargeSpeciality">@item.DischargeSpeciality</option>
+                                                }
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="row_bar">
+                                    <select style="font-size:12px;" class="form-control" id="ddlPatientType" name="ddlPatientType">
+                                        @if (Convert.ToString(Session["PatientType"]) == "0")
+                                        {
+                                            <option selected value="0">
+                                                All Patient Type
+                                            </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="0">
+                                                All Patient Type
+                                            </option>
+                                        }
+                                        @foreach (var item in ViewBag.PatientTypeDDM)
+                                        {
+                                            if (Convert.ToString(item.ID) == Convert.ToString(Session["PatientType"]) && Convert.ToString(Session["PatientType"]) != "0"
+                                                && Convert.ToString(Session["PatientType"]) != "")
+                                            {
+                                                <option selected value="@item.ID">@item.PatientTypeLongText</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.ID">@item.PatientTypeLongText</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="row_bar">
+                                    <select style="font-size:12px;" class="form-control" id="ddlWardDeath" name="ddlWardDeath">
+                                        @if (Convert.ToString(Session["WardDeath"]) == "0")
+                                        {
+                                            <option selected value="">
+                                                All Ward of Death
+                                            </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="0">
+                                                All Ward of Death
+                                            </option>
+                                        }
+                                        @foreach (var item in ViewBag.wardDeathDropdown)
+                                        {
+                                            if (!string.IsNullOrEmpty(item.WardOfDeath))
+                                            {
+                                                if (item.WardOfDeath == Convert.ToString(Session["WardDeath"]) && Convert.ToString(Session["WardDeath"]) != "0"
+                                                    && Convert.ToString(Session["WardDeath"]) != "")
+                                                {
+                                                    <option selected value="@item.WardOfDeath">@item.WardOfDeath</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.WardOfDeath">@item.WardOfDeath</option>
+                                                }
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="row_bar">
+                                    <select style="font-size:12px;" class="form-control" id="ddlDischargeConsultant" name="ddlDischargeConsultant">
+                                        @if (Convert.ToString(Session["DischargeConsultant"]) == "0")
+                                        {
+                                            <option selected value="">
+                                                All Consultants
+                                            </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="0">
+                                                All Consultants
+                                            </option>
+                                        }
+                                        @foreach (var item in ViewBag.dischargeConsultantDropdown)
+                                        {
+                                            if (!string.IsNullOrEmpty(item.DischargeConsultantCode))
+                                            {
+                                                if (item.DischargeConsultantCode == Convert.ToString(Session["DischargeConsultant"]) && Convert.ToString(Session["DischargeConsultant"]) != "0"
+                                                    && Convert.ToString(Session["DischargeConsultant"]) != "")
+                                                {
+                                                    <option selected value="@item.DischargeConsultantCode">@item.DischargeConsultantName</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.DischargeConsultantCode">@item.DischargeConsultantName</option>
+                                                }
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-1" align="right">
+                                <div class="ds_filter_cont">
+                                    <ul>
+                                        <li><button id="btnSearch" type="submit" data-toggle="tooltip" title="Search"><img src="~/images/search-icon.png" alt="" /></button"></li>
+                                        <li><button id="btnReset" type="button" data-toggle="tooltip" title="Reset Filters"><img src="~/images/refresh-icon.png" alt="" /></button></li>
+                                    </ul>
+                                </div>
+                             </div>
+                        </div>
+
+                    </div>
+                </div>
+        </div>
+    </div>
+    <div id="dvCustomerList">
+        @Html.Partial("_MortalityDashboard", Model)
+    </div>
+</div>
+<br />
+<br />
+<script type="text/javascript">
+$(function () {
+    $("#btnSearch").click(function () {
+        var dataActionUrl = '@Url.Action("MoreMortalityDetails", "Home")';
+        var isReset = false;
+        var startdate = $("#txtStartDate").val();
+        var enddate = $("#txtEndDate").val();
+        var patientype = $("#ddlPatientType").val();
+        var dischargespeciality = $("#ddlDischargeSpeciality").val();
+        var wardofdeath = $("#ddlWardDeath").val();
+        var consultant = $("#ddlDischargeConsultant").val();
+        var pPageNo = 1;
+        var searchfield = "";
+        var pageSize = 10;
+        var SortColumn = "";
+        var IsTotal = false;
+        var IsQAP = false;
+        var IsMedTriage = false;
+        var IsMEO = false;
+        var fromfilter = true;
+        var frompager = false;
+
+        $.ajax({
+                url: dataActionUrl,
+                data: {
+                    pageNumber: pPageNo, searchfield: searchfield, pageSize: pageSize, SortColumn: SortColumn, IsTotal: IsTotal,
+                    IsQAP: IsQAP, IsMedTriage: IsMedTriage, IsMEO: IsMEO, fromfilter: fromfilter, frompager: frompager,
+                    startdate : startdate, enddate : enddate, patientype : patientype, dischargespeciality : dischargespeciality,
+                    wardofdeath : wardofdeath, consultant : consultant, isReset: isReset
+                },
+                type: "POST",
+                success: function (data) {
+                    $("#dvCustomerList").empty();
+                    $("#dvCustomerList").html(data);
+                    //$("#loader-wrapper1").hide();
+                    //$("#loader").hide();
+                },
+                error: function (data) {
+                    //$("#loader-wrapper1").hide();
+                    //$("#loader").hide();
+                }
+            });
+        });
+    });
+$(function () {
+    $("#btnReset").click(function(){
+        var dataActionUrl = '@Url.Action("MoreMortalityDetails", "Home")';
+        var isReset = true;
+        var startdate = "";
+        var enddate = "";
+        var patientype = "";
+        var dischargespeciality = "";
+        var wardofdeath = "";
+        var consultant = "";
+        $.ajax({
+                url: dataActionUrl,
+                data: {
+                    pageNumber: pPageNo, searchfield: searchfield, pageSize: pageSize, SortColumn: SortColumn, IsTotal: IsTotal,
+                    IsQAP: IsQAP, IsMedTriage: IsMedTriage, IsMEO: IsMEO, fromfilter: fromfilter, frompager: frompager,
+                    startdate : startdate, enddate : enddate, patientype : patientype, dischargespeciality : dischargespeciality,
+                    wardofdeath : wardofdeath, consultant : consultant, isReset: isReset
+                },
+                type: "POST",
+                success: function (data) {
+                    $("#dvCustomerList").empty();
+                    $("#dvCustomerList").html(data);
+                    //$("#loader-wrapper1").hide();
+                    //$("#loader").hide();
+                },
+                error: function (data) {
+                    //$("#loader-wrapper1").hide();
+                    //$("#loader").hide();
+                }
+            });
+    });
+});
+    (function ($) {
+        $(".datepicker").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy'
+        });
+    })(jQuery)
+</script>
+<script>
+    function GetMortalityList(pPageNo, searchfield, pageSize, SortColumn, frompager,
+        IsTotal, IsQAP, IsMedTriage, IsMEO, fromfilter) {
+        var pageSize = $("#tblPatientDetails_length").val();
+        var dataActionUrl = '@Url.Action("MoreMortalityDetails", "Home")';
+        var startdate = $("#txtStartDate").val();
+        var enddate = $("#txtEndDate").val();
+        var patientype = $("#ddlPatientType").val();
+        var dischargespeciality = $("#ddlDischargeSpeciality").val();
+        var wardofdeath = $("#ddlWardDeath").val();
+        var consultant = $("#ddlDischargeConsultant").val();
+        var isReset = false;
+
+        if (frompager == 'onclick')
+        {
+            //alert(frompager);
+            frompager = true;
+        }
+        if (fromfilter == true) {
+            $('#tblPatientDetails_length').val("10").attr("selected", "selected");
+            $("#searchfield").val('');
+            pageSize = 10;
+        }
+        else
+        {
+            searchfield = $("#searchfield").val();
+            pageSize = $("#tblPatientDetails_length").val();
+        }
+        $.ajax({
+            url: dataActionUrl,
+            data: {
+                pageNumber: pPageNo, searchfield: searchfield, pageSize: pageSize, SortColumn: SortColumn, IsTotal: IsTotal,
+                IsQAP: IsQAP, IsMedTriage: IsMedTriage, IsMEO: IsMEO, fromfilter: fromfilter, frompager: frompager,
+                startdate: startdate, enddate: enddate, patientype: patientype, dischargespeciality: dischargespeciality,
+                wardofdeath: wardofdeath, consultant: consultant, isReset: isReset
+            },
+            type: "POST",
+            success: function (data) {
+                $("#dvCustomerList").empty();
+                $("#dvCustomerList").html(data);
+                $('#searchfield').focusTextToEnd();
+            },
+            error: function (data) {
+                //$("#loader-wrapper1").hide();
+                //$("#loader").hide();
+            }
+        });
+    }
+</script>
+<script>
+    function HideFilter()
+    {
+        $("#filtercondition").fadeOut(400);
+        $("#showfilterdiv").show();
+        $("#hidefilterdiv").hide();
+    }
+    function ShowFilter() {
+        $("#filtercondition").fadeIn(400);
+        $("#hidefilterdiv").show();
+        $("#showfilterdiv").hide();
+    }
+</script>
+<script>
+    (function ($) {
+        $.fn.focusTextToEnd = function () {
+            this.focus();
+            var $thisVal = this.val();
+            this.val('').val($thisVal);
+            return this;
+        }
+    }(jQuery));
+</script>
+

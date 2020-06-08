@@ -47,5 +47,7 @@ namespace NHS.Common
         public string DOB { get; set; }
         public string PatientName { get; set; }
         public bool IsFormStarted { get; set; }
+
+        public bool DeathChemo { get; set; }
     }
 }

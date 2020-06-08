@@ -1,0 +1,461 @@
+﻿@model NHS.Common.clsPatientDetails
+@{
+    /**/
+
+    ViewBag.Title = "Coding Review";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .square {
+        height: 30px;
+        width: 100px;
+        background-color: forestgreen;
+    }
+    #my_form {
+        width: 100% !important;
+    }
+</style>
+<br />
+<br />
+
+<div class="container">
+    <div class="row form-group">
+        <div class="col-lg-12">
+            <div class="row" align="right">
+                <div class="col-md-12">
+                    <input type="image" src="~/images/Delete.png" width="30" height="30" alt="Submit" id="btnClose1" title="Close" />
+                </div>
+            </div>
+            <ul class="nav nav-pills nav-justified thumbnail setup-panel">
+                <li class="active">
+                    <a href='@Url.Action("CodingReview", "home", new { id=Model.ID })'>
+                        <h4 class="list-group-item-heading">
+                            <b> Coding Review</b>
+                        </h4>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href='@Url.Action("QualityReview", "home", new { id=Model.ID })'>
+                        <h4 class="list-group-item-heading">
+                            <b>Clinical Coding Quality Review</b>
+                        </h4>
+                    </a>
+
+                </li>
+                </ul>
+        </div>
+    </div>
+
+    <div class="row setup-content" id="step-1">
+        @using (Html.BeginForm("CodingReview", "Home", FormMethod.Post, new { @id = "my_form" }))
+        {
+            <div class="col-xs-12 col-lg-12">
+                <div class="row" align="right">
+                 
+                </div>
+                <div class="col-md-12 text-center">
+                    <div class="form-section" style="text-align:left">
+                        <div class="lable_title">
+                            <h2>CODING REVIEW</h2>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
+
+                                <div class="row">
+                                    <div class="col-md-6">
+
+                                        Primary Diagnosis
+                                    </div>
+
+
+                                    <div class="col-md-6">
+
+
+                                        @if (!string.IsNullOrEmpty(@Model.PrimaryDiagnosis))
+                                        {
+                                            <span>@Model.PrimaryDiagnosis</span>
+                                        }
+                                        else
+                                        {
+                                            <span>Awaiting Pending</span>
+                                        }
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+
+                                        SHMI Diagnosis Code
+                                    </div>
+
+                                    <div class="col-md-6">
+
+                                        <span>@Model.SHMICode</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+
+                                        SHMI Diagnosis Group
+                                    </div>
+
+                                    <div class="col-md-6">
+
+                                        <span>@Model.SHMIGroup</span>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+
+                                        Count of comorbities
+                                    </div>
+                                
+
+                                <div class="col-md-6">
+                                   
+                                        <span>@Model.ComorbiditiesCount</span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5 dstable4"> 
+                                <table style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;" width="100%">
+                                    <tbody>
+                                        <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                            <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;" width="40%"><b>Patient ID</b></td>
+                                            <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.PatientId</td>
+                                        </tr>
+                                        <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                            <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Patient Name</b></td>
+                                            <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.PatientName</td>
+
+                                        </tr>
+                                        <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                                            <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>DOB</b></td>
+                                            <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.DOB</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+                            </div>
+
+                            <div class="row">
+                                
+                                <br />
+                                <br />
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-primary btn-block" id="myBtnDiagnosis">View Diagnoses (@Model.DiagnosisCount)</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-primary btn-block" id="myBtnProcedures">View Procedures (@Model.ProcedureCount)</button>
+                                </div>
+                                <br /><br />
+                                <div class="col-md-4">
+                                    @*<label class="label_part">Coding issue identified?</label>*@
+                                    Coding Issue Identified
+                                </div>
+                                <div class="col-md-8">
+                                    @if (Model.CodingIssueIdentified == true)
+                                    {
+                                        <input type="checkbox" checked id="CodingIssueIdentified" name="CodingIssueIdentified"><span> Yes </span>
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" id="CodingIssueIdentified" name="CodingIssueIdentified"><span> Yes </span>
+                                    }
+                                    @*@Html.CheckBoxFor(model => model.CodingIssueIdentified, new { htmlAttributes = new { @class = "form-control" } })<span> Yes </span>*@
+                                </div>
+                                <br />
+                                <br />
+                                @if (Model.CodingIssueIdentified == true)
+                                {
+                                    <div class="col-md-12" id="dvPatientDetailsCimment" style="display:block;">
+                                        Comments
+                                        @*<textarea rows="5" name="Comments" id="Comments" />*@
+                                    </div>
+                                    <div class="col-md-12" style="display:block;">
+                                        @Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control" })
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-md-12" id="dvPatientDetailsCimmentlbl" style="display:none;">
+                                        Comments
+                                        @*<textarea rows="5" name="Comments" id="Comments" />*@
+                                    </div>
+                                    <div class="col-md-12" id="dvPatientDetailsCimment" style="display:none;">
+                                        @Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control" })
+                                    </div>
+                                }
+                            </div>
+                            <div class="col-md-12" align="right">
+                                <button id="activate-step-2" type="submit" name="BtnFinish" class="btn btn-primary btn-lg">Save</button>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<br />
+<br />
+
+<div class="modal fade" id="myModalProcedures">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Procedures</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <table class="table table-bordered" id="assets-data-table">
+                    <tr bgcolor="#a9d7cc" style="color:black;">
+                        <th style="text-align:center">Consultant  </th>
+                        <th style="text-align:center">Speciality  </th>
+                        <th style="text-align:center">FCE Number</th>
+                        <th style="text-align:center">Episode Start</th>
+                        <th style="text-align:center">Episode End</th>
+                        <th style="text-align:center">LOS Episode</th>
+                        <th style="text-align:center">Procedure</th>
+                        <th style="text-align:center">Position</th>
+                    </tr>
+                    <tbody bgcolor="#ffffff" style="color:black;">
+                        @foreach (var item in ViewBag.Procedures)
+                        {
+                            <tr style="color:black;" bgcolor="ffffff">
+                                <td>
+                                    <div style="text-align:center">@item.DischargeConsultantName</div>
+                                </td>
+                                <td>
+                                    <div style="text-align:center">@item.DischargeSpeciality</div>
+                                </td>
+                                <td>
+                                    <div style="text-align:center">@item.FCENumber</div>
+                                </td>
+                                <td>
+                                    <div style="text-align:center">@item.EpisodeStart</div>
+                                </td>
+                                <td>
+                                    <div style="text-align:center">@item.EpisodeEnd</div>
+                                </td>
+                                <td>
+                                    <div style="text-align:center">@item.LOSEpisode</div>
+                                </td>
+                                <td>
+                                    <div style="text-align:center">@item.ProcedureDescription</div>
+                                </td>
+                                <td>
+                                    <div style="text-align:center">@Convert.ToInt32(item.Position)</div>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+
+            </div>
+
+            <!-- Modal footer -->
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>*@
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModalDiagnosis" style="width:1200px !important">
+    <div class="modal-dialog modal-lg" style="width:1000px !important">
+        <div class="modal-content" style="width:1200px !important">
+
+            <!-- Modal Header -->
+            <div class="modal-header" style="width:1000px !important">
+                <h4 class="modal-title">Diagnosis</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body" style="width:1000px !important">
+                <table class="table table-bordered" id="assets-data-table">
+                    <tr bgcolor="#a9d7cc" style="color:black;">
+                        <th style="text-align:center">Consultant  </th>
+                        <th style="text-align:center">Speciality  </th>
+                        <th style="text-align:center">FCE Number</th>
+                        <th style="text-align:center">Episode Start</th>
+                        <th style="text-align:center">Episode End</th>
+                        <th style="text-align:center">LOS Episode</th>
+                        <th style="text-align:center">Diagnosis</th>
+                        <th style="text-align:center">Primary</th>
+                        <th style="text-align:center">Comorbidity</th>
+                    </tr>
+                    <tbody bgcolor="#ffffff" style="color:black;">
+                        @foreach (var item in ViewBag.Diagnoses)
+                        {
+                            <tr style="color:black;" bgcolor="ffffff">
+                                <td>
+                                    <div style="text-align:center">@item.DischargeConsultantName</div>
+                                </td>
+                                <td>
+                                    <div style="text-align:center">@item.DischargeSpeciality</div>
+                                </td>
+                                <td>
+                                    <div style="text-align:center">@item.FCENumber</div>
+                                </td>
+                                <td>
+                                    <div style="text-align:center">@item.EpisodeStart</div>
+                                </td>
+                                <td>
+                                    <div style="text-align:center">@item.EpisodeEnd</div>
+                                </td>
+                                <td>
+                                    <div style="text-align:center">@item.LOSEpisode</div>
+                                </td>
+                                <td>
+                                    <div style="text-align:center">@item.DiagnosisDescription</div>
+                                </td>
+                                @if (item.PrimaryInt == 1)
+                                {
+                                    <td align="center"><img src="~/images/GreenCircle.png" width="27" height="27"></td>
+                                }
+                                else
+                                {
+                                    <td align="center"><img src="~/images/GeryImg.png" width="27" height="27"></td>
+                                }
+                                @if (item.ComorbidityFlag == 1)
+                                {
+                                    <td align="center"><img src="~/images/GreenCircle.png" width="27" height="27"></td>
+                                }
+                                else
+                                {
+                                    <td align="center"><img src="~/images/GeryImg.png" width="27" height="27"></td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+
+            <!-- Modal footer -->
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>*@
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modelClose">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Message</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="form-section" style="text-align:left">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row_bar">
+                                <div>Do you want to exit without saving your changes?</div>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-primary btn-block" id="btnModelClose1" data-dismiss="modal" formmethod="post" onclick="location.href='@Url.Action("MortalityReview", "Home", new { id=Model.ID })'">Yes</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary btn-block" name="btnCloseYes" id="btnCloseYes">No</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#btnClose1").click(function () {
+            $("#modelClose").modal();
+        });
+    });
+</script>
+<script>
+        $(document).ready(function () {
+            $("#btnCloseYes").click(function () {
+                $("#modelClose").modal('hide');
+            });
+        });
+</script>
+<script>
+    $(document).ready(function () {
+        //$('#dvPatientDetailsCimment').hide();
+        $("#myBtnProcedures").click(function () {
+            $("#myModalProcedures").modal();
+        });
+        $("#myBtnDiagnosis").click(function () {
+            $("#myModalDiagnosis").modal();
+        });
+        $("#btnClose1").click(function () {
+            $("#modelClose1").modal();
+        });
+        //$("#BtnNext").click(function (event) {
+        //    if (!confirm('Are you sure that you want to submit the form'))
+        //        event.preventDefault();
+        //});
+    });
+</script>
+
+<script type="text/javascript">
+$(function () {
+    $("#btnModelClose1").click(function () {
+window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.ID })";
+    });
+});
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('input:radio').change(function () {
+            var radioVal = $("input[name=Stage2SJRRequired]:checked").val();
+            $('#hdfStage2SJRRequired').val(radioVal);
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('input:radio').change(function () {
+            var radioVal = $("input[name=MSGRequired]:checked").val();
+            $('#hdfMSGRequired').val(radioVal);
+        });
+    });
+</script>
+<script>
+        $(document).ready(function () {
+            $("#CodingIssueIdentified").click(function () {
+                if ($(this).is(":checked"))
+                {
+                    $("#dvPatientDetailsCimment").css("display", "block");
+                    $("#dvPatientDetailsCimmentlbl").css("display", "block");
+                }
+                else
+                {
+                    $("#dvPatientDetailsCimment").css("display", "none");
+                    $("#dvPatientDetailsCimmentlbl").css("display", "none");
+                }
+            });
+        });
+</script>
+
+

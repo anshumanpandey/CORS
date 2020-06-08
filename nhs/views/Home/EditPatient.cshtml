@@ -1,0 +1,643 @@
+﻿@model NHS.Common.clsPatientDetails
+@{
+    ViewBag.Title = "Edit Patient";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+    <style>
+        .form-control:disabled, .form-control[readonly] {
+            background-color: #fff;
+            opacity: 1;
+        }
+    </style>
+}
+
+<br />
+<br />
+
+<div class="container">
+    <div class="row form-group">
+        <div class="col-lg-12">
+            <div class="row" align="right">
+                <div class="col-md-12">
+                    <input type="image" src="~/images/Delete.png" width="30" height="30" alt="Submit" id="btnClose1" title="Close" />
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row setup-content" id="step-1">
+        <span style="color:red">&nbsp;&nbsp;&nbsp;&nbsp;@TempData["AlertMessage"]</span><br />
+        @using (Html.BeginForm("UpdatePatient", "Home", new { id= Model.ID}))
+        {
+            <div class="col-xs-12 col-lg-12">
+                <div class="row" align="right">
+
+                </div>
+                <div class="col-md-12 text-center">
+                    <div class="form-section" style="text-align:left">
+                        <div class="lable_title">
+                            <h2>ADD NEW PATIENT</h2><span style="color:red"><i>&nbsp;&nbsp;* marked fields are mandatory fields.</i></span><br />
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <span>Patient ID</span>&nbsp;&nbsp;<span style="color:red;font-size:20px">*</span>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row_bar checkbox-row">
+                                    @Html.EditorFor(model => model.PatientId, new { htmlAttributes = new { @class = "form-control", @maxlength = "10", onkeypress = "return numbersonly(event)", } })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row_bar">
+                                    <span>Patient Name</span>&nbsp;&nbsp;<span style="color:red;font-size:20px">*</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row_bar checkbox-row">
+                                    @Html.EditorFor(model => model.PatientName, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+                            <div id="msglabel" class="col-md-4">
+                                <span>Date of Death</span>&nbsp;&nbsp;<span style="color:red;font-size:20px">*</span>
+                            </div>
+
+                            <div id="msgdate" class="col-md-6">
+                                <input class="form-control datepicker" readonly="readonly" type="text" id="DateOfDeath" name="DateOfDeath" value="@Model.DateofDeath" placeholder="Select Date">
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row_bar">
+                                    <span>Patient Type</span>&nbsp;&nbsp;<span style="color:red;font-size:20px">*</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row_bar checkbox-row">
+                                    <select style="font-size:inherit;" class="form-control" id="ddlPatientType" name="ddlPatientType">
+                                        <option value="0">All Patient Type</option>
+                                        @foreach (var item in ViewBag.PatientTypeDDM)
+                                        {
+                                            if (item.ID == Model.PatientTypeActual)
+                                            {
+                                                <option selected value="@item.ID">@item.PatientTypeLongText</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.ID">@item.PatientTypeLongText</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row_bar">
+                                    <span>Gender</span>&nbsp;&nbsp;<span style="color:red;font-size:20px">*</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row_bar checkbox-row">
+                                    <select class="form-control" id="ddlGender" name="ddlGender">
+                                        <option value="" selected>Please Select</option>
+                                        if (Model.Gender.Trim().ToUpper() == "FEMALE" || Model.Gender.Trim().ToUpper().IndexOf("FEMALE") > 0)
+                                        {
+                                            <option selected value="Female">Female</option>
+                                        }
+                                        else
+                                        {
+                                            <option selected value="Male">Male</option>
+                                        }
+                                        
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row_bar">
+                                    Spell Number
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row_bar checkbox-row">
+                                    @Html.EditorFor(model => model.SpellNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="col-md-4">
+                                <div class="row_bar">
+                                    NHS Number
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row_bar checkbox-row">
+                                    @Html.EditorFor(model => model.NHSNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+                            <div id="msglabel" class="col-md-4">
+                                <span>Date of Birth</span>
+                            </div>
+
+                            <div id="msgdate" class="col-md-6">
+                                <input class="form-control datepicker" readonly="readonly" type="text" id="DOB" name="DOB" value="@Model.DOB" placeholder="Select Date">
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="row_bar">
+                                    Time Of Death
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row_bar checkbox-row">
+                                    @Html.EditorFor(model => model.TimeofDeath, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+                            @*puja changes*@
+
+
+
+                            <div id="msglabel" class="col-md-4">
+                                <span>Date Of Admission </span>
+                            </div>
+
+                            <div id="msgdate" class="col-md-6">
+                                <input class="form-control datepicker" readonly="readonly" type="text" id="DateOfAdmission" name="DateOfAdmission" value="@Model.DateofAdmission" placeholder="Select Date">
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row_bar">
+                                    Time of Admission
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row_bar checkbox-row">
+                                    @Html.EditorFor(model => model.TimeofAdmission, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row_bar">
+                                    Discharge Ward
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row_bar checkbox-row">
+                                    <select style="font-size:inherit;" class="form-control" id="DischargeWard" name="DischargeWard">
+                                        <option value="Pending">All Wards</option>
+                                        @foreach (var item in ViewBag.Wards)
+                                        {
+                                            if (Model.DischargeWard == item.WardCode)
+                                            {
+                                                <option selected value="@item.WardCode">@item.WardName</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.WardCode">@item.WardName</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="row_bar">
+                                    Ward Of Death
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row_bar checkbox-row">
+                                    <select style="font-size:inherit;" class="form-control" id="WardofDeath" name="WardofDeath">
+                                        <option value="Pending">All Wards</option>
+                                        @foreach (var item in ViewBag.Wards)
+                                        {
+                                            if (Model.WardofDeath == item.WardCode)
+                                            {
+                                                <option selected value="@item.WardCode">@item.WardName</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.WardCode">@item.WardName</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row_bar">
+                                    Discharge Consultant Name
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row_bar checkbox-row">
+                                    @Html.TextBoxFor(model => Model.DischargeConsutantName, new { @class = "form-control" })
+                                    @Html.HiddenFor(model => Model.DischargeConsutantID)
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="row_bar">
+                                    Discharge Speciality
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row_bar checkbox-row">
+                                    <select style="font-size:inherit;" class="form-control" id="DischargeSpeciality" name="DischargeSpeciality">
+                                        <option value="Pending">All Specialities</option>
+                                        @foreach (var item in ViewBag.SpecialityDDM)
+                                        {
+                                            if (Model.DischargeSpecialtyCode == item.SpecialityCode)
+                                            {
+                                                <option selected value="@item.SpecialityCode">@item.SpecialityName</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.SpecialityCode">@item.SpecialityName</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="row_bar">
+                                    Admission Type
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row_bar checkbox-row">
+                                    <select style="font-size:inherit;" class="form-control" id="AdmissionType" name="AdmissionType">
+                                        <option value="Pending">All AdmissionTypes</option>
+                                        @foreach (var item in ViewBag.AdmissionType)
+                                        {
+                                            if (Model.AdmissionType == item.Admission_Method)
+                                            {
+                                                <option selected value="@item.Admission_Method">@item.Admission_Method</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Admission_Method">@item.Admission_Method</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                            @*<div class="col-md-4">
+                                <div class="row_bar">
+                                Primary Diagnosis
+                                </div>
+                                </div>
+                                <div class="col-md-6">
+                                                                <div class="row_bar checkbox-row">
+                                                                    @Html.EditorFor(model => model.PrimaryDiagnosis, new { htmlAttributes = new { @class = "form-control" } })
+                                                                </div>
+                                                            </div>
+
+
+                                <div class="col-md-4">
+                                <div class="row_bar">
+                                Primary Procedure
+                                </div>
+                                </div>
+                                <div class="col-md-6">
+                                                                <div class="row_bar checkbox-row">
+                                                                    @Html.EditorFor(model => model.PrimaryProcedure, new { htmlAttributes = new { @class = "form-control" } })
+                                                                </div>
+                                                            </div>
+
+
+
+
+
+                                <div class="col-md-4">
+                                <div class="row_bar">
+                                SHMI Group
+                                </div>
+                                </div>
+                                <div class="col-md-6">
+                                                                <div class="row_bar checkbox-row">
+                                                                    @Html.EditorFor(model => model.SHMIGroup, new { htmlAttributes = new { @class = "form-control" } })
+                                                                </div>
+                                                            </div>
+
+
+                                <div class="col-md-4">
+                                <div class="row_bar">
+                                SHMI Code
+                                </div>
+                                </div>
+                                <div class="col-md-6">
+                                                                <div class="row_bar checkbox-row">
+                                                                    @Html.EditorFor(model => model.SHMICode, new { htmlAttributes = new { @class = "form-control" } })
+                                                                </div>
+                                                            </div>*@
+
+                            
+                            <div class="col-md-4">
+                                <div class="row_bar">
+                                    Occupation
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row_bar checkbox-row">
+                                    @Html.EditorFor(model => model.Occupation, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row_bar">
+                                    Enabled?
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row_bar checkbox-row">
+                                    @if (Model.IsEnabled)
+                                    {
+                                        <input type="checkbox" checked id="IsEnabled" name="IsEnabled" />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" id="IsEnabled" name="IsEnabled" />
+                                    }
+                                </div>
+                            </div>
+                            @*<div class="col-md-4">
+                                <div class="row_bar">
+                                GP Surgery
+                                </div>
+                                </div>
+                                <div class="col-md-6">
+                                 <div class="row_bar checkbox-row">
+                                @Html.TextAreaFor(model => model.GPSurgery, 10, 50, new { @class = "form-control" })
+                                </div>
+                                </div>*@
+
+
+
+                            @*<div class="col-md-4">
+                                <div class="row_bar">
+                                Comments
+                                </div>
+                                </div>
+                                <div class="col-md-6">
+                                <div class="row_bar checkbox-row">
+                                                            @Html.TextAreaFor(model => model.Comments, 10, 50, new { @class = "form-control" })
+                                                            @Html.ValidationMessageFor(model => model.objclsMedicalExaminerReview.Comments, "", new { @class = "form-control" })
+                                                        </div>
+                                </div>*@
+                            @*end changes*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12" align="center">
+                <button id="activate-step-2" type="submit" name="BtnFinish" class="btn btn-primary btn-lg">Save & Finish</button>
+            </div>
+        }
+    </div>
+</div>
+<br />
+<br />
+
+<div class="modal fade" id="modelClose">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Message</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="form-section" style="text-align:left">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row_bar">
+                                <div>Do you want to exit without saving your changes?</div>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-primary btn-block" id="btnModelClose1" data-dismiss="modal" formmethod="post" onclick="location.href='@Url.Action("PatientList", "Home", new { id = 0, qapreview = false, medtriage = false, meoreview = false, isReset = false  })'">Yes</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary btn-block" name="btnCloseYes" id="btnCloseYes">No</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#btnClose1").click(function () {
+            $("#modelClose").modal();
+        });
+    });
+    function numbersonly(e) {
+        //debugger;
+        var unicode = e.charCode ? e.charCode : e.keyCode
+        if (unicode != 8) { //if the key isn't the backspace key (which we should allow)
+            if (unicode < 46 || unicode > 57) //if not a number
+                return false //disable key press
+        }
+    }
+    (function ($) {
+        $(".datepicker").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy',
+            yearRange: '-120:+0'
+        });
+    })(jQuery)
+</script>
+<script>
+        $(document).ready(function () {
+            $("#btnCloseYes").click(function () {
+                $("#modelClose").modal('hide');
+            });
+
+            //puja changes
+            //for checking DeathTime Format
+            $("#DeathTime").on("change", function () {
+                debugger;
+                var reg = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
+                if (!reg.test($('[id*=DeathTime]').val())) {
+                    alert("Please enter valid time in 24 hour format");
+                    $('[id*=DeathTime]').val('');
+                    $('[id*=DeathTime]').focus();
+                }
+            });
+
+
+        });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("input[name$='Stage2SJRRequired']").click(function () {
+            var radioVal = $("input[name='Stage2SJRRequired']:checked").val();
+            if (radioVal == "Yes")
+            {
+                $("#stage2datelabel").css("display", "block");
+                $("#stage2date").css("display", "block");
+                $("#stage2date").val('');
+                $("#stage2sentlabel").css("display", "block");
+                $("#stage2sent").css("display", "block");
+            }
+            else
+            {
+                $("#stage2datelabel").css("display", "none");
+                $("#stage2date").css("display", "none");
+                $("#stage2date").val('');
+                $("#stage2sentlabel").css("display", "none");
+                $("#stage2sent").css("display", "none");
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("input[name$='MSGRequired']").click(function () {
+            var radioVal = $("input[name='MSGRequired']:checked").val();
+            if (radioVal == "Yes")
+            {
+                $("#msglabel").css("display", "block");
+                $("#msgdate").css("display", "block");
+                $("#msgdate").val('');
+            }
+            else
+            {
+                $("#msglabel").css("display", "none");
+                $("#msgdate").css("display", "none");
+                $("#msgdate").val('');
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#activate-step-2").click(function () {
+            if ($("#DateOfDeath").val() == "")
+            {
+                    alert("Date of Death is a mandatory field to create a new patient.");
+                    return false;
+
+            }
+            if ($("#ddlPatientType").val() == '0')
+            {
+                alert("Patient type is a mandatory field to create a new patient.");
+                return false;
+            }
+            if ($("#ddlGender").val() == '') {
+                alert("Gender is a mandatory field to create a new patient.");
+                return false;
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#DischargeWard").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("GetFilteredWards", "Home")',
+                    datatype: "json",
+                    data: {
+                        term: request.term
+                    },
+                    success: function (data) {
+                        response($.map(data, function (val, item) {
+                            return {
+                                label: val.WardName,
+                                value: val.WardName
+                            }
+                        }))
+                    }
+                })
+            },
+            select: function (event, ui) {
+                $("#DischargeWardID").val(ui.item.WardID);
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#WardofDeath").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("GetFilteredWards", "Home")',
+                    datatype: "json",
+                    data: {
+                        term: request.term
+                    },
+                    success: function (data) {
+                        response($.map(data, function (val, item) {
+                            return {
+                                label: val.WardName,
+                                value: val.WardName
+                            }
+                        }))
+                    }
+                })
+            },
+            select: function (event, ui) {
+                $("#WardofDeath").val(ui.item.WardID);
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#DischargeConsutantName").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("GetFilteredConsultants", "Home")',
+                    datatype: "json",
+                    data: {
+                        term: request.term
+                    },
+                    success: function (data) {
+                        response($.map(data, function (val, item) {
+                            return {
+                                label: val.Consultant_Name,
+                                value: val.Consultant_Name
+                            }
+                        }))
+                    }
+                })
+            },
+            select: function (event, ui) {
+                $("#DischargeConsutantName").val(ui.item.ConsID);
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#DischargeSpeciality").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("GetFilteredSpecialities", "Home")',
+                    datatype: "json",
+                    data: {
+                        term: request.term
+                    },
+                    success: function (data) {
+                        response($.map(data, function (val, item) {
+                            return {
+                                label: val.SpecialityName,
+                                value: val.SpecialityName
+                            }
+                        }))
+                    }
+                })
+            },
+            select: function (event, ui) {
+                $("#DischargeSpeciality").val(ui.item.SpecialityID);
+            }
+        });
+    });
+</script>

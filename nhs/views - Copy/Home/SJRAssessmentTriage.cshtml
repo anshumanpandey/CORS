@@ -1,0 +1,664 @@
+﻿@model NHS.Common.clsSJRReview
+@{
+    ViewBag.Title = "SJR Assessment Triage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<br />
+<style>
+    .form_width {
+        width: 100% !important;
+    }
+</style>
+<div class="container">
+    <div class="row form-group">
+        <div class="col-xs-12 col-lg-12">
+            <div class="row" align="right">
+                <div class="col-md-12">
+                    <input type="image" src="~/images/Delete.png" width="30" height="30" alt="Submit" id="btnClose4" title="Close" />
+                </div>
+                </div>
+            <ul class="nav nav-pills nav-justified thumbnail setup-panel">
+                <li class="disabled">
+                    <a href='@Url.Action("PatientDetails", "home", new { id=Model.Patient_ID })'>
+                        <h4 class="list-group-item-heading">
+                            Patient details
+                        </h4>
+                    </a>
+
+                </li>
+                <li class="disabled">
+                    <a href='@Url.Action("MedicalExaminerReview", "home", new { id=Model.Patient_ID })'>
+                        <h4 class="list-group-item-heading">
+                            Medical Examiner<br /> Scrutiny
+                        </h4>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href='@Url.Action("MedicalExaminerDecision", "home", new { id = Model.Patient_ID})'>
+                        <h4 class="list-group-item-heading">
+                            Medical Examiner Decision
+                        </h4>
+                    </a>
+                </li>
+                
+                <li class="active">
+                    <a href='@Url.Action("SJRAssessmentTriage", "home", new { id = Model.Patient_ID})'>
+                        <h4 class="list-group-item-heading">
+                            SJR Assessment<br /> Triage
+                        </h4>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href='@Url.Action("OtherReferrals", "home", new { id = Model.Patient_ID})'>
+                        <h4 class="list-group-item-heading">
+                            Other Referrals
+                        </h4>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href='@Url.Action("PositiveFeedback", "home", new { id = Model.Patient_ID})'>
+                        <h4 class="list-group-item-heading">
+                            Positive Feedback
+                        </h4>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href='@Url.Action("Declaration", "home", new { id = Model.Patient_ID})'>
+                        <h4 class="list-group-item-heading">
+                            Declaration
+                        </h4>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href='@Url.Action("FinalOutcome", "home", new { id = Model.Patient_ID})'>
+                        <h4 class="list-group-item-heading">
+                            Final Outcome<br />(MEO)
+                        </h4>
+                    </a>
+                </li>
+            </ul>
+            </div>
+        </div>
+    <div class="row setup-content" id="step-4">
+        @using (Html.BeginForm("SJRAssessmentTriage", "Home", FormMethod.Post, new { @id = "my_form", @class = "form_width" }))
+        {
+            <div class="col-xs-12 col-lg-12">
+                <form action="/Home/MedExamFormStep4" method="post" id="frmMedExamFormStep4">
+                    <div class="col-md-12 well">
+                        <div class="form-section">
+                            <div class="lable_title">
+                                <h2>SJR REVIEW TRIAGE</h2>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="col-md-12 row_bar" style="">
+                                        <div class="row_bar checkbox-row">
+                                            <span> Full SJR Required &nbsp;&nbsp;  </span>
+                                            @if (Model.MedTriage == 3)
+                                            {
+                                                if (Model.FullSJRRequired == true)
+                                                {
+                                                    @*<input type="checkbox" disabled="disabled" id="FullSJRRequired" checked name="FullSJRRequired"><span> Yes </span>*@
+                                                    <input type="radio" disabled="disabled" id="FullSJRRequiredYes" name="FullSJRRequired" value="Yes" checked> <span> Yes </span>
+                                                    <input type="radio" disabled="disabled" id="FullSJRRequiredNo" name="FullSJRRequired" value="No"><span> No </span>
+                                                }
+                                                else
+                                                {
+                                                    @*<input type="checkbox" disabled="disabled" id="FullSJRRequired" name="FullSJRRequired"><span> Yes </span>*@
+                                                    <input type="radio" disabled="disabled" id="FullSJRRequiredYes" name="FullSJRRequired" value="Yes"> <span> Yes </span>
+                                                    <input type="radio" disabled="disabled" id="FullSJRRequiredNo" name="FullSJRRequired" value="No" checked><span> No </span>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (Model.IsFormStarted == false)
+                                                {
+                                                    <input type="radio" id="FullSJRRequiredYes" name="FullSJRRequired" value="Yes"> <span> Yes </span><span></span>
+                                                    <input type="radio" id="FullSJRRequiredNo" name="FullSJRRequired" value="No"><span> No </span>
+
+                                                }
+                                                else
+                                                {
+                                                    if (Model.FullSJRRequired == true)
+                                                    {
+                                                        @*<input type="checkbox" id="FullSJRRequired" checked name="FullSJRRequired"><span> Yes </span>*@
+                                                        <input type="radio" id="FullSJRRequiredYes" name="FullSJRRequired" value="Yes" checked> <span> Yes </span>
+                                                        <input type="radio" id="FullSJRRequiredNo" name="FullSJRRequired" value="No"><span> No </span>
+                                                    }
+                                                    else
+                                                    {
+                                                        @*<input type="checkbox" id="FullSJRRequired" name="FullSJRRequired"><span> Yes </span>*@
+                                                        <input type="radio" id="FullSJRRequiredYes" name="FullSJRRequired" value="Yes"> <span> Yes </span>
+                                                        <input type="radio" id="FullSJRRequiredNo" name="FullSJRRequired" value="No" checked><span> No </span>
+                                                    }
+                                                }
+                                            }
+
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="margin-top:12px">
+                                        @if (Model.FullSJRRequired == false)
+                                        {
+                                            <div id="specialitylabel" style="display:none;padding-right: 0px;padding-left: 28px;" class="col-md-6">
+                                                <div class="row_bar">
+                                                    <span>Specialty to complete SJR Review </span>
+                                                </div>
+                                            </div>
+                                            <div id="specialityddm" style="display:none;padding-right: 0;margin-left: 0;" class="col-md-6">
+                                                <div class="row_bar">
+                                                    @if (Model.MedTriage == 3)
+                                                    {
+                                                        <select class="form-control" disabled="disabled" id="ddlCoronerReferral" name="ddlCoronerReferral">
+                                                            @if (Model.SpecialityID == 999)
+                                                            {
+                                                                <option selected value="999">
+                                                                    Select Speciality
+                                                                </option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="999">
+                                                                    Select Speciality
+                                                                </option>
+                                                            }
+                                                            @foreach (var item in ViewBag.Specialities)
+                                                            {
+                                                                if (item.SpecialityID == Model.SpecialityID)
+                                                                {
+                                                                    <option selected value="@item.SpecialityID">@item.SpecialityName</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@item.SpecialityID">@item.SpecialityName</option>
+                                                                }
+                                                            }
+                                                        </select>
+                                                    }
+                                                    else
+                                                    {
+                                                        <select class="form-control" id="ddlCoronerReferral" name="ddlCoronerReferral">
+                                                            @if (Model.SpecialityID == 999)
+                                                            {
+                                                                <option selected value="999">
+                                                                    Select Speciality
+                                                                </option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="999">
+                                                                    Select Speciality
+                                                                </option>
+                                                            }
+                                                            @foreach (var item in ViewBag.Specialities)
+                                                            {
+                                                                if (item.SpecialityID == Model.SpecialityID)
+                                                                {
+                                                                    <option selected value="@item.SpecialityID">@item.SpecialityName</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@item.SpecialityID">@item.SpecialityName</option>
+                                                                }
+                                                            }
+                                                        </select>
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div id="specialitylabel" style="display:block;padding-right: 0px;padding-left: 28px;" class="col-md-6">
+                                                <div class="row_bar">
+                                                    <span>Specialty to complete SJR Review </span>
+                                                </div>
+                                            </div>
+                                            <div id="specialityddm" style="display:block;padding-right: 17px;margin-left: 0;" class="col-md-6">
+                                                <div class="row_bar">
+                                                    @if (Model.MedTriage == 3)
+                                                    {
+                                                        <select class="form-control" disabled="disabled" id="ddlCoronerReferral" name="ddlCoronerReferral">
+                                                            @if (Model.SpecialityID == 999)
+                                                            {
+                                                                <option selected value="999">
+                                                                    Select Speciality
+                                                                </option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="999">
+                                                                    Select Speciality
+                                                                </option>
+                                                            }
+                                                            @foreach (var item in ViewBag.Specialities)
+                                                            {
+                                                                if (item.SpecialityID == Model.SpecialityID)
+                                                                {
+                                                                    <option selected value="@item.SpecialityID">@item.SpecialityName</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@item.SpecialityID">@item.SpecialityName</option>
+                                                                }
+                                                            }
+                                                        </select>
+                                                    }
+                                                    else
+                                                    {
+                                                        <select class="form-control" id="ddlCoronerReferral" name="ddlCoronerReferral">
+                                                            @if (Model.SpecialityID == 999)
+                                                            {
+                                                                <option selected value="999">
+                                                                    Select Speciality
+                                                                </option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="999">
+                                                                    Select Speciality
+                                                                </option>
+                                                            }
+                                                            @foreach (var item in ViewBag.Specialities)
+                                                            {
+                                                                if (item.SpecialityID == Model.SpecialityID)
+                                                                {
+                                                                    <option selected value="@item.SpecialityID">@item.SpecialityName</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@item.SpecialityID">@item.SpecialityName</option>
+                                                                }
+                                                            }
+                                                        </select>
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+
+
+
+
+
+
+
+
+                                    <div class="col-md-12">
+                                        <div class="row_bar checkbox-row">
+                                            @if (Model.MedTriage == 3)
+                                            {
+                                                if (Model.PaediatricPatient == true)
+                                                {
+                                                    <input type="checkbox" disabled="disabled" id="PaediatricPatient" checked name="PaediatricPatient"><span> Paediatric Patient </span>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" disabled="disabled" id="PaediatricPatient" name="PaediatricPatient"><span> Paediatric Patient </span>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (Model.PaediatricPatient == true)
+                                                {
+                                                    <input type="checkbox" id="PaediatricPatient" checked name="PaediatricPatient"><span> Paediatric Patient </span>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" id="PaediatricPatient" name="PaediatricPatient"><span> Paediatric Patient </span>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="row_bar checkbox-row">
+                                            @if (Model.MedTriage == 3)
+                                            {
+                                                if (Model.LearningDisabilityPatient == true)
+                                                {
+                                                    <input type="checkbox" disabled="disabled" id="LearningDisabilityPatient" checked name="LearningDisabilityPatient"><span> Learning disability patient </span>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" disabled="disabled" id="LearningDisabilityPatient" name="LearningDisabilityPatient"><span> Learning disability patient </span>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (Model.LearningDisabilityPatient == true)
+                                                {
+                                                    <input type="checkbox" id="LearningDisabilityPatient" checked name="LearningDisabilityPatient"><span> Learning disability patient </span>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" id="LearningDisabilityPatient" name="LearningDisabilityPatient"><span> Learning disability patient </span>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="row_bar checkbox-row">
+                                            @if (Model.MedTriage == 3)
+                                            {
+                                                if (Model.MentalillnessPatient == true)
+                                                {
+                                                    <input type="checkbox" disabled="disabled" id="MentalillnessPatient" checked name="MentalillnessPatient"><span> Severe mental health illness patient </span>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" disabled="disabled" id="MentalillnessPatient" name="MentalillnessPatient"><span> Severe mental health illness patient </span>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (Model.MentalillnessPatient == true)
+                                                {
+                                                    <input type="checkbox" id="MentalillnessPatient" checked name="MentalillnessPatient"><span> Severe mental health illness patient </span>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" id="MentalillnessPatient" name="MentalillnessPatient"><span> Severe mental health illness patient </span>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="row_bar checkbox-row">
+                                            @if (Model.MedTriage == 3)
+                                            {
+                                                if (Model.ElectiveAdmission == true)
+                                                {
+                                                    <input type="checkbox" disabled="disabled" id="ElectiveAdmission" checked name="ElectiveAdmission"><span> Elective admission </span>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" disabled="disabled" id="ElectiveAdmission" name="ElectiveAdmission"><span> Elective admission </span>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (Model.ElectiveAdmission == true)
+                                                {
+                                                    <input type="checkbox" id="ElectiveAdmission" checked name="ElectiveAdmission"><span> Elective admission </span>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" id="ElectiveAdmission" name="ElectiveAdmission"><span> Elective admission </span>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="row_bar checkbox-row">
+                                            @if (Model.MedTriage == 3)
+                                            {
+                                                if (Model.NoKConcernsDeath == true)
+                                                {
+                                                    <input type="checkbox" disabled="disabled" id="NoKConcernsDeath" checked name="NoKConcernsDeath"><span> NoK concerns about death </span>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" disabled="disabled" id="NoKConcernsDeath" name="NoKConcernsDeath"><span> NoK concerns about death </span>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (Model.NoKConcernsDeath == true)
+                                                {
+                                                    <input type="checkbox" id="NoKConcernsDeath" checked name="NoKConcernsDeath"><span> NoK concerns about death </span>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" id="NoKConcernsDeath" name="NoKConcernsDeath"><span> NoK concerns about death </span>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="row_bar checkbox-row">
+                                            @if (Model.MedTriage == 3)
+                                            {
+                                                if (Model.OtherConcern == true)
+                                                {
+                                                    <input type="checkbox" disabled="disabled" id="OtherConcern" checked name="OtherConcern"><span> Other concerns which warrant further review </span>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" disabled="disabled" id="OtherConcern" name="OtherConcern"><span> Other concerns which warrant further review </span>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (Model.OtherConcern == true)
+                                                {
+                                                    <input type="checkbox" id="OtherConcern" checked name="OtherConcern"><span> Other concerns which warrant further review </span>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" id="OtherConcern" name="OtherConcern"><span> Other concerns which warrant further review </span>
+                                                }
+                                            }
+                                            @if (Model.MedTriage == 3)
+                                            {
+                                                if (Model.OtherConcern == true)
+                                                {
+                                                    <div id="OtherConcernDetail" style="display:block" class="col-md-12">
+                                                        <div class="row_bar">
+                                                            Details:
+                                                            @Html.TextAreaFor(model => model.OtherConcernDetails, 10, 100, new { @class = "form-control", @readonly = true })
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div id="OtherConcernDetail" style="display:none" class="col-md-12">
+                                                        <div class="row_bar">
+                                                            Details:
+                                                            @Html.TextAreaFor(model => model.OtherConcernDetails, 10, 100, new { @class = "form-control", @readonly = true })
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (Model.OtherConcern == true)
+                                                {
+                                                    <div id="OtherConcernDetail" style="display:block" class="col-md-12">
+                                                        <div class="row_bar">
+                                                            Details:
+                                                            @Html.TextAreaFor(model => model.OtherConcernDetails, 10, 100, new { @class = "form-control" })
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div id="OtherConcernDetail" style="display:none" class="col-md-12">
+                                                        <div class="row_bar">
+                                                            Details:
+                                                            @Html.TextAreaFor(model => model.OtherConcernDetails, 10, 100, new { @class = "form-control" })
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                    <div id="Comments" style="display:block; padding-top:10px;" class="col-md-12">
+                                        @if (Model.MedTriage == 3)
+                                        {
+                                            <div class="row_bar">
+                                                Comments
+                                                @Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control", @readonly = true })
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="row_bar">
+                                                Comments
+                                                @Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control" })
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="table_margin">
+                                        <table width="100%" style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;">
+                                            <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                                <td width="40%" style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Patient ID</b></td>
+                                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.PatientID </td>
+                                            </tr>
+                                            <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Patient Name</b></td>
+                                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.PatientName</td>
+
+                                            </tr>
+                                            <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>DOB</b></td>
+                                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.DOB</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                               
+                            
+                                <br />
+                                <br />
+
+                               
+                                <br />
+                                <br />
+                             
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pull-right">
+                        <button id="activate-prev-1" name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
+                        <button id="activate-step-2" name="BtnNext" class="btn btn-primary btn-lg">Save & Next</button>
+
+                    </div>
+                </form>
+            </div>
+        }
+    </div>
+    <br />
+    <br />
+    @*<div class="pull-right">
+        <button class="btn btn-primary btn-lg" id="btnClose4">Close</button>
+    </div>*@
+</div>
+<div class="modal fade" id="modelClose4">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Message</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="form-section" style="text-align:left">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row_bar">
+                                <div>Do you want to exit without saving your changes?</div>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-primary btn-block" id="btnModelClose1" data-dismiss="modal" formmethod="post" onclick="location.href='@Url.Action("MortalityReview", "Home", new { id=Model.Patient_ID })'">Yes</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary btn-block" name="btnCloseYes" id="btnCloseYes">No</button>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#btnClose4").click(function () {
+            $("#modelClose4").modal();
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#FullSJRRequiredYes").click(function () {
+            if ($(this).is(":checked"))
+            {
+                $("#specialitylabel").css("display", "block");
+                $("#specialityddm").css("display", "block");
+                $("#ddlCoronerReferral").val('999');
+            }
+            else
+            {                
+                $("#specialitylabel").css("display", "none");
+                $("#specialityddm").css("display", "none");
+            }
+        });
+        $("#FullSJRRequiredNo").click(function () {
+            debugger;
+            $("#specialitylabel").css("display", "none");
+            $("#specialityddm").css("display", "none");
+        });
+    });
+</script>
+<script>
+        $(document).ready(function () {
+            $("#OtherConcern").click(function () {
+                if ($(this).is(":checked"))
+                {
+                    $("#OtherConcernDetail").css("display", "block");
+                }
+                else
+                {
+                    $("#OtherConcernDetail").css("display", "none");
+                }
+            });
+        });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#activate-step-2").click(function () {
+            if ($("#FullSJRRequiredYes").is(":checked"))
+            {
+                if($("#ddlCoronerReferral").val() == '999')
+                {
+                    alert("If Full SJR is required, it is mandatory to select the speciality to complete the SJR review.");
+                    return false;
+                }
+            }
+            else {
+
+
+                if (!$("#FullSJRRequiredYes").is(":checked") && !$("#FullSJRRequiredNo").is(":checked")) {
+
+                    alert("Full SJR Required is mandatory. Please select an option");
+                    return false;
+
+                }
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+$(function () {
+     $("#btnModelClose4").click(function(){
+window.location.href = "@Url.Action("MortalityReview", "Home")";
+    });
+
+});
+</script>
+<script>
+        $(document).ready(function () {
+            $("#btnCloseYes").click(function () {
+                $("#modelClose4").modal('hide');
+            });
+        });
+</script>
+

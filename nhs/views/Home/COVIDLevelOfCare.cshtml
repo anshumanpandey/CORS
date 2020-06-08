@@ -1,0 +1,839 @@
+﻿@model NHS.Common.DTO.COVIDLevelOfCare
+
+@{
+    /**/
+
+    ViewBag.Title = "COVID 19 Level Of Care";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .square {
+        height: 30px;
+        width: 100px;
+        background-color: forestgreen;
+    }
+</style>
+<br />
+<br />
+<div class="container">
+    <div class="row form-group">
+        <div class="col-xs-12 col-lg-12">
+            <div class="row" align="right">
+                <div class="col-md-12">
+                    <input type="image" src="~/images/Delete.png" width="30" height="30" alt="Submit" id="btnClose1" title="Close" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row setup-content" id="step-1">
+        <div class="col-xs-12 col-lg-12">
+            <div class="lable_title">
+                <h2>Level Of Care </h2>
+            </div><br/>
+            @using (Html.BeginForm("COVIDLevelOfCare", "Home", FormMethod.Post, new { @id = Model.ID, @patientID = Model.PatientID }))
+            {
+                @Html.Hidden("hdnPatientID", Model.PatientID);
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="col-md-12">
+                        <div class="row_bar">
+                            <span><b>ITU</b></span>
+                        </div>
+                    </div>    
+                        @if (ViewBag.IsReadOnly)
+                        {
+                            if (Model.ITULevel1)
+                            {
+                                <div class="col-md-12">
+                                    <div class="col-md-2">
+                                        <div class="row_bar">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="row_bar">
+                                            <input type="checkbox" disabled checked id="ITULevel1" name="ITULevel1"><span> ITU Level 1 </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else if (!string.IsNullOrEmpty(Model.UpdatedBy) && !Model.ITULevel1 && !Model.ITULevel2 && !Model.ITULevel3 && !Model.InfectionDiseaseUnitBed && !Model.OtherBeds)
+                            {
+                                <div class="col-md-12">
+                                    <div class="col-md-2">
+                                        <div class="row_bar">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="row_bar">
+                                            <input type="checkbox" disabled id="ITULevel1" name="ITULevel1"><span> ITU Level 1 </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else if (!string.IsNullOrEmpty(Model.UpdatedBy))
+                            {
+                                <div class="col-md-12">
+                                    <div class="col-md-2">
+                                        <div class="row_bar">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="row_bar">
+                                            <input type="checkbox" disabled id="ITULevel1" name="ITULevel1"><span> ITU Level 1 </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-md-12">
+                                    <div class="col-md-2">
+                                        <div class="row_bar">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="row_bar">
+                                            <input type="checkbox" disabled id="ITULevel1" name="ITULevel1"><span> ITU Level 1 </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+                        }
+                        else
+                        {
+                            if (Model.ITULevel1)
+                            {
+                        <div class="col-md-12">
+                            <div class="col-md-2">
+                                <div class="row_bar">
+                                    <span>&nbsp;</span>
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="row_bar">
+                                    <input type="checkbox" checked id="ITULevel1" name="ITULevel1"><span> ITU Level 1 </span>
+                                </div>
+                            </div>
+                        </div>
+                            }
+                            else if (!string.IsNullOrEmpty(Model.UpdatedBy) && !Model.ITULevel1 && !Model.ITULevel2 && !Model.ITULevel3 && !Model.InfectionDiseaseUnitBed && !Model.OtherBeds)
+                            {
+                                <div class="col-md-12">
+                                    <div class="col-md-2">
+                                        <div class="row_bar">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="row_bar">
+                                            <input type="checkbox" id="ITULevel1" name="ITULevel1"><span> ITU Level 1 </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else if (!string.IsNullOrEmpty(Model.UpdatedBy))
+                            {
+                        <div class="col-md-12">
+                            <div class="col-md-2">
+                                <div class="row_bar">
+                                    <span>&nbsp;</span>
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="row_bar">
+                                    <input type="checkbox" disabled id="ITULevel1" name="ITULevel1"><span> ITU Level 1 </span>
+                                </div>
+                            </div></div>
+                            }
+                            else
+                            {
+                        <div class="col-md-12">
+                            <div class="col-md-2">
+                                <div class="row_bar">
+                                    <span>&nbsp;</span>
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="row_bar">
+                                    <input type="checkbox" id="ITULevel1" name="ITULevel1"><span> ITU Level 1 </span>
+                                </div>
+                            </div></div>
+
+                            }
+                        }
+
+                                @if (ViewBag.IsReadOnly)
+                                {
+                                    if (Model.ITULevel2)
+                                    {
+                                        <div class="col-md-12">
+                                            <div class="col-md-2">
+                                                <div class="row_bar">
+                                                    <span>&nbsp;</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <div class="row_bar">
+                                                    <input type="checkbox" disabled checked id="ITULevel2" name="ITULevel2"><span> ITU Level 2 </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else if (!string.IsNullOrEmpty(Model.UpdatedBy) && !Model.ITULevel1 && !Model.ITULevel2 && !Model.ITULevel3 && !Model.InfectionDiseaseUnitBed && !Model.OtherBeds)
+                                    {
+                                        <div class="col-md-12">
+                                            <div class="col-md-2">
+                                                <div class="row_bar">
+                                                    <span>&nbsp;</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <div class="row_bar">
+                                                    <input type="checkbox" disabled id="ITULevel2" name="ITULevel2"><span> ITU Level 2 </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else if (!string.IsNullOrEmpty(Model.UpdatedBy))
+                                    {
+                                        <div class="col-md-12">
+                                            <div class="col-md-2">
+                                                <div class="row_bar">
+                                                    <span>&nbsp;</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <div class="row_bar">
+                                                    <input type="checkbox" disabled id="ITULevel2" name="ITULevel2"><span> ITU Level 2 </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-12">
+                                            <div class="col-md-2">
+                                                <div class="row_bar">
+                                                    <span>&nbsp;</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <div class="row_bar">
+                                                    <input type="checkbox" disabled id="ITULevel2" name="ITULevel2"><span> ITU Level 2 </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    if (Model.ITULevel2)
+                                    {
+                                    <div class="col-md-12">
+                                        <div class="col-md-2">
+                                            <div class="row_bar">
+                                                <span>&nbsp;</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-10">
+                                            <div class="row_bar">
+                                                <input type="checkbox" checked id="ITULevel2" name="ITULevel2"><span> ITU Level 2 </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    }
+                                    else if (!string.IsNullOrEmpty(Model.UpdatedBy) && !Model.ITULevel1 && !Model.ITULevel2 && !Model.ITULevel3 && !Model.InfectionDiseaseUnitBed && !Model.OtherBeds)
+                                    {
+                                        <div class="col-md-12">
+                                            <div class="col-md-2">
+                                                <div class="row_bar">
+                                                    <span>&nbsp;</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <div class="row_bar">
+                                                    <input type="checkbox" id="ITULevel2" name="ITULevel2"><span> ITU Level 2 </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else if (!string.IsNullOrEmpty(Model.UpdatedBy))
+                                    {
+                                    <div class="col-md-12">
+                                        <div class="col-md-2">
+                                            <div class="row_bar">
+                                                <span>&nbsp;</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-10">
+                                            <div class="row_bar">
+                                                <input type="checkbox" disabled id="ITULevel2" name="ITULevel2"><span> ITU Level 2 </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    }
+                                    else
+                                    {
+                                    <div class="col-md-12">
+                                        <div class="col-md-2">
+                                            <div class="row_bar">
+                                                <span>&nbsp;</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-10">
+                                            <div class="row_bar">
+                                                <input type="checkbox" id="ITULevel2" name="ITULevel2"><span> ITU Level 2 </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    }
+                                }
+                                        @if (ViewBag.IsReadOnly)
+                                        {
+                                            if (Model.ITULevel3)
+                                            {
+                                                <div class="col-md-12">
+                                                    <div class="col-md-2">
+                                                        <div class="row_bar">
+                                                            <span>&nbsp;</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <div class="row_bar">
+                                                            <input type="checkbox" disabled checked id="ITULevel3" name="ITULevel3"><span> ITU Level 3 </span>
+                                                        </div>
+                                                    </div>
+                                                </div><br />
+                                            }
+                                            else if (!string.IsNullOrEmpty(Model.UpdatedBy) && !Model.ITULevel1 && !Model.ITULevel2 && !Model.ITULevel3 && !Model.InfectionDiseaseUnitBed && !Model.OtherBeds)
+                                            {
+                                                <div class="col-md-12">
+                                                    <div class="col-md-2">
+                                                        <div class="row_bar">
+                                                            <span>&nbsp;</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <div class="row_bar">
+                                                            <input type="checkbox" disabled id="ITULevel3" name="ITULevel3"><span> ITU Level 3 </span>
+                                                        </div>
+                                                    </div>
+                                                </div><br />
+                                            }
+                                            else if (!string.IsNullOrEmpty(Model.UpdatedBy))
+                                            {
+                                                <div class="col-md-12">
+                                                    <div class="col-md-2">
+                                                        <div class="row_bar">
+                                                            <span>&nbsp;</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <div class="row_bar">
+                                                            <input type="checkbox" disabled id="ITULevel3" name="ITULevel3"><span> ITU Level 3 </span>
+                                                        </div>
+                                                    </div>
+                                                </div><br />
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-12">
+                                                    <div class="col-md-2">
+                                                        <div class="row_bar">
+                                                            <span>&nbsp;</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="row_bar">
+                                                            <input type="checkbox" disabled id="ITULevel3" name="ITULevel3"><span> ITU Level 3 </span>
+                                                        </div>
+                                                    </div>
+                                                </div><br />
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (Model.ITULevel3)
+                                            {
+                                            <div class="col-md-12">
+                                                <div class="col-md-2">
+                                                    <div class="row_bar">
+                                                        <span>&nbsp;</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <div class="row_bar">
+                                                        <input type="checkbox" checked id="ITULevel3" name="ITULevel3"><span> ITU Level 3 </span>
+                                                    </div>
+                                                </div>
+                                            </div><br />
+                                            }
+                                            else if (!string.IsNullOrEmpty(Model.UpdatedBy) && !Model.ITULevel1 && !Model.ITULevel2 && !Model.ITULevel3 && !Model.InfectionDiseaseUnitBed && !Model.OtherBeds)
+                                            {
+                                                <div class="col-md-12">
+                                                    <div class="col-md-2">
+                                                        <div class="row_bar">
+                                                            <span>&nbsp;</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <div class="row_bar">
+                                                            <input type="checkbox" id="ITULevel3" name="ITULevel3"><span> ITU Level 3 </span>
+                                                        </div>
+                                                    </div>
+                                                </div><br />
+                                            }
+                                            else if (!string.IsNullOrEmpty(Model.UpdatedBy))
+                                            {
+                                            <div class="col-md-12">
+                                                <div class="col-md-2">
+                                                    <div class="row_bar">
+                                                        <span>&nbsp;</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <div class="row_bar">
+                                                        <input type="checkbox" disabled id="ITULevel3" name="ITULevel3"><span> ITU Level 3 </span>
+                                                    </div>
+                                                </div>
+                                            </div><br />
+                                            }
+                                            else
+                                            {
+                                            <div class="col-md-12">
+                                                <div class="col-md-2">
+                                                    <div class="row_bar">
+                                                        <span>&nbsp;</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="row_bar">
+                                                        <input type="checkbox" id="ITULevel3" name="ITULevel3"><span> ITU Level 3 </span>
+                                                    </div>
+                                                </div>
+                                            </div><br />
+                                            }
+                                        }
+                                                @if (ViewBag.IsReadOnly)
+                                                {
+                                                    if (Model.InfectionDiseaseUnitBed)
+                                                    {
+                                                        <div class="col-md-12">
+                                                            <div class="row_bar">
+                                                                <input type="checkbox" disabled checked id="InfectionDiseaseUnitBed" name="InfectionDiseaseUnitBed"><span> Infection Disease Unit Bed </span>
+                                                            </div>
+                                                        </div><br />
+                                                    }
+                                                    else if (!string.IsNullOrEmpty(Model.UpdatedBy) && !Model.ITULevel1 && !Model.ITULevel2 && !Model.ITULevel3 && !Model.InfectionDiseaseUnitBed && !Model.OtherBeds)
+                                                    {
+                                                        <div class="col-md-12">
+                                                                <div class="row_bar">
+                                                                    <input type="checkbox" disabled id="InfectionDiseaseUnitBed" name="InfectionDiseaseUnitBed"><span> Infection Disease Unit Bed </span>
+                                                                </div>
+                                                            </div><br />
+                                                    }
+                                                    else if (!string.IsNullOrEmpty(Model.UpdatedBy))
+                                                    {
+                                                        <div class="col-md-12">
+                                                            <div class="row_bar">
+                                                                <input type="checkbox" disabled id="InfectionDiseaseUnitBed" name="InfectionDiseaseUnitBed"><span> Infection Disease Unit Bed </span>
+                                                            </div>
+                                                        </div><br />
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="col-md-12">
+                                                            <div class="row_bar">
+                                                                <input type="checkbox" disabled id="InfectionDiseaseUnitBed" name="InfectionDiseaseUnitBed"><span> Infection Disease Unit Bed </span>
+                                                            </div>
+                                                        </div><br />
+                                                                }
+                                                }
+                                                else
+                                                {
+                                                    if (Model.InfectionDiseaseUnitBed)
+                                                    {
+                                                        <div class="col-md-12">
+                                                        <div class="row_bar">
+                                                            <input type = "checkbox" checked id="InfectionDiseaseUnitBed" name="InfectionDiseaseUnitBed"><span> Infection Disease Unit Bed</span>
+                                                        </div>
+                                                    </div><br />
+                                                    }
+                                                    else if (!string.IsNullOrEmpty(Model.UpdatedBy) && !Model.ITULevel1 && !Model.ITULevel2 && !Model.ITULevel3 && !Model.InfectionDiseaseUnitBed && !Model.OtherBeds)
+                                                    {
+                                                        <div class="col-md-12">
+                                                                <div class="row_bar">
+                                                                    <input type="checkbox" id="InfectionDiseaseUnitBed" name="InfectionDiseaseUnitBed"><span> Infection Disease Unit Bed </span>
+                                                                </div>
+                                                            </div><br />
+                                                    }
+                                                    else if (!string.IsNullOrEmpty(Model.UpdatedBy))
+                                                    {
+                                                    <div class="col-md-12">
+                                                        <div class="row_bar">
+                                                            <input type = "checkbox" disabled id = "InfectionDiseaseUnitBed" name="InfectionDiseaseUnitBed"><span> Infection Disease Unit Bed</span>
+                                                            </div>
+                                                    </div><br />
+                                                    }
+                                                    else
+                                                    {
+                                                    <div class="col-md-12">
+                                                        <div class="row_bar">
+                                                            <input type = "checkbox" id="InfectionDiseaseUnitBed" name="InfectionDiseaseUnitBed"><span> Infection Disease Unit Bed</span>
+                                                          </div>
+                                                    </div><br />
+                                                    }
+                                                }
+                                                @if (ViewBag.IsReadOnly)
+                                                {
+                                                    if (Model.OtherBeds)
+                                                    {
+                                                        <div class="col-md-12">
+                                                            <div class="row_bar">
+                                                                <input type="checkbox" disabled checked id="OtherBeds" name="OtherBeds"><span> Other Beds </span>
+                                                            </div>
+                                                        </div><br />
+                                                    }
+                                                    else if (!string.IsNullOrEmpty(Model.UpdatedBy) && !Model.ITULevel1 && !Model.ITULevel2 && !Model.ITULevel3 && !Model.InfectionDiseaseUnitBed && !Model.OtherBeds)
+                                                    {
+                                                        <div class="col-md-12">
+                                                                <div class="row_bar">
+                                                                    <input type="checkbox" disabled id="OtherBeds" name="OtherBeds"><span> Other Beds </span>
+                                                                </div>
+                                                            </div><br />
+                                                    }
+                                                    else if (!string.IsNullOrEmpty(Model.UpdatedBy))
+                                                    {
+                                                        <div class="col-md-12">
+                                                            <div class="row_bar">
+                                                                <input type="checkbox" disabled id="OtherBeds" name="OtherBeds"><span> Other Beds </span>
+                                                            </div>
+                                                        </div><br />
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="col-md-12">
+                                                            <div class="row_bar">
+                                                                <input type="checkbox" disabled id="OtherBeds" name="OtherBeds"><span> Other Beds </span>
+                                                            </div>
+                                                        </div><br />
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    if (Model.OtherBeds)
+                                                    {
+                                                    <div class="col-md-12">
+                                                        <div class="row_bar">
+                                                            <input type="checkbox" checked id="OtherBeds" name="OtherBeds"><span> Other Beds </span>
+                                                        </div>
+                                                    </div><br />
+                                                    }
+                                                    else if (!string.IsNullOrEmpty(Model.UpdatedBy) && !Model.ITULevel1 && !Model.ITULevel2 && !Model.ITULevel3 && !Model.InfectionDiseaseUnitBed && !Model.OtherBeds)
+                                                    {
+                                                        <div class="col-md-12">
+                                                            <div class="row_bar">
+                                                                <input type="checkbox" id="OtherBeds" name="OtherBeds"><span> Other Beds </span>
+                                                            </div>
+                                                        </div><br />
+                                                    }
+                                                    else if (!string.IsNullOrEmpty(Model.UpdatedBy))
+                                                    {
+                                                    <div class="col-md-12">
+                                                        <div class="row_bar">
+                                                            <input type="checkbox" disabled id="OtherBeds" name="OtherBeds"><span> Other Beds </span>
+                                                        </div>
+                                                    </div><br />
+                                                    }
+                                                    else
+                                                    {
+                                                    <div class="col-md-12">
+                                                        <div class="row_bar">
+                                                            <input type="checkbox" id="OtherBeds" name="OtherBeds"><span> Other Beds </span>
+                                                        </div>
+                                                    </div><br />
+                                                    }
+                                                }
+                                            </div>
+                    <div class="col-md-4">
+                        <div class="table_margin">
+                            <table width="100%" style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;">
+                                <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                    <td width="40%" style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Patient ID</b></td>
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.PatientID </td>
+                                </tr>
+                                <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Patient Name</b></td>
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.PatientName</td>
+
+                                </tr>
+                                <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Test Result</b></td>
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.TestResult</td>
+                                </tr>
+                                <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Age</b></td>
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.Age</td>
+                                </tr>
+                                <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Test Result</b></td>
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.Gender</td>
+                                </tr>
+                                <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Spell Number</b></td>
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.SpellNumber</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div><br /><br />
+                @if (!string.IsNullOrEmpty(Model.UpdatedBy))
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row_bar">
+                                <br /><br /><span><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Updated By:</b>&nbsp;</span>
+                                <span><b><i>@Model.UpdatedBy</i></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                <span><b>Updated Date:</b>&nbsp;</span>
+                                <span><b><i>@Model.UpdatedDate</i></b></span>
+                            </div>
+                        </div>
+                    </div>
+                }           
+                </div><br /><br />
+                if (ViewBag.IsReadOnly)
+                {
+                    <div class="pull-right">
+                        <button id="BtnNext" disabled type="submit" name="BtnNext" class="btn btn-primary btn-lg">Save</button>
+                        <button id="btnSave" disabled name="btnSave" class="btn btn-primary btn-lg">Exit</button>
+                    </div>
+                }
+                else
+                {
+                    <div class="pull-right">
+                        <button id="BtnNext" type="submit" name="BtnNext" class="btn btn-primary btn-lg">Save</button>
+                        <span id="btnSave" name="btnSave" class="btn btn-primary btn-lg">Exit</span>
+                    </div>
+                }
+            }
+            </div>
+        <br />
+        <br />
+
+    </div>
+</div>
+    <div class="modal fade" id="modelClose1">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Message</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <div class="form-section" style="text-align:left">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row_bar">
+                                    <div>Do you want to exit without saving your changes?</div>
+                                </div>
+                            </div>
+
+
+                            @*<div class="col-md-12">
+                                    <div class="row_bar">
+                                        <div><input type="checkbox" id="QAPReview" name="QAPReview" checked disabled="disabled"><span>Review Completed?</span>?</div>
+                                    </div>
+                                </div>*@
+                            <br />
+                            <br />
+                       <div class="col-md-4">
+                                    <button type="button" class="btn btn-primary btn-block" id="btnModelClose1" data-dismiss="modal" formmethod="post" onclick="location.href='@Url.Action("COVIDReviewCycle", "Home", new { id = Model.Test_ID, patientID = Model.PatientID })'">Yes</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-primary btn-block" name="btnCloseYes" id="btnCloseYes">No</button>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="modal fade" id="modelCloseNext">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Message</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="form-section" style="text-align:left">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row_bar">
+                                <div>Do you want to exit without saving your changes?</div>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-primary btn-block" id="btnModelClose2" data-dismiss="modal" formmethod="post" onclick="location.href='@Url.Action("COVIDReviewCycle", "Home", new { id=Model.Test_ID, patientID = Model.PatientID })'">Yes</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary btn-block" name="btnCloseYes2" id="btnCloseYes2">No</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        //$('#dvPatientDetailsCimment').hide();
+        $("#myBtnProcedures").click(function () {
+            $("#myModalProcedures").modal();
+        });
+        $("#myBtnSecondaryDiagnoses").click(function () {
+            $("#myModalSecondaryDiagnoses").modal();
+        });
+        $("#btnClose1").click(function () {
+            $("#modelClose1").modal();
+        });
+        //$("#BtnNext").click(function (event) {
+        //    if (!confirm('Are you sure that you want to submit the form'))
+        //        event.preventDefault();
+        //});
+    });
+</script> 
+<script type="text/javascript">
+$(function () {
+    $("#btnModelClose1").click(function(){
+window.location.href = "@Url.Action("COVIDReviewCycle", "Home", new { id = Model.Test_ID, patientID = Model.PatientID })";
+    });
+});
+    </script>
+<script>
+        $(document).ready(function () {
+            $("#btnCloseYes").click(function () {
+                $("#modelClose1").modal('hide');
+            });
+            $("#btnSave").click(function () {
+                $("#modelCloseNext").modal();
+            });
+        });
+</script>
+<script type="text/javascript">
+$(function () {
+    $("#BtnNext").click(function () {
+
+        if ($("#ITULevel1").prop('checked') == false &&
+           $("#ITULevel2").prop('checked') == false &&
+           $("#ITULevel3").prop('checked') == false &&
+           $("#InfectionDiseaseUnitBed").prop('checked') == false &&
+           $("#OtherBeds").prop('checked') == false)
+        {
+                alert("Please select atleast one level of care.");
+                return false;
+        }
+    });
+});
+</script>
+<script>
+        $(document).ready(function () {
+            $("#ITULevel1").click(function () {
+                if ($(this).is(":checked"))
+                {
+                    $("#ITULevel2").prop("disabled", true);
+                    $("#ITULevel3").prop("disabled", true);
+                    $("#InfectionDiseaseUnitBed").prop("disabled", true);
+                    $("#OtherBeds").prop("disabled", true);
+                }
+                else
+                {
+                    $("#ITULevel2").prop("disabled", false);
+                    $("#ITULevel3").prop("disabled", false);
+                    $("#InfectionDiseaseUnitBed").prop("disabled", false);
+                    $("#OtherBeds").prop("disabled", false);
+                }
+            });
+            $("#ITULevel2").click(function () {
+                if ($(this).is(":checked")) {
+                    $("#ITULevel1").prop("disabled", true);
+                    $("#ITULevel3").prop("disabled", true);
+                    $("#InfectionDiseaseUnitBed").prop("disabled", true);
+                    $("#OtherBeds").prop("disabled", true);
+                }
+                else {
+                    $("#ITULevel1").prop("disabled", false);
+                    $("#ITULevel3").prop("disabled", false);
+                    $("#InfectionDiseaseUnitBed").prop("disabled", false);
+                    $("#OtherBeds").prop("disabled", false);
+                }
+            });
+            $("#ITULevel3").click(function () {
+                if ($(this).is(":checked")) {
+                    $("#ITULevel2").prop("disabled", true);
+                    $("#ITULevel1").prop("disabled", true);
+                    $("#InfectionDiseaseUnitBed").prop("disabled", true);
+                    $("#OtherBeds").prop("disabled", true);
+                }
+                else {
+                    $("#ITULevel2").prop("disabled", false);
+                    $("#ITULevel1").prop("disabled", false);
+                    $("#InfectionDiseaseUnitBed").prop("disabled", false);
+                    $("#OtherBeds").prop("disabled", false);
+                }
+            });
+            $("#InfectionDiseaseUnitBed").click(function () {
+                if ($(this).is(":checked")) {
+                    $("#ITULevel2").prop("disabled", true);
+                    $("#ITULevel1").prop("disabled", true);
+                    $("#ITULevel3").prop("disabled", true);
+                    $("#OtherBeds").prop("disabled", true);
+                }
+                else {
+                    $("#ITULevel2").prop("disabled", false);
+                    $("#ITULevel1").prop("disabled", false);
+                    $("#ITULevel3").prop("disabled", false);
+                    $("#OtherBeds").prop("disabled", false);
+                }
+            });
+            $("#OtherBeds").click(function () {
+                if ($(this).is(":checked")) {
+                    $("#ITULevel2").prop("disabled", true);
+                    $("#ITULevel1").prop("disabled", true);
+                    $("#ITULevel3").prop("disabled", true);
+                    $("#InfectionDiseaseUnitBed").prop("disabled", true);
+                }
+                else {
+                    $("#ITULevel2").prop("disabled", false);
+                    $("#ITULevel1").prop("disabled", false);
+                    $("#ITULevel3").prop("disabled", false);
+                    $("#InfectionDiseaseUnitBed").prop("disabled", false);
+                }
+            });
+        });
+    </script>
+
+<script>
+$(document).ready(function () {
+    $("#btnCloseYes").click(function () {
+        $("#modelClose1").modal('hide');
+    });
+    $("#btnCloseYes2").click(function () {
+        $("#modelCloseNext").modal('hide');
+    });
+});
+</script>

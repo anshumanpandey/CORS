@@ -1,0 +1,383 @@
+﻿@model NHS.Common.DTO.COVIDTestResultsComplexDTO
+
+@{
+    /**/
+
+    ViewBag.Title = "COVID 19 Data Assurance";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .square {
+        height: 30px;
+        width: 100px;
+        background-color: forestgreen;
+    }
+</style>
+<br />
+<br />
+<div class="container">
+    <div class="row form-group">
+        <div class="col-xs-12 col-lg-12">
+            <div class="row" align="right">
+                <div class="col-md-12">
+                    <input type="image" src="~/images/Delete.png" width="30" height="30" alt="Submit" id="btnClose1" title="Close" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row setup-content" id="step-1">
+        <div class="col-xs-12 col-lg-12">
+            <div class="lable_title">
+                <h2>Data Assurance </h2>
+            </div>
+                <div class="row">
+                    <div style="width:98%;">
+                        <br />
+                        <table class="stripe row-border order-column" style="overflow:auto;" id="tblPatientDetails">
+                            <thead>
+                                <tr bgcolor="#a9d7cc" style="color:black;  font-size:11px;">
+                                    <th align="left" width="4%" style="text-align:center;">Patient ID</th>
+                                    <th align="left" width="10%" style="text-align:center;">Name (Age)</th>
+                                    @*<th align="left" width="4%" style="text-align:center;">Gender</th>*@
+                                    <th align="left" width="4%" style="text-align:center;">DQ</th>
+                                    <th align="left" width="5%" style="">Encounter<br/> Type</th>
+                                    <th align="left" width="8%" style="">Order Date</th>
+                                    <th align="left" width="5%" style="">Order Status</th>
+                                    <th align="left" width="8%" style="">Event/Result</th>
+                                    <th align="left" width="10%" style="">Result Date Time</th>
+                                    <th align="left" width="20%" style="">Clinical Display</th>
+                                    <th align="left" width="10%" style="">COVID EDL Diagnosis</th>
+                                    <th align="left" width="10%" style="">COVID EDL Problem</th>
+                                    <th align="left" width="5%" style="">Notified</th>
+                                    <th align="left" width="5%" style="">Status</th>
+                                    @if (!ViewBag.IsReadOnly)
+                                    {
+                                        <th align="left" width="5%" style="">Action</th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody style="font-size:11px;padding:0px;">
+                                @if (Model.LstTestHistory.Count > 0)
+                {
+                    foreach (var item in Model.LstTestHistory)
+                    {
+                                        <tr class="Entries">
+                                            <td align="left">&nbsp;&nbsp;&nbsp;@item.PatientID.Trim()</td>
+                                            <td align="left">
+                                                <a href="#" data-toggle="tooltip" title="Gender:@item.Gender" style="display:block;">
+                                                    @item.PatientName.Trim() (@item.Age.ToString())
+                                                </a>
+                                            </td>
+                                            <td align="left">@item.Encounter_Type_Des.Trim()</td>
+                                            <td align="left" style="">@item.OrderDateTime</td>
+                                            <td align="left" style="">&nbsp;&nbsp;&nbsp;@item.TestStatus</td>
+                                            <td align="left">&nbsp;&nbsp;&nbsp;@item.TestResult</td>
+                                            <td align="left" style="">@item.TestResultDateTime</td>
+                                            <td align="left">@item.Clinical_Display_Line.Trim()</td>
+                                            <td align="left">@item.COVID_Diagnosis.Trim()</td>
+                                            <td align="left">@item.COVID_Problem.Trim()</td>
+
+                                            @if (item.Notified == 0)
+                                            {
+                                                <td align="left">&nbsp;&nbsp;&nbsp;<img src="~/images/GeryImg.png" width="18" height="18" title="Pending"></td>
+                                            }
+                                            else if (item.Notified == 2)
+                                            {
+                                                <td align="left">&nbsp;&nbsp;&nbsp;<img src="~/images/RedC.png" width="18" height="18" title="No"></td>
+                                            }
+                                            else if (item.Notified == 3)
+                                            {
+                                                <td align="left">&nbsp;&nbsp;&nbsp;<img src="~/images/GreenCircle.png" width="18" height="18" title="Yes"></td>
+                                            }
+                                            @if (item.DQ == 0)
+                                            {
+                                                <td align="left">&nbsp;&nbsp;&nbsp;<img src="~/images/GeryImg.png" width="18" height="18" title=""></td>
+                                            }
+                                            else if (item.DQ == 1)
+                                            {
+                                                <td align="left">&nbsp;&nbsp;&nbsp;<img src="~/images/amber.png" width="18" height="18" title="Cancelled/Discontinued"></td>
+                                            }
+                                            else if (item.DQ == 2)
+                                            {
+                                                <td align="left">&nbsp;&nbsp;&nbsp;<img src="~/images/RedC.png" width="18" height="18" title="Multiple Tests and Pending 5 days or more"></td>
+                                            }
+                                            else if (item.DQ == 4)
+                                            {
+                                                <td align="left">&nbsp;&nbsp;&nbsp;<img src="~/images/purple.png" width="18" height="18" title="Result with No Order"></td>
+                                            }
+                                            else if (item.DQ == 4)
+                                            {
+                                                <td align="left">&nbsp;&nbsp;&nbsp;<img src="~/images/GreenCircle.png" width="18" height="18" title="Order with Result"></td>
+                                            }
+                                            @if (item.IsDisabled)
+                                            {
+                                                <td align="left" style="color:#ff2e37">&nbsp;&nbsp;&nbsp;<b>Inactive</b></td>
+                                            }
+                                            else
+                                            {
+                                                <td align="left" style="color:#52d26a">&nbsp;&nbsp;&nbsp;<b>Active</b></td>
+                                            }
+                                            @if (!ViewBag.IsReadOnly)
+                                            {
+                                                <td align="center" class="PID"><a href="@Url.Action("EditCOVIDTest", "Home", new { id = item.Test_ID, patientID = item.PatientID })"><i class="fas fa-edit"></i></a></td>
+                                            }
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="14" class="text-center" align="center">No Records Found.</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            <div class="col-md-12">
+                <div class="col-md-8">
+                    <span>&nbsp;</span>
+                </div>
+                @*<div class="col-md-4">
+                    <div class="table_margin">
+                        <table width="100%" style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;">
+                            <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                <td width="40%" style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Patient ID</b></td>
+                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@ViewBag.PatientID </td>
+                            </tr>
+                            <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Patient Name</b></td>
+                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@ViewBag.PatientName</td>
+
+                            </tr>
+                            <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Test Result</b></td>
+                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@ViewBag.TestResult</td>
+                            </tr>
+                            <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Age</b></td>
+                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@ViewBag.Age</td>
+                            </tr>
+                            <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Gender</b></td>
+                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@ViewBag.Gender</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>*@
+            </div>
+            
+        </div>
+    </div>
+    <div class="modal fade" id="modelClose1">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Message</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <div class="form-section" style="text-align:left">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row_bar">
+                                    <div>Do you want to exit without saving your changes?</div>
+                                </div>
+                            </div>
+
+
+                            @*<div class="col-md-12">
+                                    <div class="row_bar">
+                                        <div><input type="checkbox" id="QAPReview" name="QAPReview" checked disabled="disabled"><span>Review Completed?</span>?</div>
+                                    </div>
+                                </div>*@
+                            <br />
+                            <br />
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-primary btn-block" id="btnModelClose1" data-dismiss="modal" formmethod="post" onclick="location.href='@Url.Action("COVIDReviewCycle", "Home", new { id = ViewBag.Patient_ID, patientID = Model.TestResults.PatientID })'">Yes</button>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-primary btn-block" name="btnCloseYes" id="btnCloseYes">No</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modelCloseNext">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Message</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="form-section" style="text-align:left">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row_bar">
+                                    <div>Do you want to exit without saving your changes?</div>
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-primary btn-block" id="btnModelClose2" data-dismiss="modal" formmethod="post" onclick="location.href='@Url.Action("COVIDReviewCycle", "Home", new { id=ViewBag.Patient_ID })'">Yes</button>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-primary btn-block" name="btnCloseYes2" id="btnCloseYes2">No</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    $(document).ready(function () {
+        //$('#dvPatientDetailsCimment').hide();
+        $("#myBtnProcedures").click(function () {
+            $("#myModalProcedures").modal();
+        });
+        $("#myBtnSecondaryDiagnoses").click(function () {
+            $("#myModalSecondaryDiagnoses").modal();
+        });
+        $("#btnClose1").click(function () {
+            $("#modelClose1").modal();
+        });
+        //$("#BtnNext").click(function (event) {
+        //    if (!confirm('Are you sure that you want to submit the form'))
+        //        event.preventDefault();
+        //});
+    });
+    </script>
+    <script type="text/javascript">
+$(function () {
+    $("#btnModelClose1").click(function(){
+window.location.href = "@Url.Action("COVIDReviewCycle", "Home", new { id = ViewBag.Patient_ID, patientID = ViewBag.PatientID })";
+    });
+});
+    </script>
+    <script>
+    $(document).ready(function () {
+        $("#btnCloseYes").click(function () {
+            $("#modelClose1").modal('hide');
+        });
+        $("#btnCloseYes2").click(function () {
+            $("#modelCloseNext").modal('hide');
+        });
+    });
+    </script>
+    <script>
+        jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+            "date-uk-pre": function (a) {
+                var ukDatea = a.split('-');
+                return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
+            },
+            "date-uk-asc": function (a, b) {
+                return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+            },
+            "date-uk-desc": function (a, b) {
+                return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+            }
+        });
+    $(document).ready(function () {
+        $('#tblPatientDetails').DataTable(
+            {
+
+                "ordering": true,
+                "paging": true,
+                "searching": true,
+                "pageLength": 10,
+                "columnDefs": [{ "targets": 5, "type": "date-uk" }],
+                "order": [3, 'desc'],
+                "aoColumns": [
+                    { "sName": "PatientID", "sTitle": "Patient ID", "bSortable": "true" },
+                    { "sName": "PatientName", "sTitle": "Name (Age)", "bSortable": "true" },
+                    { "sName": "Encounter_Type_Des", "sTitle": "Encounter<br/> Type", "bSortable": "true" },
+                    { "sName": "OrderDateTime", "sTitle": "Order Date", "sType": "date-uk", "bSortable": "true" },
+                    { "sName": "TestStatus", "sTitle": "Order Status", "sType": "date", "bSortable": "true" },
+                    { "sName": "TestResult", "sTitle": "Test Result", "bSortable": "true" },
+                    { "sName": "TestResultDateTime", "sTitle": "Result DateTime", "bSortable": "true" },
+                    { "sName": "Clinical_Display_Line", "sTitle": "Clinical Display", "bSortable": "true" },
+                    { "sName": "COVID_Diagnosis", "sTitle": "COVID EDL Diagnosis", "bSortable": "true" },
+                    { "sName": "COVID_Problem", "sTitle": "COVID EDL Problem", "bSortable": "true" },
+                    { "sName": "Notified", "sTitle": "Notified?", "bSortable": "true" },
+                    { "sName": "DQ", "sTitle": "DQ", "bSortable": "true" },
+                    { "sName": "IsDisabled", "sTitle": "Record Status", "bSortable": "true" },
+                    { "sName": "Action", "sTitle": "Action", "bSortable": "true" }
+                ],
+                "lengthMenu": [
+                    [10, 20, 50, 100, -1],
+                    ['10 rows', '20 rows', '50 rows', '100 rows', 'Show all']],
+                "scrollX": true
+                //language: '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
+                //"language": {
+                //    "emptyTable": '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
+                //    //"zeroRecords": '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
+                //},
+                //"scrollY": true,
+
+                //"columnDefs": [{ "targets": 4, "type": "date-eu" }],
+            });
+
+
+    });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#btnCloseYes").click(function () {
+                $("#modelClose1").modal('hide');
+            });
+            $("#btnSave").click(function () {
+                $("#modelCloseNext").modal();
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#IsOxygen").click(function () {
+                if ($(this).is(":checked"))
+                {
+                    $("#IsNonEvasiveVentilation").prop("disabled", true);
+                    $("#IsMechanicalVentilation").prop("disabled", true);
+                }
+                else
+                {
+                    $("#IsNonEvasiveVentilation").prop("disabled", false);
+                    $("#IsMechanicalVentilation").prop("disabled", false);
+                }
+            });
+            $("#IsNonEvasiveVentilation").click(function () {
+                if ($(this).is(":checked")) {
+                    $("#IsOxygen").prop("disabled", true);
+                    $("#IsMechanicalVentilation").prop("disabled", true);
+                }
+                else {
+                    $("#IsOxygen").prop("disabled", false);
+                    $("#IsMechanicalVentilation").prop("disabled", false);
+                }
+            });
+            $("#IsMechanicalVentilation").click(function () {
+                if ($(this).is(":checked")) {
+                    $("#IsOxygen").prop("disabled", true);
+                    $("#IsNonEvasiveVentilation").prop("disabled", true);
+                }
+                else {
+                    $("#IsOxygen").prop("disabled", false);
+                    $("#IsNonEvasiveVentilation").prop("disabled", false);
+                }
+            });
+        });
+    </script>
+
+

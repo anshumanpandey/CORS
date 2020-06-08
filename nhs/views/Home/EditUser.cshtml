@@ -1,0 +1,173 @@
+﻿@model NHS.Common.AppUsers
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    ViewBag.Title = "Index";
+    NHS.Common.Alert alertMessage = (NHS.Common.Alert)ViewBag.AlertMessage;
+}
+<br /><br /><br /><br />
+<div class="container">
+    <span style="color:red">@TempData["AlertMessage"]</span>
+    <form action="@Url.Action("UpdateUser", "Home", new { id = Model.ID })" id="login-form" class="sky-form" method="post" novalidate="novalidate">
+        <div class="lable_title">
+            <h2>Edit User</h2><span style="color:red"><i>&nbsp;&nbsp;* marked fields are mandatory fields.</i></span><br />
+        </div>
+        @*<header style="color:black">Registration</header>*@
+        <input type="hidden" id="IsApproved" value="" />
+        <fieldset>
+            <section>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span>Email ID</span>&nbsp;&nbsp;<span style="color:red;font-size:20px">*</span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="row_bar checkbox-row">
+                            @Html.EditorFor(model => model.EmailID, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span>First Name</span>&nbsp;&nbsp;<span style="color:red;font-size:20px">*</span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="row_bar checkbox-row">
+                            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span>Last Name</span>&nbsp;&nbsp;<span style="color:red;font-size:20px">*</span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="row_bar checkbox-row">
+                            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span>User Name (Domain login name)</span>&nbsp;&nbsp;<span style="color:red;font-size:20px">*</span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="row_bar checkbox-row">
+                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span>GMC Code (If Applicable)</span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="row_bar checkbox-row">
+                            @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span>Speciality</span>
+                    </div>
+
+                    <div class="col-md-5">
+                        <div class="row_bar checkbox-row">
+                            <select class="form-control" id="ddlSpeciality" name="ddlSpeciality">
+                                <option value="" selected="">Please Select</option>
+                                @foreach (var item in ViewBag.SpecialityDDM)
+                                {
+                                    if (Model.Speciality == item.SpecialityName)
+                                    {
+                                        <option value="@item.SpecialityName" selected>@item.SpecialityName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.SpecialityName">@item.SpecialityName</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span>Role</span>&nbsp;&nbsp;<span style="color:red;font-size:20px">*</span>
+                    </div>
+
+                    <div class="col-md-5">
+                        <div class="row_bar checkbox-row">
+                            <select class="form-control" id="ddlRole" name="ddlRole">
+                                <option value="" selected="">Please Select</option>
+                                @foreach (var item in ViewBag.RoleDDM)
+                                {
+                                    if (Model.Role == item.RoleName)
+                                    {
+                                        <option value="@item.ID" selected>@item.RoleName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.ID">@item.RoleName</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span>Approved</span>
+                    </div>
+                    <div class="col-md-5">
+                        @if (Model.IsApproved == true)
+                        {
+                            <div class="row_bar checkbox-row">
+                                <input type="checkbox" id="Approved" name="Approved" checked />
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="row_bar checkbox-row">
+                                <input type="checkbox" id="Approved" name="Approved" />
+                            </div>
+                        }
+                    </div>
+                </div>
+            </section>
+        </fieldset>
+        <div class="col-md-10" align="center">
+            <button id="activate-step-2" type="submit" name="BtnFinish" class="btn btn-primary btn-lg">Submit</button>
+            <button id="activate-step-3" type="button" name="BtnCancel" class="btn btn-primary btn-lg" onclick="location.href='@Url.Action("Users","Home")'">Cancel</button>
+        </div>
+    </form>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#Approved").click(function () {
+            if ($(this).is(":checked"))
+            {
+                $("#IsApproved").val('true');
+            }
+            else
+            {
+                $("#IsApproved").val('false');
+            }
+            alert($("#IsApproved").val());
+        });
+    });
+</script>

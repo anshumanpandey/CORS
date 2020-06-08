@@ -1,0 +1,115 @@
+﻿@{
+    int totalPages = ViewBag.TotalPagesCount;
+    int pageIndex = ViewBag.PageNumber;
+    int totalRecordCount = ViewBag.TotalRecordCount;
+    int modalRecordCount = ViewBag.ModalRecordCount - 1;
+    int pageSize = Convert.ToInt32(Session["MortalityPageSize"]);
+    string sortcolumn = Convert.ToString(Session["Column"]);
+    bool IsTotalRecords = Convert.ToBoolean(Session["IsTotal"]);
+    bool IsQAP = Convert.ToBoolean(Session["IsQAP"]);
+    bool IsMedTriage = Convert.ToBoolean(Session["IsMedTriage"]);
+    bool IsMEO = Convert.ToBoolean(Session["IsMEO"]);
+
+    bool sorttype = true;
+    int firstRecord = (pageSize * (pageIndex - 1)) + 1;
+    int lastRecord = firstRecord + modalRecordCount;
+
+    if (modalRecordCount < 0)
+    {
+        firstRecord = 0;
+        lastRecord = 0;
+    }
+
+
+    <input type="hidden" name="hdfTotalRecords" id="hdfTotalRecords" value="@totalRecordCount" />
+    <div class="row">
+        <div class="col-md-4">
+            <div class="pageCountcontainer">
+                <br />
+                <span>Showing @firstRecord to @lastRecord of @totalRecordCount</span>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <br />
+            <ul class="pagination pull-right">
+                @*========Set Previous Page Link==============*@
+
+                @if (pageIndex != 1)
+                {
+                    int previousPage = pageIndex - 1;
+                    <li><a onclick="GetMortalityList('@previousPage','','0','@sortcolumn', '@sorttype','@IsTotalRecords','@IsQAP','@IsMedTriage','@IsMEO')" href="javascript:void(0);" style="padding: 0.5em 1em; box-shadow:none" data-pageindex="@previousPage">Previous</a></li>
+
+                }
+                else
+                {
+                    <li><a href="javascript:void(0);" style="cursor:default; border: 1px solid transparent; background: transparent; color:#666 !important; padding: 0.5em 1em; box-shadow:none">Previous</a></li>
+                }
+
+                @*==============End==============*@
+
+                @{
+
+                    int start;
+                    if (pageIndex <= 5)
+                    {
+                        start = 1;
+                    }
+                    else
+                    {
+                        start = pageIndex - 4;
+                        int counterDifference = totalPages - start;
+                        if (counterDifference < 8)
+                        {
+                            start = totalPages - 7;
+                        }
+                    }
+
+                    for (int i = start; i < start + 8; i++)
+                    {
+                        if (i > totalPages) { continue; }
+
+                        if (i > 0)
+                        {
+                            string linkID = "pglink-" + i.ToString();
+
+
+                            if (i == pageIndex)
+                            {
+
+                                //current page
+                                <li id="@linkID"><span style="border: 1px solid #979797; background:linear-gradient(to bottom, #fff 0%, #dcdcdc 100%); box-sizing: border-box; min-width: 1.5em; padding: 0.5em 1em; margin-left: 2px; text-align: center; text-decoration:none !important; cursor:pointer">@i</span></li>
+                            }
+                            else
+                            {
+                                <li id="@linkID">
+                                    <a href="javascript:void(0);" onclick="GetMortalityList('@i','','0','@sortcolumn', '@sorttype','@IsTotalRecords','@IsQAP','@IsMedTriage','@IsMEO')" data-pageindex="@i" style="padding-top:0.25em;!outline:none; border-radius:2px; border: 1px solid transparent;box-sizing: border-box; min-width: 1.5em; padding: 0.5em 1em; margin-left: 2px; text-align: center; text-decoration:none !important; cursor:pointer">@i</a>
+                                </li>
+                            }
+                        }
+                    }
+
+
+                    @*========Set Next Page Link==============*@
+
+                if (pageIndex != totalPages)
+                {
+                    int nextPage = pageIndex + 1;
+                    <li><a onclick="GetMortalityList('@nextPage','','0','@sortcolumn', '@sorttype','@IsTotalRecords','@IsQAP','@IsMedTriage','@IsMEO')" data-pageindex="@nextPage" href="javascript:void(0);" style="box-sizing:border-box; padding: 0.5em 1em; min-width:1.5em; margin-left:2px; text-align:center; text-decoration:none !important; border:1px solid transparent; border-radius: 2px;">Next</a></li>
+                }
+                else
+                {
+                    <li><a class="next-problem" href="javascript:void(0);" style="cursor:default; border: 1px solid transparent; background: transparent; color:#666 !important; padding: 0.5em 1em; box-shadow:none">Next</a></li>
+                }
+                @*==============End==============*@
+
+                }
+            </ul>
+
+        </div>
+
+    </div>
+
+
+}
+

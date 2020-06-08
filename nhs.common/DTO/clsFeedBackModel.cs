@@ -54,6 +54,8 @@ namespace NHS.Common
         public int FeedbackTypeID { get; set; }
 
         public string FBType { get; set; }
+
+        public int Count { get; set; }
        
     }
 }

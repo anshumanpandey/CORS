@@ -1,0 +1,43 @@
+﻿@model NHS.Common.CommentType
+@{
+    ViewBag.Title = "Edit Comment Type";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br /><br /><br /><br />
+<div class="container">
+    <form action="@Url.Action("UpdateCommentType", "Home", new { id = Model.CommonTypeID} )" id="login-form" class="sky-form" method="post" novalidate="novalidate">
+        <div class="lable_title">
+            <h2>Edit Comment Type</h2><span style="color:red"><i>&nbsp;&nbsp;* marked fields are mandatory fields.</i></span><br />
+        </div>
+        <fieldset>
+            <section>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span>Comment Type</span>&nbsp;&nbsp;<span style="color:red;font-size:20px">*</span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="row_bar checkbox-row">
+                            @Html.EditorFor(model => model.Type, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </fieldset>
+        <div class="col-md-12" align="center">
+            <button id="activate-step-2" type="submit" name="BtnFinish" class="btn btn-primary btn-lg">Submit</button>
+            <button id="activate-step-3" type="button" name="BtnCancel" class="btn btn-primary btn-lg" onclick="location.href='@Url.Action("CommentType","Home")'">Cancel</button>
+        </div>
+    </form>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#activate-step-2").click(function () {
+            if ($.trim($("#Type").val()) == "") {
+                alert("Comment Type is a mandatory field.");
+                return false;
+
+            }
+        });
+    });
+</script>
+

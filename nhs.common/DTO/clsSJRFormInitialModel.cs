@@ -103,5 +103,9 @@ namespace NHS.Common
         public string PatientId { get; set; }
         public string DOB { get; set; }
         public string PatientName { get; set; }
+
+        public int SJR1 { get; set; }
+
+        public int SJR2 { get; set; }
     }
 }

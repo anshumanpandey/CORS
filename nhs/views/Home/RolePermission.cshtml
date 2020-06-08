@@ -1,0 +1,105 @@
+﻿@model List<NHS.Common.RolePermission>
+@{
+    ViewBag.Title = "Role Permission";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .form-control:disabled, .form-control[readonly] {
+        background-color: #fdfdfd;
+        opacity: 1;
+    }
+</style>
+<br />
+<br />
+<div align="left" style="width:90%">
+    <h4>Module Permissions</h4>
+</div>
+<span style="color:green">@TempData["AlertMessage"]</span>
+<div class="col-sm-12">
+    <div align="center" style="width:90%">
+        Need to give access to a new role?&nbsp;<a href='@Url.Action("AddPermission", "home")'>Add Permission</a>
+    </div>
+    <div class="row">
+        <div class="col-md-12" style="padding-left:0;">
+            @*<div class="panel panel-info">*@
+            @*<div class="panel-heading">Search</div>*@
+            @*<div class="panel-body">*@
+            <div class="" style="margin:10px 0 10px 0;">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td>
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td align="left" width="82%"><label>Show <select id="tblPatientDetails_length" name="tblPatientDetails_length" aria-controls="tblPatientDetails" class=""><option value="10">10 rows</option><option value="20">20 rows</option><option value="50">50 rows</option><option value="100">100 rows</option><option value="-1">Show All</option></select>&nbsp;&nbsp; entries</label></td>
+                                    <td align="right">Search:</td>
+                                    <td align="right">
+                                        <input type="text" name="searchfield" id="searchfield" value="@ViewBag.SearchText" style="margin-left: 0.5em" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="dvCustomerList">
+                @Html.Partial("_PermissionsList", Model)
+            </div>
+        </div>
+        @*</div>*@
+        @*</div>*@
+    </div>
+</div>
+<script>
+    $(function () {
+        $("#searchfield").keyup(function () {
+            var searchfield = $("#searchfield").val();
+            var pagesize = $("#tblPatientDetails_length").val();
+            GetList(1, searchfield, pagesize);
+        });
+    });
+</script>
+<script>
+    $(function () {
+        $("#tblPatientDetails_length").change(function () {
+            var searchfield = $("#searchfield").val();
+            var pagesize = $("#tblPatientDetails_length").val();
+            GetList(1, searchfield, pagesize);
+        });
+    });
+</script>
+<script>
+    function GetList(pPageNo, searchfield, pageSize, SortColumn, frompager, fromfilter) {
+        var pageSize = $("#tblPatientDetails_length").val();
+        var dataActionUrl = '@Url.Action("MorePermissionDetails", "Home")';
+        //alert(IsPositiveDischarges);
+        if (frompager == 'onclick')
+        {
+            //alert(frompager);
+            frompager = true;
+        }
+        if (fromfilter == true) {
+            $('#tblPatientDetails_length').val("10").attr("selected", "selected");
+            $("#searchfield").val('');
+            pageSize = 10;
+        }
+        $.ajax({
+            url: dataActionUrl,
+            data: {
+                pageNumber: pPageNo, searchfield: searchfield, pageSize: pageSize, SortColumn: SortColumn, fromfilter: fromfilter, frompager: frompager
+            },
+            type: "POST",
+            success: function (data) {
+                $("#dvCustomerList").empty();
+                $("#dvCustomerList").html(data);
+                //$("#loader-wrapper1").hide();
+                //$("#loader").hide();
+            },
+            error: function (data) {
+                //$("#loader-wrapper1").hide();
+                //$("#loader").hide();
+            }
+        });
+    }
+</script>
+
+
