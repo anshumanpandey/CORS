@@ -1,0 +1,1463 @@
+﻿@model NHS.Common.PatientDetailView
+@{
+    ViewBag.Title = "Patient Details";
+    Layout = "~/Views/Shared/_PopopLayout.cshtml";
+}
+
+<div class="container" id="printpdf">
+    <div class="row setup-content" id="step-1">
+        <div class="col-xs-12 col-lg-12">
+            <div align="right">
+                <button type="button" id="btnPrint" class="btn btn-primary">Print/Export</button>
+            </div>
+            <div class="lable_title">
+                <h2>PATIENT DETAILS </h2><br/>
+            </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="row_bar">
+                            <b>Patient Name</b>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row_bar">
+                            <span>@Model.PatientName</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row_bar">
+                            <b>Patient ID</b>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row_bar">
+                            <span>@Model.PatientId</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row_bar">
+                            <b>Date of Birth</b>
+                        </div>
+                    </div>
+                    @if (Model.DOB != "")
+                    {
+                        <div class="col-md-3">
+                            <div class="row_bar">
+                                <span>@Model.DOB</span>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-3">
+                            <div class="row_bar">
+                                <span>Pending</span>
+                            </div>
+                        </div>
+                    }
+                    <div class="col-md-3">
+                        <div class="row_bar">
+                            <b>Gender</b>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="row_bar">
+                            @if (Model.Gender.Trim().ToUpper().Equals("PENDING"))
+                            {
+                                <span>Pending</span>
+                            }
+                            else if (Model.Gender.Trim().ToUpper().Equals("OTHER"))
+                            {
+                                <span>Other</span>
+                            }
+                            else
+                            {
+                                if (Model.Gender.Trim().ToUpper() == "FEMALE" || Model.Gender.Trim().ToUpper().IndexOf("FEMALE") > 0)
+                                {
+                                    <span>Female</span>
+                                }
+                                else
+                                {
+                                    <span>Male</span>
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row_bar">
+                            <b>Ward (on discharge)</b>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row_bar">
+                            <span>@Model.DischargeWard</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row_bar">
+                            <b>Consultant (on discharge)</b>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row_bar">
+                            <span>@Model.DischargeConsutantName</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row_bar">
+                            <b>Admission Method</b>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row_bar">
+                            <span>@Model.AdmissionType</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row_bar">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row_bar">
+                            <b>Day/ Date of Admission</b>
+                        </div>
+                    </div>
+                    @if (!Model.Gender.Trim().ToUpper().Equals("PENDING"))
+                    {
+                        <div class="col-md-3">
+                            <div class="row_bar">
+                                <span>@Convert.ToDateTime(Model.DateofAdmission).ToString("dddd, dd/MM/yyyy")</span>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-3">
+                            <div class="row_bar">
+                                <span>Pending</span>
+                            </div>
+                        </div>
+                    }
+                    <div class="col-md-3">
+                        <div class="row_bar">
+                            <b>Day/ Date of Death</b>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row_bar">
+                            <span>@Model.DateofDeath.ToString("dddd, dd/MM/yyyy")</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row_bar">
+                            <b>Time of admission</b>
+                        </div>
+                    </div>
+                    @if (Model.TimeofAdmission != "")
+                    {
+                        <div class="col-md-3">
+                            <div class="row_bar">
+                                <span>@Convert.ToDateTime(Model.TimeofAdmission).ToString("hh:mm tt")</span>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-3">
+                            <div class="row_bar">
+                                <span>&nbsp;</span>
+                            </div>
+                        </div>
+                    }
+                    <div class="col-md-3">
+                        <div class="row_bar">
+                            <b>Time of death</b>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row_bar">
+                            <span>@Model.TimeofDeath</span>
+
+                            @if (!String.IsNullOrEmpty(Model.TimeofDeath))
+                            {
+                                if (Convert.ToInt32(Model.TimeofDeath.Split(':')[0]) < 12)
+                                {
+                                    <span> AM </span>
+                                }
+                                else
+                                {
+                                    <span> PM </span>
+                                }
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="row_bar">
+                            <b>Occupation</b>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row_bar">
+                            <span>@Model.Occupation</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row_bar">
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <span><b>Data Quality Issues Identified?</b></span>
+                            </div>
+                            @if (Model.DataQualityIssuesIdentified == true)
+                            {
+                                <div class="col-md-4">
+                                    <span>Yes</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-md-8">
+                                    <span>No</span>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    @if (Model.DataQualityIssuesIdentified == true)
+                    {
+                    <div id="dataqualitycomment" style="display:none;" class="col-md-12">
+                        <div class="row_bar">
+                            <b>Comments</b>
+                                    @Html.TextAreaFor(model => model.DataQualityIssueComments, 10, 100, new { @class = "form-control", @readonly = true })
+                                    @*@Html.ValidationMessageFor(model => model.objclsMedicalExaminerReview.Comments, "", new { @class = "text-danger" })*@
+                         </div>
+                    </div>
+                    }
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <span><b>Urgent ME Required?</b></span>
+                            </div>
+                            @if (Model.UrgentMEReview == true)
+                            {
+                                <div class="col-md-4">
+                                    <span>Yes</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-md-8">
+                                    <span>No</span>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    @if (Model.UrgentMEReview == true)
+                    {
+                    <div id="UrgentMEReviewComment" style="display:none;" class="col-md-12">
+                        <div class="row_bar">
+                            <b>Comments</b>
+                            @Html.TextAreaFor(model => model.UrgentMEReviewComment, 10, 100, new { @class = "form-control", @readonly = true })
+                            @*@Html.ValidationMessageFor(model => model.objclsMedicalExaminerReview.Comments, "", new { @class = "text-danger" })*@
+                        </div>
+                    </div>
+                    }
+                    <br /><br />
+                    <div class="col-md-12">
+                        <h2 style="font-size:17px; color:#70a397; font-weight:600; margin-bottom:20px;">Next of Kin</h2>
+                    </div>
+                    <table style="margin-left: 17px;border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;width:90%">
+                        <thead>
+                            <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                <th style="text-align:center">Name</th>
+                                <th style="text-align:center">Relationship</th>
+                                <th style="text-align:center">Phone No</th>
+                                <th style="text-align:center">Present at Death</th>
+                                <th style="text-align:center">Informed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                @if (!string.IsNullOrEmpty(Model.RelativeName))
+                                {
+                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%;text-align:center">
+                                        @Html.LabelFor(model => model.RelativeName, new { @class = "form-control next-kin", @readonly = true })
+                                </td>
+                                }
+                                else
+                                {
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%;text-align:center">
+                                        <span>&nbsp;</span>
+                                    </td>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.Relationship))
+                                {
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%;text-align:center">
+                                        @Html.LabelFor(model => model.Relationship, new { @class = "form-control next-kin", @readonly = true })
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%;text-align:center">
+                                        <span>&nbsp;</span>
+                                    </td>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.RelativeTelNo))
+                                {
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%;text-align:center">
+                                        @Html.LabelFor(model => model.RelativeTelNo, new { @class = "form-control next-kin", @readonly = true })
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%;text-align:center">
+                                        <span>&nbsp;</span>
+                                    </td>
+                                }
+                                @if (Model.PresentAtDeath)
+                                {
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%;text-align:center">
+                                        Yes                                        
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%;text-align:center">
+                                        No
+                                    </td>
+                                }
+                                @if (Model.IsInformed)
+                                {
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%;text-align:center">
+                                        Yes
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%;text-align:center">
+                                        No
+                                    </td>
+                                }
+                            </tr>
+                            <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                @if (!string.IsNullOrEmpty(Model.RelativeName1))
+                                {
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%;text-align:center">
+                                        @Html.LabelFor(model => model.RelativeName1, new { @class = "form-control next-kin", @readonly = true })
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%;text-align:center">
+                                        <span>&nbsp;</span>
+                                    </td>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.Relationship1))
+                                {
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%;text-align:center">
+                                        @Html.LabelFor(model => model.Relationship1, new { @class = "form-control next-kin", @readonly = true })
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%;text-align:center">
+                                        <span>&nbsp;</span>
+                                    </td>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.RelativeTelNo1))
+                                {
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%;text-align:center">
+                                        @Html.LabelFor(model => model.RelativeTelNo1, new { @class = "form-control next-kin", @readonly = true })
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%;text-align:center">
+                                        <span>&nbsp;</span>
+                                    </td>
+                                }
+                                @if (Model.PresentAtDeath1)
+                                {
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%;text-align:center">
+                                        Yes
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%;text-align:center">
+                                        No
+                                    </td>
+                                }
+                                @if (Model.IsInformed1)
+                                {
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%;text-align:center">
+                                        Yes
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%;text-align:center">
+                                        No
+                                    </td>
+                                }
+                            </tr>
+                            <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                @if (!string.IsNullOrEmpty(Model.RelativeName2))
+                                {
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%;text-align:center">
+                                        @Html.LabelFor(model => model.RelativeName2, new { @class = "form-control next-kin", @readonly = true })
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%;text-align:center">
+                                        <span>&nbsp;</span>
+                                    </td>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.Relationship2))
+                                {
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%;text-align:center">
+                                        @Html.LabelFor(model => model.Relationship2, new { @class = "form-control next-kin", @readonly = true })
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%;text-align:center">
+                                        <span>&nbsp;</span>
+                                    </td>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.RelativeTelNo2))
+                                {
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%;text-align:center">
+                                        @Html.LabelFor(model => model.RelativeTelNo2, new { @class = "form-control next-kin", @readonly = true })
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%;text-align:center">
+                                        <span>&nbsp;</span>
+                                    </td>
+                                }
+                                @if (Model.PresentAtDeath)
+                                {
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%;text-align:center">
+                                        Yes
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%;text-align:center">
+                                        No
+                                    </td>
+                                }
+                                @if (Model.IsInformed)
+                                {
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%;text-align:center">
+                                        Yes
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:16%;text-align:center">
+                                        No
+                                    </td>
+                                }
+                            </tr>
+                        </tbody>
+                    </table>
+                    @*<div class="col-md-3">
+                            <div class="row_bar">
+                                &nbsp;
+                            </div>
+                        </div>*@
+                    <br />
+                    <br />
+                    <div id="GPSurgery" style="display:block; padding-top:10px;" class="col-md-8">
+                            <div class="row_bar">
+                                GP Surgery
+                                @Html.TextAreaFor(model => model.GPSurgery, 10, 50, new { @class = "form-control", @readonly = true })
+                            </div>
+                    </div>
+                </div>
+        </div>
+        <div class="col-xs-12 col-lg-12">
+            <div class="col-md-12 well">
+                @*<div class="form-section">*@
+                <div class="lable_title">
+                    <h2>MEDICAL EXAMINER SCRUTINY </h2>
+                </div>
+                <div class="row">
+                    <div class="col-md-6" style="padding: 0">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <span><b>Name of QAP: </b></span>
+                                </div>
+                                <div class="col-md-7">
+                                    @Html.Label("lblQAP", Model.QAPName.ToString(), new { style = "width:40%; margin: 9px;" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <span><b>Family contacted regarding MCCD?</b></span>
+                                </div>
+                                @if (Model.QAP_Discussion == true)
+                                {
+                                    <div class="col-md-7">
+                                        <span>&nbsp;Yes</span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-md-7">
+                                        <span>&nbsp;No</span>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <span><b>Notes review complete?</b></span>
+                                </div>
+                                @if (Model.Notes_Review == true)
+                                {
+                                    <div class="col-md-7">
+                                        <span>&nbsp;Yes</span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-md-7">
+                                        <span>&nbsp;No</span>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <span><b>Discussion with NoK complete?</b></span>
+                                </div>
+                                @if (Model.Nok_Discussion == true)
+                                {
+                                    <div class="col-md-7">
+                                        <span>&nbsp;Yes</span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-md-7">
+                                        <span>&nbsp;No</span>
+                                    </div>
+                                }
+                            </div>
+                        </div>                        
+                    </div>
+                    <div class="col-md-6">
+                        @{
+                            //var countcomments = @Model.CommentCount.ToString();
+                            var countcomments = 0;
+                            if (ViewBag.Comments != null)
+                            {
+                                countcomments = ViewBag.Comments.Count;
+                            }
+
+                        }
+                        Available Comments (<span id="com" name="0" value="0" onclick="OpenFilterComment(0)" style="cursor:pointer;">@countcomments</span>)
+                        <div class="clearfix" style="height:5px"></div>
+                            <div class="col-md-12">
+                        <div class="row">
+                                <table width:100% style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;">
+
+                                    @foreach (var item in ViewBag.CommentType)
+                                    {
+
+                                        var count = 0;
+
+                                        <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                            <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:80%">
+                                                <span value="@item.CommonTypeID">@item.Type</span>
+                                            </td>
+                                            @for (var i = 0; i < ViewBag.Comments.Count; i++)
+                                            {
+                                                if (ViewBag.Comments[i].CommentTypeID == item.CommonTypeID)
+                                                {
+                                                    count++;
+                                                    @*<span value="@item.CommonTypeID">@item.Type</span><br />*@
+                                                }
+                                            }
+                                            <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:20%;text-align: -webkit-center;cursor:pointer;">
+                                                <span id="com" name="@item.CommonTypeID" value="@item.CommonTypeID" onclick="OpenFilterComment(@item.CommonTypeID)">@count</span>
+                                                @{
+
+                                                    TempData["TypeIdFilter"] = @item.CommonTypeID;
+                                                }
+                                            </td>
+                                        </tr>
+                                                    }
+                                    @*</tr>*@
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                @*@foreach (var item in ViewBag.CommentType)
+                                {
+                                    <span value="@item.CommonTypeID">@item.Type</span><br />
+                                }*@
+                            </div>
+                        </div>
+
+                        @*<div class="pull-right">
+                            <button id="BtnOpenComment" name="BtnOpenComment" class="btn btn-primary btn-lg" onclick="OpenComment(); return false;">Add New Comment</button>
+                        </div>*@
+                        @*<div class="pull-right">
+                            <button id="BtnCloseComment" name="BtnCloseComment" class="btn btn-primary btn-lg" style="display:none;" onclick="CloseComment(); return false;">Close Comment</button>
+                        </div>*@
+                        @*@Html.ValidationMessageFor(model => model.objclsMedicalExaminerReview.Comments, "", new { @class = "text-danger" })*@
+
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table" id="assets-data-table">
+                                    <tr style="color:black;">
+                                        <th style="text-align:left">Comments</th>
+                                    </tr>
+                                    <tbody style="color:black;">
+                                        @foreach (var item in ViewBag.Comments)
+                                        {
+                                            <tr style="color:black;" bgcolor="ffffff">
+                                                <td>
+                                                    @if (Convert.ToInt32(item.CreatedTime.Substring(0, 2)) >= 12)
+                                                    {
+                                                        <div class="pull-left col-md-6">
+                                                            <b>By:</b> @item.Name
+                                                        </div>
+                                                        <div class="pull-left col-md-6">
+                                                            <b>Role:</b>  @item.Role
+                                                        </div>
+                                                        <div class="pull-left col-md-6">
+                                                            <b>Date:</b> @item.CreatedDate
+                                                        </div>
+                                                        <div class="pull-left col-md-6">
+                                                            <b>Time:</b> @item.CreatedTime PM
+                                                        </div>
+                                                        <div class="pull-left col-md-12">
+                                                            <b>Comment Type:</b> @item.CommentType
+                                                        </div>
+                                                        <div class="pull-left col-md-12">
+                                                            <b>Comment:</b> @item.Comments
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="pull-left col-md-6">
+                                                            <b>By:</b> @item.Name
+                                                        </div>
+                                                        <div class="pull-left col-md-6">
+                                                            <b>Role:</b>  @item.Role
+                                                        </div>
+                                                        <div class="pull-left col-md-6">
+                                                            <b>Date:</b> @item.CreatedDate
+                                                        </div>
+                                                        <div class="pull-left col-md-6">
+                                                            <b>Time:</b> @item.CreatedTime AM
+                                                        </div>
+                                                        <div class="pull-left col-md-12">
+                                                            <b>Comment Type:</b> @item.CommentType
+                                                        </div>
+                                                        <div class="pull-left col-md-12">
+                                                            <b>Comment:</b> @item.Comments
+                                                        </div>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-lg-12">
+            @*<form action="/Home/MedExamFormStep3" method="post" id="frmMedExamFormStep3">*@
+            <div class="col-md-12 well">
+                <div class="form-section">
+                    <div class="lable_title">
+                        <h2>MEDICAL EXAMINER DECISION</h2><br />
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <span> Issue MCCD </span>
+                            </div>
+                            @if (Model.MCCDissue == true)
+                            {
+                                <div class="col-md-8">
+                                    <span> Yes </span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-md-8">
+                                    <span> No </span>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <span> Coroner Referral </span>
+                            </div>
+                            @if (Model.CoronerReferral == true)
+                            {
+                                <div class="col-md-8">
+                                    <span> Yes </span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-md-8">
+                                    <span> No </span>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    @if (Model.CoronerReferral == true)
+                    {
+                        <div id="CoronerReason1" style="display:block" class="col-md-12">
+                            <div class="row_bar row_bar_margin row_bar_padding">
+                                Reason for coroner referral
+                            </div>
+                        </div>
+                    }
+                    @if (Model.CoronerReferral == true)
+                    {
+                        <div id="CoronerReason2" style="display:block" class="col-md-12">
+                            <div class="row_bar row_bar_margin row_bar_padding">
+                                <br />
+                                @Html.TextAreaFor(model => model.CoronerReferralReason, 5, 150, new { @class = "form-control", @readonly = "readonly" })
+
+                            </div>
+                        </div>
+                    }
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <span> Hospital post-mortem </span>
+                            </div>
+                            @if (Model.HospitalPostMortem == true)
+                            {
+                                <div class="col-md-8">
+                                    <span> Yes </span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-md-8">
+                                    <span> No </span>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row_bar">
+                            Cause of Death
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                1a
+                                @Html.EditorFor(model => model.CauseOfDeath1, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            </div>
+                            <div class="col-md-6">
+                                1b
+                                @Html.EditorFor(model => model.CauseOfDeath2, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                1c
+                                @Html.EditorFor(model => model.CauseOfDeath3, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                            </div>
+                            <div class="col-md-6">
+                                2
+                                @Html.EditorFor(model => model.CauseOfDeath4, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-4">
+                            Death was
+                        </div>
+                        <div class="col-md-8">
+                            @if (Model.CauseID == 0)
+                            {
+                                <span>&nbsp;</span>
+                            }
+                            else if (Model.CauseID == 1)
+                            {
+                                <span>Unexpected</span>
+                            }
+                            else if (Model.CauseID == 2)
+                            {
+                                <span>Sudden but NOT unexpected</span>
+                            }
+                            else if (Model.CauseID == 3)
+                            {
+                                <span>Expected</span>
+                            }
+                            else if (Model.CauseID == 4)
+                            {
+                                <span>Individualised End of Life Care Plan</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <span> Coroner's referral Complete? </span>
+                        </div>
+                        @if (Model.CornerReferralComplete == true)
+                        {
+                            <div class="col-md-7">
+                                <span> Yes </span>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-7">
+                                <span> No </span>
+                            </div>
+                        }
+                    </div>
+                </div><br /><br />
+                </div>
+            </div>
+        <div class="col-xs-12 col-lg-12">
+                <div class="col-md-12 well">
+                    <div class="form-section">
+                        <div class="lable_title">
+                            <h2>SJR REVIEW TRIAGE</h2>
+                        </div>
+                        <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <span> Full SJR Required</span>
+                                        </div>
+                                        @if (Model.FullSJRRequired == true)
+                                        {
+                                            <div class="col-md-7">
+                                                <span>Yes</span>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-md-7">
+                                                <span>No</span>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                @if (Model.FullSJRRequired == false)
+                                {
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <span>Speciality to complete SJR Review</span>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <span>@Model.SpecialityName</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <span>Paediatric Patient</span>
+                                        </div>
+                                        @if (Model.PaediatricPatient == true)
+                                        {
+                                            <div class="col-md-7">
+                                                <span>Yes</span>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-md-7">
+                                                <span>No</span>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <span>Learning disability patient</span>
+                                        </div>
+                                        @if (Model.LearningDisabilityPatient == true)
+                                        {
+                                            <div class="col-md-7">
+                                                <span>Yes</span>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-md-7">
+                                                <span>No</span>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <span>Severe mental health illness patient</span>
+                                        </div>
+                                        @if (Model.MentalillnessPatient == true)
+                                        {
+                                            <div class="col-md-7">
+                                                <span>Yes</span>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-md-7">
+                                                <span>No</span>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <span>Elective admission</span>
+                                        </div>
+                                        @if (Model.ElectiveAdmission == true)
+                                        {
+                                            <div class="col-md-7">
+                                                <span>Yes</span>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-md-7">
+                                                <span>No</span>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <span>NoK concerns about death</span>
+                                        </div>
+                                        @if (Model.NoKConcernsDeath == true)
+                                        {
+                                            <div class="col-md-7">
+                                                <span>Yes</span>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-md-7">
+                                                <span>No</span>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <span>Death within 30 days of chemo</span>
+                                        </div>
+                                        @if (Model.DeathChemo == true)
+                                        {
+                                            <div class="col-md-7">
+                                                <span>Yes</span>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-md-7">
+                                                <span>No</span>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <span>Other concerns which warrant further review</span>
+                                        </div>
+                                        @if (Model.OtherConcern == true)
+                                        {
+                                            <div class="col-md-7">
+                                                <span>Yes</span>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-md-7">
+                                                <span>No</span>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="row_bar">
+                                        Comments
+                                        @Html.TextAreaFor(model => model.OtherSJRAssessementComments, 10, 100, new { @class = "form-control", @readonly = "readonly" })
+                                    </div>                                    
+                                </div>                             
+                        </div>
+                    </div>
+                </div>
+                
+        </div>
+        <div class="col-xs-12 col-lg-12">
+                <div class="col-md-12 well">
+                    <div class="form-section">
+                        <div class="lable_title">
+                            <h2>OTHER REFERRALS</h2>
+                        </div>
+                        <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <span><b>Referred to Patient Safety for SIRI Scoping</b></span>
+                                        </div>
+                                        <div class="col-md-7">
+                                            @if (Model.PatientSafetySIRI == true)
+                                            {
+                                                <span>Yes</span>
+                                            }
+                                            else
+                                            {
+                                                <span>No</span>
+                                            }
+                                        </div>                                        
+                                    </div>
+                                </div> 
+                                @if (Model.PatientSafetySIRI)
+                                {
+                                    <div id="PatientSafetySIRIReason" style="display:block" class="col-md-12">
+                                        <b>Reason:</b>
+                                        @Html.TextAreaFor(model => model.PatientSafetySIRIReason, 4, 55, new { @class = "form-control", @readonly = "readonly", style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
+
+                                    </div>
+                                }
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <span><b>Referred to Child Death Co-ordinator</b></span>
+                                        </div>
+                                        <div class="col-md-7">
+                                            @if (Model.ChildDeathCoordinator == true)
+                                            {
+                                                <span>Yes</span>
+                                            }
+                                            else
+                                            {
+                                                <span>No</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <span><b>Referred to Learning Disability Nurse for LEDER reporting</b></span>
+                                        </div>
+                                        <div class="col-md-7">
+                                            @if (Model.LearningDisabilityNurse == true)
+                                            {
+                                                <span>Yes</span>
+                                            }
+                                            else
+                                            {
+                                                <span>No</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <span><b>Referred to Head of Compliance for CQC reporting</b></span>
+                                        </div>
+                                        <div class="col-md-7">
+                                            @if (Model.HeadOfCompliance == true)
+                                            {
+                                                <span>Yes</span>
+                                            }
+                                            else
+                                            {
+                                                <span>No</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                @if (Model.HeadOfCompliance == true)
+                                {
+                                    <div id="HeadOfComplianceReason" style="display:block" class="col-md-12">
+                                        <b>Reason:</b>
+                                        @Html.TextAreaFor(model => model.HeadOfComplianceReason, 4, 55, new { @class = "form-control", @readonly = "readonly", style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
+                                    </div>
+                                }
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <span><b>Referred to PALs/ Complaints</b></span>
+                                        </div>
+                                        <div class="col-md-7">
+                                            @if (Model.PALsComplaints == true)
+                                            {
+                                                <span>Yes</span>
+                                            }
+                                            else
+                                            {
+                                                <span>No</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                @if (Model.PALsComplaints == true)
+                                {
+                                <div id="OtherReason" class="col-md-12">
+                                    <b>Reason:</b>
+                                    @Html.TextAreaFor(model => model.PALsComplaintsReason, 4, 55, new { @class = "form-control", @readonly = "readonly", style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
+                                </div>
+                                }
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <span><b>Referred to Ward team</b></span>
+                                        </div>
+                                        <div class="col-md-7">
+                                            @if (Model.WardTeam == true)
+                                            {
+                                                <span>Yes</span>
+                                            }
+                                            else
+                                            {
+                                                <span>No</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                @if (Model.WardTeam == true)
+                                {
+                                    <div id="WardTeamReason" class="col-md-12">
+                                        <b>Reason:</b>
+                                        @Html.TextAreaFor(model => model.WardTeamReason, 4, 55, new { @class = "form-control", @readonly = "readonly", style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
+                                    </div>
+                                }
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <span><b>SafeGuarding Team Notified</b></span>
+                                        </div>
+                                        <div class="col-md-7">
+                                            @if (Model.SafeGuardTeamNotified == true)
+                                            {
+                                                <span>Yes</span>
+                                            }
+                                            else
+                                            {
+                                                <span>No</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <span><b>Other</b></span>
+                                        </div>
+                                        <div class="col-md-7">
+                                            @if (Model.Other == true)
+                                            {
+                                                <span>Yes</span>
+                                            }
+                                            else
+                                            {
+                                                <span>No</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                @if (Model.Other == true)
+                                {
+                                <div id="OtherReason" class="col-md-12">
+                                    <b>Reason:</b>
+                                    @Html.TextAreaFor(model => model.OtherReason, 4, 55, new { @class = "form-control", @readonly = "readonly", style = "display: block;width: 100 %;padding: .375rem .75rem;font-size: 1rem;line - height: 1.5;color: #495057; background - color: #fff;background - clip: padding - box; border: 1px solid #ced4da;border - radius: .25rem;transition: border - color .15s ease-in-out,box - shadow .15s ease-in-out; " })
+                                </div>
+                                }
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+        <div class="col-xs-12 col-lg-12">
+               <div class="col-md-12 well">
+                    @* <div class="form-section">*@
+                    <div class="lable_title">
+                        <h2>POSITIVE FEEDBACK</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6" style="padding:0px">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <span>Above & Beyond form completed</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @if (Model.FormCompleted == true)
+                                        {
+                                            <span>Yes</span>
+                                        }
+                                        else
+                                        {
+                                            <span>No</span>
+                                        }
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <span>Compliments fed back to clinical team</span>
+                                        </div>
+                                        <div class="col-md-4">
+                                            @if (Model.ComplementsFedBack == true)
+                                            {
+                                                <span>Yes</span>
+                                            }
+                                            else
+                                            {
+                                                <span>No</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        <div class="col-md-6">
+                            <div style="z-index: 99;">
+                                @{
+                                    var countcomments1 = @ViewBag.FeedbackComments.Count;
+                                }
+                                Available Feedbacks (
+                                @if (countcomments1 != null)
+                                {
+                                    <span id="com" name="0" value="0" style="cursor:pointer;">@countcomments1</span>
+                                })
+                                <div class="clearfix" style="height:5px"></div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table width="100%" style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;">
+
+                                            @foreach (var item in ViewBag.FeedbackCommentType)
+                                            {
+
+                                                var count = 0;
+
+                                                <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:80%">
+                                                        <span value="@item.CommonTypeID">@item.Type</span>
+                                                    </td>
+                                                    @for (var i = 0; i < ViewBag.FeedbackComments.Count; i++)
+                                                    {
+                                                        if (ViewBag.FeedbackComments[i].CommentTypeID == item.CommonTypeID)
+                                                        {
+                                                            count++;
+                                                        }
+                                                    }
+                                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:20%;text-align: -webkit-center;cursor:pointer;">
+                                                        <span id="com" name="@item.CommonTypeID" value="@item.CommonTypeID" onclick="OpenFilterComment(@item.CommonTypeID)">@count</span>
+                                                        @{
+
+                                                            TempData["TypeIdFilter"] = @item.CommonTypeID;
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table" id="assets-data-table">
+                                        <tr style="color:black;">
+                                            <th style="text-align:left">Comments</th>
+                                        </tr>
+                                        <tbody style="color:black;">
+                                            @foreach (var item in ViewBag.FeedbackComments)
+                                            {
+                                                <tr style="color:black;" bgcolor="ffffff">
+                                                    <td>
+                                                        @if (Convert.ToInt32(item.CreatedTime.Substring(0, 2)) >= 12)
+                                                        {
+                                                            <div class="pull-left col-md-6">
+                                                                <b>By:</b> @item.Name
+                                                            </div>
+                                                            <div class="pull-left col-md-6">
+                                                                <b>Role:</b>  @item.Role
+                                                            </div>
+                                                            <div class="pull-left col-md-6">
+                                                                <b>Date:</b> @item.CreatedDate
+                                                            </div>
+                                                            <div class="pull-left col-md-6">
+                                                                <b>Time:</b> @item.CreatedTime PM
+                                                            </div>
+                                                            <div class="pull-left col-md-12">
+                                                                <b>Comment Type:</b> @item.CommentType
+                                                            </div>
+                                                            <div class="pull-left col-md-12">
+                                                                <b>Comment:</b> @item.Comments
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="pull-left col-md-6">
+                                                                <b>By:</b> @item.Name
+                                                            </div>
+                                                            <div class="pull-left col-md-6">
+                                                                <b>Role:</b>  @item.Role
+                                                            </div>
+                                                            <div class="pull-left col-md-6">
+                                                                <b>Date:</b> @item.CreatedDate
+                                                            </div>
+                                                            <div class="pull-left col-md-6">
+                                                                <b>Time:</b> @item.CreatedTime AM
+                                                            </div>
+                                                            <div class="pull-left col-md-12">
+                                                                <b>Comment Type:</b> @item.CommentType
+                                                            </div>
+                                                            <div class="pull-left col-md-12">
+                                                                <b>Comment:</b> @item.Comments
+                                                            </div>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+        </div>
+        </div>
+        <div class="col-xs-12 col-lg-12">
+            <div class="col-md-12 well">
+                <div class="form-section">
+                    <div class="lable_title">
+                        <h2>DECLARATION</h2>
+                    </div>
+                    <div class="row">                        
+                        <div class="col-md-8">
+                            <div class="row">
+                                    <div class="col-md-6" id="dvNameLabel">
+                                        <div class="row_bar">
+                                            <span><b><i>Name of medical examiner (print)</i></b></span>
+                                        </div>
+                                    </div>
+                                <div class="col-md-6" id="dvNameSpan">
+                                    <div class="row_bar">
+                                            <span><b><i>@Model.FeedbackCreatedBy</i></b></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" id="dvOfficeLabel">
+                                    <div class="row_bar">
+                                        <span><b><i>Office</i></b></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" id="dvOfficeSpan">
+                                    <div class="row_bar">
+                                        <span><b><i>Royal Berkshire Hospital</i></b></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" id="dvDateLabel">
+                                    <div class="row_bar">
+                                        <span><b><i>Date</i></b></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" id="dvDateSpan">
+                                    <div class="row_bar">
+                                            <span><b><i>@Model.FeedbackCreatedDate</i></b></span>
+                                    </div>
+                                </div>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>         
+    </div>
+</div>
+<script type="text/javascript">
+$("#btnPrint").click(function () {
+    $("#btnPrint").hide();
+    var HTML_Width = $(".container").width();
+    var HTML_Height = $(".container").height();
+    var top_left_margin = 1;
+    var PDF_Width = HTML_Width + (top_left_margin * 2);
+    var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+    var canvas_image_width = HTML_Width;
+    var canvas_image_height = HTML_Height;
+
+    var totalPDFPages = Math.ceil(HTML_Height / PDF_Height);
+    var scale = 1.0;
+    var qualityjpg = 1.0;
+    var top_left_margin = 15;
+    var PDF_Width = HTML_Width + (top_left_margin * 2);
+    var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+    //}
+
+    html2canvas($(".container")[0], { allowTaint: true, scale: scale }).then(function (canvas) {
+        canvas.getContext('2d');
+        //console.log(canvas.height+"  "+canvas.width);
+
+
+        var imgData = canvas.toDataURL("image/png", qualityjpg);
+        console.log(imgData);
+        var pdf = new jsPDF('portrait', 'pt', [PDF_Width, PDF_Height]);
+        pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin * 4, canvas_image_width, canvas_image_height);
+        for (var i = 1; i < totalPDFPages; i++) {
+            pdf.addPage(PDF_Width, PDF_Height);
+            pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
+        }
+        var blob = pdf.output("blob");
+        var objectUrl = URL.createObjectURL(blob);
+        window.open(objectUrl);
+    });
+    $("#btnPrint").show();
+});
+</script>

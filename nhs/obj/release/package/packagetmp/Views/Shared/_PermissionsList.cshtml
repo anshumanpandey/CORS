@@ -1,0 +1,60 @@
+﻿@model List<NHS.Common.RolePermission>
+<div style="width:100%;">
+    <table class="stripe row-border order-column ds_table" style="overflow:auto;width:100%;" id="tblPatientDetails">
+        <thead>
+            <tr bgcolor="#a9d7cc" style="color:black;  font-size:12px;">
+                <th align="left" width="20%" style="cursor: pointer;" onclick="GetList(1, '', 0, 'ModuleName')">Module Name</th>
+                <th align="left" width="20%" style="cursor: pointer;" onclick="GetList(1, '', 0, 'RoleName')">Role Name</th>
+                <th align="left" width="15%" style="cursor: default;">Full Access</th>
+                <th align="left" width="15%" style="cursor: default;">Read Only</th>
+                <th align="left" width="15%" style="cursor: default;">No Access</th>
+                <th align="left" width="15%">Action</th>
+            </tr>
+        </thead>
+        <tbody style="font-size:12px;padding:0px;">
+            @if (Model.Count > 0)
+            {
+                foreach (var item in Model)
+                {
+                    <tr class="Entries">
+                        <td align="left" width="20%">&nbsp;&nbsp;@item.ModuleName</td>
+                        <td align="left" width="20%">&nbsp;&nbsp;@item.RoleName</td>
+                        @if (item.IsFullAccess == true)
+                        {
+                            <td align="left" width="15%">&nbsp;&nbsp;Yes</td>
+                        }
+                        else
+                        {
+                            <td align="left" width="15%">&nbsp;&nbsp;No</td>
+                        }
+                        @if (item.IsReadOnly == true)
+                        {
+                            <td align="left" width="15%">&nbsp;&nbsp;Yes</td>
+                        }
+                        else
+                        {
+                            <td align="left" width="15%">&nbsp;&nbsp;No</td>
+                        }
+                        @if (item.NoAccess == true)
+                        {
+                            <td align="left" width="15%">&nbsp;&nbsp;Yes</td>
+                        }
+                        else
+                        {
+                            <td align="left" width="15%">&nbsp;&nbsp;No</td>
+                        }
+                        <td width="20%" align="left"><a href="@Url.Action("EditPermission", "Home", new { id = item.ID })"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="@Url.Action("DeletePermission", "Home", new { id = item.ID })"><i class="fas fa-trash-alt"></i></a></td>
+
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="14" class="text-center" align="center">No Records Found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@Html.Partial("_CommonPagerControl")

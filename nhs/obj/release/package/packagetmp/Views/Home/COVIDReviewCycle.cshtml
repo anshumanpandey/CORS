@@ -1,0 +1,213 @@
+﻿@model NHS.Common.DTO.COVIDReviewCycle
+@using NHS.Common;
+@{
+    /**/
+
+    ViewBag.Title = "COVID 19 Review";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .ClrGreen {
+        background-color: #008000;
+    }
+
+    .ClrGreen1 {
+        background-color: #008000;
+    }
+
+    .clrGrey {
+        background-color: #808080;
+    }
+
+    .clrAmber {
+        background-color: #ffbf00;
+    }
+
+    .clrGreySjrOutcome {
+        background-color: #808080;
+    }
+
+    .clrAmberSjrOutcome {
+        background-color: #ffbf00;
+    }
+
+    .clrGreenSjrOutcome {
+        background-color: #008000;
+    }
+</style>
+<br />
+<br />
+<div class="container">
+    <div class="row">
+            <div class="col-md-2">
+                @if (Convert.ToBoolean(Session["TestDashboard"]) == true)
+                {
+                    <a href="@Url.Action("COVIDDashboard", "home")"><img src="~/images/BackArrowimages.png?v=1.1" width="50" height="40" alt=""></a>
+                }
+                else if(Convert.ToBoolean(Session["PatientDashboard"]) == true)
+                {
+                    <a href="@Url.Action("COVIDPatientDashboard", "home")"><img src="~/images/BackArrowimages.png?v=1.1" width="50" height="40" alt=""></a>
+                }
+                @*<a herf="/home/MedicalExaminerDashboard"><img src="~/images/back-158491_640.png" width="120" height="90" alt="" ></a>*@
+            </div>
+        <div class="col-md-8">
+            &nbsp;
+        </div>
+    </div>
+    <br />
+    <br /><br />
+<br /><br /><br />
+
+    <div class="row text-center">
+        <table style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;width:30%">
+            <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc;width:35%"><b>Patient ID</b></td>
+                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc;  "><b>@Model.PatientID</b></td>
+            </tr>
+            <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc;width:35%"><b>Patient Name</b></td>
+                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc;  "><b>@Model.PatientName</b></td>
+            </tr>
+            <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc;width:35%"><b>Test Result</b></td>
+                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; "><b>@Model.TestResult</b></td>
+            </tr>
+            <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc;width:35%"><b>Age</b></td>
+                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; "><b>@Model.Age</b></td>
+            </tr>
+            <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc;width:35%"><b>Gender</b></td>
+                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; "><b>@Model.Gender</b></td>
+            </tr>
+            <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc;"><b>Spell Number</b></td>
+                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc;"><b>@Model.SpellNumber.Trim()</b></td>
+            </tr>
+        </table>
+        @*@if (Model.PatientType == "AAPC")
+            {*@
+        <div style="height:430px;width:430px;border:15px solid #9aa5b0;border-radius:50%; position: relative;margin:-10% auto;margin-left:10%">
+            <a href="@Url.Action("COVIDPatientDetails", "home", new { id = Model.ID, patientID = Model.PatientID })" class="box3" style="top: -10%; left: 47%;transform: translate(-40%, -20%);"><img src="~/images/profile-3.png" title="Profile" width="150" height="150" /></a>
+             @if (Model.TestResult.ToUpper().Trim() == "NOT DETECTED")
+            {
+                <a href="@Url.Action("COVIDTestResults", "home", new { id = Model.ID, patientID = Model.PatientID })" class="box3" style="top: 10%; left: 95%;transform: translate(-50%);"><img src="~/images/test-results-1.png" title="Not Detected" width="150" height="150" /></a>
+            }
+            else if (Model.TestResult.ToUpper().Trim() == "DETECTED" || Model.TestResult.ToUpper().Trim() == "DIAGNOSED")
+            {
+                <a href="@Url.Action("COVIDTestResults", "home", new { id = Model.ID, patientID = Model.PatientID })" class="box3" style="top: 10%; left: 95%;transform: translate(-50%);"><img src="~/images/test-results-3.png" title="Detected" width="150" height="150" /></a>
+             }
+             else if (Model.TestResult.ToUpper().Trim() == "PENDING")
+             {
+                <a href="@Url.Action("COVIDTestResults", "home", new { id = Model.ID, patientID = Model.PatientID })" class="box3" style="top: 10%; left: 95%;transform: translate(-50%);"><img src="~/images/test-results-2.png" title="Pending" width="150" height="150" /></a>
+             }
+             else if (Model.TestResult.ToUpper().Trim() == "NOT TESTED")
+             {
+                <a href="@Url.Action("COVIDTestResults", "home", new { id = Model.ID, patientID = Model.PatientID })" class="box3" style="top: 10%; left: 95%;transform: translate(-50%);"><img src="~/images/test-results-5.png" title="Not Tested" width="150" height="150" /></a>
+             }
+             else if (Model.TestResult.ToUpper().Trim() == "UNKNOWN" || Model.TestResult.ToUpper().Trim() == "SAMPLE FAIL")
+             {
+                <a href="@Url.Action("COVIDTestResults", "home", new { id = Model.ID, patientID = Model.PatientID })" class="box3" style="top: 10%; left: 95%;transform: translate(-50%);"><img src="~/images/test-results-4.png" title="Not Tested" width="150" height="150" /></a>
+             }
+             else if (Model.TestResult.ToUpper().Trim() == "COLD")
+             {
+                <a href="@Url.Action("COVIDTestResults", "home", new { id = Model.ID, patientID = Model.PatientID })" class="box3" style="top: 10%; left: 95%;transform: translate(-50%);"><img src="~/images/test-results-6.png" title="Cold" width="150" height="150" /></a>
+             }    
+            @if (Model.LevelCareUpdated == 2)
+            {
+                <a href='@Url.Action("COVIDLevelOfCare", "home", new { id = Model.ID, patientID = Model.PatientID })' class="box3" style="top: 80%;left: 95%; transform: translate(-50%,-50%);" id="jqSJRStage1">
+                    <img src="~/images/level-care-2.png" title="" width="150" height="150" />
+                </a>
+            }            
+            else if (Model.LevelCareUpdated == 1)
+            {
+                <a href='@Url.Action("COVIDLevelOfCare", "home", new { id = Model.ID, patientID = Model.PatientID })' class="box3" style="top: 80%;left: 95%; transform: translate(-50%,-50%);" id="jqSJRStage1">
+                    <img src="~/images/level-care-1.png" title="" width="150" height="150" />
+                </a>
+            }
+            else if (Model.LevelCareUpdated == 3)
+            {
+                <a href='@Url.Action("COVIDLevelOfCare", "home", new { id = Model.ID, patientID = Model.PatientID })' class="box3" style="top: 80%;left: 95%; transform: translate(-50%,-50%);" id="jqSJRStage1">
+                    <img src="~/images/level-care-3.png" title="" width="150" height="150" />
+                </a>
+            }
+            else if (Model.LevelCareUpdated == 0)
+            {
+                <a href='@Url.Action("COVIDLevelOfCare", "home", new { id = Model.ID, patientID = Model.PatientID })' class="box3" style="top: 80%;left: 95%; transform: translate(-50%,-50%);" id="jqSJRStage1">
+                    <img src="~/images/level-care-4.png" title="" width="150" height="150" />
+                </a>
+            }            
+            @if (Model.DQ == 0)
+            {
+                <a href='@Url.Action("COVIDDataAssurance", "home", new { id = Model.ID, patientID = Model.PatientID })' class="box3" style="top: 80%; left: 5%;transform: translate(-50%,-50%);" id="jqSJRStage2">
+                    <img src="~/images/data-assurance-4.png" title="" width="150" height="150" />
+                </a>
+            }
+            else if (Model.DQ == 1)
+            {
+                <a href='@Url.Action("COVIDDataAssurance", "home", new { id = Model.ID, patientID = Model.PatientID })' class="box3" style="top: 80%; left: 5%;transform: translate(-50%,-50%);" id="jqSJRStage2">
+                    <img src="~/images/data-assurance-2.png" title="Cancelled/Discontinued" width="150" height="150" />
+                </a>
+            }
+            else if (Model.DQ == 2)
+            {
+                <a href='@Url.Action("COVIDDataAssurance", "home", new { id = Model.ID, patientID = Model.PatientID })' class="box3" style="top: 80%; left: 5%;transform: translate(-50%,-50%);" id="jqSJRStage2">
+                    <img src="~/images/data-assurance-3.png" title="Multiple Tests and Pending 5 days or more" width="150" height="150" />
+                </a>
+            }
+            else if (Model.DQ == 3)
+            {
+                <a href='@Url.Action("COVIDDataAssurance", "home", new { id = Model.ID, patientID = Model.PatientID })' class="box3" style="top: 80%; left: 5%;transform: translate(-50%,-50%);" id="jqSJRStage2">
+                    <img src="~/images/data-assurance-5.png" title="Result with No Order" width="150" height="150" />
+                </a>
+            }
+            else if (Model.DQ == 4)
+            {
+                <a href='@Url.Action("COVIDDataAssurance", "home", new { id = Model.ID, patientID = Model.PatientID })' class="box3" style="top: 80%; left: 5%;transform: translate(-50%,-50%);" id="jqSJRStage2">
+                    <img src="~/images/data-assurance-1.png" title="Order with Result" width="150" height="150" />
+                </a>
+            }
+            
+            @if (Model.BreathingUpdated == 2)
+            {
+                <a href='@Url.Action("COVIDBreathing", "home", new { id = Model.ID, patientID = Model.PatientID })' class="box3" style="top: 100%;left: 50%;transform: translate(-50%,-50%);" id="jqSJROutcome">
+                    <img src="~/images/breathing-2.png" title="" width="150" height="150" />
+                </a>                
+            }            
+            else if(Model.BreathingUpdated == 1)
+            {
+                <a href='@Url.Action("COVIDBreathing", "home", new { id = Model.ID, patientID = Model.PatientID })' class="box3" style="top: 100%;left: 50%;transform: translate(-50%,-50%);" id="jqSJROutcome">
+                    <img src="~/images/breathing-3.png" title="" width="150" height="150" />
+                </a>
+            }
+            else if (Model.BreathingUpdated == 3)
+            {
+                <a href='@Url.Action("COVIDBreathing", "home", new { id = Model.ID, patientID = Model.PatientID })' class="box3" style="top: 100%;left: 50%;transform: translate(-50%,-50%);" id="jqSJROutcome">
+                    <img src="~/images/breathing-1.png" title="" width="150" height="150" />
+                </a>
+            }
+            else if (Model.BreathingUpdated == 0)
+            {
+                <a href='@Url.Action("COVIDBreathing", "home", new { id = Model.ID, patientID = Model.PatientID })' class="box3" style="top: 100%;left: 50%;transform: translate(-50%,-50%);" id="jqSJROutcome">
+                    <img src="~/images/breathing-4.png" title="" width="150" height="150" />
+                </a>
+            }
+            @if (Model.Notified == 0)
+            {
+                <a href="@Url.Action("COVIDComms", "home", new { id = Model.ID, patientID = Model.PatientID })" class="box3" style="top: 10%; left: 5%;transform: translate(-50%);"><img src="~/images/comms-4.png" title="Pending" width="150" height="150" /></a>
+            } 
+            else if (Model.Notified == 2)
+            {
+            <a href="@Url.Action("COVIDComms", "home", new { id = Model.ID, patientID = Model.PatientID })" class="box3" style="top: 10%; left: 5%;transform: translate(-50%);"><img src="~/images/comms-1.png" title="No" width="150" height="150" /></a>
+            }
+            else if (Model.Notified == 3)
+            {
+                <a href="@Url.Action("COVIDComms", "home", new { id = Model.ID, patientID = Model.PatientID })" class="box3" style="top: 10%; left: 5%;transform: translate(-50%);"><img src="~/images/comms-2.png" title="Yes" width="150" height="150" /></a>
+            }  
+            <div href="#" class="box3" style="top: 50%; left: 50%;transform: translate(-50%,-50%);" id="jqMortality">
+                <img src="~/images/COVID-2.png" title="COVID" width="150" height="150" />
+            </div>
+        </div>
+    </div>
+</div>

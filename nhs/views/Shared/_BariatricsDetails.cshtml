@@ -1,0 +1,61 @@
+﻿@model List<NHS.Common.DTO.clsBariatricDetails>
+
+<div class="">
+    <table class="stripe row-border order-column ds_tableblue" style="overflow:auto;" id="tblPatientDetails">
+        <thead style="font-weight: bold;">
+            <tr bgcolor="#00a2ed !important" style="color:white !important;  font-size:11px;border-top: 1px solid #ddd;
+        border-right: 1px solid #ddd !important;">
+                <th align="center" width="11%" style="cursor: pointer;" onclick="GetPage(1,'',0,'PatientName')">Name</th>
+                <th align="left" width="5%" style="cursor: pointer;" onclick="GetPage(1,'',0,'MRN')">MRN</th>
+                <th align="left" width="5%" style="cursor: pointer;" onclick="GetPage(1,'',0,'ReferralDate')">Referral Date</th>
+                <th align="left" width="5%" style="cursor: pointer;" onclick="GetPage(1,'',0,'NurseAssessment')">Nurse <br />Assess<br />ment </th>
+                <th align="left" width="5%" style="cursor: pointer;" onclick="GetPage(1,'',0,'MDTMedical')">MDT<br/>Medical</th>
+                <th align="left" width="5%" style="cursor: pointer;" onclick="GetPage(1, '', 0, 'PsychologyAssess')">Psycho<br />logy <br/>Assess</th>
+                <th align="left" width="5%" style="cursor: pointer;" onclick="GetPage(1,'',0,'Group1')">Group1</th>
+                <th align="left" width="5%" style="cursor: pointer;" onclick="GetPage(1, '', 0, 'Group2')">Group2</th>
+                <th align="left" width="5%" style="cursor: pointer;" onclick="GetPage(1, '', 0, 'Group3')">Group3</th>
+                <th align="left" width="5%" style="cursor: pointer;" onclick="GetPage(1, '', 0, 'Group4')">Group4</th>
+                <th align="left" width="5%" style="cursor: pointer;" onclick="GetPage(1,'',0,'MDTVirtual')">MDT <br /> Virtual</th>
+                <th align="left" width="5%" style="cursor: pointer;" onclick="GetPage(1,'',0,'MDTSurgical')">MDT <br /> Surgical</th>
+                <th align="left" width="5%" style="cursor: pointer;" onclick="GetPage(1,'',0,'Surgery')">Surgery</th>
+                <th align="left" width="5%" style="cursor: pointer;" onclick="GetPage(1,'',0,'PostOPMed')">Post-<br />OP <br /> Med</th>
+                <th align="left" width="5%" style="cursor: pointer;" onclick="GetPage(1,'',0,'PostOPDiet')">Post-<br />OP <br /> Diet</th>
+            </tr>
+        </thead>
+        <tbody style="font-size:11px;padding:0px;" class="ds_table">
+            @if (Model.Count > 0)
+            {
+                foreach (var item in Model)
+                {
+                    <tr class="Entries">
+                        <td align="left">@item.PatientName.Trim()</td>
+                        <td align="left">@item.MRN.Trim()</td>
+                        <td align="left">@item.ReferralDate.Trim() (@item.WeekDifference wks)</td>
+                        <td align="center" style=""><a href="@Url.Action("NurseAssessment", "Home", new { patientID = item.Patient_ID, MRN = item.MRN})"><img src="@item.NurseAssessment" width="18" height="18" title=""></a></td>
+                        <td align="center" style=""><a href="@Url.Action("MedicalMDT", "Home", new { patientID = item.Patient_ID, MRN = item.MRN})"><img src="@item.MDTMedical" width="18" height="18" title=""></a></td>
+                        <td align="center" style=""><img src="@item.PsychologyAssess" width="18" height="18" title=""></td>
+                        <td align="center" style=""><a href="@Url.Action("GroupSessions", "Home", new { patientID = item.Patient_ID, MRN = item.MRN})"><img src="@item.Group1" width="18" height="18" title=""></a></td>
+                        <td align="center" style=""><a href="@Url.Action("GroupSessions", "Home", new { patientID = item.Patient_ID, MRN = item.MRN})"><img src="@item.Group2" width="18" height="18" title=""></a></td>
+                        <td align="center" style=""><a href="@Url.Action("GroupSessions", "Home", new { patientID = item.Patient_ID, MRN = item.MRN})"><img src="@item.Group3" width="18" height="18" title=""></a></td>
+                        <td align="center" style=""><a href="@Url.Action("GroupSessions", "Home", new { patientID = item.Patient_ID, MRN = item.MRN})"><img src="@item.Group4" width="18" height="18" title=""></a></td>
+                        <td align="center" style=""><a href="@Url.Action("VirtualMDT", "Home", new { patientID = item.Patient_ID, MRN = item.MRN})"><img src="@item.MDTVirtual" width="18" height="18" title=""></a></td>
+                        <td align="center" style=""><a href="@Url.Action("SurgicalMDT", "Home", new { patientID = item.Patient_ID, MRN = item.MRN})"><img src="@item.MDTSurgical" width="18" height="18" title=""></a></td>
+                        <td align="center" style=""><a href="@Url.Action("Surgery", "Home", new { patientID = item.Patient_ID, MRN = item.MRN})"><img src="@item.Surgery" width="18" height="18" title=""></a></td>
+                        <td align="center" style=""><a href="@Url.Action("PostOpMedical", "Home", new { patientID = item.Patient_ID, MRN = item.MRN})"><img src="@item.PostOPMed" width="18" height="18" title=""></a></td>
+                        <td align="center" style=""><a href="@Url.Action("PostOpDietician", "Home", new { patientID = item.Patient_ID, MRN = item.MRN})"><img src="@item.PostOPDiet" width="18" height="18" title=""></a></td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="14" class="text-center" align="center">No Records Found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@Html.Partial("_BariatricsPageControl")
+
+
+

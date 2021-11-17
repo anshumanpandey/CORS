@@ -1,0 +1,89 @@
+﻿@model NHS.Common.WebsiteSetting
+@{
+    ViewBag.Title = "Settings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br/><br /><br /><br />
+<div class="container">
+    <form action="@Url.Action("WebsiteSetting", "Home" )" id="login-form" class="sky-form" method="post" novalidate="novalidate">
+                <fieldset>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-3" style="color:black; font-size:medium">SMTP Server</label>
+                            <div class="col-md-5">
+                                <div class="row_bar checkbox-row">
+                                    @Html.EditorFor(model => model.SMTPServer, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-3" style="color:black; font-size:medium">Port Number</label>
+                            <div class="col-md-5">
+                                <div class="row_bar checkbox-row">
+                                    @Html.EditorFor(model => model.Port, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-3" style="color:black; font-size:medium">Email ID</label>
+                            <div class="col-md-5">
+                                <div class="row_bar checkbox-row">
+                                    @Html.EditorFor(model => model.EmailID, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-3" style="color:black; font-size:medium">Password</label>
+                            <div class="col-md-5">
+                                <div class="row_bar checkbox-row">
+                                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-3" style="color:black; font-size:medium">AD Domain Name</label>
+                            <div class="col-md-5">
+                                <div class="row_bar checkbox-row">
+                                    @Html.EditorFor(model => model.DomainName, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    </fieldset>
+                    <div class="col-md-12" align="center">
+                        <button id="activate-step-2" type="submit" name="BtnFinish" class="btn btn-primary btn-lg">Submit</button>
+                    </div>
+            </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>

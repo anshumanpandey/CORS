@@ -1,0 +1,192 @@
+﻿@model NHS.Common.AppUsers
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    ViewBag.Title = "Index";
+    NHS.Common.Alert alertMessage = (NHS.Common.Alert)ViewBag.AlertMessage;
+}
+
+<br /><br /><br /><br />
+<div class="container">
+    <span style="color:red">@TempData["AlertMessage"]</span>
+    <form action="@Url.Action("CreateUser", "Home")" id="login-form" class="sky-form" method="post" novalidate="novalidate">
+        <div class="lable_title">
+            <h2>Add User</h2><span style="color:red"><i>&nbsp;&nbsp;* marked fields are mandatory fields.</i></span><br />
+        </div>
+        <fieldset>
+            <section>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span>Email ID</span>&nbsp;&nbsp;<span style="color:red;font-size:20px">*</span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="row_bar checkbox-row">
+                            @Html.EditorFor(model => model.EmailID, new { htmlAttributes = new { @class = "form-control", @id="EmailID" } })
+                            
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span>First Name</span>&nbsp;&nbsp;<span style="color:red;font-size:20px">*</span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="row_bar checkbox-row">
+                            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @id="FirstName" } })
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span>Last Name</span>&nbsp;&nbsp;<span style="color:red;font-size:20px">*</span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="row_bar checkbox-row">
+                            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @id="LastName" } })
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span>User Name (Domain login name)</span>&nbsp;&nbsp;<span style="color:red;font-size:20px">*</span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="row_bar checkbox-row">
+                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @id="UserName" } })
+                            <span class="custom-errorcolor" id="spnEmailExists1" style="display:none; color:#ee9393; font-size:14px;">User Name already exists</span>
+                            <img src="@Url.Content("~/assets/img/AjaxLoader.gif")" class="control-loader" id="email-loader" style="display:none;right: 5px;bottom: 5px;width: 20px;position: absolute;" />
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span>GMC Code (If Applicable)</span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="row_bar checkbox-row">
+                            @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span>Speciality</span>
+                    </div>
+
+                    <div class="col-md-5">
+                        <div class="row_bar checkbox-row">
+                            <select class="form-control" id="ddlSpeciality" name="ddlSpeciality">
+                                <option value="" selected="">Please Select</option>
+                                @foreach (var item in ViewBag.SpecialityDDM)
+                                {
+                                    <option value="@item.SpecialityName">@item.SpecialityName</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span>Role</span>&nbsp;&nbsp;<span style="color:red;font-size:20px">*</span>
+                    </div>
+
+                    <div class="col-md-5">
+                        <div class="row_bar checkbox-row">
+                            <select class="form-control" id="ddlRole" name="ddlRole">
+                                <option value="-1" selected="">Please Select</option>
+                                @foreach (var item in ViewBag.RoleDDM)
+                                {
+                                    <option value="@item.ID">@item.RoleName</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </fieldset>
+        <div class="col-md-10" align="center">
+            <button id="activate-step-2" type="submit" name="BtnFinish"  class="btn btn-primary btn-lg">Submit</button>
+            <button id="activate-step-3" type="button" name="BtnCancel" class="btn btn-primary btn-lg" onclick="location.href='@Url.Action("Users","Home")'">Cancel</button>
+        </div>
+    </form>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#activate-step-2").click(function () {
+            if ($.trim($("#EmailID").val()) == "") {
+                alert("Email ID is a mandatory field.");
+                return false;
+            }
+            if ($.trim($("#FirstName").val()) == "") {
+                alert("First Name is a mandatory field.");
+                return false;
+            }
+            if ($.trim($("#LastName").val()) == "") {
+                alert("Last Name is a mandatory field.");
+                return false;
+            }
+            if ($.trim($("#UserName").val()) == "") {
+                alert("User Name is a mandatory field.");
+                return false;
+            }
+            //if ($.trim($("#ddlSpeciality").val()) == "") {
+            //    alert("Speciality is a mandatory field.");
+            //    return false;
+            //}
+            if ($.trim($("#ddlRole").val()) == "-1") {
+                alert("Role is a mandatory field.");
+                return false;
+            }
+        });
+    });
+    var isValidUserName;
+    $('#UserName').change(function () {
+        //debugger;
+        isValidUserName = false;
+        var Email = $("#UserName").val();
+        //alert(Email);
+        if (Email != "") {
+
+            $("#email-loader").show();
+            var dataActionUrl = '@Url.Action("IsUserNameExists", "Home")';
+
+            $.ajax({
+                url: dataActionUrl,
+                type: 'POST',
+                data: { UserName: Email },
+                success: function (data) {
+                    if (data == "SUCCESS") {
+                        $("#signUpEmail-wrapper").removeClass("has-error").addClass("has-success");
+                        $("#spnEmailExists1").hide();
+                        isValidUserName = true;
+                        $("#email-loader").hide();
+                        $("#activate-step-2").attr("disabled", false);
+                    }
+                    else {
+                        $("#signUpEmail-wrapper").addClass("has-success").removeClass("has-error");
+                        $("#spnEmailExists1").show();
+                        isValidUserName = false;
+                        $("#email-loader").hide();
+                        $("#activate-step-2").attr("disabled", true);
+                    }
+                },
+                error: function (data) {
+                    $("#email-loader").hide();
+                }
+            });
+        }
+    });
+</script>

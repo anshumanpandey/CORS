@@ -1,0 +1,191 @@
+﻿@model List<NHS.Common.CORSUsers>
+@using NHS.Models;
+@{
+    ViewBag.Title = "CORS Users";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>*@
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>*@
+
+@*<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />*@
+
+<style>
+    #Newpatient {
+        font-size: 13px;
+    }
+
+        #Newpatient:hover {
+            text-decoration: underline;
+            color: cornflowerblue !important;
+        }
+
+    #DOD_ToolTip {
+        display: none;
+        position: absolute;
+        border: 1px solid gray;
+        WIDTH: 254PX;
+        HEIGHT: 100PX;
+        Z-INDEX: 999999;
+        background-color: white;
+    }
+
+    #DRow {
+        padding-right: 1px !Important;
+    }
+
+    #DateOfDeath:hover {
+        cursor: context-menu;
+    }
+    /*.tooltip {
+        border:1px solid gray;
+        padding:5px !important;
+    }*/
+    #DateOfDeath.tooltip {
+        border: 1px solid gray;
+        padding: 5px !important;
+    }
+</style>
+
+
+<br />
+<br />
+@*<script src="cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>*@
+<div align="left" style="width:90%">
+    <h4>CORS Users</h4>
+</div>
+<span style="color:green">@TempData["AlertMessage"]</span>
+<!-- DataTables -->
+<div class="col-sm-12">
+<div align="center" style="width:90%">
+            Need to give access to a new user?&nbsp;<a href='@Url.Action("AddUser", "home")'>Add New User</a>
+</div>
+    <br />
+    <div class="row">
+        <div style="width:90%;">
+            <table class="stripe row-border order-column" style="overflow:auto;width:100% !important" id="tblPatientDetails">
+                <thead>
+                    <tr bgcolor="#a9d7cc" style="color:black;  font-size:11px;">
+                        <th align="left" width="0%" style="display:none;">ID</th>
+                        <th align="left" width="10%" style="text-align:center;">Email</th>
+                        <th align="left" width="10%" style="">Role</th>
+                        <th align="left" width="10%" style="">First Name</th>
+                        <th align="left" width="10%" style="">Last Name</th>
+                        <th align="left" width="10%" style="">User Name</th>
+                        <th align="left" width="10%" style="">GMC Code</th>
+                        <th align="left" width="10%" style="">Speciality</th>
+                        <th align="left" width="10%" style="">Approved?</th>
+                        <th align="left" width="10%" style="">  Created Date </th>
+                        <th align="center" width="5%" style="">Action</th>
+                        @*<th align="center" width="5%" style="">ME<br /> Triage <br />Review</th>
+                        <th align="center" width="5%" style="">MEO<br /> Review<br /> Status</th>
+                        <th align="center" width="5%" style="">SJR<br /> Review <br />Status</th>
+                        <th align="center" width="5%" style="">SJR <br /> Review Outcome</th>
+                        <th align="center" width="5%" style="">SJR 2 <br />Review Status</th>
+                        <th align="center" width="5%" style="">Coding Review Status</th>*@
+                    </tr>
+                </thead>
+                <tbody style="font-size:12px;padding:0px;">
+                    @if (Model.Count > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr class="Entries">
+                                <td align="center"  width="0%" style="display:none;">@item.ID</td>
+                                <td align="center" width="10%" >@item.EmailID</td>
+                                <td align="left" width="10%" style="">&nbsp;&nbsp;@item.Role</td>
+                                <td align="left" width="10%" style="">&nbsp;&nbsp;@item.FirstName</td>
+                                @*changes*@
+                                <td align="left" width="10%">&nbsp;&nbsp;@item.LastName</td>
+                                <td align="left" width="10%" style="">&nbsp;&nbsp;@item.UserName.Trim()</td>
+                                <td align="left" width="10%" >&nbsp;&nbsp;@item.Code.Trim()</td>
+                                <td align="left" width="10%">&nbsp;&nbsp;@item.Speciality.Trim()</td>
+                                @if (item.IsApproved == true)
+                                {
+                                    <td align="left" width="10%" style="">&nbsp;&nbsp;Approved</td>
+                                }
+                                else
+                                {
+                                    <td align="left" width="10%" style="">
+                                        <button id="activate-step-2" type="submit" name="BtnFinish" class="btn btn-u-sm" style="font-size:12px; background-color: #a9d7cc" onclick="location.href='@Url.Action("ApproveUser","Home", new { id=item.ID})'">Approve</button></td>
+                                }
+                                <td align="left" width="10%">&nbsp;&nbsp;@item.CreatedDate</td> 
+                                <td width="10%" align="center"><a href="@Url.Action("EditUser", "Home", new { id = item.ID})"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;<a href="@Url.Action("DeleteUser", "Home", new { id = item.ID})"><i class="fas fa-trash-alt"></i></a></td>                               
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="14" class="text-center" align="center">No Records Found.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<script>
+
+
+    //newly added script
+    jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+        "date-uk-pre": function (a) {
+            var ukDatea = a.split('-');
+            return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
+        },
+        "date-uk-asc": function (a, b) {
+            return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+        },
+        "date-uk-desc": function (a, b) {
+            return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+        }
+    });
+
+
+    //added
+    $(document).ready(function () {
+        $('#tblPatientDetails').DataTable(
+            {
+            "ordering": true,
+            "paging": true,
+            "searching": true,
+            "pageLength": 10,
+            "order": [[9, "desc"]],
+            "aoColumns": [
+                { "sName": "ID", "sTitle": "ID", "bSortable": "true" },
+                { "sName": "EmailID", "sTitle": "Email ID", "bSortable": "true" },
+                { "sName": "Role", "sTitle": "Role", "sType": "date", "bSortable": "true" },
+                { "sName": "FirstName", "sTitle": "First Name", "sType": "date", "bSortable": "true" },
+                { "sName": "LastName", "sTitle": "Last Name", "sType": "date-uk", "bSortable": "true" },
+                { "sName": "UserName", "sTitle": "User Name", "bSortable": "true" },
+                { "sName": "Code", "sTitle": "GMC Code", "bSortable": "true" },
+                { "sName": "Speciality", "sTitle": "Speciality", "bSortable": "true" },
+                { "sName": "IsApproved", "sTitle": "Approved", "bSortable": "true" },
+                { "sName": "CreatedDate", "sTitle": "Created Date", "sType":"date-uk", "bSortable": "true" },
+                { "sName": "Action", "sTitle": "Action", "bSortable": "false" }
+            ],
+            "lengthMenu": [
+                [10, 20, 50, 100, -1],
+                ['10 rows', '20 rows', '50 rows', '100 rows', 'Show all']],
+            "scrollX": true,
+            //language: '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
+            //"language": {
+            //    "emptyTable": '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
+            //    //"zeroRecords": '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
+            //},
+            //"scrollY": true,
+
+            //"columnDefs": [{ "targets": 4, "type": "date-eu" }],
+        });
+    });
+    //"language": {
+    //    'emptyTable': '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
+    //},
+</script>
+
+
+

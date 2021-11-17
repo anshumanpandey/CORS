@@ -93,6 +93,18 @@ namespace NHS.Common
         public bool IsBypassedMESystem { get; set; }
 
         public int FuneralArrangement { get; set; }
+
+        public bool UrgentBodyRelease { get; set; }
+
+        public string UrgentBodyReleaseComment { get; set; }
+
+        public bool DeathCertificateRejected { get; set; }
+
+        public string DeathCertificateRejectionReason { get; set; }
+
+        public bool InteractionBereaved { get; set; }
+
+        public int InteractionBereavedReason { get; set; } 
     }
     public class ReasonGroups
     {

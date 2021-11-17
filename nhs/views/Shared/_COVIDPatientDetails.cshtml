@@ -8,10 +8,12 @@
                 <th align="left" width="5%" style="cursor: pointer;" onclick="GetPage(1,'',0,'PatientID')">MRN</th>
                 <th align="left" width="11%" style="cursor: pointer;" onclick="GetPage(1,'',0,'PatientName')">Name (Age)</th>
                 <th align="left" width="4%" style="cursor: pointer;" onclick="GetPage(1,'',0,'Gender')">Gender</th>  
-                <th align="center" width="3%" style="cursor: pointer;" onclick="GetPage(1,'',0,'ComorbitiesCount')">Prev Known <br /> Comorbidities</th>                          
-                <th align="center" width="5%" style="cursor: pointer;" onclick="GetPage(1,'',0,'TestResultDateTime')">Test Result<br />DateTime </th>
+                <th align="center" width="3%" style="cursor: pointer;" onclick="GetPage(1,'',0,'ComorbitiesCount')">Prev Known <br /> Comorbidities</th> 
+				<th align="center" width="5%" style="cursor: pointer;" onclick="GetPage(1,'',0,'SampleCollectionDateTime')">Sample <br/>Collection<br />DateTime </th>				
+                <th align="center" width="5%" style="cursor: pointer;" onclick="GetPage(1,'',0,'TestResultDateTime')">Test Result<br />DateTime </th>                
                 <th align="left" width="4%" style="cursor: pointer;" onclick="GetPage(1,'',0,'TestResult')">Test Result</th>
-                <th align="left" width="4%" style="cursor: pointer;" onclick="GetPage(1,'',0,'AdmissionStatus')">Admission <br /> Status</th>                
+                <th align="left" width="4%" style="cursor: pointer;" onclick="GetPage(1,'',0,'AdmissionStatus')">Admission <br /> Status</th>
+                <th align="left" width="4%" style="cursor: pointer;" onclick="GetPage(1,'',0,'AdmissionStatus')">Admission <br /> Group</th>                
                 <th align="right" width="7%" style="cursor: pointer;" onclick="GetPage(1, '', 0, 'LastPatientLocation')">Current/<br />Last<br />Ward </th>
                 <th align="left" width="4%" style="cursor: pointer;" onclick="GetPage(1,'',0,'LOSDays')">LOS</th>
                 <th align="left" width="8%" style="cursor: pointer;" onclick="GetPage(1,'',0,'AdmissionDateTime')">Admission <br /> DateTime</th>
@@ -20,7 +22,7 @@
                 <th align="center" width="4%" style="cursor: pointer;" onclick="GetPage(1,'',0,'BedNumber')">Current/<br />Last <br /> Bed Number</th>               
                 <th align="center" width="5%" style="cursor: pointer;" onclick="GetPage(1,'',0,'BedTypeUpdated')">Bed <br /> Type</th>
                 <th align="center" width="5%" style="cursor: pointer;" onclick="GetPage(1,'',0,'BreathingStatusUpdated')">Breathing <br />Status</th>                
-                <th align="right" width="4%" style="cursor: pointer;" onclick="GetPage(1, '', 0, 'ReadmissionFlag')">Readmission<br /> Flag</th>
+                @*<th align="right" width="4%" style="cursor: pointer;" onclick="GetPage(1, '', 0, 'ReadmissionFlag')">Readmission<br /> Flag</th>*@
             </tr>
         </thead>
         <tbody style="font-size:11px;padding:0px;" class="ds_table">
@@ -40,38 +42,51 @@
                         {
                             <td align="center" style=""><img src="~/images/GeryImg.png" width="18" height="18" title=""></td>
                         }
-                        @if (string.IsNullOrEmpty(item.TestResultDateTime))
+						@if (string.IsNullOrEmpty(item.SampleCollectionDateTime))
                         {
-                            <td align="left" style="">&nbsp;&nbsp;Pending</td>
+                            <td align="center">&nbsp;</td>
+                        }
+                        else
+                        {
+                            <td align="center"><a href="#" title="Order DateTime: @item.OrderDateTime">@item.SampleCollectionDateTime</a></td>
+                        }
+                        @if (item.SITREP_GROUP.ToUpper().Equals("UNTESTED"))
+                        {
+                            <td align="left" style="">&nbsp;&nbsp;Untested</td>
+                        }
+                        else if (item.SITREP_GROUP.ToUpper().Equals("PENDING"))
+                        {
+                        <td align="left" style="">&nbsp;&nbsp;Pending</td>
+                        }
+                        else if (string.IsNullOrEmpty(item.TestResultDateTime))
+                        {
+                            <td align="left" style="">&nbsp;&nbsp;</td>
                         }
                         else
                         {
                             <td align="left" style="">@Convert.ToDateTime(item.TestResultDateTime).ToString("dd/MM/yyyy HH:mm")</td>
                         }
-                        @if (item.TestResult.ToUpper().Trim() == "NOT DETECTED")
+                        
+                        @if (item.SITREP_GROUP.ToUpper().Trim() == "NEGATIVE")
                         {
-                            <td align="center"><a href="@Url.Action("COVIDTestResults", "Home", new { id = item.Test_ID})"><img src="~/images/GreenCircle.png" width="18" height="18" title="Not Detected"></a></td>
+                            <td align="center"><a href="@Url.Action("COVIDTestResults", "Home", new { id = item.Test_ID})"><img src="~/images/GreenCircle.png" width="18" height="18" title="@item.RESULT_STATUS"></a></td>
                         }
-                        else if (item.TestResult.ToUpper().Trim() == "DETECTED" || item.TestResult.ToUpper().Trim() == "DIAGNOSED")
+                        else if (item.SITREP_GROUP.ToUpper().Trim() == "POSITIVE")
                         {
-                            <td align="center"><a href="@Url.Action("COVIDTestResults", "Home", new { id = item.Test_ID})"><img src="~/images/RedC.png" width="18" height="18" title="Detected"></a></td>
+                            <td align="center"><a href="@Url.Action("COVIDTestResults", "Home", new { id = item.Test_ID})"><img src="~/images/RedC.png" width="18" height="18" title="@item.RESULT_STATUS"></a></td>
                         }
-                        else if (item.TestResult.ToUpper().Trim() == "PENDING")
+                        else if (item.SITREP_GROUP.ToUpper().Trim() == "PENDING")
                         {
-                            <td align="center"><a href="@Url.Action("COVIDTestResults", "Home", new { id = item.Test_ID})"><img src="~/images/amber.png" width="18" height="18" title="Pending"></a></td>
+                            <td align="center"><a href="@Url.Action("COVIDTestResults", "Home", new { id = item.Test_ID})"><img src="~/images/amber.png" width="18" height="18" title="@item.RESULT_STATUS"></a></td>
                         }
-                        else if (item.TestResult.ToUpper().Trim() == "NOT TESTED")
+                        else if (item.SITREP_GROUP.ToUpper().Trim() == "UNTESTED")
                         {
-                            <td align="center"><a href="@Url.Action("COVIDTestResults", "Home", new { id = item.Test_ID })"><img src="~/images/purple.png" width="18" height="18" title="Not Tested"></a></td>
+                            <td align="center"><a href="@Url.Action("COVIDTestResults", "Home", new { id = item.Test_ID })"><img src="~/images/blue.jpg" width="18" height="18" title="@item.RESULT_STATUS"></a></td>
                         }
-                        else if (item.TestResult.ToUpper().Trim() == "UNKNOWN" || item.TestResult.ToUpper().Trim() == "SAMPLE FAIL")
+                        else
                         {
                             <td align="center"><a href="@Url.Action("COVIDTestResults", "Home", new { id = item.Test_ID })"><img src="~/images/GeryImg.png" width="18" height="18" title="Not Tested"></a></td>
                         }
-                        else if (item.TestResult.ToUpper().Trim() == "COLD")
-                        {
-                            <td align="center"><a href="@Url.Action("COVIDTestResults", "Home", new { id = item.Test_ID })"><img src="~/images/blue.jpg" width="18" height="18" title="Cold"></a></td>
-                        } 
                         @if (item.AdmissionStatus.ToUpper().IndexOf("CURRENT") > -1)
                         {
                             <td align="center" style="background-color: #fadf7f;">@item.AdmissionStatus</td>
@@ -83,11 +98,36 @@
                         else if (item.AdmissionStatus.ToUpper().IndexOf("DIE") > -1)
                         {
                             <td align="center" style="background-color: #f08b8f;">@item.AdmissionStatus</td>
-                        }                                             
+                        }
+                        else
+                        {
+                            <td align="center" style="background-color: #A9A9A9;">@item.AdmissionStatus</td>
+                        }                                            
+                        <td align="center">@item.AdmissionGroup</td>
                         <td align="center">@item.LastPatientLocation</td>
                         <td align="center" style="">@item.LOSDays.ToString() days</td>
-                        <td align="center" style="">@item.AdmissionDateTime</td>
-                        @if (item.DischargeDateTime == "01/01/0001")
+                        @if (string.IsNullOrEmpty(item.PatientType))
+                        {
+                            <td align="center" style="">&nbsp;</td>
+                        }
+                        else if (item.PatientType.ToUpper().Equals("UNKNOWN"))
+                        {
+                            <td align="center" style="">&nbsp;</td>
+                        }
+                        else if(string.IsNullOrEmpty(item.AdmissionDateTime))
+                        {
+                            <td align="center" style="">&nbsp;</td>
+                        }
+                        else
+                        {
+                            <td align="center" style="">@item.AdmissionDateTime</td>
+                        }
+
+                        @if (string.IsNullOrEmpty(item.PatientType))
+                        {
+                            <td align="left" style="">&nbsp;</td>
+                        }
+                        else if (item.DischargeDateTime == "01/01/0001" || item.PatientType.ToUpper().Equals("UNKNOWN"))
                         {
                             <td align="left" style="">&nbsp;</td>
                         }
@@ -161,14 +201,14 @@
                                 </a>
                             </td>
                         }                      
-                        @if (item.ReadmissionFlag == 1)
+                        @*@if (item.ReadmissionFlag == 1)
                         {
                             <td align="center" style=""><img src="~/images/RedC.png" width="18" height="18" title="No. of Admissions: @item.NoOfAdmissions"></td>
                         }
                         else
                         {
                             <td align="center" style=""><img src="~/images/GeryImg.png" width="18" height="18" title="No. of Admissions: @item.NoOfAdmissions"></td>
-                        }                        
+                        }*@                        
                     </tr>
                 }
             }

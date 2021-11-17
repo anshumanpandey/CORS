@@ -1,0 +1,46 @@
+﻿@model NHS.Common.DTO.COVIDDataAssurance
+@{
+    ViewBag.Title = "Edit Role";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br /><br /><br /><br />
+<div class="container">
+    <form action="@Url.Action("UpdateCOVIDTest", "Home", new { id = Model.Test_ID, patientID = Model.PatientID } )" id="login-form" class="sky-form" method="post" novalidate="novalidate">
+        @Html.Hidden("hdnPatientID", Model.PatientID)
+        <div class="lable_title">
+            <h2>Remove Record</h2><br />
+        </div>
+        <fieldset>
+            <section>
+                <div class="row">                    
+                    <div class="col-md-5">
+                        <div class="row_bar checkbox-row">
+                            @if (Model.IsDisabled)
+                            {
+                                <input type="checkbox" checked id="IsDisabled" name="IsDisabled"><span> Disabled? </span>
+                            }
+                            else
+                            {
+                                <input type="checkbox" id="IsDisabled" name="IsDisabled"><span> Disabled? </span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row_bar checkbox-row">
+                            Comments
+                            @Html.TextAreaFor(model => model.DAComments, 10, 50, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </fieldset>
+        <div class="col-md-12" align="center">
+            <button id="activate-step-2" type="submit" name="BtnFinish" class="btn btn-primary btn-lg">Submit</button>
+            <button id="activate-step-3" type="button" name="BtnCancel" class="btn btn-primary btn-lg" onclick="location.href='@Url.Action("COVIDDataAssurance","Home", new { id = Model.Test_ID, patientID = Model.PatientID})'">Cancel</button>
+        </div>
+    </form>
+</div>
+
+

@@ -101,7 +101,7 @@
 
                                 @*<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
             <div class="row_bar">
-                <span>Synopsis of circumstances, medical history and preliminary view of the cause of death</span>
+                <span>Key Points in determining MCCD (over and above the Hospital Course in EPR)</span>
             </div>
         </div>*@
 
@@ -129,7 +129,7 @@
 
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="row_bar">
-                                        <span>Synopsis of circumstances, medical history and preliminary view of the cause of death</span>
+                                        <span>Key Points in determining MCCD (over and above the Hospital Course in EPR)</span>
 
                                         @if(Convert.ToBoolean(ViewBag.IsReadOnly))
                                         {
@@ -2312,44 +2312,14 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="row_bar">
+                                        @if (Model.FullName == "")
+                                        {
+                                            <input type="text" id="fname" name="fname" class="form-control" readonly value="@Convert.ToString(Session["FullName"])">
 
-                                       @if (Convert.ToBoolean(ViewBag.IsReadOnly))
-                                       {
-                                           if (Model.QAPReview == 3)
-                                           {
-                                               if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
-                                               {
-                                                    @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
-                                                }
-                                                else
-                                                {
-                                                    @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
-                                                }
-
-                                            }
-                                            else
-                                            {
-                                                @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
-                                           }
-                                       }
-                                       else
-                                       {
-                                           if (Model.QAPReview == 3)
-                                           {
-                                               if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
-                                               {
-                                                    @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
-                                                }
-                                                else
-                                                {
-                                                    @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
-                                                }
-
-                                            }
-                                            else
-                                            {
-                                                @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
-                                            }
+                                        }
+                                        else
+                                        {
+                                            <input type="text" id="fname" name="fname" class="form-control" readonly value="@Convert.ToString(Model.FullName)">
                                         }
                                     </div>
                                 </div>

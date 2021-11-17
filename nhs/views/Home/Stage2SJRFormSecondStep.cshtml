@@ -4871,6 +4871,39 @@
         </div>
     </div>
 </div>
+    <div class="modal fade" id="modelStage2SJRFormAlert">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">CORS</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="form-section" style="text-align:left">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row_bar">
+                                    <div><b>Consider if patient care requires incident reporting.</b></div>
+                                </div>
+                            </div>
+                            <br /><br />
+                            <div class="col-md-4">
+                               &nbsp;
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-primary btn-block" name="btnCloseYes1" id="btnCloseYes1">Ok</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 <script>
     $(document).ready(function () {
         $("#btnCloseStage2SJRForm").click(function () {
@@ -4926,7 +4959,7 @@ $(document).ready(function () {
                 alert("Avoidability Score ID is a mandatory field.");
                 return false;
 
-        }
+        }        
         if (initialmanagement == "" || ongoingcare == "" || careduringprocedure == "" ||
             endlifecare == "" || overallassessment == "")
         {
@@ -4983,6 +5016,20 @@ $(document).ready(function () {
         $('input:radio').change(function () {
             var radioVal = $("input[name=ProblemOccured]:checked").val();
             $('#hdfProblemOccured').val(radioVal);
+        });
+    });
+</script>
+<script>
+    $("#AvoidabilityScoreID").change(function () {
+        if ($("#AvoidabilityScoreID").val() == "2" || $("#AvoidabilityScoreID").val() == "3") {
+            $("#modelStage2SJRFormAlert").modal();
+        }
+        });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#btnCloseYes1").click(function () {
+            $("#modelStage2SJRFormAlert").modal('hide');
         });
     });
 </script>

@@ -1,0 +1,354 @@
+﻿@model NHS.Common.clsSJROutcome
+@{
+    ViewBag.Title = "SJROutcome";
+    Layout = "~/Views/Shared/_PopopLayout.cshtml";
+}
+
+<br />
+<br />
+
+<div class="container">
+    <div class="row form-group">
+        <div class="col-xs-12 col-lg-12">
+            <div align="right">
+                <button type="button" id="btnPrint" class="btn btn-primary">Print/Export</button>
+            </div>
+            <div class="row" align="right">
+
+            </div>
+            <div class="col-md-12 text-center">
+                <div class="form-section" style="text-align:left">
+                    <div class="lable_title">
+                        <h2>QUALITY GOVERNANCE</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <span>Date SJR 1 Requested</span>
+                        </div>
+
+                        <div class="col-md-8">
+                            <input class="form-control datepicker" disabled readonly="readonly" type="text" id="DateSJR1Requested" value="@Model.DateSJR1Requested" name="DateSJR1Requested" placeholder="Select Date">
+                        </div>
+                        <div class="col-md-4">
+                            <span>SJR1 Request sent to</span>
+                        </div>
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.SJR1RequestSentTo, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                        </div>
+                        <div class="col-md-4">
+                            <span>Required for Random Sample Review? </span>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row_bar checkbox-row">
+                                @if (Model.RandomSampleReview == true)
+                                {
+                                    <span> Yes </span>
+                                }
+                                else
+                                {
+                                    <span> No </span>
+                                }                                
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="lable_title">
+                        <h2>SJR OUTCOME</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="row_bar">
+                                Stage 2 SJR Required?
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="row_bar checkbox-row">
+                                @if (Model.Stage2SJRRequired == true)
+                                {
+                                    <span> Yes </span>
+                                }
+                                else
+                                {
+                                    <span> No </span>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5 dstable3" style="padding-bottom: 10px !important;">
+                            <table style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;" width="100%">
+                                <tbody>
+                                    <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;" width="40%"><b>Patient ID</b></td>
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.PatientId</td>
+                                    </tr>
+                                    <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Patient Name</b></td>
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.PatientName</td>
+
+                                    </tr>
+                                    <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>DOB</b></td>
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.DOB</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                        @*<div class="col-md-2">
+                            <div class="row_bar">
+                                &nbsp;
+                            </div>
+                        </div>*@
+                        <div id="stage2datelabel" class="col-md-4" style="display:block">
+                            <div class="row_bar">
+                                <span>Stage 2 SJR date sent</span>
+                            </div>
+                        </div>
+                        <div id="stage2date" class="col-md-8" style="display:block">
+                            <div class="row_bar">
+                                <input class="form-control datepicker" disabled readonly="readonly" type="text" id="Stage2SJRDateSent" value="@Model.Stage2SJRDateSent" name="Stage2SJRDateSent" placeholder="Select Date">
+                            </div>
+                        </div>
+                        <div id="stage2sentlabel" class="col-md-4" style="display:block">
+                            <div class="row_bar">
+                                <span>Stage 2 SJR sent to</span>
+                            </div>
+                        </div>
+
+                        <div id="stage2sent" class="col-md-8" style="display:block">
+                            <div class="row_bar">
+                                @Html.EditorFor(model => model.Stage2SJRSentTo, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            </div>
+                        </div>
+                        @*<div class="col-md-1">
+                            <div class="row_bar">
+                                &nbsp;
+                            </div>
+                        </div>*@
+
+                        @*<div class="col-md-1">
+                            <div class="row_bar">
+                                &nbsp;
+                            </div>
+                        </div>*@
+                    </div>
+                    <br />
+                    <div class="lable_title">
+                        <h2>SIRI/ RCA OUTCOME</h2>
+                    </div><br />
+                    <div class="row">
+                        <div class="col-md-4">
+                            <span>Reference Number</span>
+                        </div>
+
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.ReferenceNumber, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </div>
+                        @*<div class="col-md-1">
+                            <div class="row_bar">
+                                &nbsp;
+                            </div>
+                        </div>*@
+                        <div class="col-md-4">
+                            <span>Date Received</span>
+                        </div>
+                        <div class="col-md-8">
+                            <input class="form-control datepicker" disabled readonly="readonly" type="text" id="DateReceived" value="@Model.DateReceived" name="DateReceived" placeholder="Select Date">
+                        </div>
+                        @*<div class="col-md-1">
+                            <div class="row_bar">
+                                &nbsp;
+                            </div>
+                        </div>*@
+                        <div class="col-md-12">
+                            <span>Comments</span>
+                        </div>
+                        @*<div class="col-md-8">
+                            <div class="row_bar">
+                                &nbsp;
+                            </div>
+                        </div>*@
+                        <div class="col-md-12">
+                            @Html.TextAreaFor(model => model.SIRIComments, 5, 100, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div><br />
+                    <div class="lable_title">
+                        <h2>MORTALITY SURVEILLANCE GROUP </h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <span>Presentation to MSG required? </span>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row_bar checkbox-row">
+                                @if (Model.MSGRequired == true)
+                                {
+                                    <span> Yes </span>
+                                }
+                                else
+                                {
+                                    <span> No </span>
+                                }
+                            </div>
+                        </div>
+                        @*<div class="col-md-1">
+                            <div class="row_bar">
+                                &nbsp;
+                            </div>
+                        </div>*@
+                        @if (Model.MSGRequired == true)
+                        {
+                            <div id="msglabel" class="col-md-4" style="display:block">
+                                <span>Discussed with MSG</span>
+                            </div>
+
+                                            <div id="msgdate" class="col-md-8" style="display:block">
+                                                <input class="form-control datepicker" disabled readonly="readonly" type="text" id="MSGDiscussionDate" name="MSGDiscussionDate" value="@Model.MSGDiscussionDate" placeholder="Select Date" value="@Model.MSGDiscussionDate">
+                                            </div>
+                        }
+                        else
+                        {
+                            <div id="msglabel" class="col-md-4" style="display:none">
+                                <span>Discussed with MSG</span>
+                            </div>
+
+                                            <div id="msgdate" class="col-md-8" style="display:none">
+                                                <input class="form-control datepicker" disabled readonly="readonly" type="text" id="MSGDiscussionDate" name="MSGDiscussionDate" value="@Model.MSGDiscussionDate" placeholder="Select Date" value="@Model.MSGDiscussionDate">
+                                            </div>
+                        }
+                        @*<div class="col-md-1">
+                            <div class="row_bar">
+                                &nbsp;
+                            </div>
+                        </div>*@
+                        <div class="col-md-4">
+                            <div class="row_bar">
+                                <span>Avoidability Score</span>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="col-md-8">
+                            <div class="row_bar">
+                                @if (Model.AvoidabilityScoreID == 0)
+                                {
+                                    <span>0</span>
+                                }
+                                @if (Model.AvoidabilityScoreID == 1)
+                                {
+                                    <span>1</span>
+                                }
+                                @if (Model.AvoidabilityScoreID == 2)
+                                {
+                                    <span>2</span>
+                                }
+                                @if (Model.AvoidabilityScoreID == 3)
+                                {
+                                    <span>3</span>
+                                }
+                            </div>
+                        </div>
+                        @*<div class="col-md-1">
+                            <div class="row_bar">
+                                &nbsp;
+                            </div>
+                        </div>*@
+                        <div class="col-md-12">
+                            <span>Comments</span>
+                        </div>
+                        @*<div class="col-md-4">
+                            <div class="row_bar">
+                                &nbsp;
+                            </div>
+                        </div>*@
+                        <div class="col-md-12">
+                            @Html.TextAreaFor(model => model.Comments, 5, 100, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                        <br />
+                        <div class="col-md-4" style="display:none;">
+                            <div class="row_bar">
+                                <span>Reviewer Speciality</span>
+                            </div>
+                        </div>
+                        <div class="col-md-8" style="display:none;">
+                            <div class="row_bar">
+                                @foreach (var item in ViewBag.SpecialityDDM)
+                                {
+                                    if (Model.SpecialityID == item.SpecialityID)
+                                    {
+                                        <span>@item.SpecialityName</span>
+                                    }
+                                }
+                            </div>
+                        </div>
+                        @if (Model.ReviewCompleted)
+                        {
+                            <div class="col-md-3" id="dvNameLabel">
+                                <div class="row_bar">
+                                    <span>Outcome Completed By :</span>
+                                </div>
+                            </div>
+                                            <div class="col-md-3" id="dvNameSpan">
+                                                <div class="row_bar">
+                                                    <span><b><i>@Model.CreatedBy</i></b></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3" id="dvDateLabel">
+                                                <div class="row_bar">
+                                                    <span>Date :</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3" id="dvDateSpan">
+                                                <div class="row_bar">
+                                                    <span><b><i>@Model.CreateDate</i></b></span>
+                                                </div>
+                                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+ </div>   
+<br />
+<br />
+<script type="text/javascript">
+$("#btnPrint").click(function () {
+    $("#btnPrint").hide();
+    var HTML_Width = $(".container").width();
+    var HTML_Height = $(".container").height();
+    var top_left_margin = 1;
+    var PDF_Width = HTML_Width + (top_left_margin * 2);
+    var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+    var canvas_image_width = HTML_Width;
+    var canvas_image_height = HTML_Height;
+
+    var totalPDFPages = Math.ceil(HTML_Height / PDF_Height);
+    var scale = 1.0;
+    var qualityjpg = 1.0;
+    var top_left_margin = 15;
+    var PDF_Width = HTML_Width + (top_left_margin * 2);
+    var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+    //}
+
+    html2canvas($(".container")[0], { allowTaint: true, scale: scale }).then(function (canvas) {
+        canvas.getContext('2d');
+        //console.log(canvas.height+"  "+canvas.width);
+
+
+        var imgData = canvas.toDataURL("image/png", qualityjpg);
+        console.log(imgData);
+        var pdf = new jsPDF('portrait', 'pt', [PDF_Width, PDF_Height]);
+        pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin * 4, canvas_image_width, canvas_image_height);
+        for (var i = 1; i < totalPDFPages; i++) {
+            pdf.addPage(PDF_Width, PDF_Height);
+            pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
+        }
+        var blob = pdf.output("blob");
+        var objectUrl = URL.createObjectURL(blob);
+        window.open(objectUrl);
+    });
+    $("#btnPrint").show();
+});
+</script>

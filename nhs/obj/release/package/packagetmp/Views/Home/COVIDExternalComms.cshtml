@@ -1,0 +1,651 @@
+﻿@model NHS.Common.DTO.COVIDExternalCommsComplexDTO
+
+@{
+    /**/
+
+    ViewBag.Title = "COVID 19 External Comms";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    bool isCHESSReadonly = false;
+    bool isCPNSReadonly = false;
+    if (ViewBag.ReadOnly == true || ViewBag.CHESSReadOnly == true)
+    {
+        isCHESSReadonly = true;
+    }
+    if (ViewBag.ReadOnly == true || ViewBag.CPNSReadOnly == true)
+    {
+        isCPNSReadonly = true;
+    }
+    if(Model.CovidChessComms.TestResult.ToUpper() == "DIAGNOSED" || Model.CovidChessComms.TestResult.ToUpper() == "DETECTED")
+    {
+        isCHESSReadonly = false;
+    }
+}
+
+<style>
+    .square {
+        height: 30px;
+        width: 100px;
+        background-color: forestgreen;
+    }
+</style>
+<br />
+<br />
+<div class="container">
+    <div class="row form-group">
+        <div class="col-xs-12 col-lg-12">
+            <div class="row" align="right">
+                <div class="col-md-12">
+                    <input type="image" src="~/images/Delete.png" width="30" height="30" alt="Submit" id="btnClose1" title="Close" />
+                </div>
+            </div>
+            <ul class="nav nav-pills nav-justified thumbnail setup-panel">
+                <li class="disabled">
+                    <a href="@Url.Action("COVIDComms", "home", new { id=Model.CovidChessComms.Test_ID, patientID = Model.CovidChessComms.PatientID })">
+                        <h4 class="list-group-item-heading">
+                            <b>Internal Communication</b>
+                        </h4>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="@Url.Action("COVIDExternalComms", "home", new { id=Model.CovidChessComms.Test_ID, patientID = Model.CovidChessComms.PatientID })">
+                        <h4 class="list-group-item-heading">
+                            <b>External Communication</b>
+                        </h4>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row setup-content" id="step-1">
+        <div class="col-xs-12 col-lg-12">
+            
+            @using (Html.BeginForm("COVIDCHESSComms", "Home", FormMethod.Post, new { @id = Model.CovidChessComms.Test_ID, @patientID = Model.PatientID }))
+            {
+                @Html.Hidden("hdnTestID", Model.CovidChessComms.Test_ID)
+                @Html.Hidden("hdnPatientID", Model.CovidChessComms.PatientID)
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="col-md-12">
+                            <div class="lable_title">
+                                <h2>CHESS NOTIFICATION</h2>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="lable_title">
+                                <h3 style="font-size:17px;"><b>Positive Result Notification</b></h3>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row_bar">
+                                <span>CHESS Notified? &nbsp; &nbsp; &nbsp; &nbsp;</span>
+                                    @if (Model.CovidChessComms.IsCHESSContacted)
+                                    {
+                                        <input checked disabled="@isCHESSReadonly" type="radio" id="CHESSContacted" name="CHESSContacted" value="Yes"><span>Yes</span>
+                                        <input type="radio" disabled="@isCHESSReadonly" id="CHESSContacted" name="CHESSContacted" value="No"><span>No</span>
+                                    }
+                                    else
+                                    {
+                                        <input type="radio" disabled="@isCHESSReadonly" id="CHESSContacted" name="CHESSContacted" value="Yes"><span>Yes</span>
+                                        <input checked disabled="@isCHESSReadonly" type="radio" id="CHESSContacted" name="CHESSContacted" value="No"><span>No</span>
+                                    }                              
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row_bar">
+                                <span>Comments</span>
+                                @if (isCHESSReadonly)
+                                {
+                                    @Html.TextAreaFor(model => model.CovidChessComms.CHESSComments, 1, 50, new { @class = "form-control", @readonly = true })
+                                }
+                                else
+                                {
+                                    @Html.TextAreaFor(model => model.CovidChessComms.CHESSComments, 1, 50, new { @class = "form-control" })
+                                }
+                            </div>
+                        </div>
+                        @if (!string.IsNullOrEmpty(Model.CovidChessComms.UpdatedDate))
+                        {
+                            @*<div class="row">*@
+                                <div class="col-md-12">
+                                    <div class="row_bar">
+                                        <span><b>Last Updated By:</b>&nbsp;</span>
+                                        <span><b><i>@Model.CovidChessComms.UpdatedBy</i></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                        <span><b>Last Updated Date:</b>&nbsp;</span>
+                                        <span><b><i>@Model.CovidChessComms.UpdatedDate</i></b></span>
+                                    </div>
+                                </div>
+                            @*</div>*@
+                        }
+                    </div>
+                    <div class="col-md-4">
+                        <div class="table_margin">
+                            <table width="100%" style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;">
+                                <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                    <td width="40%" style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Patient ID</b></td>
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.CovidChessComms.PatientID </td>
+                                </tr>
+                                <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Patient Name</b></td>
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.CovidChessComms.PatientName</td>
+
+                                </tr>
+                                <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Test Result</b></td>
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.CovidChessComms.TestResult</td>
+                                </tr>
+                                <!--<tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Age</b></td>
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.CovidChessComms.Age</td>
+                                </tr>
+                                <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Gender</b></td>
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.CovidChessComms.Gender</td>
+                                </tr>
+                                <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Spell Number</b></td>
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.CovidChessComms.SpellNumber</td>
+                                </tr>-->
+                            </table>
+                        </div>
+                    </div>                    
+                </div>    
+                <div class="pull-right">
+                    @if (isCHESSReadonly)
+                    {
+                        <button id="BtnNext" disabled type="submit" name="BtnNext" class="btn btn-primary btn-lg">Save</button>
+                    }
+                    else
+                    {
+                        <button id="BtnNext" type="submit" name="BtnNext" class="btn btn-primary btn-lg">Save</button>
+                    }
+                </div>
+            }
+            <br /><br /><hr>
+            @using (Html.BeginForm("COVIDLOCComms", "Home", FormMethod.Post, new { @id = Model.CovidChessLOCComms.Test_ID, @patientID = Model.CovidChessLOCComms.PatientID }))
+            {
+                @Html.Hidden("hdnTestID1", Model.CovidChessComms.Test_ID)
+                @Html.Hidden("hdnPatientID1", Model.CovidChessLOCComms.PatientID)
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="col-md-12">
+                            <div class="lable_title">
+                                <h3 style="font-size:17px;"><b>New change in Level Of Care Notification</b></h3>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row_bar">
+                                <span>Level of Care Updated?</span>
+                                    @if (Model.CovidChessLOCComms.IsLevelOfCareUpdated)
+                                    {
+                                        <input checked disabled="@isCHESSReadonly" type="radio" id="LevelOfCareUpdated" name="LevelOfCareUpdated" value="Yes"><span>Yes</span>
+                                        <input type="radio" disabled="@isCHESSReadonly" id="LevelOfCareUpdated" name="LevelOfCareUpdated" value="No"><span>No</span>
+                                    }
+                                    else
+                                    {
+                                        <input type="radio" disabled="@isCHESSReadonly" id="LevelOfCareUpdated" name="LevelOfCareUpdated" value="Yes"><span>Yes</span>
+                                        <input checked disabled="@isCHESSReadonly" type="radio" id="LevelOfCareUpdated" name="LevelOfCareUpdated" value="No"><span>No</span>
+                                    } 
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row_bar">
+                                <span>Comments</span>
+                                @if (isCHESSReadonly)
+                                {
+                                    @Html.TextAreaFor(model => model.CovidChessLOCComms.LOCComments, 2, 50, new { @class = "form-control", @readonly = true })
+                                }
+                                else
+                                {
+                                    @Html.TextAreaFor(model => model.CovidChessLOCComms.LOCComments, 2, 50, new { @class = "form-control" })
+                                }
+                            </div>
+                        </div>
+                        @if (!string.IsNullOrEmpty(Model.CovidChessLOCComms.UpdatedDate))
+                        {
+                            @*<div class="row">*@
+                                <div class="col-md-12">
+                                    <div class="row_bar">
+                                        <span><b>Last Updated By:</b>&nbsp;</span>
+                                        <span><b><i>@Model.CovidChessLOCComms.UpdatedBy</i></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                        <span><b>Last Updated Date:</b>&nbsp;</span>
+                                        <span><b><i>@Model.CovidChessLOCComms.UpdatedDate</i></b></span>
+                                    </div>
+                                </div>
+                            @*</div>*@
+                        }
+                    </div>                    
+                </div>
+                <div class="pull-right">
+                    <span id="myBtnProcedures" name="myBtnProcedures" class="btn btn-primary btn-lg">View History</span>
+                    @if (isCHESSReadonly)
+                    {
+                        <button id="BtnNext1" disabled type="submit" name="BtnNext1" class="btn btn-primary btn-lg">Save</button>
+                    }
+                    else
+                    {
+                        <button id="BtnNext" type="submit" name="BtnNext" class="btn btn-primary btn-lg">Save</button>
+                    }                        
+                </div>
+            }
+            <br /><br /><hr>
+            @using (Html.BeginForm("COVIDDischargeDeathComms", "Home", FormMethod.Post, new { @id = Model.CovidDischargeDeathComms.Test_ID, @patientID = Model.CovidDischargeDeathComms.PatientID }))
+            {
+                @Html.Hidden("hdnTestID2", Model.CovidChessComms.Test_ID)
+                @Html.Hidden("hdnPatientID2", Model.CovidDischargeDeathComms.PatientID)
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="col-md-12">
+                            <div class="lable_title">
+                                <h3 style="font-size:17px;"><b>Discharge/Death outcome Notification</b></h3>
+                            </div>
+                        </div>
+                    <div class="col-md-12">
+                        <div class="row_bar">
+                            <span>Discharge/Death Notified?&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            @if (Model.CovidDischargeDeathComms.IsDichargeDeathContacted)
+                            {
+                                <input checked type="radio" disabled="@isCHESSReadonly" id="DichargeDeathContacted" name="DichargeDeathContacted" value="Yes"><span>Yes</span>
+                                <input type="radio" disabled="@isCHESSReadonly" id="DichargeDeathContacted" name="DichargeDeathContacted" value="No"><span>No</span>
+                            }
+                            else
+                            {
+                                <input type="radio" disabled="@isCHESSReadonly" id="DichargeDeathContacted" name="DichargeDeathContacted" value="Yes"><span>Yes</span>
+                                <input checked type="radio" disabled="@isCHESSReadonly" id="DichargeDeathContacted" name="DichargeDeathContacted" value="No"><span>No</span>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row_bar">
+                            <span>Comments</span>
+                            @if (isCHESSReadonly)
+                            {
+                                @Html.TextAreaFor(model => model.CovidDischargeDeathComms.DischargeDeathComments, 1, 50, new { @class = "form-control", @readonly = true })
+                            }
+                            else
+                            {
+                                @Html.TextAreaFor(model => model.CovidDischargeDeathComms.DischargeDeathComments, 1, 50, new { @class = "form-control" })
+                            }
+                            @*@Html.ValidationMessageFor(model => model.objclsMedicalExaminerReview.Comments, "", new { @class = "text-danger" })*@
+                        </div>
+                    </div>
+                    @if (!string.IsNullOrEmpty(Model.CovidDischargeDeathComms.UpdatedDate))
+                    {
+                        @*<div class="row">*@
+                            <div class="col-md-12">
+                                <div class="row_bar">
+                                    <span><b>Last Updated By:</b>&nbsp;</span>
+                                    <span><b><i>@Model.CovidDischargeDeathComms.UpdatedBy</i></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                    <span><b>Last Updated Date:</b>&nbsp;</span>
+                                    <span><b><i>@Model.CovidDischargeDeathComms.UpdatedDate</i></b></span>
+                                </div>
+                            </div>
+                        @*</div>*@
+                    }
+                    </div>
+                </div>
+                <div class="pull-right">
+                    @if (isCHESSReadonly)
+                    {
+                        <button id="BtnNext2" disabled type="submit" name="BtnNext" class="btn btn-primary btn-lg">Save</button>
+                    }
+                    else
+                    {
+                        <button id="BtnNext2" type="submit" name="BtnNext" class="btn btn-primary btn-lg">Save</button>
+                    }
+                </div>
+            }
+            <br/><br /><hr>
+            @using (Html.BeginForm("COVIDCPNSComms", "Home", FormMethod.Post, new { @id = Model.CovidCpnsComms.Test_ID, @patientID = Model.CovidCpnsComms.PatientID }))
+            {
+                @Html.Hidden("hdnTestID3", Model.CovidCpnsComms.Test_ID)
+                @Html.Hidden("hdnPatientID3", Model.CovidCpnsComms.PatientID)
+                <div class="row">
+                    <div class="col-md-8">
+                    <div class="col-md-12">
+                        <div class="lable_title">
+                            <h2>CPNS NOTIFICATION</h2>
+                        </div>
+                    </div>
+                        <div class="col-md-12">
+                            <div class="lable_title">
+                                <br /><h3 style="font-size:17px;"><b>Death Notification</b></h3>
+                            </div>
+                        </div>
+                    <div class="col-md-12">
+                        <div class="row_bar">
+                             <span>Death Notified?&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            @if (Model.CovidCpnsComms.IsCPNSContacted)
+                            {
+                                <input checked type="radio" disabled="@isCPNSReadonly" id="CPNSContacted" name="CPNSContacted" value="Yes"><span>Yes</span>
+                                <input type="radio" disabled="@isCPNSReadonly" id="CPNSContacted" name="CPNSContacted" value="No"><span>No</span>
+                            }
+                            else
+                            {
+                                <input type="radio" disabled="@isCPNSReadonly" id="CPNSContacted" name="CPNSContacted" value="Yes"><span>Yes</span>
+                                <input checked disabled="@isCPNSReadonly" type="radio" id="CPNSContacted" name="CPNSContacted" value="No"><span>No</span>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row_bar">
+                            <span>Comments</span>
+                            @if (isCPNSReadonly)
+                            {
+                                @Html.TextAreaFor(model => model.CovidCpnsComms.CPNSComments, 2, 50, new { @class = "form-control", @readonly = true })
+                            }
+                            else
+                            {
+                                @Html.TextAreaFor(model => model.CovidCpnsComms.CPNSComments, 2, 50, new { @class = "form-control" })
+                            }
+                        </div>
+                    </div>
+                    @if (!string.IsNullOrEmpty(Model.CovidCpnsComms.UpdatedDate))
+                    {
+                        @*<div class="row">*@
+                            <div class="col-md-12">
+                                <div class="row_bar">
+                                    <span><b>Last Updated By:</b>&nbsp;</span>
+                                    <span><b><i>@Model.CovidCpnsComms.UpdatedBy</i></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                    <span><b>Last Updated Date:</b>&nbsp;</span>
+                                    <span><b><i>@Model.CovidCpnsComms.UpdatedDate</i></b></span>
+                                </div>
+                            </div>
+                        @*</div>*@
+                    }
+                    </div>
+                </div>
+                <div class="pull-right">
+                    @if (isCPNSReadonly)
+                    {
+                        <button id="BtnNext3" disabled type="submit" name="BtnNext3" class="btn btn-primary btn-lg">Save</button>
+                    }
+                    else
+                    {
+                        <button id="BtnNext3" type="submit" name="BtnNext3" class="btn btn-primary btn-lg">Save</button>
+                    }
+                    <span id="btnSave" name="btnSave" class="btn btn-primary btn-lg">Exit</span>
+                </div>
+            }
+            <br /><br /><hr>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModalProcedures">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h5 class="modal-title">Level Of Care Update History</h5>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <table class="table table-bordered" id="assets-data-table">
+                    <tr bgcolor="#a9d7cc" style="color:black;">
+                        <th style="text-align:center">Status Updated  </th>
+                        <th style="text-align:center">Comments  </th>
+                        <th style="text-align:center">Updated Date  </th>
+                        <th style="text-align:center">Updated By  </th>
+                        
+                    </tr>
+                    <tbody bgcolor="#ffffff" style="color:black;">
+                        @if (Model.CovidLOCCommsAuditTrail.Count > 0)
+                        {
+                            foreach (var item in Model.CovidLOCCommsAuditTrail)
+                            {
+                            <tr style="color:black;" bgcolor="ffffff">
+                                <td>
+                                    <div style="text-align:center">@item.LevelOfCareUpdated</div>
+                                </td>
+                                <td>
+                                    <div style="text-align:center">@item.LOCComments</div>
+                                </td> 
+                                <td>
+                                    <div style="text-align:center">@item.UpdatedDate</div>
+                                </td>
+                                <td>
+                                    <div style="text-align:center">@item.UpdatedBy</div>
+                                </td>                                                              
+                            </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr style="color:black;" bgcolor="ffffff">
+                                <td colspan="14" class="text-center" align="center">No History Available.</td>
+                            </tr>
+                        }
+
+                </tbody>
+                </table>
+
+            </div>
+
+            <!-- Modal footer -->
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>*@
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modelClose1">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Message</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+
+                <div class="form-section" style="text-align:left">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row_bar">
+                                <div>Do you want to exit without saving your changes?</div>
+                            </div>
+                        </div>
+
+
+                        @*<div class="col-md-12">
+                                <div class="row_bar">
+                                    <div><input type="checkbox" id="QAPReview" name="QAPReview" checked disabled="disabled"><span>Review Completed?</span>?</div>
+                                </div>
+                            </div>*@
+                        <br />
+                        <br />
+                        <div class="col-md-4">
+                        @if (Convert.ToBoolean(Session["IsPatientList"]) == false)
+                        {
+                            <button type="button" class="btn btn-primary btn-block" id="btnModelClose1" data-dismiss="modal" formmethod="post" onclick="location.href='@Url.Action("COVIDReviewCycle", "Home", new { id = Model.CovidChessComms.Test_ID, patientID = Model.CovidChessComms.PatientID })'">Yes</button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-primary btn-block" id="btnModelClose1" data-dismiss="modal" formmethod="post" onclick="location.href='@Url.Action("COVIDPatientListing", "Home", new { pPageNo = Convert.ToInt32(Session["PatientListPageNo"]), searchfield = Convert.ToString(Session["PatientListSearchText"]), pageSize = Convert.ToInt32(Session["PatientListPageSize"]), SortColumn = Convert.ToString(Session["PatientListColumn"]), frompager = false, IsExternalComms = Convert.ToBoolean(Session["IsExternalComms"]),
+                                                                                                                                                                      IsBreathing = Convert.ToBoolean(Session["IsBreathing"]), IsLevelOfCare = Convert.ToBoolean(Session["IsLevelOfCare"]),
+                                                                                                                                                                      PatientLocation = Convert.ToString(Session["PatientLocation"]),
+                                                                                                                                                                      IsCurrentIPCount = Convert.ToBoolean(Session["IsCurrentIPCount"]),
+                                                                                                                                                                      IsNotUpdatedLast20HoursCount = Convert.ToBoolean(Session["IsNotUpdatedLast20HoursCount"]),
+                                                                                                                                                                      IsNotUpdatedLast12HoursCount = Convert.ToBoolean(Session["IsNotUpdatedLast12HoursCount"]),
+                                                                                                                                                                      IsUpdatedLast12HoursCount = Convert.ToBoolean(Session["IsUpdatedLast12HoursCount"]),
+                                                                                                                                                                      NoOxygen = Convert.ToBoolean(Session["NoOxygen"]),
+                                                                                                                                                                      Oxygen = Convert.ToBoolean(Session["Oxygen"]),
+                                                                                                                                                                      NonInvasiveVentilation = Convert.ToBoolean(Session["NonInvasiveVentilation"]),
+                                                                                                                                                                      MechanicalVentilation = Convert.ToBoolean(Session["MechanicalVentilation"]),
+                                                                                                                                                                      NotUpdatedAtAll = Convert.ToBoolean(Session["NotUpdatedAtAll"]),
+                                                                                                                                                                      IsNewPositive = Convert.ToBoolean(Session["IsNewPositive"]),
+                                                                                                                                                                      IsPostiveBacklog = Convert.ToBoolean(Session["IsPostiveBacklog"]),
+                                                                                                                                                                      IsPositiveBacklogPending = Convert.ToBoolean(Session["IsPositiveBacklogPending"]),
+                                                                                                                                                                      IsPositiveLive = Convert.ToBoolean(Session["IsPositiveLive"]),
+                                                                                                                                                                      IsPositiveLivePending = Convert.ToBoolean(Session["IsPositiveLivePending"]),
+                                                                                                                                                                      IsDischargeDeath = Convert.ToBoolean(Session["IsDischargeDeath"]),
+                                                                                                                                                                      IsDischargeDeathBacklog = Convert.ToBoolean(Session["IsDischargeDeathBacklog"]),
+                                                                                                                                                                      IsDischargeDeathBacklogPending = Convert.ToBoolean(Session["IsDischargeDeathBacklogPending"]),
+                                                                                                                                                                      IsDischargeDeathLive = Convert.ToBoolean(Session["IsDischargeDeathLive"]),
+                                                                                                                                                                      IsDischargeDeathLivePending = Convert.ToBoolean(Session["IsDischargeDeathLivePending"]),
+                                                                                                                                                                      IsDeathYTD = Convert.ToBoolean(Session["IsDeathYTD"]),
+                                                                                                                                                                      IsDeathYTDPending = Convert.ToBoolean(Session["IsDeathYTDPending"]),
+                                                                                                                                                                      IsDeathDetected = Convert.ToBoolean(Session["IsDeathDetected"]),
+                                                                                                                                                                      IsDeathDetectedPending = Convert.ToBoolean(Session["IsDeathDetectedPending"]),
+                                                                                                                                                                      IsDeathDiagnosed = Convert.ToBoolean(Session["IsDeathDiagnosed"]),
+                                                                                                                                                                      IsDeathDiagnosedPending = Convert.ToBoolean(Session["IsDeathDiagnosedPending"]),
+                                                                                                                                                                      IsDeathReAdmission = Convert.ToBoolean(Session["IsDeathReAdmission"]),
+                                                                                                                                                                      IsDeathReAdmissionPending = Convert.ToBoolean(Session["IsDeathReAdmissionPending"])
+                                                                                                                                                                  })'">Yes</button>
+                        }
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary btn-block" name="btnCloseYes" id="btnCloseYes">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modelCloseNext">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Message</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="form-section" style="text-align:left">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row_bar">
+                                <div>Do you want to exit without saving your changes?</div>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+                        <div class="col-md-4">
+                            @if (Convert.ToBoolean(Session["IsPatientList"]) == false)
+                            {
+                                <button type="button" class="btn btn-primary btn-block" id="btnModelClose2" data-dismiss="modal" formmethod="post" onclick="location.href='@Url.Action("COVIDReviewCycle", "Home", new { id=Model.CovidChessComms.Test_ID, patientID = Model.CovidChessComms.PatientID })'">Yes</button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-primary btn-block" id="btnModelClose2" data-dismiss="modal" formmethod="post" onclick="location.href='@Url.Action("COVIDPatientListing", "Home", new { pPageNo = Convert.ToInt32(Session["PatientListPageNo"]), searchfield = Convert.ToString(Session["PatientListSearchText"]), pageSize = Convert.ToInt32(Session["PatientListPageSize"]), SortColumn = Convert.ToString(Session["PatientListColumn"]), frompager = false, IsExternalComms = Convert.ToBoolean(Session["IsExternalComms"]),
+                                                                                                                                                                          IsBreathing = Convert.ToBoolean(Session["IsBreathing"]), IsLevelOfCare = Convert.ToBoolean(Session["IsLevelOfCare"]),
+                                                                                                                                                                          PatientLocation = Convert.ToString(Session["PatientLocation"]),
+                                                                                                                                                                          IsCurrentIPCount = Convert.ToBoolean(Session["IsCurrentIPCount"]),
+                                                                                                                                                                          IsNotUpdatedLast20HoursCount = Convert.ToBoolean(Session["IsNotUpdatedLast20HoursCount"]),
+                                                                                                                                                                          IsNotUpdatedLast12HoursCount = Convert.ToBoolean(Session["IsNotUpdatedLast12HoursCount"]),
+                                                                                                                                                                          IsUpdatedLast12HoursCount = Convert.ToBoolean(Session["IsUpdatedLast12HoursCount"]),
+                                                                                                                                                                          NoOxygen = Convert.ToBoolean(Session["NoOxygen"]),
+                                                                                                                                                                          Oxygen = Convert.ToBoolean(Session["Oxygen"]),
+                                                                                                                                                                          NonInvasiveVentilation = Convert.ToBoolean(Session["NonInvasiveVentilation"]),
+                                                                                                                                                                          MechanicalVentilation = Convert.ToBoolean(Session["MechanicalVentilation"]),
+                                                                                                                                                                          NotUpdatedAtAll = Convert.ToBoolean(Session["NotUpdatedAtAll"]),
+                                                                                                                                                                          IsNewPositive = Convert.ToBoolean(Session["IsNewPositive"]),
+                                                                                                                                                                          IsPostiveBacklog = Convert.ToBoolean(Session["IsPostiveBacklog"]),
+                                                                                                                                                                          IsPositiveBacklogPending = Convert.ToBoolean(Session["IsPositiveBacklogPending"]),
+                                                                                                                                                                          IsPositiveLive = Convert.ToBoolean(Session["IsPositiveLive"]),
+                                                                                                                                                                          IsPositiveLivePending = Convert.ToBoolean(Session["IsPositiveLivePending"]),
+                                                                                                                                                                          IsDischargeDeath = Convert.ToBoolean(Session["IsDischargeDeath"]),
+                                                                                                                                                                          IsDischargeDeathBacklog = Convert.ToBoolean(Session["IsDischargeDeathBacklog"]),
+                                                                                                                                                                          IsDischargeDeathBacklogPending = Convert.ToBoolean(Session["IsDischargeDeathBacklogPending"]),
+                                                                                                                                                                          IsDischargeDeathLive = Convert.ToBoolean(Session["IsDischargeDeathLive"]),
+                                                                                                                                                                          IsDischargeDeathLivePending = Convert.ToBoolean(Session["IsDischargeDeathLivePending"]),
+                                                                                                                                                                          IsDeathYTD = Convert.ToBoolean(Session["IsDeathYTD"]),
+                                                                                                                                                                      IsDeathYTDPending = Convert.ToBoolean(Session["IsDeathYTDPending"]),
+                                                                                                                                                                      IsDeathDetected = Convert.ToBoolean(Session["IsDeathDetected"]),
+                                                                                                                                                                      IsDeathDetectedPending = Convert.ToBoolean(Session["IsDeathDetectedPending"]),
+                                                                                                                                                                      IsDeathDiagnosed = Convert.ToBoolean(Session["IsDeathDiagnosed"]),
+                                                                                                                                                                      IsDeathDiagnosedPending = Convert.ToBoolean(Session["IsDeathDiagnosedPending"]),
+                                                                                                                                                                      IsDeathReAdmission = Convert.ToBoolean(Session["IsDeathReAdmission"]),
+                                                                                                                                                                      IsDeathReAdmissionPending = Convert.ToBoolean(Session["IsDeathReAdmissionPending"])})'">Yes</button>
+                            }
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary btn-block" name="btnCloseYes2" id="btnCloseYes2">No</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="hdnTestResult" name="hdnTestResult" value="@Model.CovidChessComms.TestResult" />
+<input type="hidden" id="hdnID" name="hdnID" value="@Model.CovidChessComms.PatientID" />
+<script>
+    $(document).ready(function () {
+        //$('#dvPatientDetailsCimment').hide();
+        $("#myBtnProcedures").click(function () {
+            $("#myModalProcedures").modal();
+        });
+        $("#myBtnSecondaryDiagnoses").click(function () {
+            $("#myModalSecondaryDiagnoses").modal();
+        });
+        $("#btnClose1").click(function () {
+            $("#modelClose1").modal();
+        });
+        //$("#BtnNext").click(function (event) {
+        //    if (!confirm('Are you sure that you want to submit the form'))
+        //        event.preventDefault();
+        //});
+    });
+</script>
+<script type="text/javascript">
+$(function () {
+    $("#BtnNext").click(function () {
+        
+        if($("#hdnTestResult").val().toUpperCase() == "DETECTED" || $("#hdnTestResult").val().toUpperCase() == "DIAGNOSED")
+        {
+            if ($('input[name="CHESSContacted"]:checked').val() == 'No')
+            {
+                alert("For positive cases CHESS Notification is mandatory.");
+                return false;
+            }
+        }
+    });
+});
+</script>
+<script type="text/javascript">
+$(function () {
+    $("#btnModelClose1").click(function () {
+        if(@Convert.ToBoolean(Session["IsPatientList"]) == false)
+        {
+            window.location.href = "@Url.Action("COVIDReviewCycle", "Home", new { id = Model.CovidChessComms.Test_ID, patientID = Model.CovidChessComms.PatientID })";
+        }
+        else
+        {
+            window.location.href = "@Url.Action("COVIDPatientListing", "Home")";
+        }
+    });
+});
+</script>
+<script>
+        $(document).ready(function () {
+            $("#btnCloseYes").click(function () {
+                $("#modelClose1").modal('hide');
+            });
+            $("#btnSave").click(function () {
+                $("#modelCloseNext").modal();
+            });
+        });
+</script>
+<script>
+$(document).ready(function () {
+    $("#btnCloseYes").click(function () {
+        $("#modelClose1").modal('hide');
+    });
+    $("#btnCloseYes2").click(function () {
+        $("#modelCloseNext").modal('hide');
+    });
+});
+</script>
+
+

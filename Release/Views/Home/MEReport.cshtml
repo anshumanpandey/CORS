@@ -1,0 +1,255 @@
+﻿@model NHS.Common.clsMedicalExaminerDecision
+@{
+    ViewBag.Title = "MEO Report";
+    Layout = "~/Views/Shared/_PopopLayout.cshtml";
+}
+<br />
+<br />
+<div class="container">
+    <div class="col-xs-12 col-lg-12">
+        <div class="col-md-12 well">
+            <div class="form-section">
+                <div class="lable_title">
+                    <h2>MEO Final Outcome</h2>
+                </div>
+                <div class="row">
+
+
+                    <br /><br />
+
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row_bar">
+                                    Cause of Death
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="row_bar">
+                                    1a
+                                     @Html.EditorFor(model => model.CauseOfDeath1Final, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="row_bar">
+                                    1b
+                                    @Html.EditorFor(model => model.CauseOfDeath2Final, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row_bar">
+                                    1c
+                                    @Html.EditorFor(model => model.CauseOfDeath3Final, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row_bar">
+                                    2
+                                    @Html.EditorFor(model => model.CauseOfDeath4Final, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-12" style="margin-top: 44px !important;">
+                            <div class="row_bar"></div>
+                        </div>
+                        <div class="table_margin">
+                            <table width="100%" style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;">
+                                <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                    <td width="40%" style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Patient ID</b></td>
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.Patient_ID </td>
+                                </tr>
+                                <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Patient Name</b></td>
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.PatientName</td>
+
+                                </tr>
+                                <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>DOB</b></td>
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.DOB</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="deathdate" class="col-md-4" style="display:block;">
+                        <div class="row_bar">
+                            @if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                            {
+                                <input class="form-control input_datepicker" disabled readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="@Model.DeathCertificateDate" placeholder="Select Date">
+                            }
+                            else
+                            {
+                                <input class="form-control input_datepicker" disabled readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="@Model.DeathCertificateDate" placeholder="Select Date" disabled="disabled">
+                            }
+                        </div>
+                    </div>
+                    <div id="deathtime" class="col-md-12" style="display:block;">
+                        <div class="row_bar">
+                            <span>@Model.DeathCertificateDate + " " + @Model.DeathCertificateTime + " " + @Model.TimeType</span>
+                        </div>
+                    </div>                    
+                    <br /><br />
+                    <div class="col-md-12">
+                        <div class="row_bar">
+                            <label class="label_part" for="defaultCheck1">(If Applicable) Coroner's decision </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span>Inquest</span>
+                            </div>
+                            <div class="col-md-6">
+                                @if (Model.CoronerDecisionInquest == true)
+                                {
+                                    <span>Yes</span>
+                                }
+                                else
+                                {
+                                    <span>No</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span>Inquest</span>
+                            </div>
+                            <div class="col-md-6">
+                                @if (Model.CoronerDecisionInquest == true)
+                                {
+                                    <span>Yes</span>
+                                }
+                                else
+                                {
+                                    <span>No</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span>Post-Mortem</span>
+                            </div>
+                            <div class="col-md-6">
+                                @if (Model.CoronerDecisionPostMortem == true)
+                                {
+                                    <span>Yes</span>
+                                }
+                                else
+                                {
+                                    <span>No</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span>100 A</span>
+                            </div>
+                            <div class="col-md-6">
+                                @if (Model.CoronerDecision100A == true)
+                                {
+                                    <span>Yes</span>
+                                }
+                                else
+                                {
+                                    <span>No</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span>GP Issue</span>
+                            </div>
+                            <div class="col-md-6">
+                                @if (Model.CoronerDecisionGPissue == true)
+                                {
+                                    <span>Yes</span>
+                                }
+                                else
+                                {
+                                    <span>No</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span>No Further Action</span>
+                            </div>
+                            <div class="col-md-6">
+                                @if (Model.NoFurtherAction == true)
+                                {
+                                    <span>Yes</span>
+                                }
+                                else
+                                {
+                                    <span>No</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span>Forensic PM</span>
+                            </div>
+                            <div class="col-md-6">
+                                @if (Model.CoronerDecisionForensicPM == true)
+                                {
+                                    <span>Yes</span>
+                                }
+                                else
+                                {
+                                    <span>No</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                                <div class="col-md-6" id="dvNameLabel" style="display:none">
+                                    <div class="row_bar">
+                                        <span><b><i>Name of MEO (print)</i></b></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" id="dvNameSpan" style="display:none">
+                                    <div class="row_bar">
+                                            <span><b><i>@Model.CreatedBy</i></b></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" id="dvDateLabel" style="display:none">
+                                    <div class="row_bar">
+                                        <span><b><i>Date</i></b></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" id="dvDateSpan" style="display:none">
+                                    <div class="row_bar">
+                                            <span><b><i>@Model.MEOReviewCreatedDate</i></b></span>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

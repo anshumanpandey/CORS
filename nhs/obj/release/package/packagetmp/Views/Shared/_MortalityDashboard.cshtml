@@ -1,0 +1,190 @@
+﻿@model List<NHS.Common.clsPatientDetails>
+
+<div style="width:100%;">
+    <table class="stripe row-border order-column ds_table" style="overflow:auto;" id="tblPatientDetails">
+        <thead>
+            <tr bgcolor="#a9d7cc" style="color:black;  font-size:11px;">
+                <th align="left" width="8%" style="cursor: pointer;" onclick="GetMortalityList(1, '', 0, 'PatientID')">Patient ID</th>
+                <th align="left" width="15%" style="cursor: pointer;" onclick="GetMortalityList(1, '', 0, 'PatientName')">Name</th>
+                <th align="left" width="8%" style="cursor: pointer;" onclick="GetMortalityList(1, '', 0, 'DateofDeath')">Date of Death</th>
+                <th align="left" width="10%" style="cursor: pointer;" onclick="GetMortalityList(1, '', 0, 'DischargeConsultantName')">Discharge Consultant</th>
+                <th align="center" width="10%" style="cursor: pointer;" onclick="GetMortalityList(1, '', 0, 'PatientTypeLongText')">Patient Type</th>
+                <th align="center" width="5%" style="">   QAP<br /> Review<br />Status</th>
+                <th align="center" width="5%" style="">   ME<br /> Triage <br />Review</th>
+                <th align="center" width="5%" style="">   MEO<br /> Review<br /> Status</th>
+                <th align="center" width="5%" style="">   SJR<br /> Review <br />Status</th>
+                <th align="center" width="5%" style="">   SJR <br /> Review Outcome</th>
+                <th align="center" width="5%" style="">   SJR 2 <br />Review Status</th>
+                <th align="center" width="5%" style="">   Coding Review Status</th>
+                @*<th align="center" width="3%" style="">Action</th>*@
+            </tr>
+        </thead>
+        <tbody style="font-size:11px;padding:0px;">
+            @if (Model.Count > 0)
+            {
+                foreach (var item in Model)
+                {
+                    <tr class="Entries">
+                        <td align="left" class="PID"><a href="@Url.Action("MortalityReview", new { id = item.ID })" data-toggle="tooltip" data-html="true" title="DOB:                         @item.DOB &#010;Date of Admission:   @item.DateofAdmission &#010;Ward of Death:         @item.WardofDeath &#010;Discharge Speciality: @item.DischargeSpeciality" style="display:block;"><u>@item.PatientId</u></td>
+                        <td align="left">@item.PatientName.Trim() (@item.AgeAtDeath Yrs)</td>
+                        @*changes*@
+                        <td align="left" id="DateOfDeath">&nbsp;&nbsp;@item.DateofDeath</td>
+                        <td align="center">@item.DischargeConsutantName.Trim()</td>
+                        <td align="left">&nbsp;&nbsp;@item.PatientTypeLongText</td>
+                        <td align="center">
+                            @if (item.QAPReview == 0)
+                            {
+                                <a href='#'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open Medical Examiner Triage form"></a>
+                            }
+                            else if (item.QAPReview == 1)
+                            {
+                                <a href='@Url.Action("QAPReviewFirstStep", "home", new { id = item.ID })'><img src="~/images/amber.png" width="18" height="18" title="Click to open QAP review form"></a>
+                            }
+
+                            else if (item.QAPReview == 2)
+                            {
+                                <a href='@Url.Action("QAPReviewFirstStep", "home", new { id = item.ID })'><img src="~/images/RedC.png" width="18" height="18" title="Click to open QAP review form"></a>
+                            }
+                            else if (item.QAPReview == 3)
+                            {
+                                <a href='@Url.Action("QAPReviewFirstStep", "home", new { id = item.ID })'><img src="~/images/GreenCircle.png" width="18" height="18" title="Click to open QAP review form"></a>
+                            }
+                        </td>
+                        <td align="center">
+                            @if (item.MedTriage == 0)
+                            {
+                                <a href='#'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open Medical Examiner Triage form"></a>
+                            }
+                            else if (item.MedTriage == 1)
+                            {
+                                <a href='@Url.Action("PatientDetails", "home", new { id = item.ID })'><img src="~/images/amber.png" width="18" height="18" title="Click to open Medical Examiner Triage form"></a>
+                            }
+
+                            else if (item.MedTriage == 2)
+                            {
+                                <a href='@Url.Action("PatientDetails", "home", new { id = item.ID })'><img src="~/images/RedC.png" width="18" height="18" title="Click to open Medical Examiner Triage form"></a>
+                            }
+                            else if (item.MedTriage == 3)
+                            {
+                                <a href='@Url.Action("PatientDetails", "home", new { id = item.ID })'><img src="~/images/GreenCircle.png" width="18" height="18" title="Click to open Medical Examiner Triage form"></a>
+                            }
+                        </td>
+                        <td align="center">
+                            @if (item.MEOReview == 3)
+                            {
+                                <a href='@Url.Action("FinalOutcome", "home", new { id = item.ID })'><img src="~/images/GreenCircle.png" width="18" height="18" title="Click to open MEO Review Outcome form"></a>
+                            }
+                            else if (item.MEOReview == 2 || item.MEOReview == 0)
+                            {
+                                <a href='@Url.Action("FinalOutcome", "home", new { id = item.ID })'><img src="~/images/RedC.png" width="18" height="18" title="Click to open MEO Review Outcome form"></a>
+                            }
+                            else
+                            {
+                                <a href='@Url.Action("FinalOutcome", "home", new { id = item.ID })'><img src="~/images/RedC.png" width="18" height="18" title="Click to open MEO Review Outcome form"></a>
+                            }
+                        </td>
+                        <td align="center">
+                            @if (item.SJR1 == 0)
+                            {
+                                <a href='@Url.Action("Stage2SJRformFirstStep", "home", new { id = item.ID })'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open SJR Stage 1 form"></a>
+                            }
+                            else if (item.SJR1 == 1)
+                            {
+                                <a href='@Url.Action("Stage2SJRformFirstStep", "home", new { id = item.ID })'><img src="~/images/amber.png" width="18" height="18" title="Click to open SJR Stage 1 form"></a>
+                            }
+
+                            else if (item.SJR1 == 2)
+                            {
+                                <a href='@Url.Action("Stage2SJRformFirstStep", "home", new { id = item.ID })'><img src="~/images/RedC.png" width="18" height="18" title="Click to open SJR Stage 1 form"></a>
+                            }
+
+                            else if (item.SJR1 == 3)
+                            {
+                                <a href='@Url.Action("Stage2SJRformFirstStep", "home", new { id = item.ID })'><img src="~/images/GreenCircle.png" width="18" height="18" title="Click to open SJR Stage 1 form"></a>
+                            }
+                            else
+                            {
+                                <a href='@Url.Action("Stage2SJRformFirstStep", "home", new { id = item.ID })'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open SJR Stage 1 form"></a>
+                            }
+                        </td>
+                        <td align="center">
+                            @if (item.SJROutcome == 0)
+                            {
+                                <a href='@Url.Action("SJROutcome", "home", new { id = item.ID })'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open SJR Outcome form"></a>
+                            }
+                            else if (item.SJROutcome == 1)
+                            {
+                                <a href='@Url.Action("SJROutcome", "home", new { id = item.ID })'><img src="~/images/amber.png" width="18" height="18" title="Click to open SJR Outcome form"></a>
+                            }
+
+                            else if (item.SJROutcome == 2)
+                            {
+                                <a href='@Url.Action("SJROutcome", "home", new { id = item.ID })'><img src="~/images/RedC.png" width="18" height="18" title="Click to open SJR Outcome form"></a>
+                            }
+
+                            else if (item.SJROutcome == 3)
+                            {
+                                <a href='@Url.Action("SJROutcome", "home", new { id = item.ID })'><img src="~/images/GreenCircle.png" width="18" height="18" title="Click to open SJR Outcome form"></a>
+                            }
+                            else
+                            {
+                                <a href='@Url.Action("SJROutcome", "home", new { id = item.ID })'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open SJR Outcome form"></a>
+                            }
+                        </td>
+                        <td align="center">
+                            @if (item.SJR2 == 0)
+                            {
+                                <a href='@Url.Action("Stage3SJRFormFirstStep", "home", new { id = item.ID })'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open SJR Stage 2 form"></a>
+                            }
+                            else if (item.SJR2 == 1)
+                            {
+                                <a href='@Url.Action("Stage3SJRFormFirstStep", "home", new { id = item.ID })'><img src="~/images/amber.png" width="18" height="18" title="Click to open SJR Stage 2 form"></a>
+                            }
+
+                            else if (item.SJR2 == 2)
+                            {
+                                <a href='@Url.Action("Stage3SJRFormFirstStep", "home", new { id = item.ID })'><img src="~/images/RedC.png" width="18" height="18" title="Click to open SJR Stage 2 form"></a>
+                            }
+
+                            else if (item.SJR2 == 3)
+                            {
+                                <a href='@Url.Action("Stage3SJRFormFirstStep", "home", new { id = item.ID })'><img src="~/images/GreenCircle.png" width="18" height="18" title="Click to open SJR Stage 2 form"></a>
+                            }
+                            else
+                            {
+                                <a href='@Url.Action("Stage3SJRFormFirstStep", "home", new { id = item.ID })'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open SJR Stage 2 form"></a>
+                            }
+                        </td>
+                        <td align="center">
+                            @if (item.CodingReview == 3)
+                            {
+                                <a href='@Url.Action("CodingReview", "home", new { id = item.ID })'><img src="~/images/GreenCircle.png" width="18" height="18" title="Click to open Coding review form"></a>
+                            }
+                            else if (item.CodingReview == 2)
+                            {
+                                <a href='@Url.Action("CodingReview", "home", new { id = item.ID })'><img src="~/images/RedC.png" width="18" height="18" title="Click to open Coding review form"></a>
+                            }
+                            else if (item.CodingReview == 1)
+                            {
+                                <a href='@Url.Action("CodingReview", "home", new { id = item.ID })'><img src="~/images/amber.png" width="18" height="18" title="Click to open Coding review form"></a>
+                            }
+
+                            else if (item.CodingReview == 0 || item.PrimaryDiagnosis.ToUpper().Equals("AWAITING CODING") || item.PrimaryDiagnosis.ToUpper().Equals("PENDING"))
+                            {
+                                <a href='@Url.Action("CodingReview", "home", new { id = item.ID })'><img src="~/images/GeryImg.png" width="18" height="18" title="Click to open Coding review form"></a>
+                            }
+
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="14" class="text-center" align="center">No Records Found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@Html.Partial("_MortalityPagerControl")

@@ -1,0 +1,82 @@
+﻿@model List<NHS.Common.clsDataManagement>
+@using NHS.Models;
+@{
+    ViewBag.Title = "DataManagementDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .square {
+        height: 30px;
+        width: 100px;
+        background-color: forestgreen;
+    }
+</style>
+
+<div class="col-sm-12">
+    <div class="row">
+        <div class="col-md-10">
+            <h2 style="margin-left:40px"><b>Data Management Details</b></h2>
+        </div>
+    </div>
+    <hr style="height:2px;background-color:black">
+    <br />
+    <br />
+    @using (Html.BeginForm("DataManagement", "Home", FormMethod.Post, new { @id = "my_form" }))
+    {
+        <div class="col-md-10" style="text-align:center;margin-left:110px">
+            <table class="stripe row-border order-column" id="tblDataDetails">
+                <thead>
+                    <tr>
+                    <tr bgcolor="#a9d7cc" style="color:black;">
+                        <th style="text-align:center">Source System</th>
+                        <th style="text-align:center">Dataset </th>
+                        <th style="text-align:center">DQ Rag</th>
+                        <th style="text-align:center">Updated Date </th>
+                        <th style="text-align:center"> Updated Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Count > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr style="color:black;color:black" bgcolor="cadetblue">
+                                <td>@item.SourceSystem</td>
+                                <td>@item.DataSet</td>
+                                <td>
+                                    @if (item.DQRag == 1)
+                                    {
+                                        <img src="~/images/GreenCircle.png" width="23" height="23">
+                                    }
+                                    else
+                                    {
+                                        <img src="~/images/GeryImg.png" width="23" height="23">
+                                    }
+                                </td>
+                                <td align="center">
+                                    <div class="square" style="text-align:center">
+                                        @String.Format("{0:dd/MM/yy}", item.UpdateDate)
+                                    </div>
+                                </td>
+                                <td>@item.UpdateTime</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    }
+    </div>
+<script>
+    $(document).ready(function () {
+        $('#tblDataDetails').DataTable({
+            "searching": true,
+            "ordering": true,
+            "paging": true,
+
+            //"pagingType": "full_numbers"
+        });
+    });
+</script>
+

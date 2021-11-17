@@ -1,0 +1,393 @@
+﻿@model NHS.Common.DTO.BreathingSupportReport
+@using NHS.Models;
+@{
+    ViewBag.Title = "COVID 19 Breathing Support Tracker";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    <style>
+        /*.square {
+            height: 120px;
+            width: 250px;
+            border: solid black 1px;
+            border-color: #d3d3d3;
+            border-style: solid;
+            padding: 10px 0 0 0;
+        }*/
+
+        .square-large {
+            height: 450px;
+            width: 1050px;
+            border: solid black 1px;
+            border-color: #000;
+            border-style: solid;
+            padding: 40px 0 0 0;
+        }
+
+        .square-large1 {
+            height: 250px;
+            width: 1050px;
+            border: solid black 1px;
+            border-color: #000;
+            border-style: solid;
+            padding: 40px 0 0 0;
+        }
+		.ds_doted_line1 {
+	/* border-bottom: 2px #212529 dotted; */
+	border-right:1px #70a397 solid;
+	padding: 5px 5px 5px 5px;
+	height: 85px;
+}
+.ds_doted_line2{
+	/*border-bottom:2px #212529 dotted;*/
+	border-right:1px #70a397 solid;
+	padding:5px 5px 5px 5px;
+}
+.ds_doted_line3 {
+	border-top:1px #70a397 solid;
+	padding: 20px 5px 30px 5px;
+	margin: 0 0 -9px 0;
+	/* height: 96px; */
+}
+.ds_doted_line4{
+	/*border-bottom:2px #212529 dotted;*/
+	border-right:1px #70a397 solid;
+	padding:5px 5px 5px 5px;
+	height: 85px;
+}
+.ds_doted_line5{
+	/*border-bottom:2px #212529 dotted;*/
+	border-right:2px #70a397 solid;
+	padding:5px 5px 5px 5px;
+	height: 85px;
+}
+.ds_doted_line6{
+	/*border-bottom:2px #212529 dotted;
+	border-right:2px #212529 dotted;*/
+	padding:5px 5px 5px 5px;
+	height: 85px;
+}
+    </style>
+}
+<h2 align="center">Breathing Support Tracking Dashboard</h2>
+<div align="left">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td width="40%">
+                <div id="showfilterdiv" class="ds_filter_btn" style="display:none !important;">
+                    <a href="javascript:void(0);" onclick="ShowFilter()" id="showfilter" @*class="ds_filter_btn_show"*@> <img src="~/images/show-arrow.png" alt="" />Show Advanced Filters</a>
+                </div>
+                <div id="hidefilterdiv" class="ds_filter_btn" style="display:block !important;">
+                    <a href="javascript:void(0);" onclick="HideFilter()" id="hidefilter" @*class="ds_filter_btn_hide"*@> <img src="~/images/hide-arrow.png" alt="" />Hide Advanced Filters</a>
+                </div>
+            </td>
+            @*<td width="60%" align="right" style="padding:10px 15px"><b>Data Refreshed: From @ViewBag.UpdatedSource at @ViewBag.UpdatedDate</b></td>*@
+        </tr>
+
+    </table>
+</div>
+
+
+<br />
+<br />
+@*<script src="cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>*@
+
+<!-- DataTables -->
+
+<div class="col-sm-12">
+    <div class="row">
+        <div class="col-md-12">
+            <form action="@Url.Action("COVIDBreathingSupportReport", "Home", new { isReset = false })" method="post">
+                <div class="row" id="filtercondition">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="row_bar">
+                                    <select style="font-size:12px;  margin:0 0 0 0;" class="form-control" id="ddlTestResults" name="ddlTestResults">
+                                        @if (Convert.ToString(Session["BreathingReportTestResults"]) == "0")
+                                        {
+                                            <option selected value="0">
+                                                All Test Results
+                                            </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="0">
+                                                All Test Results
+                                            </option>
+                                        }
+                                        @foreach (var item in ViewBag.TestResults)
+                                        {
+                                            if (!string.IsNullOrEmpty(item.TestResult))
+                                            {
+                                                if (item.TestResult == Convert.ToString(Session["BreathingReportTestResults"]) && Convert.ToString(Session["BreathingReportTestResults"]) != "0"
+                                                    && Convert.ToString(Session["BreathingReportTestResults"]) != "")
+                                                {
+                                                    <option selected value="@item.TestResult">@item.TestResult</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.TestResult">@item.TestResult</option>
+                                                }
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                @*<div class="row_bar">
+                                        <button id="btnSearch" type="submit" class="btn btn-primary btn-md" name="btnSearch">Search </button>
+                                    </div>*@
+                                <div class="ds_filter_cont">
+
+                                    <ul>
+                                        <li><button id="btnSearch" type="submit" data-toggle="tooltip" title="Search"><img src="~/images/search-icon.png" alt="" /></button"></li>
+                                        <li><button id="btnReset" type="button" data-toggle="tooltip" title="Reset Filters"><img src="~/images/refresh-icon.png" alt="" /></button></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br />
+    <div align="left" style="margin: 0 0 20px 0;">
+        <table width="90%">
+            <tr>
+                <td width="12%">
+                    <table width="100%">
+                        <tr><td class="ds_doted_line4" align="center"><span style="font-family:verdana;"><b>Total <br/>Current IP</b></span></td></tr>
+                        <tr>
+                            <td class="ds_doted_line4">
+                                <div vertical-align="middle" class="square ds_doted_line3" style="background-color:#fff">
+                                    <div align="center">
+                                        <span style="font-size:30px; color:#0072c6 !important;">@Model.TotalCurrentIP</span>
+                                    </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td width="12%">
+                    <table width="100%">
+                        <tr><td class="ds_doted_line1" align="center"><span style="font-family:verdana;"><b>% total not updated <br/>in 20 hours</b></span></td></tr>
+                        <tr>
+                            <td class="ds_doted_line2">
+                                <div vertical-align="middle" class="square ds_doted_line3" style="background-color:#fff">
+                                    <div align="center">
+                                        <span style="font-size:30px; color:#ff2e37 !important;">@Model.NotUpdatedLast20HoursPercentage%</span>
+                                    </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td width="12%">
+                    <table width="100%">
+                        <tr><td class="ds_doted_line4" align="center"><span style="font-family:verdana;"><b>% total not updated<br/> in 12 hours</b></span></td></tr>
+                        <tr>
+                            <td class="ds_doted_line4">
+                                <div vertical-align="middle" class="square ds_doted_line3" style="background-color:#fff">
+                                    <div align="center">
+                                        <span style="font-size:30px; color:#fec600  !important;">@Model.NotUpdatedLast12HoursPercentage%</span>
+                                    </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td width="12%">
+                    <table width="100%">
+                        <tr><td class="ds_doted_line4" align="center"><span style="font-family:verdana;"><b>% total updated <br/>in 12 hours</b></span></td></tr>
+                        <tr>
+                            <td vertical-align="middle" style="padding: 0 5px; "  class="ds_doted_line4">
+                                <div vertical-align="middle" class="square ds_doted_line3" style="background-color:#fff">
+                                    <div align="center">
+                                        <span style="font-size:30px; color:#52d26a !important;">@Model.UpdatedLast12HoursPercentage%</span>
+                                    </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td width="12%">
+                    <table width="100%">
+                        <tr><td class="ds_doted_line4" align="center"><span style="font-family:verdana;"><b>% No Oxygen</b></span></td></tr>
+                        <tr>
+                            <td vertical-align="middle" style="padding: 0 5px;"  class="ds_doted_line4">
+                                <div vertical-align="middle" class="square ds_doted_line3" style="background-color:#fff">
+                                    <div align="center">
+                                        <span style="font-size:30px; color:#000000 !important;">@Model.TotalIsNoOxygenPercentage%</span>
+                                    </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td width="12%">
+                    <table width="100%">
+                        <tr><td class="ds_doted_line4" align="center"><span style="font-family:verdana;"><b>% Oxygen</b></span></td></tr>
+                        <tr>
+                            <td vertical-align="middle" style="padding: 0 5px;"  class="ds_doted_line4">
+                                <div vertical-align="middle" class="square ds_doted_line3" style="background-color:#fff">
+                                    <div align="center">
+                                        <span style="font-size:30px; color:#000000 !important;">@Model.TotalIsOxygenPercentage%</span>
+                                    </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                
+                <td width="12%">
+                    <table width="100%">
+                        <tr><td class="ds_doted_line4" align="center"><span style="font-family:verdana;"><b>% Non Invasive Ventilation</b></span></td></tr>
+                        <tr>
+                            <td vertical-align="middle" style="padding: 0 5px;"  class="ds_doted_line4">
+                                <div vertical-align="middle" class="square ds_doted_line3" style="background-color:#fff">
+                                    <div align="center">
+                                        <span style="font-size:30px; color:#000000 !important;">@Model.TotalIsNonEvasiveVentilationPercentage%</span>
+                                    </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td width="12%">
+                    <table width="100%">
+                        <tr><td class="ds_doted_line4" align="center"><span style="font-family:verdana;"><b>% Mechanical Ventilation</b></span></td></tr>
+                        <tr>
+                            <td class="ds_doted_line4" vertical-align="middle" style="padding: 0 5px;">
+                                <div vertical-align="middle" class="square ds_doted_line3" style="background-color:#fff">
+                                    <div align="center">
+                                        <span style="font-size:30px; color:#000000 !important;">@Model.TotalIsMechanicalVentilationPercentage%</span>
+                                    </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td width="12%">
+                    <table width="100%">
+                        <tr><td class="ds_doted_line6" align="center"><span style="font-family:verdana;"><b>% Unknown</b></span></td></tr>
+                        <tr>
+                            <td vertical-align="middle" style="padding: 0 5px;">
+                                <div vertical-align="middle" class="square ds_doted_line3" style="background-color:#fff">
+                                    <div align="center">
+                                        <span style="font-size:30px; color:#ff2e37 !important;">@Model.TotalBreathingNotUpdatedPercentage%</span>
+                                    </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="row" align="left">
+        <div class="col-md-12" style="padding-left:0;">
+            @*<div class="panel panel-info">*@
+            @*<div class="panel-heading">Search</div>*@
+            @*<div class="panel-body">*@
+            @*<div class="" style="margin:10px 0 10px 0;">
+                <table width="79%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td>
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td align="left" width="82%"><label>Show <select id="tblPatientDetails_length" name="tblPatientDetails_length" aria-controls="tblPatientDetails" class=""><option value="10">10 rows</option><option value="20">20 rows</option><option selected value="50">50 rows</option><option value="100">100 rows</option><option value="-1">Show All</option></select>&nbsp;&nbsp; entries</label></td>
+                                    <td align="right">Search:</td>
+                                    <td align="right">
+                                        <input type="text" name="searchfield" id="searchfield" value="@ViewBag.SearchText" style="margin-left: 0.5em" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>*@
+            <div id="dvCustomerList">
+                @Html.Partial("_BreathingTracker", Model)
+            </div>
+        </div>
+        @*</div>*@
+        @*</div>*@
+    </div>
+</div>
+<input type="hidden" id="Reset" name="Reset" value="" />
+<br />
+<br />
+
+<script>
+    $(function () {
+        $("#searchfield").keyup(function () {
+            var searchfield = $("#searchfield").val();
+            var pagesize = $("#tblPatientDetails_length").val();
+            GetList(1, searchfield, pagesize);
+        });
+    });
+</script>
+<script>
+    $(function () {
+        $("#tblPatientDetails_length").change(function () {
+            var searchfield = $("#searchfield").val();
+            var pagesize = $("#tblPatientDetails_length").val();
+            GetList(1, searchfield, pagesize);
+        });
+    });
+</script>
+<script type="text/javascript">
+$(function () {
+    $("#btnSearch").click(function(){
+window.location.href = "@Url.Action("COVIDBreathingSupportReport", "Home", new { isReset = false })";
+    });
+});
+$(function () {
+    $("#btnReset").click(function () {
+        window.location.href = "@Url.Action("COVIDBreathingSupportReport", "Home", new { isReset = true })";
+    });
+});
+    (function ($) {
+        $(".datepicker").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy'
+        });
+    })(jQuery)
+</script>
+<script>
+    function HideFilter()
+    {
+        $("#filtercondition").fadeOut(400);
+        $("#showfilterdiv").show();
+        $("#hidefilterdiv").hide();
+    }
+    function ShowFilter() {
+        $("#filtercondition").fadeIn(400);
+        $("#hidefilterdiv").show();
+        $("#showfilterdiv").hide();
+    }
+</script>
+<script>
+    function GetList(pPageNo, searchfield, pageSize, SortColumn, frompager) {
+        var pageSize = $("#tblPatientDetails_length").val();
+        var dataActionUrl = '@Url.Action("MoreBreathingSupportReport", "Home")';
+        //alert(IsPositiveDischarges);
+        if (frompager == 'onclick')
+        {
+            //alert(frompager);
+            frompager = true;
+        }
+        $.ajax({
+            url: dataActionUrl,
+            data: {
+                pageNumber: pPageNo, searchfield: searchfield, pageSize: pageSize, SortColumn: SortColumn, frompager: frompager
+            },
+            type: "POST",
+            success: function (data) {
+                $("#dvCustomerList").empty();
+                $("#dvCustomerList").html(data);
+                //$("#loader-wrapper1").hide();
+                //$("#loader").hide();
+            },
+            error: function (data) {
+                //$("#loader-wrapper1").hide();
+                //$("#loader").hide();
+            }
+        });
+    }
+</script>
+

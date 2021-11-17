@@ -14,6 +14,8 @@ namespace NHS.Common.DTO
 
         public string PatientName { get; set; }
 
+        public string ACTUAL_TEST_RESULT { get; set; }
+
         public string SpellNumber { get; set; }
 
         public string NHSNumber { get; set; }
@@ -228,6 +230,8 @@ namespace NHS.Common.DTO
 
         public string TestResult { get; set; }
 
+        public string ResultStatus { get; set; }
+
         public int ComorbitiesCount { get; set; }
 
         public string AdmissionStatus { get; set; }
@@ -249,13 +253,148 @@ namespace NHS.Common.DTO
         public string UpdatedBy { get; set; }
 
         public string UpdatedDate { get; set; }
+
+        public string CHESSComments { get; set; }
+
+        public string DischargeDeathComments { get; set; }
+
+        public string CPNSComments { get; set; }
+
+        public string BreathingStatus { get; set; }
+
+        public string BreathingStatusText { get; set; }
+
+        public string BedType { get; set; }
+        public string BedTypeText { get; set; }
+    }
+
+    public class clsBariatricDetails
+    {
+        public int Patient_ID { get; set; }
+        public string PatientName { get; set; }
+
+        public string MRN { get; set; }
+
+        public string ReferralDate { get; set; }
+
+        public int TotalCount { get; set; }
+
+        public int WeekDifference { get; set; }
+
+        public string NurseAssessment { get; set; }
+
+        public string MDTMedical { get; set; }
+
+        public string PsychologyAssess { get; set; }
+
+        public string Group1 { get; set; }
+
+        public string Group2 { get; set; }
+
+        public string Group3 { get; set; }
+
+        public string Group4 { get; set; }
+
+        public string MDTVirtual { get; set; }
+
+        public string MDTSurgical { get; set; }
+
+        public string Surgery { get; set; }
+
+        public string PostOPMed { get; set; }
+
+        public string PostOPDiet { get; set; }
+    }
+
+    public class PathwayStatuses
+    {
+        public int ID { get; set; }
+
+        public string PathwayStatus { get; set; }
+    }
+
+    public class PathwayEvents
+    {
+        public int ID { get; set; }
+
+        public string PathwayEvent { get; set; }
+    }
+
+    public class clsBariatricAppoitments
+    {
+        public string LOADDATETIME { get; set; }
+
+        public string PATHWAY { get; set; }
+
+        public string PATHWAY_TYPE_ID { get; set; }
+
+        public string LOCAL_PATIENT_IDENTIFIER { get; set; }
+
+        public string FIN_NUMBER { get; set; }
+
+        public string REFERRAL_REQUEST_RECEIVED_DATE { get; set; }
+
+        public string APPOINTMENT_DATE { get; set; }
+
+        public string ATTENDED_OR_DID_NOT_ATTEND_CODE { get; set; }
+
+        public string ATTENDED_OR_DID_NOT_ATTEND { get; set; }
+
+        public string ATTENDANCE_STATUS { get; set; }
+
+        public string APPOINTMENT_TYPE { get; set; }
+
+        public string SLOT_TYPE { get; set; }
+
+        public string OUTCOME_OF_ATTENDANCE { get; set; }
+    }
+
+    public class BariatricPatientDetails
+    {
+        public string Patient_ID { get; set; }
+
+        public string PatientName { get; set; }
+
+        public string ReferralDate { get; set; }
+
+        public int NurseAssessment { get; set; }
+
+        public int MDTMedical { get; set; }
+
+        public int PsychologyAssess { get; set; }
+
+        public int Group1 { get; set; }
+
+        public int Group2 { get; set; }
+
+        public int Group3 { get; set; }
+
+        public int Group4 { get; set; }
+
+        public int MDTVirtual { get; set; }
+
+        public int MDTSurgical { get; set; }
+
+        public int Surgery { get; set; }
+
+        public int PostOPMed { get; set; }
+
+        public int PostOPDiet { get; set; }
     }
 
     public class clsCOVIDPatientDetails
     {
         public int ID { get; set; }
 
+        public string ACTUAL_TEST_RESULT { get; set; }
         public int Test_ID { get; set; }
+
+        public string AdmissionGroup { get; set; }
+
+        public string SampleCollectionDateTime { get; set; }
+        public string AdmissionMethodCode { get; set; }
+
+        public string AdmissionMethodDesc { get; set; }
 
         public string TestID { get; set; }
 
@@ -409,6 +548,26 @@ namespace NHS.Common.DTO
         public string TestResultDateTime { get; set; }
 
         public int NoOfAdmissions { get; set; }
+
+        public int ActivePositiveDetected { get; set; }
+
+        public int ActivePositiveDiagnosed { get; set; }
+
+        public int FirstTestResultPending { get; set; }
+
+        public int FiveSevenReTestPending { get; set; }
+
+        public int ActiveNegative { get; set; }
+
+        public int FiveDaysReTest { get; set; }
+
+        public int FiveSevenReTestNegative { get; set; }
+
+        public int Untested { get; set; }
+
+        public string SITREP_GROUP { get; set; }
+
+        public string RESULT_STATUS { get; set; }
     }
 
     public class COVIDDefaultDate
@@ -583,6 +742,26 @@ namespace NHS.Common.DTO
         public int CPNSDeathReAdmission { get; set; }
 
         public int CPNSDeathReAdmissionPending { get; set; }
+
+        public int CHESSNewPositiveNotRequiredYTD { get; set; }
+
+        public int CHESSICUHDUStepUpNotRequiredYTD { get; set; }
+
+        public int CHESSICUHDUStepDownNotRequiredYTD { get; set; }
+
+        public int CHESSDischargeDeathNotRequiredYTD { get; set; }
+
+        public int CHESSDischargesNotRequiredYTD { get; set; }
+
+        public int CHESSPositiveDeathsNotRequiredYTD { get; set; }
+
+        public int CPNSDeathDetectedNotRequired { get; set; }
+
+        public int CPNSDeathNotRequiredYTD { get; set; }
+
+        public int CPNSDeathDiagnosedNotRequired { get; set; }
+
+        public int CPNSDeathReAdmissionNotRequired { get; set; }
     }
 
     public class COVIDDischargeDeathComms
@@ -713,6 +892,8 @@ namespace NHS.Common.DTO
 
         public string PatientID { get; set; }
 
+        public string ACTUAL_TEST_RESULT { get; set; }
+
         public string PatientName { get; set; }
 
         public string Clinical_Display_Line { get; set; }
@@ -822,6 +1003,8 @@ namespace NHS.Common.DTO
         public string PatientName { get; set; }
 
         public string TestResult { get; set; }
+
+        public string ACTUAL_TEST_RESULT { get; set; }
 
         public string SpellNumber { get; set; }
 

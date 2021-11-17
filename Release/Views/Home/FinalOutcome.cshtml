@@ -1,0 +1,1949 @@
+﻿@model NHS.Common.clsMedicalExaminerDecision
+@{
+    ViewBag.Title = "FinalOutcome";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<br />
+<div class="container">
+    <div class="row form-group">
+        <div class="col-xs-12 col-lg-12">
+            <div class="row" align="right">
+                <div class="col-md-12">
+                    <input type="image" src="~/images/Delete.png" width="30" height="30" alt="Submit" id="btnClose3" title="Close" />
+                </div>
+            </div>
+            <ul class="nav nav-pills nav-justified thumbnail setup-panel">
+                <li class="disabled">
+                    <a href='@Url.Action("PatientDetails", "home", new { id = Model.ID })'>
+                        <h4 class="list-group-item-heading">
+                            Patient details
+                        </h4>
+                    </a>
+
+                </li>
+                <li class="disabled">
+                    <a href='@Url.Action("MedicalExaminerReview", "home", new { id = Model.ID })'>
+                        <h4 class="list-group-item-heading">
+                            Medical Examiner<br /> Scrutiny
+                        </h4>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href='@Url.Action("MedicalExaminerDecision", "home", new { id = Model.ID })'>
+                        <h4 class="list-group-item-heading">
+                            Medical Examiner Decision
+                        </h4>
+                    </a>
+                </li>
+                
+                <li class="disabled">
+                    <a href='@Url.Action("SJRAssessmentTriage", "home", new { id = Model.ID })'>
+                        <h4 class="list-group-item-heading">
+                            SJR Assessment<br /> Triage
+                        </h4>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href='@Url.Action("OtherReferrals", "home", new { id = Model.ID })'>
+                        <h4 class="list-group-item-heading">
+                            Other Referrals
+                        </h4>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href='@Url.Action("PositiveFeedback", "home", new { id = Model.ID })'>
+                        <h4 class="list-group-item-heading">
+                            Positive Feedback
+                        </h4>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href='@Url.Action("Declaration", "home", new { id = Model.ID })'>
+                        <h4 class="list-group-item-heading">
+                            Declaration
+                        </h4>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href='@Url.Action("FinalOutcome", "home", new { id = Model.ID })'>
+                        <h4 class="list-group-item-heading">
+                            Final Outcome<br />(MEO)
+                        </h4>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row setup-content" id="step-3">
+        @using (Html.BeginForm("FinalOutcome", "Home", FormMethod.Post, new { @id = Model.ID }))
+        {
+            AntiForgeryConfig.SuppressXFrameOptionsHeader = true;
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="col-xs-12 col-lg-12">
+                @*<form action="/Home/MedExamFormStep3" method="post" id="frmMedExamFormStep3">*@
+                <div class="col-md-12 well">
+                    <div class="form-section">
+                        <div class="lable_title">
+                            <h2>MEO Final Outcome</h2>
+                        </div>
+                        <div class="row">
+
+
+    <br /><br />
+
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row_bar">
+                    Cause of Death
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="row_bar">
+
+                        1a
+                        @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+                        {
+                            if (Model.MEOReviewCompleted == true)
+                            {
+                                if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                                {
+                                @Html.EditorFor(model => model.CauseOfDeath1Final, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                }
+                                else
+                                {
+                                    @Html.EditorFor(model => model.CauseOfDeath1Final, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                }
+                            }
+                            else
+                            {
+                                @Html.EditorFor(model => model.CauseOfDeath1Final, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            }
+                        }
+                        else
+                        {
+                            if (Model.MEOReviewCompleted == true)
+                            {
+                                if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                                {
+                                    @Html.EditorFor(model => model.CauseOfDeath1Final, new { htmlAttributes = new { @class = "form-control" } })
+                                }
+                                else
+                                {
+                                    @Html.EditorFor(model => model.CauseOfDeath1Final, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                }
+                            }
+                            else
+                            {
+                                @Html.EditorFor(model => model.CauseOfDeath1Final, new { htmlAttributes = new { @class = "form-control" } })
+                            }
+                        }
+
+
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="row_bar">
+                    1b
+                    @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+                    {
+                        if (Model.MEOReviewCompleted == true)
+                        {
+                            if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                            {
+                            @Html.EditorFor(model => model.CauseOfDeath2Final, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            }
+                            else
+                            {
+                            @Html.EditorFor(model => model.CauseOfDeath2Final, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            }
+                        }
+                        else
+                        {
+                            @Html.EditorFor(model => model.CauseOfDeath2Final, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        }
+                    }
+                    else
+                    {
+                        if (Model.MEOReviewCompleted == true)
+                        {
+                            if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                            {
+                                @Html.EditorFor(model => model.CauseOfDeath2Final, new { htmlAttributes = new { @class = "form-control" } })
+                            }
+                            else
+                            {
+                                @Html.EditorFor(model => model.CauseOfDeath2Final, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            }
+                        }
+                        else
+                        {
+                            @Html.EditorFor(model => model.CauseOfDeath2Final, new { htmlAttributes = new { @class = "form-control" } })
+                        }
+                    }
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row_bar">
+                    1c
+                    @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+                    {
+                        if (Model.MEOReviewCompleted == true)
+                        {
+                            if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                            {
+                            @Html.EditorFor(model => model.CauseOfDeath3Final, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            }
+                            else
+                            {
+                            @Html.EditorFor(model => model.CauseOfDeath3Final, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            }
+                        }
+                        else
+                        {
+                        @Html.EditorFor(model => model.CauseOfDeath3Final, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        }
+                    }
+                    else
+                    {
+                        if (Model.MEOReviewCompleted == true)
+                        {
+                            if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                            {
+                                @Html.EditorFor(model => model.CauseOfDeath3Final, new { htmlAttributes = new { @class = "form-control" } })
+                            }
+                            else
+                            {
+                                @Html.EditorFor(model => model.CauseOfDeath3Final, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            }
+                        }
+                        else
+                        {
+                            @Html.EditorFor(model => model.CauseOfDeath3Final, new { htmlAttributes = new { @class = "form-control" } })
+                        }
+                    }
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row_bar">
+                    2
+                    @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+                    {
+                        if (Model.MEOReviewCompleted == true)
+                        {
+                            if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                            {
+                            @Html.EditorFor(model => model.CauseOfDeath4Final, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            }
+                            else
+                            {
+                            @Html.EditorFor(model => model.CauseOfDeath4Final, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            }
+                        }
+                        else
+                        {
+                        @Html.EditorFor(model => model.CauseOfDeath4Final, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        }
+                    }
+                    else
+                    {
+                        if (Model.MEOReviewCompleted == true)
+                        {
+                            if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                            {
+                                @Html.EditorFor(model => model.CauseOfDeath4Final, new { htmlAttributes = new { @class = "form-control" } })
+                            }
+                            else
+                            {
+                                @Html.EditorFor(model => model.CauseOfDeath4Final, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            }
+                        }
+                        else
+                        {
+                            @Html.EditorFor(model => model.CauseOfDeath4Final, new { htmlAttributes = new { @class = "form-control" } })
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="col-md-12" style="margin-top: 44px !important;">
+            <div class="row_bar"></div>
+        </div>
+        <div class="table_margin">
+            <table width="100%" style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;">
+                <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                    <td width="40%" style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Patient ID</b></td>
+                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.Patient_Id </td>
+                </tr>
+                <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Patient Name</b></td>
+                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.PatientName</td>
+
+                </tr>
+                <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>DOB</b></td>
+                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.DOB</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="col-md-4">
+        <div class="row_bar">
+            @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+            {
+                if (Model.MEOReviewCompleted == true)
+                {
+                    if (Model.DeathCertificate == true)
+                    {
+                        if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                        {
+                            <input type="checkbox" checked id="DeathCertificate" disabled name="DeathCertificate"><span> Death Certificate Complete? </span>
+                        }
+                        else
+                        {
+                            <input type="checkbox" checked id="DeathCertificate" disabled="disabled" name="DeathCertificate"><span> Death Certificate Complete? </span>
+                        }
+
+                    }
+                    else
+                    {
+                        if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                        {
+                            <input type="checkbox" id="DeathCertificate" disabled name="DeathCertificate"><span> Death Certificate Complete? </span>
+                        }
+                        else
+                        {
+                            <input type="checkbox" id="DeathCertificate" disabled="disabled" name="DeathCertificate"><span> Death Certificate Complete? </span>
+                        }
+
+                    }
+                }
+                else
+                {
+                    <input type="checkbox" id="DeathCertificate" disabled name="DeathCertificate"><span> Death Certificate Complete? </span>
+                }
+            }
+            else
+            {
+                if (Model.MEOReviewCompleted == true)
+                {
+                    if (Model.DeathCertificate == true)
+                    {
+                        if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                        {
+                            <input type="checkbox" checked id="DeathCertificate" name="DeathCertificate"><span> Death Certificate Complete? </span>
+                        }
+                        else
+                        {
+                            <input type="checkbox" checked id="DeathCertificate" name="DeathCertificate"><span> Death Certificate Complete? </span>
+                        }
+                    }
+                    else
+                    {
+                        if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                        {
+                            <input type="checkbox" id="DeathCertificate" name="DeathCertificate"><span> Death Certificate Complete? </span>
+                        }
+                        else
+                        {
+                            <input type="checkbox" disabled id="DeathCertificate" name="DeathCertificate"><span> Death Certificate Complete? </span>
+                        }
+
+                    }
+                }
+                else
+                {
+                    <input type="checkbox" id="DeathCertificate" name="DeathCertificate"><span> Death Certificate Complete? </span>
+                }
+            }
+        </div>
+    </div>
+    @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+    {
+        if (Model.MEOReviewCompleted == true)
+        {
+            if (Model.DeathCertificate == true)
+            {
+            <div id="deathdate" class="col-md-4" style="display:block;">
+                <div class="row_bar">
+                    @if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                    {
+                        <input class="form-control input_datepicker" disabled readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="@Model.DeathCertificateDate" placeholder="Select Date">
+                    }
+                    else
+                    {
+                        <input class="form-control input_datepicker" disabled readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="@Model.DeathCertificateDate" placeholder="Select Date" disabled="disabled">
+                    }
+                </div>
+            </div>
+            }
+            else
+            {
+            <div id="deathdate" class="col-md-4" style="display:none;">
+                <div class="row_bar">
+
+                    @if (string.IsNullOrEmpty(Model.DeathCertificateDate))
+                    {
+                        if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                        {
+                            <input class="form-control datepicker" disabled readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="" placeholder="Select Date">
+                        }
+                        else
+                        {
+                            <input class="form-control datepicker" disabled readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="" placeholder="Select Date" disabled="disabled">
+                        }
+
+                    }
+                    else
+                    {
+                        if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                        {
+                            <input class="form-control datepicker" disabled readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="@Model.DeathCertificateDate" placeholder="Select Date">
+                        }
+                        else
+                        {
+                            <input class="form-control datepicker" disabled readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="@Model.DeathCertificateDate" placeholder="Select Date" disabled="disabled">
+                        }
+                    }
+                </div>
+            </div>
+            }
+        }
+        else
+        {
+        <div id="deathdate" class="col-md-4" style="display:none;">
+            <div class="row_bar">
+                <input class="form-control datepicker" disabled readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="" placeholder="Select Date">
+            </div>
+        </div>
+        }
+    }
+    else
+    {
+        if (Model.MEOReviewCompleted == true)
+        {
+            if (Model.DeathCertificate == true)
+            {
+                <div id="deathdate" class="col-md-4" style="display:block;">
+                    <div class="row_bar">
+                        @if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                        {
+                            <input class="form-control input_datepicker" readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="@Model.DeathCertificateDate" placeholder="Select Date">
+                        }
+                        else
+                        {
+                            <input class="form-control input_datepicker" readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="@Model.DeathCertificateDate" placeholder="Select Date" disabled="disabled">
+                        }
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div id="deathdate" class="col-md-4" style="display:none;">
+                    <div class="row_bar">
+
+                        @if (string.IsNullOrEmpty(Model.DeathCertificateDate))
+                        {
+                            if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                            {
+                                <input class="form-control datepicker" readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="" placeholder="Select Date">
+                            }
+                            else
+                            {
+                                <input class="form-control datepicker" readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="" placeholder="Select Date" disabled="disabled">
+                            }
+
+                        }
+                        else
+                        {
+                            if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                            {
+                                <input class="form-control datepicker" readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="@Model.DeathCertificateDate" placeholder="Select Date">
+                            }
+                            else
+                            {
+                                <input class="form-control datepicker" readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="@Model.DeathCertificateDate" placeholder="Select Date" disabled="disabled">
+                            }
+                        }
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div id="deathdate" class="col-md-4" style="display:none;">
+                <div class="row_bar">
+                    <input class="form-control datepicker" readonly="readonly" type="text" id="DeathCertificateDate" name="DeathCertificateDate" value="" placeholder="Select Date">
+                </div>
+            </div>
+        }
+    }
+    @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+    {
+        if (Model.MEOReviewCompleted == true)
+        {
+            if (Model.DeathCertificate == true)
+            {
+            <div id="deathtime" class="col-md-2" style="display:block;">
+                <div class="row_bar">
+                    @if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN" || Model.MEOReviewCompleted == false)
+                    {
+                        <input class="form-control" disabled name="DeathCertificateTime" type="text" maxlength="5" id="txtTime" placeholder="00:00"
+                               value="@Model.DeathCertificateTime" />
+                    }
+                    else
+                    {
+                        <input class="form-control" disabled name="DeathCertificateTime" type="text" maxlength="5" id="txtTime" placeholder="00:00"
+                               value="@Model.DeathCertificateTime" readonly="readonly" />
+                    }
+                </div>
+            </div>
+            }
+            else
+            {
+            <div id="deathtime" class="col-md-2" style="display:none;">
+                <div class="row_bar">
+                    @if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN" || Model.MEOReviewCompleted == false)
+                    {
+                        if (string.IsNullOrEmpty(Model.DeathCertificateTime))
+                        {
+                            <input class="form-control" disabled name="DeathCertificateTime" type="text" maxlength="5" id="txtTime" placeholder="00:00"
+                                   value="" />
+                        }
+                        else
+                        {
+                            <input class="form-control" disabled name="DeathCertificateTime" type="text" maxlength="5" id="txtTime" placeholder="00:00"
+                                   value="@Model.DeathCertificateTime" />
+                        }
+                    }
+                    else
+                    {
+                        if (string.IsNullOrEmpty(Model.DeathCertificateTime))
+                        {
+                            <input class="form-control" disabled name="DeathCertificateTime" type="text" maxlength="5" id="txtTime" placeholder="00:00"
+                                   value="" readonly="readonly" />
+                        }
+                        else
+                        {
+                            <input class="form-control" disabled name="DeathCertificateTime" type="text" maxlength="5" id="txtTime" placeholder="00:00"
+                                   value="@Model.DeathCertificateTime" readonly="readonly" />
+                        }
+                    }
+                </div>
+            </div>
+            }
+        }
+        else
+        {
+        <div id="deathtime" class="col-md-2" style="display:none;">
+            <div class="row_bar">
+                <input class="form-control" disabled name="DeathCertificateTime" type="text" maxlength="5" id="txtTime" placeholder="00:00"
+                       value="" />
+            </div>
+        </div>
+        }
+    }
+    else
+    {
+        if (Model.MEOReviewCompleted == true)
+        {
+            if (Model.DeathCertificate == true)
+            {
+                <div id="deathtime" class="col-md-2" style="display:block;">
+                    <div class="row_bar">
+                        @if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN" || Model.MEOReviewCompleted == false)
+                        {
+                            <input class="form-control" name="DeathCertificateTime" type="text" maxlength="5" id="txtTime" placeholder="00:00"
+                                   value="@Model.DeathCertificateTime" />
+                        }
+                        else
+                        {
+                            <input class="form-control" name="DeathCertificateTime"  type="text" disabled maxlength="5" id="txtTime" placeholder="00:00"
+                                   value="@Model.DeathCertificateTime" readonly="readonly" />
+                        }
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div id="deathtime" class="col-md-2" style="display:none;">
+                    <div class="row_bar">
+                        @if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN" || Model.MEOReviewCompleted == false)
+                        {
+                            if (string.IsNullOrEmpty(Model.DeathCertificateTime) || Model.DeathCertificateTime == "00:00")
+                            {
+                                <input class="form-control" name="DeathCertificateTime" type="text" maxlength="5" id="txtTime" placeholder="00:00"
+                                       value="" />
+                            }
+                            else
+                            {
+                                <input class="form-control" name="DeathCertificateTime" type="text" disabled maxlength="5" id="txtTime" placeholder="00:00"
+                                       value="@Model.DeathCertificateTime" />
+                            }
+                        }
+                        else
+                        {
+                            if (string.IsNullOrEmpty(Model.DeathCertificateTime))
+                            {
+                                <input class="form-control" name="DeathCertificateTime" disabled type="text" maxlength="5" id="txtTime" placeholder="00:00"
+                                       value="" readonly="readonly" />
+                            }
+                            else
+                            {
+                                <input class="form-control" name="DeathCertificateTime" disabled type="text" maxlength="5" id="txtTime" placeholder="00:00"
+                                       value="@Model.DeathCertificateTime" readonly="readonly" />
+                            }
+                        }
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div id="deathtime" class="col-md-2" style="display:none;">
+                <div class="row_bar">
+                    <input class="form-control" name="DeathCertificateTime" type="text" maxlength="5" id="txtTime" placeholder="00:00"
+                           value="" />
+                </div>
+            </div>
+        }
+    }
+
+    @if (Model.MEOReviewCompleted == true)
+    {
+        if (Model.DeathCertificate == true)
+        {
+            <div id="deathtimetype" class="col-md-2" style="display:block;">
+                <div class="row_bar">
+                    @if (Model.TimeType == "0")
+                    {
+                        <span>&nbsp;</span>
+                    }
+                    else
+                    {
+                        <span>@Model.TimeType</span>
+                    }
+                </div>
+            </div>
+        }
+        else
+        {
+            <div id="deathtimetype" class="col-md-2" style="display:none;">
+                <div class="row_bar">
+                    @if (Model.TimeType == "0")
+                    {
+                        <span>&nbsp;</span>
+                    }
+                    else
+                    {
+                        <span>@Model.TimeType</span>
+                    }
+                </div>
+            </div>
+        }
+    }
+<br /><br />
+<div class="col-md-12">
+    <div class="row_bar">
+        <label class="label_part" for="defaultCheck1">(If Applicable) Coroner's decision </label>
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="row_bar">
+        @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+        {
+            if (Model.MEOReviewCompleted)
+            {
+                if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                {
+                    if (Model.CoronerDecisionInquest == true)
+                    {
+                        <input type="checkbox" disabled checked id="Inquest" name="Inquest"><span> Inquest </span>
+                    }
+                    else
+                    {
+                        <input type="checkbox" disabled id="Inquest" name="Inquest"><span> Inquest </span>
+                    }
+                }
+                else
+                {
+                    if (Model.CoronerDecisionInquest == true)
+                    {
+                        <input type="checkbox" disabled checked id="Inquest" name="Inquest"><span> Inquest </span>
+                    }
+                    else
+                    {
+                        <input type="checkbox" disabled id="Inquest" name="Inquest"><span> Inquest </span>
+                    }
+                }
+            }
+            else
+            {
+            <input type="checkbox" disabled id="Inquest" name="Inquest"><span> Inquest </span>
+            }
+        }
+        else
+        {
+            if (Model.MEOReviewCompleted)
+            {
+                if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                {
+                    if (Model.CoronerDecisionInquest == true)
+                    {
+                        <input type="checkbox" checked id="Inquest" name="Inquest"><span> Inquest </span>
+                    }
+                    else
+                    {
+                        <input type="checkbox" id="Inquest" name="Inquest"><span> Inquest </span>
+                    }
+                }
+                else
+                {
+                    if (Model.CoronerDecisionInquest == true)
+                    {
+                        <input type="checkbox" checked id="Inquest" name="Inquest" disabled="disabled"><span> Inquest </span>
+                    }
+                    else
+                    {
+                        <input type="checkbox" id="Inquest" name="Inquest" disabled="disabled"><span> Inquest </span>
+                    }
+                }
+            }
+            else
+            {
+                if (Model.CoronerDecisionInquest == true)
+                {
+                    <input type="checkbox" checked id="Inquest" name="Inquest"><span> Inquest </span>
+                }
+                else
+                {
+                    <input type="checkbox" id="Inquest" name="Inquest"><span> Inquest </span>
+                }
+            }
+        }
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="row_bar">
+        @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+        {
+            if (Model.MEOReviewCompleted)
+            {
+                if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                {
+                    if (Model.CoronerDecisionPostMortem == true)
+                    {
+                    <input type="checkbox" disabled checked id="Post-Mortem" name="Post-Mortem"><span> Post-Mortem </span>
+                    }
+                    else
+                    {
+                    <input type="checkbox" disabled id="Post-Mortem" name="Post-Mortem"><span> Post-Mortem </span>
+                    }
+                }
+                else
+                {
+                    if (Model.CoronerDecisionPostMortem == true)
+                    {
+                <input type="checkbox" disabled checked id="Post-Mortem" name="Post-Mortem" disabled="disabled"><span> Post-Mortem </span>
+                    }
+                    else
+                    {
+                <input type="checkbox" disabled id="Post-Mortem" name="Post-Mortem" disabled="disabled"><span> Post-Mortem </span>
+                    }
+                }
+            }
+            else
+            {
+            <input type="checkbox" disabled id="Post-Mortem" name="Post-Mortem"><span> Post-Mortem </span>
+            }
+        }
+        else
+        {
+            if (Model.MEOReviewCompleted)
+            {
+                if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                {
+                    if (Model.CoronerDecisionPostMortem == true)
+                    {
+                        <input type="checkbox" checked id="Post-Mortem" name="Post-Mortem"><span> Post-Mortem </span>
+                    }
+                    else
+                    {
+                        <input type="checkbox" id="Post-Mortem" name="Post-Mortem"><span> Post-Mortem </span>
+                    }
+                }
+                else
+                {
+                    if (Model.CoronerDecisionPostMortem == true)
+                    {
+                        <input type="checkbox" checked id="Post-Mortem" name="Post-Mortem" disabled="disabled"><span> Post-Mortem </span>
+                    }
+                    else
+                    {
+                        <input type="checkbox" id="Post-Mortem" name="Post-Mortem" disabled="disabled"><span> Post-Mortem </span>
+                    }
+                }
+            }
+            else
+            {
+                if (Model.CoronerDecisionPostMortem == true)
+                {
+                    <input type="checkbox" checked id="Post-Mortem" name="Post-Mortem"><span> Post-Mortem </span>
+                }
+                else
+                {
+                    <input type="checkbox" id="Post-Mortem" name="Post-Mortem"><span> Post-Mortem </span>
+                }
+            }
+        }
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="row_bar">
+        @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+        {
+            if (Model.MEOReviewCompleted)
+            {
+                if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                {
+                    if (Model.CoronerDecision100A == true)
+                    {
+                    <input type="checkbox" disabled checked id="100A" name="100A"><span> 100 A </span>
+                    }
+                    else
+                    {
+                    <input type="checkbox" disabled id="100A" name="100A"><span> 100 A </span>
+                    }
+                }
+                else
+                {
+                    if (Model.CoronerDecision100A == true)
+                    {
+                        <input type="checkbox" checked id="100A" name="100A" disabled="disabled"><span> 100 A </span>
+                    }
+                    else
+                    {
+                        <input type="checkbox" id="100A" name="100A" disabled="disabled"><span> 100 A </span>
+                    }
+                }
+            }
+            else
+            {
+                if (Model.CoronerDecision100A == true)
+                {
+                    <input type="checkbox" disabled checked id="100A" name="100A"><span> 100 A </span>
+                }
+                else
+                {
+                    <input type="checkbox" disabled id="100A" name="100A"><span> 100 A </span>
+                }
+            }
+        }
+        else
+        {
+            if (Model.MEOReviewCompleted)
+            {
+                if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                {
+                    if (Model.CoronerDecision100A == true)
+                    {
+                        <input type="checkbox" checked id="100A" name="100A"><span> 100 A </span>
+                    }
+                    else
+                    {
+                        <input type="checkbox" id="100A" name="100A"><span> 100 A </span>
+                    }
+                }
+                else
+                {
+                    if (Model.CoronerDecision100A == true)
+                    {
+                        <input type="checkbox" disabled checked id="100A" name="100A"><span> 100 A </span>
+                    }
+                    else
+                    {
+                        <input type="checkbox" disabled id="100A" name="100A"><span> 100 A </span>
+                    }
+                }
+            }
+            else
+            {
+                if (Model.CoronerDecision100A == true)
+                {
+                    <input type="checkbox" checked id="100A" name="100A"><span> 100 A </span>
+                }
+                else
+                {
+                    <input type="checkbox" id="100A" name="100A"><span> 100 A </span>
+                }
+            }
+        }
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="row_bar">
+    @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+    {
+        if (Model.MEOReviewCompleted)
+        {
+            if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+            {
+                if (Model.CoronerDecisionGPissue == true)
+                {
+                    <input type="checkbox" disabled checked id="GPIssue" name="GPIssue"><span> GP Issue </span>
+                }
+                else
+                {
+                    <input type="checkbox" disabled id="GPIssue" name="GPIssue"><span> GP Issue </span>
+                }
+            }
+            else
+            {
+                if (Model.CoronerDecisionGPissue == true)
+                {
+                    <input type="checkbox" disabled checked id="GPIssue" name="GPIssue"><span> GP Issue </span>
+                }
+                else
+                {
+                    <input type="checkbox" disabled id="GPIssue" name="GPIssue"><span> GP Issue </span>
+                }
+            }
+        }
+        else
+        {
+            <input type="checkbox" id="GPIssue" disabled name="GPIssue"><span> GP Issue </span>
+        }
+    }
+    else
+    {
+        if (Model.MEOReviewCompleted)
+        {
+            if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+            {
+                if (Model.CoronerDecisionGPissue == true)
+                {
+                    <input type="checkbox" checked id="GPIssue" name="GPIssue"><span> GP Issue </span>
+                }
+                else
+                {
+                    <input type="checkbox" id="GPIssue" name="GPIssue"><span> GP Issue </span>
+                }
+            }
+            else
+            {
+                if (Model.CoronerDecisionGPissue == true)
+                {
+                    <input type="checkbox" disabled checked id="GPIssue" name="GPIssue"><span> GP Issue </span>
+                }
+                else
+                {
+                    <input type="checkbox" disabled id="GPIssue" name="GPIssue"><span> GP Issue </span>
+                }
+            }
+        }
+        else
+        {
+            if (Model.CoronerDecisionGPissue == true)
+            {
+                <input type="checkbox" checked id="GPIssue" name="GPIssue"><span> GP Issue </span>
+            }
+            else
+            {
+                <input type="checkbox" id="GPIssue" name="GPIssue"><span> GP Issue </span>
+            }
+        }
+    }
+    </div>
+</div>
+
+<div class="col-md-6">
+    <div class="row_bar">
+    @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+    {
+        if (Model.MEOReviewCompleted)
+        {
+            if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+            {
+                if (Model.NoFurtherAction == true)
+                {
+                    <input type="checkbox" disabled checked id="NoFurAction" name="NoFurAction"><span> No Further Action </span>
+                }
+                else
+                {
+                    <input type="checkbox" disabled id="NoFurAction" name="NoFurAction"><span> No Further Action</span>
+                }
+            }
+            else
+            {
+                if (Model.NoFurtherAction == true)
+                {
+                    <input type="checkbox" checked id="NoFurAction" name="NoFurAction" disabled="disabled"><span> No Further Action </span>
+                }
+                else
+                {
+                    <input type="checkbox" id="NoFurAction" name="NoFurAction" disabled="disabled"><span> No Further Action</span>
+                }
+            }
+        }
+        else
+        {
+        <input type="checkbox" id="NoFurAction" disabled name="NoFurAction"><span> No Further Action</span>
+        }
+    }
+    else
+    {
+        if (Model.MEOReviewCompleted)
+        {
+            if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+            {
+                if (Model.NoFurtherAction == true)
+                {
+                    <input type="checkbox" checked id="NoFurAction" name="NoFurAction"><span> No Further Action </span>
+                }
+                else
+                {
+                    <input type="checkbox" id="NoFurAction" name="NoFurAction"><span> No Further Action</span>
+                }
+            }
+            else
+            {
+                if (Model.NoFurtherAction == true)
+                {
+                    <input type="checkbox" disabled checked id="NoFurAction" name="NoFurAction"><span> No Further Action </span>
+                }
+                else
+                {
+                    <input type="checkbox" disabled id="NoFurAction" name="NoFurAction"><span> No Further Action</span>
+                }
+            }
+        }
+        else
+        {
+            if (Model.NoFurtherAction == true)
+            {
+                <input type="checkbox" checked id="NoFurAction" name="NoFurAction"><span> No Further Action </span>
+            }
+            else
+            {
+                <input type="checkbox" id="NoFurAction" name="NoFurAction"><span> No Further Action</span>
+            }
+        }
+    }
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="row_bar">
+        @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+        {
+            if (Model.MEOReviewCompleted)
+            {
+                if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                {
+                    if (Model.CoronerDecisionForensicPM == true)
+                    {
+                    <input type="checkbox" disabled checked id="ForensicPM" name="ForensicPM"><span> Forensic PM </span>
+                    }
+                    else
+                    {
+                    <input type="checkbox" disabled id="ForensicPM" name="ForensicPM"><span> Forensic PM</span>
+                    }
+                }
+                else
+                {
+                    if (Model.CoronerDecisionForensicPM == true)
+                    {
+                <input type="checkbox" checked id="ForensicPM" name="ForensicPM" disabled="disabled"><span> Forensic PM </span>
+                    }
+                    else
+                    {
+                <input type="checkbox" id="ForensicPM" name="ForensicPM" disabled="disabled"><span> Forensic PM</span>
+                    }
+                }
+            }
+            else
+            {
+                if (Model.CoronerDecisionForensicPM == true)
+                {
+                    <input type="checkbox" disabled checked id="ForensicPM" name="ForensicPM"><span> Forensic PM </span>
+                }
+                else
+                {
+                    <input type="checkbox" disabled id="ForensicPM" name="ForensicPM"><span> Forensic PM</span>
+                }
+            }
+        }
+        else
+        {
+            if (Model.MEOReviewCompleted)
+            {
+                if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                {
+                    if (Model.CoronerDecisionForensicPM == true)
+                    {
+                        <input type="checkbox" checked id="ForensicPM" name="ForensicPM"><span> Forensic PM </span>
+                    }
+                    else
+                    {
+                        <input type="checkbox" id="ForensicPM" name="ForensicPM"><span> Forensic PM</span>
+                    }
+                }
+                else
+                {
+                    if (Model.CoronerDecisionForensicPM == true)
+                    {
+                        <input type="checkbox" disabled checked id="ForensicPM" name="ForensicPM"><span> Forensic PM </span>
+                    }
+                    else
+                    {
+                        <input type="checkbox" disabled id="ForensicPM" name="ForensicPM"><span> Forensic PM</span>
+                    }
+                }
+            }
+            else
+            {
+                if (Model.CoronerDecisionForensicPM == true)
+                {
+                    <input type="checkbox" checked id="ForensicPM" name="ForensicPM"><span> Forensic PM </span>
+                }
+                else
+                {
+                    <input type="checkbox" id="ForensicPM" name="ForensicPM"><span> Forensic PM</span>
+                }
+            }
+        }
+    </div>
+</div><br /><br />
+<div class="col-md-12">
+    <div class="row_bar checkbox-row">
+        <span><b>Funeral Arrangement:</b></span>
+    </div>
+</div> 
+<div class="col-md-2">
+    <div class="row_bar">
+        @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+        {
+            if (Model.MEOReviewCompleted)
+            {
+                if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                {
+                    if (Model.FuneralArrangement == 1)
+                    {
+                        <input type="checkbox" disabled checked id="IsCremated" name="IsCremated"><span> Cremated </span>
+                    }
+                    else if (Model.FuneralArrangement == 0)
+                    {
+                        <input type="checkbox" disabled id="IsCremated" name="IsCremated"><span> Cremated </span>
+                    }
+                    else
+                    {
+                        <input type="checkbox" disabled id="IsCremated" name="IsCremated"><span> Cremated </span>
+                    }
+                }
+                else
+                {
+                    if (Model.FuneralArrangement == 1)
+                    {
+                        <input type="checkbox" checked id="IsCremated" name="IsCremated" disabled="disabled"><span> Cremated </span>
+                    }
+                    else if (Model.FuneralArrangement == 0)
+                    {
+                        <input type="checkbox" disabled id="IsCremated" name="IsCremated"><span> Cremated </span>
+                    }
+                    else
+                    {
+                        <input type="checkbox" id="IsCremated" name="IsCremated" disabled="disabled"><span> Cremated </span>
+                    }
+                }
+            }
+            else
+            {
+                if (Model.FuneralArrangement == 1)
+                {
+                    <input type="checkbox" disabled checked id="IsCremated" name="IsCremated"><span> Cremated </span>
+                }
+                else if (Model.FuneralArrangement == 0)
+                {
+                    <input type="checkbox" disabled id="IsCremated" name="IsCremated"><span> Cremated </span>
+                }
+                else
+                {
+                    <input type="checkbox" disabled id="IsCremated" name="IsCremated"><span> Cremated </span>
+                }
+            }
+        }
+        else
+        {
+            if (Model.MEOReviewCompleted)
+            {
+                if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                {
+                    if (Model.FuneralArrangement == 1)
+                    {
+                        <input type="checkbox" checked id="IsCremated" name="IsCremated"><span> Cremated </span>
+                    }
+                    else if (Model.FuneralArrangement == 0)
+                    {
+                        <input type="checkbox" id="IsCremated" name="IsCremated"><span> Cremated </span>
+                    }
+                    else
+                    {
+                        <input type="checkbox" disabled id="IsCremated" name="IsCremated"><span> Cremated </span>
+                    }
+                }
+                else
+                {
+                    if (Model.FuneralArrangement == 1)
+                    {
+                        <input type="checkbox" disabled checked id="IsCremated" name="IsCremated"><span> Cremated </span>
+                    }
+                    else if (Model.FuneralArrangement == 0)
+                    {
+                        <input type="checkbox" id="IsCremated" name="IsCremated"><span> Cremated </span>
+                    }
+                    else
+                    {
+                        <input type="checkbox" disabled id="IsCremated" name="IsCremated"><span> Cremated </span>
+                    }
+                }
+            }
+            else
+            {
+                if (Model.FuneralArrangement == 1)
+                {
+                    <input type="checkbox" checked id="IsCremated" name="IsCremated"><span> Cremated </span>
+                }
+                else if (Model.FuneralArrangement == 0)
+                {
+                    <input type="checkbox" id="IsCremated" name="IsCremated"><span> Cremated </span>
+                }
+                else
+                {
+                    <input type="checkbox" disabled id="IsCremated" name="IsCremated"><span> Cremated </span>
+                }
+            }
+        }
+    </div>
+</div>    
+<div class="col-md-2">
+<div class="row_bar">
+    @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+    {
+        if (Model.MEOReviewCompleted)
+        {
+            if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+            {
+                if (Model.FuneralArrangement == 2)
+                {
+                    <input type="checkbox" disabled checked id="IsBuried" name="IsBuried"><span> Buried </span>
+                }
+                else if (Model.FuneralArrangement == 0)
+                {
+                    <input type="checkbox" disabled id="IsBuried" name="IsBuried"><span> Buried </span>
+                }
+                else
+                {
+                    <input type="checkbox" disabled id="IsBuried" name="IsBuried"><span> Buried </span>
+                }
+            }
+            else
+            {
+                if (Model.FuneralArrangement == 2)
+                {
+                    <input type="checkbox" checked id="IsBuried" name="IsBuried" disabled="disabled"><span> Buried </span>
+                }
+                else if (Model.FuneralArrangement == 0)
+                {
+                    <input type="checkbox" disabled id="IsBuried" name="IsBuried"><span> Buried </span>
+                }
+                else
+                {
+                    <input type="checkbox" id="IsBuried" name="IsBuried" disabled="disabled"><span> Buried </span>
+                }
+            }
+        }
+        else
+        {
+            if (Model.FuneralArrangement == 2)
+            {
+                <input type="checkbox" disabled checked id="IsBuried" name="IsBuried"><span> Buried </span>
+            }
+            else if (Model.FuneralArrangement == 0)
+            {
+                <input type="checkbox" disabled id="IsBuried" name="IsBuried"><span> Buried </span>
+            }
+            else
+            {
+                <input type="checkbox" disabled id="IsBuried" name="IsBuried"><span> Buried </span>
+            }
+        }
+    }
+    else
+    {
+        if (Model.MEOReviewCompleted)
+        {
+            if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+            {
+                if (Model.FuneralArrangement == 2)
+                {
+                    <input type="checkbox" checked id="IsBuried" name="IsBuried"><span> Buried </span>
+                }
+                else if (Model.FuneralArrangement == 0)
+                {
+                    <input type="checkbox" id="IsBuried" name="IsBuried"><span> Buried </span>
+                }
+                else
+                {
+                    <input type="checkbox" disabled id="IsBuried" name="IsBuried"><span> Buried </span>
+                }
+            }
+            else
+            {
+                if (Model.FuneralArrangement == 2)
+                {
+                    <input type="checkbox" disabled checked id="IsBuried" name="IsBuried"><span> Buried </span>
+                }
+                else if (Model.FuneralArrangement == 0)
+                {
+                    <input type="checkbox" id="IsBuried" name="IsBuried"><span> Buried </span>
+                }
+                else
+                {
+                    <input type="checkbox" disabled id="IsBuried" name="IsBuried"><span> Buried </span>
+                }
+            }
+        }
+        else
+        {
+            if (Model.FuneralArrangement == 2)
+            {
+                <input type="checkbox" checked id="IsBuried" name="IsBuried"><span> Buried </span>
+            }
+            else if (Model.FuneralArrangement == 0)
+            {
+                <input type="checkbox" id="IsBuried" name="IsBuried"><span> Buried </span>
+            }
+            else
+            {
+                <input type="checkbox" disabled id="IsBuried" name="IsBuried"><span> Buried </span>
+            }
+        }
+    }
+</div>
+</div> 
+<div class="col-md-3">
+<div class="row_bar">
+    @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+    {
+        if (Model.MEOReviewCompleted)
+        {
+            if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+            {
+                if (Model.FuneralArrangement == 3)
+                {
+                    <input type="checkbox" disabled checked id="IsBypassedMESystem" name="IsBypassedMESystem"><span> Bypassed ME System </span>
+                }
+                else if (Model.FuneralArrangement == 0)
+                {
+                    <input type="checkbox" disabled checked id="IsBypassedMESystem" name="IsBypassedMESystem"><span> Bypassed ME System </span>
+                }
+                else
+                {
+                    <input type="checkbox" disabled id="IsBypassedMESystem" name="IsBypassedMESystem"><span> Bypassed ME System </span>
+                }
+            }
+            else
+            {
+                if (Model.FuneralArrangement == 3)
+                {
+                    <input type="checkbox" checked id="IsBypassedMESystem" name="IsBypassedMESystem" disabled="disabled"><span> Bypassed ME System </span>
+                }
+                else if (Model.FuneralArrangement == 0)
+                {
+                    <input type="checkbox" disabled checked id="IsBypassedMESystem" name="IsBypassedMESystem"><span> Bypassed ME System </span>
+                }
+                else
+                {
+                    <input type="checkbox" id="IsBypassedMESystem" name="IsBypassedMESystem" disabled="disabled"><span> Bypassed ME System </span>
+                }
+            }
+        }
+        else
+        {
+            if (Model.FuneralArrangement == 3)
+            {
+                <input type="checkbox" disabled checked id="IsBypassedMESystem" name="IsBypassedMESystem"><span> Bypassed ME System </span>
+            }
+            else if (Model.FuneralArrangement == 0)
+            {
+                <input type="checkbox" disabled checked id="IsBypassedMESystem" name="IsBypassedMESystem"><span> Bypassed ME System </span>
+            }
+            else
+            {
+                <input type="checkbox" disabled id="IsBypassedMESystem" name="IsBypassedMESystem"><span> Bypassed ME System </span>
+            }
+        }
+    }
+    else
+    {
+        if (Model.MEOReviewCompleted)
+        {
+            if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+            {
+                if (Model.FuneralArrangement == 3)
+                {
+                    <input type="checkbox" checked id="IsBypassedMESystem" name="IsBypassedMESystem"><span> Bypassed ME System </span>
+                }
+                else if (Model.FuneralArrangement == 0)
+                {
+                    <input type="checkbox" id="IsBypassedMESystem" name="IsBypassedMESystem"><span> Bypassed ME System </span>
+                }
+                else
+                {
+                    <input type="checkbox" disabled id="IsBypassedMESystem" name="IsBypassedMESystem"><span> Bypassed ME System </span>
+                }
+            }
+            else
+            {
+                if (Model.FuneralArrangement == 3)
+                {
+                    <input type="checkbox" disabled checked id="IsBypassedMESystem" name="IsBypassedMESystem"><span> Bypassed ME System </span>
+                }
+                else if (Model.FuneralArrangement == 0)
+                {
+                    <input type="checkbox" id="IsBypassedMESystem" name="IsBypassedMESystem"><span> Bypassed ME System </span>
+                }
+                else
+                {
+                    <input type="checkbox" disabled id="IsBypassedMESystem" name="IsBypassedMESystem"><span> Bypassed ME System </span>
+                }
+            }
+        }
+        else
+        {
+            if (Model.FuneralArrangement == 3)
+            {
+                <input type="checkbox" checked id="IsBypassedMESystem" name="IsBypassedMESystem"><span> Bypassed ME System </span>
+            }
+            else if (Model.FuneralArrangement == 0)
+            {
+                <input type="checkbox" id="IsBypassedMESystem" name="IsBypassedMESystem"><span> Bypassed ME System </span>
+            }
+            else
+            {
+                <input type="checkbox" disabled id="IsBypassedMESystem" name="IsBypassedMESystem"><span> Bypassed ME System </span>
+            }
+        }
+    }
+</div>
+</div>                     
+<br /><br />
+<div class="col-md-12">
+    <div class="row_bar checkbox-row">
+        @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+        {
+            if (Model.MEOReviewCompleted == true)
+            {
+            <input type="checkbox" id="MEOReviewCompleted" disabled checked="@Model.MEOReviewCompleted" name="MEOReviewCompleted"><span>Review Form Complete?</span>
+            }
+            else
+            {
+            <input type="checkbox" id="MEOReviewCompleted" disabled name="MEOReviewCompleted"><span>Review Form Complete?</span>
+            }
+        }
+        else
+        {
+            if (Model.MEOReviewCompleted == true)
+            {
+                <input type="checkbox" disabled id="MEOReviewCompleted" checked="@Model.MEOReviewCompleted" name="MEOReviewCompleted"><span>Review Form Complete?</span>
+            }
+            else
+            {
+                <input type="checkbox" id="MEOReviewCompleted" name="MEOReviewCompleted"><span>Review Form Complete?</span>
+            }
+        }
+    </div>
+</div>
+<div class="col-md-8">
+    <div class="row">
+        @if (Model.MEOReviewCompleted == false)
+        {
+
+            <div class="col-md-6" id="dvNameLabel" style="display:none">
+                <div class="row_bar">
+                    <span><b><i>Name of MEO (print)</i></b></span>
+                </div>
+            </div>
+                        <div class="col-md-6" id="dvNameSpan" style="display:none">
+                            <div class="row_bar">
+                                @if (!string.IsNullOrEmpty(Model.MEOReviewCreatedBy))
+                                {
+                                    <span><b><i>@Model.CreatedBy</i></b></span>
+                                }
+                                else
+                                {
+                                    if (Session["FullName"] != null)
+                                    {
+                                        <span><b><i>@Convert.ToString(Session["FullName"])</i></b></span>
+                                    }
+                                    else
+                                    {
+                                        <span>&nbsp;</span>
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-6" id="dvDateLabel" style="display:none">
+                            <div class="row_bar">
+                                <span><b><i>Date</i></b></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6" id="dvDateSpan" style="display:none">
+                            <div class="row_bar">
+                                @if (!string.IsNullOrEmpty(Model.MEOReviewCreatedDate))
+                                {
+                                    <span><b><i>@Model.MEOReviewCreatedDate</i></b></span>
+                                }
+                                else
+                                {
+                                    <span><b><i>@DateTime.Now.ToString("dd/MM/yyyy")</i></b></span>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-6" id="dvSpeciality" style="display:none">
+                            <div class="row_bar">
+                                <span><b><i>Reviewer Speciality</i></b></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6" id="dvddlSpeciality" style="display:none">
+                            <div class="row_bar">
+                                <select class="form-control" id="MEOSpecialityID" name="MEOSpecialityID">
+                                    <option value="" selected="">Please Select</option>
+                                    @foreach (var item in ViewBag.SpecialityDDM)
+                                    {
+                                           <option value="@item.SpecialityID">@item.SpecialityName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+        }
+        else
+        {
+            <div class="col-md-6" id="dvNameLabel" style="display:block">
+                <div class="row_bar">
+                    <span><b><i>Name of medical examiner (print)</i></b></span>
+                </div>
+            </div>
+                        <div class="col-md-6" id="dvNameSpan" style="display:block">
+                            <div class="row_bar">
+                                @if (!string.IsNullOrEmpty(Model.MEOReviewCreatedBy))
+                                {
+                                    <span><b><i>@Model.CreatedBy</i></b></span>
+                                }
+                                else
+                                {
+                                    if (Session["FullName"] != null)
+                                    {
+                                        <span><b><i>@Convert.ToString(Session["FullName"])</i></b></span>
+                                    }
+                                    else
+                                    {
+                                        <span>&nbsp;</span>
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-6" id="dvDateLabel" style="display:block">
+                            <div class="row_bar">
+                                <span><b><i>Date</i></b></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6" id="dvDateSpan" style="display:block">
+                            <div class="row_bar">
+                                @if (!string.IsNullOrEmpty(Model.MEOReviewCreatedDate))
+                                {
+                                    <span><b><i>@Model.MEOReviewCreatedDate</i></b></span>
+                                }
+                                else
+                                {
+                                    <span><b><i>@DateTime.Now.ToString("dd/MM/yyyy")</i></b></span>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-6" id="dvSpeciality" style="display:none">
+                            <div class="row_bar">
+                                <span><b><i>Reviewer Speciality</i></b></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6" id="dvddlSpeciality">
+                            <div class="row_bar">
+                                <select class="form-control" disabled id="MEOSpecialityID"  style="display:none" name="MEOSpecialityID">
+                                    <option value="" selected="">Please Select</option>
+                                    @foreach (var item in ViewBag.SpecialityDDM)
+                                    {
+                                        if (Model.MEOSpecialityID == item.SpecialityID)
+                                        {
+                                            <option selected value="@item.SpecialityID">@item.SpecialityName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.SpecialityID">@item.SpecialityName</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+        }
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+                    </div>
+                <div class="pull-right">
+                    @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+                    {
+                        <button id="activate-prev-1" disabled name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
+                        if (Model.MEOReviewCompleted == true)
+                        {
+                            if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                            {
+                            <button id = "BtnNext" disabled name = "BtnNext" class="btn btn-primary btn-lg">Save</button>
+                            }
+                            else
+                            {
+                            <button id="BtnNext" disabled name="BtnNext" class="btn btn-primary btn-lg">Save</button>
+                            }
+                        }
+                        else
+                        {
+                            <button id="BtnNext" disabled name="BtnNext" class="btn btn-primary btn-lg">Save</button>
+                        }
+                    }
+                    else
+                    {
+                        <button id="activate-prev-1" name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
+                        if (Model.MEOReviewCompleted == true)
+                        {
+                            if (Model.MEOReviewCreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                            {
+                                <button id="BtnNext" name="BtnNext" class="btn btn-primary btn-lg">Save</button>
+                            }
+                            else
+                            {
+                                <button id = "BtnNext" disabled name = "BtnNext" class="btn btn-primary btn-lg">Save</button>
+                            }
+                        }
+                        else
+                        {
+                            <button id="BtnNext" name="BtnNext" class="btn btn-primary btn-lg">Save</button>
+                        }
+                    }
+                </div>
+                @*</form>*@
+            </div>
+        }
+    </div>
+</div>
+<br />
+<br />
+@*<div class="pull-right">
+        <button class="btn btn-primary btn-lg" id="btnClose3">Close</button>
+    </div>*@
+<div class="modal fade" id="modelClose3">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Message</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="form-section" style="text-align:left">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row_bar">
+                                <div>Do you want to exit without saving your changes?</div>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-primary btn-block" id="btnModelClose1" data-dismiss="modal" formmethod="post" onclick="location.href='@Url.Action("MortalityReview", "Home", new { id=Model.ID })'">Yes</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary btn-block" name="btnCloseYes" id="btnCloseYes">No</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>*@
+
+        </div>
+    </div>
+</div>
+<script>
+
+    function numbersonly(e) {
+        //debugger;
+        var unicode = e.charCode ? e.charCode : e.keyCode
+        if (unicode != 8) { //if the key isn't the backspace key (which we should allow)
+            if (unicode < 46 || unicode > 57) //if not a number
+                return false //disable key press
+        }
+    }
+    //$(document).ready(function () {
+
+    //    $("#DeathCertificateTime").change(function () {
+    $(document).ready(function () {
+        $("#txtTime").mouseleave(function () {
+             
+            debugger;
+            var data = $("#txtTime").val();
+            data = data.split(':')[0];
+            if (parseInt(data) >= 12 && parseInt(data)<24) {
+                $("#TimeType").val("PM");
+            }
+            else {
+                $("#TimeType").val("AM");
+            }
+        });
+    });
+</script>
+<script>
+   
+  
+    $(document).ready(function () {
+        $.ajax({
+            type: "post",
+            url: "/Home/GetReferralReasons",
+            data: { groupid: $('#ddlCoronerReferralGrp').val() },
+            datatype: "json",
+            traditional: true,
+            success: function (data) {
+                var district = "<select id='ddlCoronerReferral'>";
+                district = district + '<option value="">--Select Reason--</option>';
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].Reason_ID == $('#reasonid').val())
+                        district = district + '<option selected value=' + data[i].Reason_ID + '>' + data[i].ReasonName + '</option>';
+                    else
+                        district = district + '<option value=' + data[i].Reason_ID + '>' + data[i].ReasonName + '</option>';
+                }
+                district = district + '</select>';
+                $('#ddlCoronerReferral').html(district);
+            }
+        });
+        $("#btnClose3").click(function () {
+            $("#modelClose3").modal();
+        });
+        $('#ddlCoronerReferralGrp').change(function () {
+            $.ajax({
+                type: "post",
+                url: "/Home/GetReferralReasons",
+                data: { groupid: $('#ddlCoronerReferralGrp').val() },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    var district = "<select id='ddlCoronerReferral'>";
+                    district = district + '<option value="">--Select Reason--</option>';
+                    //alert(data[i].Value + ',' + data[i].Text);
+                    for (var i = 0; i < data.length; i++) {
+                            district = district + '<option value=' + data[i].Reason_ID + '>' + data[i].ReasonName + '</option>';
+                    }
+                    district = district + '</select>';
+                    $('#ddlCoronerReferral').html(district);
+                }
+            });
+        });
+
+
+       
+    });
+</script>
+<script type="text/javascript">
+$(function () {
+
+     $("#btnModelClose3").click(function(){
+window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.ID }))";
+    });
+
+});
+</script>
+<script>
+        $(document).ready(function () {
+            $("#btnCloseYes").click(function () {
+                $("#modelClose3").modal('hide');
+            });
+        });
+        (function ($) {
+            $(".datepicker").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd/mm/yy'
+            });
+        })(jQuery)
+</script>
+<script>
+        $(document).ready(function () {
+            $("#CoronerReferral").click(function () {
+                if ($(this).is(":checked"))
+                {
+                    $("#CoronerReason1").css("display", "block");
+                    $("#CoronerReason2").css("display", "block");
+                    $("#HOCBlank").css("display", "none");
+                }
+                else
+                {
+                    $("#CoronerReason1").css("display", "none");
+                    $("#CoronerReason2").css("display", "none");
+                    $("#HOCBlank").css("display", "block");
+                }
+            });
+        });
+</script>
+<script>
+        $(document).ready(function () {
+            $("#IsCremated").click(function () {
+                if ($(this).is(":checked"))
+                {
+                    $("#IsBuried").prop("disabled", true);
+                    $("#IsBypassedMESystem").prop("disabled", true);
+                }
+                else
+                {
+                    $("#IsBuried").prop("disabled", false);
+                    $("#IsBypassedMESystem").prop("disabled", false);
+                }
+            });
+        });
+</script>
+<script>
+        $(document).ready(function () {
+            $("#IsBuried").click(function () {
+                if ($(this).is(":checked"))
+                {
+                    $("#IsCremated").prop("disabled", true);
+                    $("#IsBypassedMESystem").prop("disabled", true);
+                }
+                else
+                {
+                    $("#IsCremated").prop("disabled", false);
+                    $("#IsBypassedMESystem").prop("disabled", false);
+                }
+            });
+        });
+</script>
+<script>
+        $(document).ready(function () {
+            $("#IsBypassedMESystem").click(function () {
+                if ($(this).is(":checked"))
+                {
+                    $("#IsCremated").prop("disabled", true);
+                    $("#IsBuried").prop("disabled", true);
+                }
+                else
+                {
+                    $("#IsCremated").prop("disabled", false);
+                    $("#IsBuried").prop("disabled", false);
+                }
+            });
+        });
+</script>
+<script>
+        $(document).ready(function () {
+            $("#DeathCertificate").click(function () {
+                if ($(this).is(":checked"))
+                {
+                    $("#deathdate").css("display", "block");
+                    $("#deathtime").css("display", "block");
+                    $("#deathtimetype").css("display", "block");
+                }
+                else
+                {
+                    $("#deathdate").css("display", "none");
+                    $("#deathtime").css("display", "none");
+                    $("#deathtimetype").css("display", "none");
+                }
+            });
+        });
+</script>
+<script type="text/javascript">
+
+    $("#txtTime").on("change", function () {
+        debugger;
+        var reg = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
+        if (!reg.test($('[id*=txtTime]').val())) {
+            alert("Please enter valid time in 24 hour format");
+            $('[id*=txtTime]').val('');
+            $('[id*=txtTime]').focus();
+            $("#deathtimetype").children('div').children("span").text("");
+        }
+        else
+        {
+            var data = $("#txtTime").val();
+            data = data.split(':')[0];
+            if (parseInt(data) >= 12 && parseInt(data) < 24) {
+                //$("#TimeType").val("PM");
+                $("#deathtimetype").children('div').children("span").text("PM");
+            }
+            else {
+                //$("#TimeType").val("AM");
+                $("#deathtimetype").children('div').children("span").text("AM");
+            }
+        }
+    });
+
+    $("#BtnNext").click(function () {
+        //alert("hi");
+        $('[id*=txtTime]').mask('00:00');
+        $('[id*=txtTime]').on("change", function () {
+                var reg = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
+            if (!reg.test($('[id*=txtTime]').val())) {
+                    alert("Please enter valid time in 24 hour format");
+                $('[id*=txtTime]').val('');
+                $('[id*=txtTime]').focus();
+                }
+            });
+        });
+</script>
+<script>
+        $(document).ready(function () {
+            $("#MEOReviewCompleted").click(function () {
+                if ($(this).is(":checked")) {
+                    $("#dvNameLabel").css("display", "block");
+                    $("#dvNameSpan").css("display", "block");
+                    $("#dvDateLabel").css("display", "block");
+                    $("#dvDateSpan").css("display", "block");
+                    //$("#dvSpeciality").css("display", "block");
+                    //$("#dvddlSpeciality").css("display", "block");
+                }
+                else {
+                    $("#dvNameLabel").css("display", "none");
+                    $("#dvNameSpan").css("display", "none");
+                    $("#dvDateLabel").css("display", "none");
+                    $("#dvDateSpan").css("display", "none");
+                    //$("#dvSpeciality").css("display", "none");
+                    //$("#dvddlSpeciality").css("display", "none");
+                }
+            });
+        });
+</script>
+
+
+

@@ -1,0 +1,849 @@
+﻿@model NHS.Common.MROutcomeDashbaord
+@{
+    ViewBag.Title = "Mortality Review Outcome Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/js/bootstrap-datepicker.min.js"></script>*@
+<style>
+    .fa2 {
+        display: inline-block;
+        font: normal normal normal 40px/1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        transform: translate(0, 0);
+        font-size: 37px;
+        color: #bbb;
+        margin: 0 0 0 0;
+    }
+</style>
+<h3 align="center">Review Outcome Dashboard</h3>
+<div class="ds_dash_box_sec1">
+    <div class="row">
+        <div class="col-md-12">
+            <form action="@Url.Action("MROutcomeDashboard", "Home")" method="post">
+                <div class="row">
+                    <div class="col-md-2">
+                        @if (!string.IsNullOrEmpty(Convert.ToString(Session["ReportStartDate"])) && Convert.ToString(Session["ReportStartDate"]) != "01/01/0001")
+                        {
+                            <div class="row_bar">
+                                <input style="font-size:10px;height:38px;" class="form-control  datepicker" readonly="readonly" type="text" id="StartDate" name="StartDate" placeholder="All Dates" value="@Convert.ToDateTime(Session["ReportStartDate"]).ToString("dd/MM/yyyy")">
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="row_bar">
+                                <input style="font-size:10px;height:38px;" class="form-control  datepicker" readonly="readonly" type="text" id="StartDate" name="StartDate" placeholder="All Dates" value="@Convert.ToString(System.DateTime.Now.AddDays(-30).ToString("dd/MM/yyyy"))">
+                            </div>
+                        }
+                    </div>
+                    @if (!string.IsNullOrEmpty(Convert.ToString(Session["ReportEndDate"])) && Convert.ToString(Session["ReportEndDate"]) != "01/01/0001")
+                    {
+                        <div class="col-md-2">
+                            <div class="row_bar">
+                                <input style="font-size:10px;height:38px;" class="form-control  datepicker" readonly="readonly" type="text" id="EndDate" name="EndDate" placeholder="All Dates" value="@Convert.ToDateTime(Session["ReportEndDate"]).ToString("dd/MM/yyyy")">&nbsp;&nbsp;
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-2">
+                            <div class="row_bar">
+                                <input style="font-size:10px;height:38px;" class="form-control  datepicker" readonly="readonly" type="text" id="EndDate" name="EndDate" placeholder="All Dates" value="@Convert.ToDateTime(System.DateTime.Now).ToString("dd/MM/yyyy")">&nbsp;&nbsp;
+                            </div>
+                        </div>
+                    }
+                    <div class="col-md-2">
+                        <div class="row_bar">
+                            <select style="font-size:12px;" class="form-control" id="ddlCareGroups" name="ddlCareGroups">
+                                @if (Convert.ToString(Session["ReportCaregroup"]) == "0")
+                                {
+                                    <option selected value="0">
+                                        All Caregroups
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="0">
+                                        All Caregroups
+                                    </option>
+                                }
+                                @foreach (var item in ViewBag.CareGroups)
+                                {
+                                    if (Session["ReportCaregroup"] != null)
+                                    {
+                                        if (item.CareGroup == Convert.ToString(Session["ReportCaregroup"]) && Convert.ToString(Session["ReportCaregroup"]) != "0"
+                                            && Convert.ToString(Session["ReportCaregroup"]) != "")
+                                        {
+                                            <option selected value="@item.CareGroup">@item.CareGroup</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.CareGroup">@item.CareGroup</option>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.CareGroup">@item.CareGroup</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="row_bar">
+                            <select style="font-size:12px;" class="form-control" id="ddlSpeciality" name="ddlSpeciality">
+                                @if (Convert.ToString(Session["ReportDischargeSpeciality"]) == "0")
+                                {
+                                    <option selected value="">
+                                        All Specialities
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="0">
+                                        All Specialities
+                                    </option>
+                                }
+                                @foreach (var item in ViewBag.LoadDischargeSpecialityDropdown)
+                                {
+                                    if (Session["ReportSpeciality"] != null)
+                                    {
+                                        if (item.DischargeSpecialityCode == Convert.ToString(Session["ReportSpeciality"]) && Convert.ToString(Session["ReportSpeciality"]) != "0"
+                                            && Convert.ToString(Session["ReportSpeciality"]) != "")
+                                        {
+                                            <option selected value="@item.DischargeSpecialityCode">@item.DischargeSpeciality</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.DischargeSpecialityCode">@item.DischargeSpeciality</option>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.DischargeSpecialityCode">@item.DischargeSpeciality</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-md-2">
+                        <div class="row_bar">
+                            <select style="font-size:12px;" class="form-control" id="ddlPatientType" name="ddlPatientType">
+                                @if (Convert.ToString(Session["ReportPatientType"]) == "0")
+                                {
+                                    <option selected value="0">
+                                        All Patient Type
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="0">
+                                        All Patient Type
+                                    </option>
+                                }
+                                @foreach (var item in ViewBag.PatientTypeDDM)
+                                {
+                                    if (Session["ReportPatientType"] != null)
+                                    {
+                                        if (item.PatientType == Convert.ToString(Session["ReportPatientType"]) && Convert.ToString(Session["ReportPatientType"]) != "0"
+                                            && Convert.ToString(Session["ReportPatientType"]) != "")
+                                        {
+                                            <option selected value="@item.PatientType">@item.PatientTypeLongText</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.PatientType">@item.PatientTypeLongText</option>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.PatientType">@item.PatientTypeLongText</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="row_bar">
+                            <select style="font-size:12px;" class="form-control" id="ddlWardDeath" name="ddlWardDeath">
+                                @if (Convert.ToString(Session["ReportWardDeath"]) == "0")
+                                {
+                                    <option selected value="">
+                                        All Ward of Death
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="0">
+                                        All Ward of Death
+                                    </option>
+                                }
+                                @foreach (var item in ViewBag.Wards)
+                                {
+                                    if (Session["ReportWardDeath"] != null)
+                                    {
+                                        if (item.WardName == Convert.ToString(Session["ReportWardDeath"]) && Convert.ToString(Session["ReportWardDeath"]) != "0"
+                                                        && Convert.ToString(Session["ReportWardDeath"]) != "")
+                                        {
+                                            <option selected value="@item.WardName">@item.WardName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.WardName">@item.WardName</option>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.WardName">@item.WardName</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="row_bar">
+                            <select style="font-size:12px;" class="form-control" id="ddlDischargeConsultant" name="ddlDischargeConsultant">
+                                @if (Convert.ToString(Session["ReportDischargeConsultant"]) == "0")
+                                {
+                                    <option selected value="">
+                                        All Consultants
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="0">
+                                        All Consultants
+                                    </option>
+                                }
+                                @foreach (var item in ViewBag.Consultants)
+                                {
+                                    if (Session["ReportDischargeConsultant"] != null)
+                                    {
+                                        if (item.Consultant_Name == Convert.ToString(Session["ReportDischargeConsultant"]) && Convert.ToString(Session["ReportDischargeConsultant"]) != "0"
+                                            && Convert.ToString(Session["ReportDischargeConsultant"]) != "")
+                                        {
+                                            <option selected value="@item.Consultant_Name">@item.Consultant_Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Consultant_Name">@item.Consultant_Name</option>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Consultant_Name">@item.Consultant_Name</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="row_bar">
+                            <select style="font-size:12px;" class="form-control" id="ddlMENames" name="ddlMENames">
+                                @if (Convert.ToString(Session["ReportMEName"]) == "0")
+                                {
+                                    <option selected value="">
+                                        All ME
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="0">
+                                        All ME
+                                    </option>
+                                }
+                                @foreach (var item in ViewBag.MENames)
+                                {
+                                    if (Session["ReportMEName"] != null)
+                                    {
+                                        if (item.MEUserName == Convert.ToString(Session["ReportMEName"]) && Convert.ToString(Session["ReportMEName"]) != "0"
+                                            && Convert.ToString(Session["ReportMEName"]) != "")
+                                        {
+                                            <option selected value="@item.MEUserName">@item.MEName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.MEUserName">@item.MEName</option>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.MEUserName">@item.MEName</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>                    
+                    <div class="col-md-2">
+                        <div class="row_bar">
+                            <button id="btnSearch" type="submit" class="btn btn-primary btn-md" name="btnSearch">Search </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="ds_dash_box_sec1">
+    <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class="ds_dash_box_area1">
+                <div class="ds_dash_box_top">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td align="left" valign="top">
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td class="ds_dash_box_top_text1"><u>@Html.ActionLink(@Model.TotalDeaths.ToString(), "TotalDeaths", new { style = "color:#0072c6 !important" })</u></td>
+                                        <td>
+                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                <tr class="ds_dash_box_top_bor">
+                                                    <td align="left" valign="top" class="ds_dash_box_top_pad">AandE</td>
+                                                    <td align="left" valign="top" class="ds_dash_box_top_pad"><u>@Html.ActionLink(@Model.AandEDeathCount.ToString(), "AandEDeaths", new { style = "color:#0072c6 !important" })</u></td>
+                                                </tr>
+                                                <tr class="ds_dash_box_top_bor">
+                                                    <td align="left" valign="top" class="ds_dash_box_top_pad">Adult</td>
+                                                    <td align="left" valign="top" class="ds_dash_box_top_pad"><u>@Html.ActionLink(@Model.AdultDeathCount.ToString(), "AAPCDeaths", new { style = "color:#0072c6 !important" })</u></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            @if (!string.IsNullOrEmpty(Convert.ToString(Session["ReportStartDate"])) && !string.IsNullOrEmpty(Convert.ToString(Session["ReportEndDate"])) && Convert.ToString(Session["ReportEndDate"]) != "01/01/0001" && Convert.ToString(Session["ReportStartDate"]) != "01/01/0001")
+                            {
+                                <td align="left" valign="top" class="ds_dash_box_top2">Total Deaths <span class="ds_dash_box_bt_2">(@Convert.ToDateTime(Convert.ToString(Session["ReportStartDate"])).ToString("dd MMM yyyy") to @Convert.ToDateTime(Convert.ToString(Session["ReportEndDate"])).ToString("dd MMM yyyy"))</span></td>
+                            }
+                            else
+                            {
+                                <td align="left" valign="top" class="ds_dash_box_top2">Total Deaths <span class="ds_dash_box_bt_2">(@System.DateTime.Now.AddDays(-30).ToString("dd MMM yyyy") to @System.DateTime.Now.ToString("dd MMM yyyy"))</span></td>
+                            }
+                        </tr>
+
+                    </table>
+
+
+                </div>
+
+                <div class="ds_dash_box_bottom">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td align="center" valign="middle" class="ds_dash_box_bt_top">QAP Review</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td class="ds_dash_comp">Completed <span>&nbsp;&nbsp;&nbsp;<u>@Html.ActionLink(@Model.QAPCompleted.ToString(), "QAPReviewCount", new { completed = true, @style = "color:#016b10 !important" })</u></span></td>
+                                        <td class="ds_dash_comp">Outstanding <span class="ds_dash_box_bt_4">&nbsp;&nbsp;&nbsp;<u>@Html.ActionLink(@Model.QAPOutstanding.ToString(), "QAPReviewCount", new { completed = false, @style = "color:#f50707 !important" })</u></span></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="ds_dash_box_top_bor2">
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td class="ds_dash_box_bottom_bor">Review Outcomes</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <td align="right" valign="top" class="ds_dash_comp2">Care Quality Concerns</td>
+                                                    <td align="center" valign="top" class="ds_dash_comp_num">&nbsp;&nbsp;&nbsp;<u>@Html.ActionLink(@Model.CareQualityCount.ToString(), "CareQualityCount", new { @style = "color:#f50707 !important" })</u></td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="right" valign="top" class="ds_dash_comp2">Recommend Referral to Coroner</td>
+                                                    <td align="center" valign="top" class="ds_dash_comp_num">&nbsp;&nbsp;&nbsp;<u>@Html.ActionLink(@Model.RecommendReferralCoronerCount.ToString(), "RecommendedReferralCount", new { @style = "color:#f50707 !important" })</u></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class="ds_dash_box_area1">
+
+
+                <div class="ds_dash_box_bottom">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td align="center" valign="middle" class="ds_dash_box_bt_top">ME Review</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td class="ds_dash_comp">Completed <span class="ds_dash_box_bt_3">&nbsp;&nbsp;&nbsp;<u>@Html.ActionLink(@Model.MEReviewCompleted.ToString(), "MEReviewCount", new { completed = true, style = "color:#016b10 !important" })</u></span></td>
+                                        <td class="ds_dash_comp">Outstanding <span class="ds_dash_box_bt_4">&nbsp;&nbsp;&nbsp;<u>@Html.ActionLink(@Model.MEReviewOutstanding.ToString(), "MEReviewCount", new { completed = false, style = "color:#f50707 !important" })</u></span></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="ds_dash_box_top_bor2">
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td class="ds_dash_box_bottom_bor">Deaths</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <td align="right" valign="top" class="ds_dash_comp2">Expected</td>
+                                                    <td align="center" valign="top" class="ds_dash_comp_num"><u>@Html.ActionLink(@Model.ExpectedDeathCount.ToString(), "MEReviewDeathExpectancy", new { causeid = 3, style = "color:#016b10 !important" })</u></td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="right" valign="top" class="ds_dash_comp2">Unexpected</td>
+                                                    <td align="center" valign="top" class="ds_dash_comp_num"><u>@Html.ActionLink(@Model.UnexpectedDeathCount.ToString(), "MEReviewDeathExpectancy", new { causeid = 1, style = "color:#016b10 !important" })</u></td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="right" valign="top" class="ds_dash_comp2">Sudden but NOT unexpected</td>
+                                                    <td align="center" valign="top" class="ds_dash_comp_num"><u>@Html.ActionLink(@Model.SuddenNotUnexpectedDeathCount.ToString(), "MEReviewDeathExpectancy", new { causeid = 2, style = "color:#016b10 !important" })</u></td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="right" valign="top" class="ds_dash_comp2">Individualised End of Life Care Plan</td>
+                                                    <td align="center" valign="top" class="ds_dash_comp_num"><u>@Html.ActionLink(@Model.IndividualEndOfLifeDeathCount.ToString(), "MEReviewDeathExpectancy", new { causeid = 4, style = "color:#016b10 !important" })</u></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td height="10" class=""></td>
+                        </tr>
+                        <tr>
+                            <td class="ds_dash_box_top_bor2">
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td class="ds_dash_box_bottom_bor">Review Outcomes</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <td align="right" valign="top" class="ds_dash_comp2">MCCD Issued</td>
+                                                    <td align="center" valign="top" class="ds_dash_comp_num"><u>@Html.ActionLink(@Model.MCCDIssuedCount.ToString(), "ReviewOutcome", new { mccd = true, referral = false, postmortem = false, style = "color:#016b10 !important" })</u></td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="right" valign="top" class="ds_dash_comp2">Coroner Referral</td>
+                                                    <td align="center" valign="top" class="ds_dash_comp_num"><u>@Html.ActionLink(@Model.CoronerReferralCount.ToString(), "ReviewOutcome", new { mccd = false, referral = true, postmortem = false, style = "color:#016b10 !important" })</u></td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="right" valign="top" class="ds_dash_comp2">Hospital Post Mortem</td>
+                                                    <td align="center" valign="top" class="ds_dash_comp_num"><u>@Html.ActionLink(@Model.HospitalPortMortemCount.ToString(), "ReviewOutcome", new { mccd = false, referral = false, postmortem = true, style = "color:#016b10 !important" })</u></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class="ds_dash_box_area1">
+
+
+                <div class="ds_dash_box_bottom">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td align="center" valign="middle" class="ds_dash_box_bt_top">ME Team Referrals</td>
+                        </tr>
+                        <tr>
+                            <td class="">
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td  height="50" align="right" valign="middle" class="ds_dash_comp2">Patient Safety for SIRI Scoping</td>
+                                        <td  height="50" align="right" valign="middle" class="ds_dash_comp_num"><u>@Html.ActionLink(@Model.SIRIScopingCount.ToString(), "OtherReferralCount", new { patientsiri = true, safeguard = false, learningdisability = false, childdeath = false, wardteam = false, headcompliance = false, palscomplaints = false, other = false, style = "color:#016b10 !important" })</u></td>
+                                    </tr>
+                                    <tr>
+                                        <td height="50" align="right" valign="middle" class="ds_dash_comp2">Safeguarding Team Notified</td>
+                                        <td height="50" align="right" valign="middle" class="ds_dash_comp_num"><u>@Html.ActionLink(@Model.SafeGuardingCount.ToString(), "OtherReferralCount", new { patientsiri = false, safeguard = true, learningdisability = false, childdeath = false, wardteam = false, headcompliance = false, palscomplaints = false, other = false, style = "color:#016b10 !important" })</u></td>
+                                    </tr>
+                                    <tr>
+                                        <td height="50" align="right" valign="middle" class="ds_dash_comp2">Learning Disability Nurse</td>
+                                        <td height="50" align="right" valign="middle" class="ds_dash_comp_num"><u>@Html.ActionLink(@Model.LearningDisabilityCount.ToString(), "OtherReferralCount", new { patientsiri = false, safeguard = false, learningdisability = true, childdeath = false, wardteam = false, headcompliance = false, palscomplaints = false, other = false, style = "color:#016b10 !important" })</u></td>
+                                    </tr>
+                                    <tr>
+                                        <td height="50" align="right" valign="middle" class="ds_dash_comp2">Child Death Coordinator</td>
+                                        <td height="50" align="right" valign="middle" class="ds_dash_comp_num"><u>@Html.ActionLink(@Model.ChildDeathCount.ToString(), "OtherReferralCount", new { patientsiri = false, safeguard = false, learningdisability = false, childdeath = true, wardteam = false, headcompliance = false, palscomplaints = false, other = false, style = "color:#016b10 !important" })</u></td>
+                                    </tr>
+                                    <tr>
+                                        <td height="50" align="right" valign="middle" class="ds_dash_comp2">Referred To Ward Team</td>
+                                        <td height="50" align="right" valign="middle" class="ds_dash_comp_num"><u>@Html.ActionLink(@Model.WardTeamCount.ToString(), "OtherReferralCount", new { patientsiri = false, safeguard = false, learningdisability = false, childdeath = false, wardteam = true, headcompliance = false, palscomplaints = false, other = false, style = "color:#016b10 !important" })</u></td>
+                                    </tr>
+                                    <tr>
+                                        <td height="50" align="right" valign="middle" class="ds_dash_comp2">Head Of Compliance</td>
+                                        <td height="50" align="right" valign="middle" class="ds_dash_comp_num"><u>@Html.ActionLink(@Model.HeadComplianceCount.ToString(), "OtherReferralCount", new { patientsiri = false, safeguard = false, learningdisability = false, childdeath = false, wardteam = false, headcompliance = true, palscomplaints = false, other = false, style = "color:#016b10 !important" })</u></td>
+                                    </tr>
+                                    <tr>
+                                        <td height="50" align="right" valign="middle" class="ds_dash_comp2">PAL/s Complaints</td>
+                                        <td height="50" align="right" valign="middle" class="ds_dash_comp_num"><u>@Html.ActionLink(@Model.PALSComplaintsCount.ToString(), "OtherReferralCount", new { patientsiri = false, safeguard = false, learningdisability = false, childdeath = false, wardteam = false, headcompliance = false, palscomplaints = true, other = false, style = "color:#016b10 !important" })</u></td>
+                                    </tr>
+                                    <tr>
+                                        <td height="50" align="right" valign="middle" class="ds_dash_comp2">Other</td>
+                                        <td height="50" align="right" valign="middle" class="ds_dash_comp_num"><u>@Html.ActionLink(@Model.OtherCount.ToString(), "OtherReferralCount", new { patientsiri = false, safeguard = false, learningdisability = false, childdeath = false, wardteam = false, headcompliance = false, palscomplaints = false, other = true, style = "color:#016b10 !important" })</u></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ds_dash_box_area1">
+    <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class="ds_dash_box_area1">
+                <div class="ds_dash_box_bottom">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td align="center" valign="middle" class="ds_dash_box_bt_top">ME SJR Triage Assessment</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td>
+                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <td class="ds_dash_comp">Required</td>
+                                                    <td class="ds_dash_box_bt_5"><u>@Html.ActionLink(@Model.SJRRequired.ToString(), "SJRRequiredCount", new { required = true, style = "color:#016b10 !important" })</u></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="ds_dash_comp">Not Required </td>
+                                                    <td class="ds_dash_box_bt_3"><u>@Html.ActionLink(@Model.SJRNotRequired.ToString(), "SJRRequiredCount", new { required = false, style = "color:#016b10 !important" })</u></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <td>
+                                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                            <tr>
+                                                                <td class="ds_dash_comp">% of SJR Review<br/>Requested</td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                    <td align="center" valign="middle" class="ds_dash_box_bt_6">@Model.SJRequestedPercentage.ToString()%</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="ds_dash_box_top_bor2">
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td class="ds_dash_box_bottom_bor">Reasons</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <td align="right" valign="top" class="ds_dash_comp2">Learning Disability Patient</td>
+                                                    <td align="center" valign="top" class="ds_dash_comp_num"><u>@Html.ActionLink(@Model.SJRLearningDisabilityCount.ToString(), "ReasonCount", new { learning = true, paeds = false, mental = false, elective = false, nok = false, chemo = false, other = false, style = "color:#016b10 !important" })</u></td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="right" valign="top" class="ds_dash_comp2">Paediatric Patient</td>
+                                                    <td align="center" valign="top" class="ds_dash_comp_num"><u>@Html.ActionLink(@Model.PaediatricPatientCount.ToString(), "ReasonCount", new { learning = false, paeds = true, mental = false, elective = false, nok = false, chemo = false, other = false, style = "color:#016b10 !important" })</u></td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="right" valign="top" class="ds_dash_comp2">Mental health illness patient</td>
+                                                    <td align="center" valign="top" class="ds_dash_comp_num"><u>@Html.ActionLink(@Model.MentalIllnessPatientCount.ToString(), "ReasonCount", new { learning = false, paeds = false, mental = true, elective = false, nok = false, chemo = false, other = false, style = "color:#016b10 !important" })</u></td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="right" valign="top" class="ds_dash_comp2">Elective admission</td>
+                                                    <td align="center" valign="top" class="ds_dash_comp_num"><u>@Html.ActionLink(@Model.ElectiveAdmissionCount.ToString(), "ReasonCount", new { learning = false, paeds = false, mental = false, elective = true, nok = false, chemo = false, other = false, style = "color:#016b10 !important" })</u></td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="right" valign="top" class="ds_dash_comp2">NoK concerns about death</td>
+                                                    <td align="center" valign="top" class="ds_dash_comp_num"><u>@Html.ActionLink(@Model.NOKConcernsCount.ToString(), "ReasonCount", new { learning = false, paeds = false, mental = false, elective = false, nok = true, chemo = false, other = false, style = "color:#016b10 !important" })</u></td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="right" valign="top" class="ds_dash_comp2">Death within 30 days of chemo</td>
+                                                    <td align="center" valign="top" class="ds_dash_comp_num"><u>@Html.ActionLink(@Model.DeathChemoCount.ToString(), "ReasonCount", new { learning = false, paeds = false, mental = false, elective = false, nok = false, chemo = true, other = false, style = "color:#016b10 !important" })</u></td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="right" valign="top" class="ds_dash_comp2">Other</td>
+                                                    <td align="center" valign="top" class="ds_dash_comp_num"><u>@Html.ActionLink(@Model.OtherConcernCount.ToString(), "ReasonCount", new { learning = false, paeds = false, mental = false, elective = false, nok = false, chemo = false, other = true, style = "color:#016b10 !important" })</u></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td height="10" class=""></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class="ds_dash_box_area1">
+                <div class="ds_dash_box_bottom">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td align="center" valign="middle" class="ds_dash_box_bt_top">SJR Review</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td class="ds_dash_comp">Completed <span class="ds_dash_box_bt_3">&nbsp;&nbsp;&nbsp;<u>@Html.ActionLink(@Model.SJR1Completed.ToString(), "SJR1CompletedCount", new { completed = true, style = "color:#016b10 !important" })</u></span></td>
+                                        <td class="ds_dash_comp">Outstanding <span class="ds_dash_box_bt_4">&nbsp;&nbsp;&nbsp;<u>@Html.ActionLink(@Model.SJR1Outstanding.ToString(), "SJR1CompletedCount", new { completed = false, style = "color:#016b10 !important" })</u></span></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="ds_dash_box_top_bor2">
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td class="ds_dash_box_bottom_bor">SJR1 Outcomes</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <td>
+                                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                            <tr>
+                                                                <td class="ds_dash_comp2">Problem with Care</td>
+                                                                <td align="center" class="ds_dash_box_bt_7"><u>@Html.ActionLink(@Model.ProblemWithCareCount.ToString(), "ProblemOccuredCount", new { style = "color:#016b10 !important" })</u></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                    <td>
+                                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                            <tr>
+                                                                <td class="ds_dash_comp2">Key Learnings</td>
+                                                                <td align="center" class="ds_dash_box_bt_8"><u>@Html.ActionLink(@Model.KeyLearningsCount.ToString(), "KeyLearningsCount", new { style = "color:#016b10 !important" })</u></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="ds_dash_box_bor_das">
+                                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                            <tr>
+                                                                <td width="65%" class="ds_dash_box_bottom_bor2">Consultant </td>
+                                                                <td width="32%" class="ds_dash_box_bottom_bor2">Review</td>
+                                                                <td width="3%" class="ds_dash_box_bottom_bor2">&nbsp;</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="right" class="ds_dash_comp2">Grade 0/1</td>
+                                                                <td align="center" class="ds_dash_box_bt_9"><u>@Html.ActionLink(@Model.ConsultantReviewGrade0Count.ToString(), "SJR1GradeCount", new { grade0 = true, grade2 = false, grade3 = false, style = "color:#016b10 !important" })</u></td>
+                                                                <td align="center">&nbsp;</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="right" class="ds_dash_comp2">Grade 2</td>
+                                                                <td align="center" class="ds_dash_box_bt_10"><u>@Html.ActionLink(@Model.ConsultantReviewGrade2Count.ToString(), "SJR1GradeCount", new { grade0 = false, grade2 = true, grade3 = false, style = "color:#016b10 !important" })</u></td>
+                                                                <td align="center">&nbsp;</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="right" class="ds_dash_comp2">Grade 3</td>
+                                                                <td align="center" class="ds_dash_box_bt_11"><u>@Html.ActionLink(@Model.ConsultantReviewGrade3Count.ToString(), "SJR1GradeCount", new { grade0 = false, grade2 = false, grade3 = true, style = "color:#016b10 !important" })</u></td>
+                                                                <td align="center">&nbsp;</td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                    <td>
+                                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                            <tr>
+                                                                <td width="3%">&nbsp;</td>
+                                                                <td width="65%" class="ds_dash_box_bottom_bor2">Consultant </td>
+                                                                <td width="32%" class="ds_dash_box_bottom_bor2">Review</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>&nbsp;</td>
+                                                                <td align="right" class="ds_dash_comp2">Grade 0/1</td>
+                                                                <td align="center" class="ds_dash_box_bt_9"><u>@Html.ActionLink(@Model.MSGReviewGrade0Count.ToString(), "MSGGradeCount", new { grade0 = true, grade2 = false, grade3 = false, style = "color:#016b10 !important" })</u></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>&nbsp;</td>
+                                                                <td align="right" class="ds_dash_comp2">Grade 2</td>
+                                                                <td align="center" class="ds_dash_box_bt_10"><u>@Html.ActionLink(@Model.MSGReviewGrade2Count.ToString(), "MSGGradeCount", new { grade0 = true, grade2 = false, grade3 = false, style = "color:#016b10 !important" })</u></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>&nbsp;</td>
+                                                                <td align="right" class="ds_dash_comp2">Grade 3</td>
+                                                                <td align="center" class="ds_dash_box_bt_11"><u>@Html.ActionLink(@Model.MSGReviewGrade3Count.ToString(), "MSGGradeCount", new { grade0 = true, grade2 = false, grade3 = false, style = "color:#016b10 !important" })</u></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                        <tr>
+                            <td class="ds_dash_box_bottom_bor">SJR 2</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td class="ds_dash_comp">Completed <span class="ds_dash_box_bt_3">&nbsp;&nbsp;&nbsp;<u>@Html.ActionLink(@Model.SJR1Completed.ToString(), "SJR1CompletedCount", new { completed = true, style = "color:#016b10 !important" })</u></span></td>
+                                        <td class="ds_dash_comp">Outstanding <span class="ds_dash_box_bt_4">&nbsp;&nbsp;&nbsp;<u>@Html.ActionLink(@Model.SJR1Outstanding.ToString(), "SJR1CompletedCount", new { completed = false, style = "color:#016b10 !important" })</u></span></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class="ds_dash_box_area1">
+
+
+                <div class="ds_dash_box_bottom">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td align="center" valign="middle" class="ds_dash_box_bt_top">Coroner's Decisions</td>
+                        </tr>
+                        <tr>
+                            <td class="">
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td height="65" align="right" valign="middle" class="ds_dash_comp2">No Further Action</td>
+                                        <td height="65" align="center" valign="middle" class="ds_dash_box_bt_12"><u>@Html.ActionLink(@Model.CoronerDecisionNoFurtherActionCount.ToString(), "CoronerDecisionCount", new { nfaction = true, postmortem = false, forensicpm = false, gpissue = false, inquest = false, a100 = false, style = "color:#016b10 !important" })</u></td>
+                                    </tr>
+                                    <tr>
+                                        <td height="65" align="right" valign="middle" class="ds_dash_comp2">PostMortem</td>
+                                        <td height="65" align="center" valign="middle" class="ds_dash_box_bt_13"><u>@Html.ActionLink(@Model.CorononerDecisionPostMortemCount.ToString(), "CoronerDecisionCount", new { nfaction = false, postmortem = true, forensicpm = false, gpissue = false, inquest = false, a100 = false, style = "color:#016b10 !important" })</u></td>
+                                    </tr>
+                                    <tr>
+                                        <td height="65" align="right" valign="middle" class="ds_dash_comp2">Forensic PM</td>
+                                        <td height="65" align="center" valign="middle" class="ds_dash_box_bt_14"><u>@Html.ActionLink(@Model.CoronerDecisionForensicPMCount.ToString(), "CoronerDecisionCount", new { nfaction = false, postmortem = false, forensicpm = true, gpissue = false, inquest = false, a100 = false, style = "color:#016b10 !important" })</u></td>
+                                    </tr>
+                                    <tr>
+                                        <td height="65" align="right" valign="middle" class="ds_dash_comp2">GP Issue</td>
+                                        <td height="65" align="center" valign="middle" class="ds_dash_box_bt_15"><u>@Html.ActionLink(@Model.CoronerDecisionGPIssueCount.ToString(), "CoronerDecisionCount", new { nfaction = false, postmortem = true, forensicpm = false, gpissue = false, inquest = false, a100 = false, style = "color:#016b10 !important" })</u></td>
+                                    </tr>
+                                    <tr>
+                                        <td height="65" align="right" valign="middle" class="ds_dash_comp2">Inquest</td>
+                                        <td height="65" align="center" valign="middle" class="ds_dash_box_bt_16"><u>@Html.ActionLink(@Model.CoronerDecisionInquestCount.ToString(), "CoronerDecisionCount", new { nfaction = false, postmortem = false, forensicpm = false, gpissue = false, inquest = true, a100 = false, style = "color:#016b10 !important" })</u></td>
+                                    </tr>
+                                    <tr>
+                                        <td height="65" align="right" valign="middle" class="ds_dash_comp2">100A</td>
+                                        <td height="65" align="center" valign="middle" class="ds_dash_box_bt_17"><u>@Html.ActionLink(@Model.CoronerDecision100ACount.ToString(), "CoronerDecisionCount", new { nfaction = false, postmortem = false, forensicpm = false, gpissue = false, inquest = false, a100 = true, style = "color:#016b10 !important" })</u></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="ds_dash_box_area2">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td class="ds_dash_box_bor_das2">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td align="center" valign="middle" class="ds_dash_box_bt_top">Positive Feedback</td>
+                        <td width="3%">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                
+                                    <tr class="ds_feedback_top">
+                                        @foreach (var item in Model.FeedbackTypes)
+                                        {
+                                            <td height="35" align="center" class="ds_feedback_top_bor">@item.FBType</td>
+                                        }
+                                    </tr>                                    
+                                
+                                
+                                    <tr>
+                                        @foreach (var item in Model.FeedbackTypes)
+                                        {
+                                            <td height="35" align="center" valign="middle" class="ds_feedback_2"><u>@Html.ActionLink(@item.Count.ToString(), "FeedbackTypeCount", new { feedbacktypeID = @item.FeedbackTypeID, style = "color:#016b10 !important" })</u></td>
+                                        }
+                                    </tr>
+                                
+                            </table>
+                        </td>
+                        <td>&nbsp;</td>
+                    </tr>
+                </table>
+            </td>
+            <td valign="middle">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td width="3%">&nbsp;</td>
+                        <td align="center" valign="middle" class="ds_feedback_abo">Above & Beyond<br /> Recognition</td>
+                        <td align="center" valign="middle" class="ds_feedback_abo2"><u>@Html.ActionLink(@Model.AboveandBeyondCount.ToString(), "AboveBeyondCount", new { style = "color:#016b10 !important" })</u></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+</div>
+<script>
+    (function ($) {
+    $(".datepicker").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: 'dd/mm/yy'
+        });
+    })(jQuery)
+</script>
+<script type="text/javascript">
+$(function () {
+    $("#btnSearch").click(function(){
+window.location.href = "@Url.Action("MROutcomeDashboard", "Home")";
+    });
+});
+</script>

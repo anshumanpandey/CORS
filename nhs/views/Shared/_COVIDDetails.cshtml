@@ -78,27 +78,27 @@
                         }
                         @if (item.TestResult.ToUpper().Trim() == "NOT DETECTED")
                         {
-                            <td align="center"><a href="@Url.Action("COVIDTestResults", "Home", new { id = item.ID})"><img src="~/images/GreenCircle.png" width="18" height="18" title="Not Detected"></a></td>
+                            <td align="center"><a href="@Url.Action("COVIDTestResults", "Home", new { id = item.ID})"><img src="~/images/GreenCircle.png" width="18" height="18" title="@item.ACTUAL_TEST_RESULT"></a></td>
                         }
                         else if (item.TestResult.ToUpper().Trim() == "DETECTED" || item.TestResult.ToUpper().Trim() == "DIAGNOSED")
                         {
-                            <td align="center"><a href="@Url.Action("COVIDTestResults", "Home", new { id = item.ID})"><img src="~/images/RedC.png" width="18" height="18" title="Detected"></a></td>
+                            <td align="center"><a href="@Url.Action("COVIDTestResults", "Home", new { id = item.ID})"><img src="~/images/RedC.png" width="18" height="18" title="@item.ACTUAL_TEST_RESULT"></a></td>
                         }
                         else if (item.TestResult.ToUpper().Trim() == "PENDING")
                         {
-                            <td align="center"><a href="@Url.Action("COVIDTestResults", "Home", new { id = item.ID})"><img src="~/images/amber.png" width="18" height="18" title="Pending"></a></td>
+                            <td align="center"><a href="@Url.Action("COVIDTestResults", "Home", new { id = item.ID})"><img src="~/images/amber.png" width="18" height="18" title="@item.ACTUAL_TEST_RESULT"></a></td>
                         }
                         else if (item.TestResult.ToUpper().Trim() == "NOT TESTED")
                         {
-                            <td align="center"><a href="@Url.Action("COVIDTestResults", "Home", new { id = item.ID})"><img src="~/images/purple.png" width="18" height="18" title="Not Tested"></a></td>
-                        }
-                        else if (item.TestResult.ToUpper().Trim() == "UNKNOWN" || item.TestResult.ToUpper().Trim() == "SAMPLE FAIL")
-                        {
-                            <td align="center"><a href="@Url.Action("COVIDTestResults", "Home", new { id = item.ID})"><img src="~/images/GeryImg.png" width="18" height="18" title="Not Tested"></a></td>
-                        }
+                            <td align="center"><a href="@Url.Action("COVIDTestResults", "Home", new { id = item.ID})"><img src="~/images/purple.png" width="18" height="18" title="@item.ACTUAL_TEST_RESULT"></a></td>
+                        }                        
                         else if (item.TestResult.ToUpper().Trim() == "COLD")
                         {
-                            <td align="center"><a href="@Url.Action("COVIDTestResults", "Home", new { id = item.ID})"><img src="~/images/blue.jpg" width="18" height="18" title="Not Tested"></a></td>
+                            <td align="center"><a href="@Url.Action("COVIDTestResults", "Home", new { id = item.ID})"><img src="~/images/blue.jpg" width="18" height="18" title="@item.ACTUAL_TEST_RESULT"></a></td>
+                        }
+                        else
+                        {
+                            <td align="center"><a href="@Url.Action("COVIDTestResults", "Home", new { id = item.ID})"><img src="~/images/GeryImg.png" width="18" height="18" title="@item.ACTUAL_TEST_RESULT"></a></td>
                         }
                         <td align="left" style="">@item.TestOrderLocation</td>
                         <td align="left" style="">@item.LastPatientLocation</td>

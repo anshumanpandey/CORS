@@ -1,0 +1,286 @@
+﻿@model List<NHS.Common.clsPatientDetails>
+@using NHS.Models;
+@{
+    ViewBag.Title = "Patient Report List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>*@
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>*@
+
+@*<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />*@
+
+<style>
+    #Newpatient {
+        font-size: 13px;
+    }
+
+        #Newpatient:hover {
+            text-decoration: underline;
+            color: cornflowerblue !important;
+        }
+
+    #DOD_ToolTip {
+        display: none;
+        position: absolute;
+        border: 1px solid gray;
+        WIDTH: 254PX;
+        HEIGHT: 100PX;
+        Z-INDEX: 999999;
+        background-color: white;
+    }
+
+    #DRow {
+        padding-right: 1px !Important;
+    }
+
+    #DateOfDeath:hover {
+        cursor: context-menu;
+    }
+    /*.tooltip {
+        border:1px solid gray;
+        padding:5px !important;
+    }*/
+    #DateOfDeath.tooltip {
+        border: 1px solid gray;
+        padding: 5px !important;
+    }
+</style>
+
+<h3 align="center">Patient List</h3>
+
+<br />
+<br />
+@*<script src="cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>*@
+
+<!-- DataTables -->
+<div class="col-sm-12">
+    
+    @*<div align="left">
+            <table style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;width:90%">
+                <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                    <td align="center" style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:12%"><b>Total Deaths</b></td>
+                    <td align="center" style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:12%  "><a href="@Url.Action("MedicalExaminerDashboard", "home", new { id = 0, qapreview = false, medtriage = false,meoreview=false } )"><span><b><u> @Session["TotalDeaths"] </u></b></span></a></td>
+                    <td align="center" style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:12%"><b>Outstanding<br />QAP Review</b></td>
+                    <td align="center" style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:12%;"><a href="@Url.Action("MedicalExaminerDashboard", "home", new { id = 0, qapreview = true, medtriage = false ,meoreview=false })"><span style="color:red; "><b><u> @Session["QAPCount"] </u></b></span></a></td>
+                    <td align="center" style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:12%"><b>Outstanding<br />MedTriage</b></td>
+                    <td align="center" style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:12%; color:red; "><a href="@Url.Action("MedicalExaminerDashboard", "home", new { id = 0, qapreview = false, medtriage = true ,meoreview=false })"><span style="color:red; "><b><u> @Session["MedCount"] </u></b></span></a></td>
+
+                    <td align="center" style="border-left:solid black 1px;border-top:solid black 1px;border-color:#a9d7cc;width: 12%;"><b>Outstanding<br>MEO Reviews </b></td>
+                    <td align="center" style="border-left:solid black 1px;border-top:solid black 1px;border-color:#a9d7cc;width: 12%;color:red;"><a href="@Url.Action("MedicalExaminerDashboard", "home", new { id = 0, qapreview = false, medtriage = false,meoreview=true  })"><span style="color:red; "><b><u> @Session["MEOCount"] </u></b></span></a></td>
+                </tr>
+            </table>
+        </div>*@
+    <br />
+        @*<div align="right" style="width:90%">
+            <a class="btn btn-primary btn-md" href='@Url.Action("Export", "home")'>Export</a>
+        </div>*@
+    <br />
+    <div class="row">
+        <div style="width:90%;">
+            <table class="stripe row-border order-column" style="overflow:auto;" id="tblPatientDetails">
+                <thead>
+                    <tr bgcolor="#a9d7cc" style="color:black;  font-size:11px;">
+                        <th align="left" width="8%" style="text-align:center;">Patient ID</th>
+                        <th align="left" width="15%" style="">Name</th>
+                        <th align="center" width="5%" style="display:none;">DOB</th>
+                        <th align="center" width="5%" style="display:none;">Date of Admission</th>
+                        <th align="center" width="8%" style="">Date of Death</th>
+                        <th align="left" width="10%" style="display:none;">Ward of Death</th>
+                        <th align="center" width="10%" style="">Discharge Consultant</th>
+                        <th align="center" width="10%" style="display:none;">Discharge Speciality</th>
+                        <th align="center" width="10%" style="">  Patient Type </th>
+                        @*<th align="center" width="3%" style="">Action</th>*@
+                    </tr>
+                </thead>
+                <tbody style="font-size:11px;padding:0px;">
+                    @if (Model.Count > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr class="Entries">
+                                <td align="center" class="PID"><u>@Html.ActionLink(item.PatientId.Trim(), "MortalityReview", new { id = item.ID }, new { @style = "color:blue;" })</u></td>
+                                <td align="left">&nbsp;&nbsp;@item.PatientName.Trim() (@item.AgeAtDeath Yrs)</td>
+                                <td align="left" style="display:none">@item.DOB</td>
+                                <td align="center" style="display:none">@item.DateofAdmission</td>
+                                @*changes*@
+                                <td align="left" id="DateOfDeath">&nbsp;&nbsp;&nbsp;@item.DateofDeath</td>
+                                <td align="center" style="display:none">&nbsp;&nbsp;@item.WardofDeath.Trim()</td>
+                                <td align="left">&nbsp;&nbsp;@item.DischargeConsutantName.Trim()</td>
+                                <td align="center" style="display:none">@item.DischargeSpeciality.Trim()</td>
+                                <td align="left">&nbsp;&nbsp;@item.PatientTypeLongText</td>
+                                @*<td align="center" class="PID"><a href="@Url.Action("EditPatient", "Home", new { id = item.ID})"><i class="fas fa-edit"></i></a></td>*@
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="14" class="text-center" align="center">No Records Found.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<script>
+
+
+    $(document).ready(function () {
+
+        var columns = ['DOB   ', 'Date of Admission', 'Ward of Death', 'Discharge Speciality']
+        $('#tblPatientDetails tbody tr').each(function () {
+            var cells = $('td', this);
+            var titleArr = cells.map(function (index) {
+                if (index == 2) {
+                    var div = document.createElement("div");
+                    div.innerHTML = columns[index - 2] + '                           : ' + this.innerHTML;
+                    div.style.fontSize = "bold";
+                    return div.innerHTML;
+                    index++;
+                }
+                else if (index == 3) {
+                    return columns[index - 2] + '      : ' + this.innerHTML;
+                    index++;
+                }
+                else if (index == 5) {
+                    return columns[index - 3] + '             : ' + this.innerHTML;
+                    index++;
+                }
+                else if (index == 7) {
+                    return columns[index - 4] + '   : ' + this.innerHTML;
+                    index++;
+                }
+                else {
+                }
+            });
+            cells.each(function (index) {
+                if (index == 0) {
+                    $(this).attr('title', titleArr.toArray().join('\r\n'))
+                }
+            })
+            var DOB = cells[0];
+            var DateOfAdmission = cells[1];
+            var DateOfDeath = cells[2];
+        });
+        var oTable = $('#tblPatientDetails').dataTable(
+            {
+                "ordering": true,
+                "paging": true,
+                "searching": true,
+                "pageLength": 10,
+                "order": [[4, "desc"]],
+                "aoColumns": [
+                    { "sName": "PatientId", "sTitle": "Patient ID", "bSortable": "true" },
+                    { "sName": "PatientName", "sTitle": "Name", "bSortable": "true" },
+                    { "sName": "DOB", "sTitle": "DOB", "sType": "date", "bSortable": "true" },
+                    { "sName": "DateOfAdmission", "sTitle": "Date Of Admission", "sType": "date", "bSortable": "true" },
+                    { "sName": "DateOfDeath", "sTitle": "Date Of Death", "sType": "date-uk", "bSortable": "true" },
+                    { "sName": "WardofDeath", "sTitle": "Ward Of Death", "bSortable": "true" },
+                    { "sName": "DischargeConsultant", "sTitle": "Discharge Consultant", "bSortable": "true" },
+                    { "sName": "DischargeSpeciality", "sTitle": "Discharge Specilaity", "bSortable": "true" },
+                    { "sName": "PatientType", "sTitle": "Patient Type", "bSortable": "true" }
+                ],
+                "lengthMenu": [
+                    [10, 20, 50, 100, -1],
+                    ['10 rows', '20 rows', '50 rows', '100 rows', 'Show all']],
+                "scrollX": true,
+                //language: '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
+                //"language": {
+                //    "emptyTable": '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
+                //    //"zeroRecords": '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
+                //},
+                //"scrollY": true,
+
+                //"columnDefs": [{ "targets": 4, "type": "date-eu" }],
+            });
+        $(oTable.fnGetNodes()).tooltip({
+            "delay": 0,
+            "track": true,
+            "fade": 250
+        });
+    });
+</script>
+<script>
+
+    //newly added script
+    jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+        "date-uk-pre": function (a) {
+            var ukDatea = a.split('-');
+            return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
+        },
+        "date-uk-asc": function (a, b) {
+            return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+        },
+        "date-uk-desc": function (a, b) {
+            return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+        }
+    });
+
+
+    //added
+    $(document).ready(function () {
+        $('#tblPatientDetails').DataTable(
+            {
+            "ordering": true,
+            "paging": true,
+            "searching": true,
+            "pageLength": 10,
+          //  "order": [[4, "desc"]],
+            "aoColumns": [
+                { "sName": "PatientId", "sTitle": "Patient ID", "bSortable": "true" },
+                { "sName": "PatientName", "sTitle": "Name", "bSortable": "true" },
+                { "sName": "DOB", "sTitle": "DOB", "sType": "date", "bSortable": "true" },
+                { "sName": "DateOfAdmission", "sTitle": "Date Of Admission", "sType": "date", "bSortable": "true" },
+                { "sName": "DateOfDeath", "sTitle": "Date Of Death", "sType": "date-uk","bSortable": "true" },
+                { "sName": "WardofDeath", "sTitle": "Ward Of Death", "bSortable": "true" },
+                { "sName": "DischargeConsultant", "sTitle": "Discharge Consultant", "bSortable": "true" },
+                { "sName": "DischargeSpeciality", "sTitle": "Discharge Specilaity", "bSortable": "true" },
+                { "sName": "PatientType", "sTitle": "Patient Type", "bSortable": "true" }
+            ],
+            "lengthMenu": [
+                [10, 20, 50, 100, -1],
+                ['10 rows', '20 rows', '50 rows', '100 rows', 'Show all']],
+            "scrollX": true,
+            //language: '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
+            //"language": {
+            //    "emptyTable": '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
+            //    //"zeroRecords": '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
+            //},
+            //"scrollY": true,
+
+            //"columnDefs": [{ "targets": 4, "type": "date-eu" }],
+        });
+
+        var table = $('#tblPatientDetails').DataTable({
+            'language': {
+                'emptyTable': '<a href="/path/' + 1 + '">Add new user</a>'
+            }
+        });
+
+    });
+    //"language": {
+    //    'emptyTable': '<a href="Home/PatientDetails/' + 1 + '">Add new patient</a>'
+    //},
+</script>
+<script type="text/javascript">
+$(function () {
+    $("#btnSearch").click(function(){
+window.location.href = "@Url.Action("MedicalExaminerDashboard", "Home")";
+    });
+});
+    (function ($) {
+        $(".datepicker").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy'
+        });
+    })(jQuery)
+</script>
+
+
+

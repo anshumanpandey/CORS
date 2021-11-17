@@ -1,0 +1,752 @@
+﻿@model NHS.Common.clsFeedBackModel
+@{
+    ViewBag.Title = "Positive Feedback";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #Cmnt {
+        margin-top: 5px !important;
+    }
+</style>
+<br />
+<br />
+<div class="container">
+    <div class="row form-group">
+        <div class="col-xs-12 col-lg-12">
+            <div class="row" align="right">
+                <div class="col-md-12">
+                    <input type="image" src="~/images/Delete.png" width="30" height="30" alt="Submit" id="btnClose6" title="Close" />
+                </div>
+            </div>
+            <ul class="nav nav-pills nav-justified thumbnail setup-panel">
+                <li class="disabled">
+                    <a href='@Url.Action("PatientDetails", "home", new { id=Model.Patient_ID })'>
+                        <h4 class="list-group-item-heading">
+                            Patient details
+                        </h4>
+                    </a>
+
+                </li>
+                <li class="disabled">
+                    <a href='@Url.Action("MedicalExaminerReview", "home", new { id=Model.Patient_ID })'>
+                        <h4 class="list-group-item-heading">
+                            Medical Examiner<br /> Scrutiny
+                        </h4>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href='@Url.Action("MedicalExaminerDecision", "home", new { id = Model.Patient_ID})'>
+                        <h4 class="list-group-item-heading">
+                            Medical Examiner Decision
+                        </h4>
+                    </a>
+                </li>
+                
+                <li class="disabled">
+                    <a href='@Url.Action("SJRAssessmentTriage", "home", new { id = Model.Patient_ID})'>
+                        <h4 class="list-group-item-heading">
+                            SJR Assessment<br /> Triage
+                        </h4>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href='@Url.Action("OtherReferrals", "home", new { id = Model.Patient_ID})'>
+                        <h4 class="list-group-item-heading">
+                            Other Referrals
+                        </h4>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href='@Url.Action("PositiveFeedback", "home", new { id = Model.Patient_ID})'>
+                        <h4 class="list-group-item-heading">
+                            Positive Feedback
+                        </h4>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href='@Url.Action("Declaration", "home", new { id = Model.Patient_ID})'>
+                        <h4 class="list-group-item-heading">
+                            Declaration
+                        </h4>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href='@Url.Action("FinalOutcome", "home", new { id = Model.Patient_ID})'>
+                        <h4 class="list-group-item-heading">
+                            Final Outcome<br />(MEO)
+                        </h4>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row setup-content" id="step-6">
+        <div class="col-xs-12 col-lg-12">
+            @using (Html.BeginForm("PositiveFeedback", "Home", FormMethod.Post, new { @id = Model.Patient_ID }))
+            {
+                <div class="col-md-12 well">
+                   @* <div class="form-section">*@
+                        <div class="lable_title">
+                            <h2>POSITIVE FEEDBACK</h2>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="row_bar checkbox-row">
+                                    @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+                                    {
+                                        if (Model.MedTriage == 3)
+                                        {
+                                        
+                                            if (Model.FormCompleted == true)
+                                            {
+                                            <input type="checkbox" disabled="disabled" id="FormCompleted" checked name="FormCompleted"><span> Above & Beyond form completed   </span>
+                                            }
+                                            else
+                                            {
+                                            <input type="checkbox" disabled="disabled" id="FormCompleted" name="FormCompleted"><span> Above & Beyond form completed  </span>
+                                            }
+                                        }
+                                        else if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() 
+                                            || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN"
+                                            || Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper())
+                                        {
+                                            if (Model.FormCompleted == true)
+                                            {
+                                                <input type="checkbox" disabled id="FormCompleted" checked name="FormCompleted"><span> Above & Beyond form completed   </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" disabled  id="FormCompleted" name="FormCompleted"><span> Above & Beyond form completed  </span>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (Model.FormCompleted == true)
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="FormCompleted" checked name="FormCompleted"><span> Above & Beyond form completed   </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="FormCompleted" name="FormCompleted"><span> Above & Beyond form completed  </span>
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() 
+                                            || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN"
+                                            || Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper())
+                                        {
+                                            if (Model.FormCompleted == true)
+                                            {
+                                                <input type="checkbox" id="FormCompleted" checked name="FormCompleted"><span> Above & Beyond form completed   </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" id="FormCompleted" name="FormCompleted"><span> Above & Beyond form completed  </span>
+                                            }
+                                        }
+                                        else if(Model.MedTriage == 3)
+                                        {
+
+                                            if (Model.FormCompleted == true)
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="FormCompleted" checked name="FormCompleted"><span> Above & Beyond form completed   </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="FormCompleted" name="FormCompleted"><span> Above & Beyond form completed  </span>
+                                            }
+                                            }
+
+                                            else
+                                            {
+                                                if (Model.FormCompleted == true)
+                                                {
+                                                <input type="checkbox" id="FormCompleted" checked name="FormCompleted"><span> Above & Beyond form completed   </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" id="FormCompleted" name="FormCompleted"><span> Above & Beyond form completed  </span>
+                                            }
+                                                }
+                                            }
+                                    <br />
+                                    @if (Convert.ToBoolean(ViewBag.IsReadOnly))
+                                    {
+                                    if (Model.MedTriage == 3)
+                                    {
+                                        
+                                            if (Model.ComplementsFedBack == true)
+                                            {
+                                            <input type="checkbox" disabled="disabled" id="ComplementsFedBack" checked name="ComplementsFedBack"><span> Compliments fed back to clinical team    </span>
+                                            }
+                                            else
+                                            {
+                                            <input type="checkbox" disabled="disabled" id="ComplementsFedBack" name="ComplementsFedBack"><span> Compliments fed back to clinical team   </span>
+                                            }
+                                        }
+                                        else if (Model.CreatedBy == Convert.ToString(Session["UserName"]) || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                                        {
+                                            if (Model.ComplementsFedBack == true)
+                                            {
+                                                <input type="checkbox" disabled id="ComplementsFedBack" checked name="ComplementsFedBack"><span> Compliments fed back to clinical team    </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" disabled id="ComplementsFedBack" name="ComplementsFedBack"><span> Compliments fed back to clinical team   </span>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (Model.ComplementsFedBack == true)
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="ComplementsFedBack" checked name="ComplementsFedBack"><span> Compliments fed back to clinical team    </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="ComplementsFedBack" name="ComplementsFedBack"><span> Compliments fed back to clinical team   </span>
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() 
+                                            || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN"
+                                            || Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper())
+                                        {
+                                            if (Model.ComplementsFedBack == true)
+                                            {
+                                                <input type="checkbox" id="ComplementsFedBack" checked name="ComplementsFedBack"><span> Compliments fed back to clinical team    </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" id="ComplementsFedBack" name="ComplementsFedBack"><span> Compliments fed back to clinical team   </span>
+                                            }
+                                        }
+                                        else if(Model.MedTriage == 3)
+                                        {
+
+                                            if (Model.ComplementsFedBack == true)
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="ComplementsFedBack" checked name="ComplementsFedBack"><span> Compliments fed back to clinical team    </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" disabled="disabled" id="ComplementsFedBack" name="ComplementsFedBack"><span> Compliments fed back to clinical team   </span>
+                                            }
+                                            }
+
+                                            else
+                                            {
+                                                if (Model.ComplementsFedBack == true)
+                                                {
+                                                <input type="checkbox" id="ComplementsFedBack" checked name="ComplementsFedBack"><span> Compliments fed back to clinical team    </span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" id="ComplementsFedBack" name="ComplementsFedBack"><span> Compliments fed back to clinical team   </span>
+                                            }
+                                                }
+                                            }
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="table_margin">
+                                    <table width="100%" style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;">
+                                        <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                            <td width="40%" style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Patient ID</b></td>
+                                            <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.PatientID </td>
+                                        </tr>
+                                        <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                            <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Patient Name</b></td>
+                                            <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.PatientName</td>
+
+                                        </tr>
+                                        <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                                            <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>DOB</b></td>
+                                            <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.DOB</td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div style="z-index: 99;">
+                                    @{
+                                        var countcomments = @ViewBag.Comments.Count;
+                                    }
+                                    Available Feedbacks (
+                                    @if (countcomments!=null)
+                                    {
+                                    <span id="com" name="0" value="0" onclick="OpenFilterComment(999)" style="cursor:pointer;">@countcomments</span>
+                                    })
+                                    <div class="clearfix" style="height:5px"></div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table width="100%" style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;">
+
+                                                @foreach (var item in ViewBag.CommentType)
+                                                {
+
+                                                    var count = 0;
+
+                                                    <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:80%">
+                                                            <span value="@item.CommonTypeID">@item.Type</span>
+                                                        </td>
+                                                        @for (var i = 0; i < ViewBag.Comments.Count; i++)
+                                                        {
+                                                            if (ViewBag.Comments[i].CommentTypeID == item.CommonTypeID)
+                                                            {
+                                                                count++;
+                                                            }
+                                                        }
+                                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; width:20%;text-align: -webkit-center;cursor:pointer;">
+                                                            <span id="com" name="@item.CommonTypeID" value="@item.CommonTypeID" onclick="OpenFilterComment(@item.CommonTypeID)">@count</span>
+                                                            @{
+
+                                                                TempData["TypeIdFilter"] = @item.CommonTypeID;
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                @for (var i = 0; i < ViewBag.Comments.Count; i++)
+                                {
+                                    if (i == 0)
+                                    {
+                                        <div class="row_bar">
+                                            Feedbacks
+                                            <table class="table table-bordered" id="assets-data-table">
+                                                <tbody bgcolor="#ffffff" style="color:black;">
+                                                    @*@for (var i = 0; i < ViewBag.Comments.Count; i++)
+                                                    {
+                                                        if (i == 0)
+                                                        {*@
+                                                            <tr style="color:black;" bgcolor="ffffff">
+                                                                <td>
+                                                                    <div class="pull-left col-md-6" style="padding-left:0px">
+                                                                        <b>By:</b> @ViewBag.Comments[i].Name
+                                                                    </div>
+                                                                    <div class="pull-left col-md-6">
+                                                                        <b>Role:</b>  @ViewBag.Comments[i].Role
+                                                                    </div>
+                                                                    <div class="pull-left col-md-6" style="padding-left:0px">
+                                                                        <b>Date:</b>
+                                                                        @ViewBag.Comments[i].CreatedDate
+                                                                    </div>
+                                                                    <div class="pull-left col-md-6">
+                                                                        <b>Time:</b>
+
+
+                                                                        @if (Convert.ToInt32(ViewBag.Comments[i].CreatedTime.Substring(0, 2)) >= 12)
+                                                                        {
+                                                                            @ViewBag.Comments[i].CreatedTime <b>PM</b>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            @ViewBag.Comments[i].CreatedTime <b>AM</b>
+                                                                        }
+                                                                    </div>
+                                                                    <div class="pull-left col-md-12" style="padding-left:0px">
+                                                                        <b>Feedback Type:</b> @ViewBag.Comments[i].CommentType
+                                                                    </div>
+                                                                    <div class="pull-left col-md-12" style="padding-left:0px">
+                                                                        <b>Feedback:</b> @ViewBag.Comments[i].Comments
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        @*}
+                                                    }*@
+                                                </tbody>
+                                            </table>
+                                            @*</div>*@
+                                        </div>
+                                    }
+                                }
+                                <br/>
+                                        <div id="comment" style="display:none;padding: 0px !important;" class="col-md-12">
+                                            <div class="col-md-12" style="background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;border-radius: .25rem;transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;">
+                                                <div class="row">
+                                                    <div class="col-md-12" style="padding: 0 !important;">
+                                                        <div class="col-md-6">
+                                                            Role
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            @{
+                                                                var role = TempData["Role"];
+                                                            }
+                                                            @Html.TextBox("role", role.ToString(), new { @readonly = "readonly", @class = "form-control", style = "width: 50%;cursor:not-allowed" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12" style="padding: 0 !important;">
+                                                        <div class="col-md-6" style="padding: 0 !important;">
+                                                            <div class="col-md-6">
+                                                                Feedback Type
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <select class="form-control" id="ddlFeedbackType" name="ddlFeedbackType">
+                                                                    <option value="0">Select Feedback Type</option>
+                                                                    @foreach (var item in ViewBag.CommentType)
+                                                                    {
+                                                                        <option value="@item.CommonTypeID">@item.Type</option>
+                                                                    }
+                                                                </select>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row_bar">
+                                                    Feedback
+                                                    @*@Html.TextAreaFor(model => model.Comments, 10, 100, new { @class = "form-control", @id = "cmnt" })*@
+                                                    @Html.TextArea("cmnt", null, 10, 100, new { @class = "form-control" })
+                                                </div>
+                                                <div class="pull-right">
+                                                    <button id="BtnSaveComment" name="BtnSaveComment" class="btn btn-primary btn-lg" onclick="SaveComment(); return false;">Save Feedback</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*  <div class="col-md-12">*@
+
+                                        <input id="IsComment" type="hidden" class="form-control" value="" name="IsComment">
+                                                <div class="pull-right">
+                                                    <button id="BtnOpenComment" name="BtnOpenComment" class="btn btn-primary" onclick="OpenComment(); return false;">Add New Feedback</button>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <button id="BtnCloseComment" name="BtnCloseComment" class="btn btn-primary" style="display:none;height: 48px;font-size: large;margin-right:6px; " onclick="CloseComment(); return false;">Close Feedback</button>
+                                                </div>
+                                        @*</div>*@
+                                    </div>
+                        </div>
+                    @*</div>*@
+                </div>
+                if (Convert.ToBoolean(ViewBag.IsReadOnly))
+                {
+                    if (Model.MedTriage == 3)
+                    {
+
+                        <div class="pull-right">
+                            <button id="activate-prev-1" disabled name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
+                            <button id="activate-step-2" disabled @*type="submit"*@ name="BtnFinish" class="btn btn-primary btn-lg">Save & Next</button>
+                        </div>
+                    }
+                    else if (Model.CreatedBy == Convert.ToString(Session["UserName"]) || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                    {
+                        <div class="pull-right">
+                            <button id="activate-prev-1" disabled name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
+                            <button id="activate-step-2" disabled @*type="submit"*@ name="BtnFinish" class="btn btn-primary btn-lg">Save & Next</button>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="pull-right">
+                            <button id="activate-prev-1" disabled name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
+                            <button id="activate-step-2" disabled name="BtnFinish" class="btn btn-primary btn-lg">Save & Next</button>
+                        </div>
+                        }
+                    }
+                    else
+                    {
+                        if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["UserName"]).ToUpper() 
+                            || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN"
+                            || Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper())
+                        {
+                            <div class="pull-right">
+                                <button id="activate-prev-1" name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
+                                <button id="activate-step-2" @*type="submit"*@ name="BtnFinish" class="btn btn-primary btn-lg">Save & Next</button>
+                            </div>
+                        }
+                        else if(Model.MedTriage == 3)
+                        {
+
+                        <div class="pull-right">
+                            <button id="activate-prev-1" disabled name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
+                            <button id="activate-step-2" disabled @*type="submit"*@ name="BtnFinish" class="btn btn-primary btn-lg">Save & Next</button>
+                        </div>
+                        }
+                     
+                        else
+                        {
+                            <div class="pull-right">
+                                <button id="activate-prev-1" name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>
+                                <button id="activate-step-2" name="BtnFinish" class="btn btn-primary btn-lg">Save & Next</button>
+                            </div>
+                        }
+                    }
+                }
+        </div>
+
+            <br />
+            <br />
+        </div>
+    <div class="modal fade" id="modelClose6">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Message</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="form-section" style="text-align:left">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row_bar">
+                                    <div>Do you want to exit without saving your changes?</div>
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-primary btn-block" id="btnModelClose1" data-dismiss="modal" formmethod="post" onclick="location.href='@Url.Action("MortalityReview", "Home", new { id=Model.Patient_ID })'">Yes</button>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-primary btn-block" name="btnCloseYes" id="btnCloseYes">No</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*changes for showing filter comments based on comment type*@
+    <div class="modal fade" id="myModalCommentsFilter" style="max-height:750px; overflow:auto">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Feedback History</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <table class="table table-bordered" id="FilterComment">
+                        <tr bgcolor="#a9d7cc" style="color:black;">
+                            <th style="text-align:center">Feedback</th>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*end changes*@
+
+
+    <script>
+        $(document).ready(function () {
+            $("#btnClose6").click(function () {
+                $("#modelClose6").modal();
+            });
+            
+            $("#activate-step-2").click(function () {
+                //if ($("#comment").is(":visible")) {
+                //    if ($("#ddlFeedbackType").val() == '') {
+                //        alert("Please Select Feedback Type.");
+                //        return false;
+                //    }
+                //    else if ($("#cmnt").val() == '')
+                //    {
+                //        alert("Please Enter Comment.");
+                //        return false;
+                //    }
+                ////}
+                 
+                //for checking validation of comments whether comments has been save if given before the form submition of Positive feedback
+                var IscommentOpen = $("#comment").is(":visible");
+                var CommentType = $("#ddlFeedbackType").val();
+                var comments = $("#cmnt").val();
+                if (IscommentOpen == true)
+                {
+                    if (CommentType == "0" || comments == "") {
+                        //$("#IsComment").val("")
+                        if (confirm("You have not entered any comments. Do you want to discard and continue to save the form") == true) {
+                            //$("#IsComment").val("false");
+                            $('input#IsComment').val('false')
+                        } else {
+
+                            return false;
+                        }
+                    }
+                    if (CommentType != "0" && comments != "") {
+                        $('input#IsComment').val('true')
+                          
+                    }
+                   /* else if (comments != "") {
+                        alert("Please save the entered comments");
+                    }
+                    else if (CommentType != "0") {
+                        alert("Please Enter Comments to save the comments");
+                    }
+                    else { }*/
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+$(function () {
+    $("#btnModelClose6").click(function () {
+window.location.href = "@Url.Action("MortalityReview", "Home", new { id = Model.Patient_ID }))";
+});
+});
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#btnCloseYes").click(function () {
+                $("#modelClose6").modal('hide');
+            });
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.js"></script>
+    <script>
+
+
+        function SaveComment() {
+            debugger;
+            var CommentType = $("#ddlFeedbackType").val();
+            var comments = $("#cmnt").val();
+            if (CommentType == "0") {
+                alert("Please Select Feedback Type");
+            }
+            else if (comments == "") {
+                alert("Please Enter Comment");
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("PFBSaveComment", "Home")",
+                    //  contentType: "application/json; charset=utf-8",
+                    data: { CommentType: CommentType, comments: comments },
+
+                    success: function (result) {
+                        //alert("Comments Saved");
+                        location.reload(true);
+                        $("#ddlFeedbackType").val(0);
+                        $("#cmnt").val("");
+
+                    },
+                    error: function (data) {
+                        debugger;
+                    }
+                });
+            }
+        }
+    function OpenComment() {
+        $("#comment").show();
+        $("#BtnOpenComment").hide();
+        $("#BtnCloseComment").show();
+        return false;
+    }
+    function CloseComment() {
+        $("#comment").hide();
+        $("#BtnOpenComment").show();
+        $("#BtnCloseComment").hide();
+        return false;
+    }
+    function OpenFilterComment(e) {
+        debugger;
+        var tableF = document.getElementById("FilterComment");
+        tableF.innerHTML = "";
+        tableF.innerHTML = "<tr bgcolor='#a9d7cc' style='color:black;'><th style='text-align:center'>Feedback</th></tr>";
+        var data = @Html.Raw(Json.Encode(@ViewBag.Comments));
+        var newElement = document.createElement("tr");
+        for (var i = 0; i < @ViewBag.Comments.Count; i++)
+        {
+            var typeIDFilter = e;
+
+            var newElement = document.createElement("tr");
+            if (typeIDFilter != null)
+            {
+                if (data[i].CommentTypeID == parseInt(typeIDFilter))
+                {
+                    var nowDate = new Date(parseInt(data[i].CreatedDate.substr(6)));
+                    if (parseInt(data[i].CreatedTime.slice(0, 2)) >= 12)
+                    {
+                        var div = ( "<td>" +
+                            "<div class='pull-left col-md-6' style='padding-left:0px'><b>By: </b>" + data[i].Name + "</div>" +
+                            "<div class='pull-right col-md-6'><b>Role: </b>" + data[i].Role + "</div>" +
+                            "<div class='pull-left col-md-6' style='padding-left:0px'><b>Date: </b>" + data[i].CreatedDate  + "</div>" +
+                            "<div class='pull-right col-md-6'><b>Time: </b>" + data[i].CreatedTime + " PM</div>" + /*nowDate.toLocaleTimeString()*/
+                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Feedback Type:</b> " + data[i].CommentType + "</div>" +
+                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Feedback: </b>" + data[i].Comments + "</div>" +
+                            "</td>");
+                    }
+                    else
+                    {
+                        var div = ("<td>" +
+                            "<div class='pull-left col-md-6' style='padding-left:0px'><b>By: </b>" + data[i].Name + "</div>" +
+                            "<div class='pull-right col-md-6'><b>Role: </b>" + data[i].Role + "</div>" +
+                            "<div class='pull-left col-md-6' style='padding-left:0px'><b>Date: </b>" + data[i].CreatedDate  + "</div>" +
+                            "<div class='pull-right col-md-6'><b>Time: </b>" + data[i].CreatedTime + " AM</div>" + /*nowDate.toLocaleTimeString()*/
+                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Feedback Type:</b> " + data[i].CommentType + "</div>" +
+                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Feedback: </b>" + data[i].Comments + "</div>" +
+                            "</td>");
+                    }
+
+
+
+                    newElement.innerHTML = div;
+                    newElement.id = 'Cmnt';
+                    newElement.style.color = "black";
+                    newElement.style.bgcolor = "ffffff";
+                    newElement.style.border = "1px solid #dee2e6";
+                    newElement.style.marginTop = "5px !Important";
+                    newElement.style.marginLeft = "5px !important"
+                    tableF.appendChild(newElement);
+                }
+                else if (parseInt(typeIDFilter) == 999)
+                {
+                    if (parseInt(data[i].CreatedTime.slice(0, 2)) >= 12)
+                    {
+                        var div = ("<tr style = 'color:black; bgcolor = ffffff>" +
+                            "<td>" +
+                            "<div class='col-md-6' style='padding-left:0px'><b>By: </b>" + data[i].Name + "</div>" +
+                            "<div class='pull-right col-md-6'><b>Role: </b>" + data[i].Role + "</div>" +
+                            "<div class='pull-left col-md-6' style='padding-left:0px'><b>Date: </b>" + data[i].CreatedDate + "</div>" +
+                            "<div class='pull-right col-md-6'><b>Time: </b>" + data[i].CreatedTime + " PM</div>" +
+                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Feedback Type:</b> " + data[i].CommentType + "</div>" +
+                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Feedback: </b>" + data[i].Comments + "</div>" +
+                            "</td>" +
+                            "</tr>");
+                    }
+                    else
+                    {
+                        var div = ("<tr style = 'color:black; bgcolor = ffffff>" +
+                            "<td>" +
+                            "<div class='col-md-6' style='padding-left:0px'><b>By: </b>" + data[i].Name + "</div>" +
+                            "<div class='pull-right col-md-6'><b>Role: </b>" + data[i].Role + "</div>" +
+                            "<div class='pull-left col-md-6' style='padding-left:0px'><b>Date: </b>" + data[i].CreatedDate + "</div>" +
+                            "<div class='pull-right col-md-6'><b>Time: </b>" + data[i].CreatedTime + " AM</div>" +
+                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Feedback Type:</b> " + data[i].CommentType + "</div>" +
+                            "<div class='pull-left col-md-12' style='padding-left:0px'><b>Feedback: </b>" + data[i].Comments + "</div>" +
+                            "</td>" +
+                            "</tr>");
+                    }
+                    newElement.innerHTML = div;
+
+                    newElement.style.color = "black";
+                    newElement.style.bgcolor = "ffffff";
+                    newElement.style.border = "1px solid #dee2e6";
+                    newElement.style.marginTop = "5px !Important";
+                    tableF.appendChild(newElement);
+                }
+
+            }
+        }
+
+        $("#myModalCommentsFilter").modal();
+    }
+    </script>

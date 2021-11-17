@@ -1,0 +1,592 @@
+﻿@model NHS.Common.SJRTracking
+@{
+    ViewBag.Title = "SJRTracking";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 align="center">SJR Tracking Dashboard</h2>
+<div class="ds_dash_box_sec1">
+    <div class="row">
+        <div class="col-md-12">
+            <form action="@Url.Action("SJRTracking", "Home")" method="post">
+                <div class="row">
+                    <div class="col-md-2">
+                        @if (!string.IsNullOrEmpty(Convert.ToString(Session["ReportStartDate"])) && Convert.ToString(Session["ReportStartDate"]) != "01/01/0001")
+                        {
+                            <div class="row_bar">
+                                <input style="font-size:10px;height:38px;" class="form-control  datepicker" readonly="readonly" type="text" id="StartDate" name="StartDate" placeholder="All Dates" value="@Convert.ToDateTime(Session["ReportStartDate"]).ToString("dd/MM/yyyy")">
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="row_bar">
+                                <input style="font-size:10px;height:38px;" class="form-control  datepicker" readonly="readonly" type="text" id="StartDate" name="StartDate" placeholder="All Dates" value="@Convert.ToString(System.DateTime.Now.AddDays(-30).ToString("dd/MM/yyyy"))">
+                            </div>
+                        }
+                    </div>
+                    @if (!string.IsNullOrEmpty(Convert.ToString(Session["ReportEndDate"])) && Convert.ToString(Session["ReportEndDate"]) != "01/01/0001")
+                    {
+                        <div class="col-md-2">
+                            <div class="row_bar">
+                                <input style="font-size:10px;height:38px;" class="form-control  datepicker" readonly="readonly" type="text" id="EndDate" name="EndDate" placeholder="All Dates" value="@Convert.ToDateTime(Session["ReportEndDate"]).ToString("dd/MM/yyyy")">&nbsp;&nbsp;
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-2">
+                            <div class="row_bar">
+                                <input style="font-size:10px;height:38px;" class="form-control  datepicker" readonly="readonly" type="text" id="EndDate" name="EndDate" placeholder="All Dates" value="@Convert.ToDateTime(System.DateTime.Now).ToString("dd/MM/yyyy")">&nbsp;&nbsp;
+                            </div>
+                        </div>
+                    }
+                    <div class="col-md-2">
+                        <div class="row_bar">
+                            <select style="font-size:12px;" class="form-control" id="ddlCareGroups" name="ddlCareGroups">
+                                @if (Convert.ToString(Session["ReportCaregroup"]) == "0")
+                                {
+                                    <option selected value="0">
+                                        All Caregroups
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="0">
+                                        All Caregroups
+                                    </option>
+                                }
+                                @foreach (var item in ViewBag.CareGroups)
+                                {
+                                    if (Session["ReportCaregroup"] != null)
+                                    {
+                                        if (item.CareGroup == Convert.ToString(Session["ReportCaregroup"]) && Convert.ToString(Session["ReportCaregroup"]) != "0"
+                                            && Convert.ToString(Session["ReportCaregroup"]) != "")
+                                        {
+                                            <option selected value="@item.CareGroup">@item.CareGroup</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.CareGroup">@item.CareGroup</option>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.CareGroup">@item.CareGroup</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="row_bar">
+                            <select style="font-size:12px;" class="form-control" id="ddlSpeciality" name="ddlSpeciality">
+                                @if (Convert.ToString(Session["ReportDischargeSpeciality"]) == "0")
+                                {
+                                    <option selected value="">
+                                        All Specialities
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="0">
+                                        All Specialities
+                                    </option>
+                                }
+                                @foreach (var item in ViewBag.LoadDischargeSpecialityDropdown)
+                                {
+                                    if (Session["ReportSpeciality"] != null)
+                                    {
+                                        if (item.DischargeSpecialityCode == Convert.ToString(Session["ReportSpeciality"]) && Convert.ToString(Session["ReportSpeciality"]) != "0"
+                                            && Convert.ToString(Session["ReportSpeciality"]) != "")
+                                        {
+                                            <option selected value="@item.DischargeSpecialityCode">@item.DischargeSpeciality</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.DischargeSpecialityCode">@item.DischargeSpeciality</option>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.DischargeSpecialityCode">@item.DischargeSpeciality</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="row_bar">
+                            <select style="font-size:12px;" class="form-control" id="ddlPatientType" name="ddlPatientType">
+                                @if (Convert.ToString(Session["ReportPatientType"]) == "0")
+                                {
+                                    <option selected value="0">
+                                        All Patient Type
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="0">
+                                        All Patient Type
+                                    </option>
+                                }
+                                @foreach (var item in ViewBag.PatientTypeDDM)
+                                {
+                                    if (Session["ReportPatientType"] != null)
+                                    {
+                                        if (item.PatientType == Convert.ToString(Session["ReportPatientType"]) && Convert.ToString(Session["ReportPatientType"]) != "0"
+                                            && Convert.ToString(Session["ReportPatientType"]) != "")
+                                        {
+                                            <option selected value="@item.PatientType">@item.PatientTypeLongText</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.PatientType">@item.PatientTypeLongText</option>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.PatientType">@item.PatientTypeLongText</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="row_bar">
+                            <select style="font-size:12px;" class="form-control" id="ddlWardDeath" name="ddlWardDeath">
+                                @if (Convert.ToString(Session["ReportWardDeath"]) == "0")
+                                {
+                                    <option selected value="">
+                                        All Ward of Death
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="0">
+                                        All Ward of Death
+                                    </option>
+                                }
+                                @foreach (var item in ViewBag.Wards)
+                                {
+                                    if (Session["ReportWardDeath"] != null)
+                                    {
+                                        if (item.WardName == Convert.ToString(Session["ReportWardDeath"]) && Convert.ToString(Session["ReportWardDeath"]) != "0"
+                                                        && Convert.ToString(Session["ReportWardDeath"]) != "")
+                                        {
+                                            <option selected value="@item.WardName">@item.WardName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.WardName">@item.WardName</option>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.WardName">@item.WardName</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="row_bar">
+                            <select style="font-size:12px;" class="form-control" id="ddlDischargeConsultant" name="ddlDischargeConsultant">
+                                @if (Convert.ToString(Session["ReportDischargeConsultant"]) == "0")
+                                {
+                                    <option selected value="">
+                                        All Consultants
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="0">
+                                        All Consultants
+                                    </option>
+                                }
+                                @foreach (var item in ViewBag.Consultants)
+                                {
+                                    if (Session["ReportDischargeConsultant"] != null)
+                                    {
+                                        if (item.Consultant_Name == Convert.ToString(Session["ReportDischargeConsultant"]) && Convert.ToString(Session["ReportDischargeConsultant"]) != "0"
+                                            && Convert.ToString(Session["ReportDischargeConsultant"]) != "")
+                                        {
+                                            <option selected value="@item.Consultant_Name">@item.Consultant_Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Consultant_Name">@item.Consultant_Name</option>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Consultant_Name">@item.Consultant_Name</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="row_bar">
+                            <select style="font-size:12px;" class="form-control" id="ddlMENames" name="ddlMENames">
+                                @if (Convert.ToString(Session["ReportMEName"]) == "0")
+                                {
+                                    <option selected value="">
+                                        All ME
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="0">
+                                        All ME
+                                    </option>
+                                }
+                                @foreach (var item in ViewBag.MENames)
+                                {
+                                    if (Session["ReportMEName"] != null)
+                                    {
+                                        if (item.MEUserName == Convert.ToString(Session["ReportMEName"]) && Convert.ToString(Session["ReportMEName"]) != "0"
+                                            && Convert.ToString(Session["ReportMEName"]) != "")
+                                        {
+                                            <option selected value="@item.MEUserName">@item.MEName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.MEUserName">@item.MEName</option>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.MEUserName">@item.MEName</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="row_bar">
+                            <button id="btnSearch" type="submit" class="btn btn-primary btn-md" name="btnSearch">Search </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="ds_dash_box_sec3">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td width="33%" class="ds_dash_box_sec3_bor">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td valign="middle" class="ds_dash_comp3">Adult Deaths:</td>
+                        <td align="center" valign="middle" class="ds_dash_box_top_text2"><u>@Html.ActionLink(@Model.AdultDeathCount.ToString(), "AAPCDeaths", new { style = "color:#016b10 !important" })</u></td>
+                    </tr>
+                </table>
+            </td>
+            <td width="33%" class="ds_dash_box_sec3_bor">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td valign="middle" class="ds_dash_comp3">Learning Disability:</td>
+                        <td align="center" valign="middle" class="ds_dash_box_top_text2"><u>@Html.ActionLink(@Model.LearningDisabilityCount.ToString(), "ReasonCount", new { learning = true, paeds = false, mental = false, elective = false, nok = false, chemo = false, other = false, style = "color:#016b10 !important" })</u></td>
+                    </tr>
+                </table>
+            </td>
+            <td width="33%">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td valign="middle" class="ds_dash_comp3">% of SRJ1 Review Requested:</td>
+                        <td align="center" valign="middle" class="ds_dash_box_top_text3">@Model.SJR1RequiredPercentage.ToString()%</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+</div>
+
+<div class="ds_dash_box_sec3">
+    <h2>SJR1</h2>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td class="ds_dash_srj_bor">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr class="ds_dash_srj_bor_2">
+                        <td align="center" valign="middle" class="ds_dash_srj_bor_3">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td align="center" valign="middle" class="ds_dash_box_top_text4"><u>@Html.ActionLink(@Model.SJR1Required.ToString(), "SJRRequiredCount", new { required = true, style = "color:#016b10 !important" })</u></td>
+                                </tr>
+                                <tr>
+                                    <td align="center" valign="middle" class="ds_dash_comp3a">Required</td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td align="center" valign="middle">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td align="center" valign="middle" class="ds_dash_box_top_text5"><u>@Html.ActionLink(@Model.SJR1NotRequired.ToString(), "SJRRequiredCount", new { required = false, style = "color:#016b10 !important" })</u></td>
+                                </tr>
+                                <tr>
+                                    <td align="center" valign="middle" class="ds_dash_comp3a">Not Required</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="middle" class="ds_dash_srj_bor_3">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td align="center" valign="middle" class="ds_dash_box_top_text6"><u>@Html.ActionLink(@Model.SJR1Completed.ToString(), "SJR1CompletedCount", new { completed = true, style = "color:#016b10 !important" })</u></td>
+                                </tr>
+                                <tr>
+                                    <td align="center" valign="middle" class="ds_dash_comp3a">Completed</td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td align="center" valign="middle">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td align="center" valign="middle" class="ds_dash_box_top_text7"><u>@Html.ActionLink(@Model.SJR1Outstanding.ToString(), "SJR1CompletedCount", new { completed = false, style = "color:#016b10 !important" })</u></td>
+                                </tr>
+                                <tr>
+                                    <td align="center" valign="middle" class="ds_dash_comp3a">Outstanding</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td align="left" valign="top" class="ds_dash_srj_bor">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td class="ds_dash_box_bottom_bor">SJR1 Outcomes</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td align="left" valign="top">
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td width="65%" align="right" class="ds_dash_comp2">Grade 0</td>
+                                                <td width="32%" align="center" class="ds_dash_box_bt_9"><u>@Html.ActionLink(@Model.SJR2OutcomeGrade0Count.ToString(), "SJR1GradeCount1", new { grade0 = true, grade1 = false, grade2 = false, grade3 = false, style = "color:#016b10 !important" })</u></td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right" class="ds_dash_comp2">Grade 1</td>
+                                                <td align="center" class="ds_dash_box_bt_10"><u>@Html.ActionLink(@Model.SJROutcomeGrade1Count.ToString(), "SJR1GradeCount1", new { grade0 = false, grade1 = true, grade2 = false, grade3 = false, style = "color:#016b10 !important" })</u></td>
+                                            </tr>
+                                            <tr>
+                                            <tr>
+                                                <td align="right" class="ds_dash_comp2">Grade 2</td>
+                                                <td align="center" class="ds_dash_box_bt_18"><u>@Html.ActionLink(@Model.SJROutcomeGrade2Count.ToString(), "SJR1GradeCount1", new { grade0 = false, grade1 = false, grade2 = true, grade3 = false, style = "color:#016b10 !important" })</u></td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right" class="ds_dash_comp2">Grade 3</td>
+                                                <td align="center" class="ds_dash_box_bt_11"><u>@Html.ActionLink(@Model.SJROutcomeGrade3Count.ToString(), "SJR1GradeCount1", new { grade0 = false, grade1 = false, grade2 = false, grade3 = true, style = "color:#016b10 !important" })</u></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td align="left" valign="top" class="ds_dash_srj_bor2">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td class="ds_dash_box_bottom_bor">SJR1 Overall Care</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td align="left" valign="top">
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td width="65%" align="right" class="ds_dash_comp2">Very Poor</td>
+                                                <td width="32%" align="center" class="ds_dash_box_bt_11"><u>@Html.ActionLink(@Model.SJRCareVeryPoorCount.ToString(), "SJR1CareCount", new { verypoor = true, poor = false, adequate = false, good = false, excellent = false, style = "color:#016b10 !important" })</u></td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right" class="ds_dash_comp2">Poor</td>
+                                                <td align="center" class="ds_dash_box_bt_18"><u>@Html.ActionLink(@Model.SJRCarePoorCount.ToString(), "SJR1CareCount", new { verypoor = false, poor = true, adequate = false, good = false, excellent = false, style = "color:#016b10 !important" })</u></td>
+                                            </tr>
+                                            <tr></tr>
+                                            <tr>
+                                                <td align="right" class="ds_dash_comp2">Adequate</td>
+                                                <td align="center" class="ds_dash_box_bt_10"><u>@Html.ActionLink(@Model.SJRCareAdequateCount.ToString(), "SJR1CareCount", new { verypoor = false, poor = false, adequate = true, good = false, excellent = false, style = "color:#016b10 !important" })</u></td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right" class="ds_dash_comp2">Good</td>
+                                                <td align="center" class="ds_dash_box_bt_19"><u>@Html.ActionLink(@Model.SJRCareGoodCount.ToString(), "SJR1CareCount", new { verypoor = false, poor = false, adequate = false, good = true, excellent = false, style = "color:#016b10 !important" })</u></td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right" class="ds_dash_comp2">Excellent</td>
+                                                <td align="center" class="ds_dash_box_bt_9"><u>@Html.ActionLink(@Model.SJRCareVeryGoodCount.ToString(), "SJR1CareCount", new { verypoor = false, poor = false, adequate = false, good = false, excellent = true, style = "color:#016b10 !important" })</u></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="ds_dash_box_sec3">
+    <h2>SJR2</h2>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td class="ds_dash_srj_bor">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr class="ds_dash_srj_bor_2">
+                        <td align="center" valign="middle" class="ds_dash_srj_bor_3">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td align="center" valign="middle" class="ds_dash_box_top_text4"><u>@Html.ActionLink(@Model.SJR2Required.ToString(), "SJR2RequiredCount", new { required = true, style = "color:#016b10 !important" })</u></td>
+                                </tr>
+                                <tr>
+                                    <td align="center" valign="middle" class="ds_dash_comp3a">Required</td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td align="center" valign="middle">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td align="center" valign="middle" class="ds_dash_box_top_text5"><u>@Html.ActionLink(@Model.SJR2NotRequired.ToString(), "SJR2RequiredCount", new { required = false, style = "color:#016b10 !important" })</u></td>
+                                </tr>
+                                <tr>
+                                    <td align="center" valign="middle" class="ds_dash_comp3a">Not Required</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="middle" class="ds_dash_srj_bor_3">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td align="center" valign="middle" class="ds_dash_box_top_text6"><u>@Html.ActionLink(@Model.SJR2Completed.ToString(), "SJR2CompletedCount", new { completed = true, style = "color:#016b10 !important" })</u></td>
+                                </tr>
+                                <tr>
+                                    <td align="center" valign="middle" class="ds_dash_comp3a">Completed</td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td align="center" valign="middle">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td align="center" valign="middle" class="ds_dash_box_top_text7"><u>@Html.ActionLink(@Model.SJR2Outstanding.ToString(), "SJR2CompletedCount", new { completed = false, style = "color:#016b10 !important" })</u></td>
+                                </tr>
+                                <tr>
+                                    <td align="center" valign="middle" class="ds_dash_comp3a">Outstanding</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td align="left" valign="top" class="ds_dash_srj_bor">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td class="ds_dash_box_bottom_bor">SJR2 Outcomes</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td align="left" valign="top">
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td width="65%" align="right" class="ds_dash_comp2">Grade 0</td>
+                                                <td width="32%" align="center" class="ds_dash_box_bt_9"><u>@Html.ActionLink(@Model.SJR2OutcomeGrade0Count.ToString(), "SJR2GradeCount", new { grade0 = true, grade1 = false, grade2 = false, grade3 = false, style = "color:#016b10 !important" })</u></td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right" class="ds_dash_comp2">Grade 1</td>
+                                                <td align="center" class="ds_dash_box_bt_10"><u>@Html.ActionLink(@Model.SJR2OutcomeGrade1Count.ToString(), "SJR2GradeCount", new { grade0 = false, grade1 = true, grade2 = false, grade3 = false, style = "color:#016b10 !important" })</u></td>
+                                            </tr>
+                                            <tr>
+                                            <tr>
+                                                <td align="right" class="ds_dash_comp2">Grade 2</td>
+                                                <td align="center" class="ds_dash_box_bt_18"><u>@Html.ActionLink(@Model.SJR2OutcomeGrade2Count.ToString(), "SJR2GradeCount", new { grade0 = false, grade1 = false, grade2 = true, grade3 = false, style = "color:#016b10 !important" })</u></td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right" class="ds_dash_comp2">Grade 3</td>
+                                                <td align="center" class="ds_dash_box_bt_11"><u>@Html.ActionLink(@Model.SJR2OutcomeGrade3Count.ToString(), "SJR2GradeCount", new { grade0 = false, grade1 = false, grade2 = false, grade3 = true, style = "color:#016b10 !important" })</u></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td align="left" valign="top" class="ds_dash_srj_bor2">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td class="ds_dash_box_bottom_bor">SJR2 Overall Care</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td align="left" valign="top">
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td width="65%" align="right" class="ds_dash_comp2">Very Poor</td>
+                                                <td width="32%" align="center" class="ds_dash_box_bt_11"><u>@Html.ActionLink(@Model.SJR2CareVeryPoorCount.ToString(), "SJR2CareCount", new { verypoor = true, poor = false, adequate = false, good = false, excellent = false, style = "color:#016b10 !important" })</u></td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right" class="ds_dash_comp2"> Poor</td>
+                                                <td align="center" class="ds_dash_box_bt_18"><u>@Html.ActionLink(@Model.SJR2CarePoorCount.ToString(), "SJR2CareCount", new { verypoor = false, poor = true, adequate = false, good = false, excellent = false, style = "color:#016b10 !important" })</u></td>
+                                            </tr>
+                                            <tr></tr>
+
+                                            <tr>
+                                                <td align="right" class="ds_dash_comp2">Adequate</td>
+                                                <td align="center" class="ds_dash_box_bt_10"><u>@Html.ActionLink(@Model.SJR2CareAdequateCount.ToString(), "SJR2CareCount", new { verypoor = false, poor = false, adequate = true, good = false, excellent = false, style = "color:#016b10 !important" })</u></td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right" class="ds_dash_comp2">Good</td>
+                                                <td align="center" class="ds_dash_box_bt_19"><u>@Html.ActionLink(@Model.SJR2CareGoodCount.ToString(), "SJR2CareCount", new { verypoor = false, poor = false, adequate = false, good = true, excellent = false, style = "color:#016b10 !important" })</u></td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right" class="ds_dash_comp2">Excellent</td>
+                                                <td align="center" class="ds_dash_box_bt_9"><u>@Html.ActionLink(@Model.SJR2CareVeryGoodCount.ToString(), "SJR2CareCount", new { verypoor = false, poor = false, adequate = false, good = false, excellent = true, style = "color:#016b10 !important" })</u></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+<script>
+    (function ($) {
+    $(".datepicker").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: 'dd/mm/yy'
+        });
+    })(jQuery)
+</script>

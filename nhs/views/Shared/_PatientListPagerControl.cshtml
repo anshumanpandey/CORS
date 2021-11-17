@@ -27,6 +27,16 @@
     bool IsDeathDiagnosedPending = false;
     bool IsDeathReAdmission = false;
     bool IsDeathReAdmissionPending = false;
+    bool IsCHESSNewPositiveNotRequiredYTD = false;
+    bool IsCHESSICUHDUStepUpNotRequiredYTD = false;
+    bool IsCHESSICUHDUStepDownNotRequiredYTD = false;
+    bool IsCHESSDischargeDeathNotRequiredYTD = false;
+    bool IsCHESSDischargesNotRequiredYTD = false;
+    bool IsCHESSPositiveDeathsNotRequiredYTD = false;
+    bool IsCPNSDeathDetectedNotRequired = false;
+    bool IsCPNSDeathNotRequiredYTD = false;
+    bool IsCPNSDeathDiagnosedNotRequired = false;
+    bool IsCPNSDeathReAdmissionNotRequired = false;
     bool NoOxygen = false;
     bool Oxygen = false;
     bool NonInvasiveVentilation = false;
@@ -75,6 +85,16 @@
     IsDeathDiagnosedPending = Convert.ToBoolean(Session["IsDeathDiagnosedPending"]);
     IsDeathReAdmission = Convert.ToBoolean(Session["IsDeathReAdmission"]);
     IsDeathReAdmissionPending = Convert.ToBoolean(Session["IsDeathReAdmissionPending"]);
+    IsCHESSNewPositiveNotRequiredYTD = Convert.ToBoolean(Session["IsCHESSNewPositiveNotRequiredYTD"]);
+    IsCHESSICUHDUStepUpNotRequiredYTD = Convert.ToBoolean(Session["IsCHESSICUHDUStepUpNotRequiredYTD"]);
+    IsCHESSICUHDUStepDownNotRequiredYTD = Convert.ToBoolean(Session["IsCHESSICUHDUStepDownNotRequiredYTD"]);
+    IsCHESSDischargeDeathNotRequiredYTD = Convert.ToBoolean(Session["IsCHESSDischargeDeathNotRequiredYTD"]);
+    IsCHESSDischargesNotRequiredYTD = Convert.ToBoolean(Session["IsCHESSDischargesNotRequiredYTD"]);
+    IsCHESSPositiveDeathsNotRequiredYTD = Convert.ToBoolean(Session["IsCHESSPositiveDeathsNotRequiredYTD"]);
+    IsCPNSDeathDetectedNotRequired = Convert.ToBoolean(Session["IsCPNSDeathDetectedNotRequired"]);
+    IsCPNSDeathNotRequiredYTD = Convert.ToBoolean(Session["IsCPNSDeathNotRequiredYTD"]);
+    IsCPNSDeathDiagnosedNotRequired = Convert.ToBoolean(Session["IsCPNSDeathDiagnosedNotRequired"]);
+    IsCPNSDeathReAdmissionNotRequired = Convert.ToBoolean(Session["IsCPNSDeathReAdmissionNotRequired"]);
 
     bool sorttype = true;
     int firstRecord = (pageSize * (pageIndex - 1)) + 1;
@@ -85,7 +105,7 @@
         firstRecord = 0;
         lastRecord = 0;
     }
-
+     
 
     <input type="hidden" name="hdfTotalRecords" id="hdfTotalRecords" value="@totalRecordCount" />
     <div class="row">
@@ -104,7 +124,9 @@
                 @if (pageIndex != 1)
                 {
                     int previousPage = pageIndex - 1;
-                    <li><a onclick="GetPage('@previousPage','','0','@sortcolumn', '@sorttype','@PatientLocation','@IsCurrentIPCount', '@IsNotUpdatedLast20HoursCount', '@IsNotUpdatedLast12HoursCount', '@IsUpdatedLast12HoursCount','@NoOxygen', '@Oxygen', '@NonInvasiveVentilation','@MechanicalVentilation','@NotUpdatedAtAll','@IsNewPositiveYTD','@IsNewPositiveYTDPending','@IsICUHDUStepUpYTD','@IsICUHDUStepUpYTDPending','@IsICUHDUStepDownYTD','@IsICUHDUStepDownYTDPending','@IsDischargeDeathYTD','@IsDischargeDeathYTDPending','@IsDischargesYTD','@IsDischargesYTDPending','@IsPositiveDeathsYTD','@IsPositiveDeathsYTDPending','@IsDeathYTD','@IsDeathYTDPending','@IsDeathDetected','@IsDeathDetectedPending','@IsDeathDiagnosed','@IsDeathDiagnosedPending','@IsDeathReAdmission','@IsDeathReAdmissionPending')" href="javascript:void(0);" style="padding: 0.5em 1em; box-shadow:none" data-pageindex="@previousPage">Previous</a></li>
+                    <li><a onclick="GetPage('@previousPage','','0','@sortcolumn', '@sorttype','@PatientLocation','@IsCurrentIPCount', '@IsNotUpdatedLast20HoursCount', '@IsNotUpdatedLast12HoursCount', '@IsUpdatedLast12HoursCount','@NoOxygen', '@Oxygen', '@NonInvasiveVentilation','@MechanicalVentilation','@NotUpdatedAtAll','@IsNewPositiveYTD','@IsNewPositiveYTDPending','@IsICUHDUStepUpYTD','@IsICUHDUStepUpYTDPending','@IsICUHDUStepDownYTD','@IsICUHDUStepDownYTDPending','@IsDischargeDeathYTD','@IsDischargeDeathYTDPending','@IsDischargesYTD','@IsDischargesYTDPending','@IsPositiveDeathsYTD','@IsPositiveDeathsYTDPending','@IsDeathYTD','@IsDeathYTDPending','@IsDeathDetected','@IsDeathDetectedPending','@IsDeathDiagnosed','@IsDeathDiagnosedPending','@IsDeathReAdmission','@IsDeathReAdmissionPending','@IsCHESSNewPositiveNotRequiredYTD','@IsCHESSICUHDUStepUpNotRequiredYTD', '@IsCHESSICUHDUStepDownNotRequiredYTD', '@IsCHESSDischargeDeathNotRequiredYTD',
+    '@IsCHESSDischargesNotRequiredYTD','@IsCHESSPositiveDeathsNotRequiredYTD', '@IsCPNSDeathDetectedNotRequired',
+    '@IsCPNSDeathDiagnosedNotRequired')" href="javascript:void(0);" style="padding: 0.5em 1em; box-shadow:none" data-pageindex="@previousPage">Previous</a></li>
 
                 }
                 else
@@ -151,13 +173,17 @@
                                 if (IsExternalComms == true)
                                 {
                                     <li id="@linkID">
-                                        <a href="javascript:void(0);" onclick="GetPage('@i','','0','@sortcolumn', '@sorttype','@PatientLocation','@IsCurrentIPCount', '@IsNotUpdatedLast20HoursCount', '@IsNotUpdatedLast12HoursCount', '@IsUpdatedLast12HoursCount','@NoOxygen', '@Oxygen', '@NonInvasiveVentilation','@MechanicalVentilation','@NotUpdatedAtAll','@IsNewPositiveYTD','@IsNewPositiveYTDPending','@IsICUHDUStepUpYTD','@IsICUHDUStepUpYTDPending','@IsICUHDUStepDownYTD','@IsICUHDUStepDownYTDPending','@IsDischargeDeathYTD','@IsDischargeDeathYTDPending','@IsDischargesYTD','@IsDischargesYTDPending','@IsPositiveDeathsYTD','@IsPositiveDeathsYTDPending','@IsDeathYTD','@IsDeathYTDPending','@IsDeathDetected','@IsDeathDetectedPending','@IsDeathDiagnosed','@IsDeathDiagnosedPending','@IsDeathReAdmission','@IsDeathReAdmissionPending')" data-pageindex="@i" style="padding-top:0.25em;!outline:none; border-radius:2px; border: 1px solid transparent;box-sizing: border-box; min-width: 1.5em; padding: 0.5em 1em; margin-left: 2px; text-align: center; text-decoration:none !important; cursor:pointer">@i</a>
+                                        <a href="javascript:void(0);" onclick="GetPage('@i','','0','@sortcolumn', '@sorttype','@PatientLocation','@IsCurrentIPCount', '@IsNotUpdatedLast20HoursCount', '@IsNotUpdatedLast12HoursCount', '@IsUpdatedLast12HoursCount','@NoOxygen', '@Oxygen', '@NonInvasiveVentilation','@MechanicalVentilation','@NotUpdatedAtAll','@IsNewPositiveYTD','@IsNewPositiveYTDPending','@IsICUHDUStepUpYTD','@IsICUHDUStepUpYTDPending','@IsICUHDUStepDownYTD','@IsICUHDUStepDownYTDPending','@IsDischargeDeathYTD','@IsDischargeDeathYTDPending','@IsDischargesYTD','@IsDischargesYTDPending','@IsPositiveDeathsYTD','@IsPositiveDeathsYTDPending','@IsDeathYTD','@IsDeathYTDPending','@IsDeathDetected','@IsDeathDetectedPending','@IsDeathDiagnosed','@IsDeathDiagnosedPending','@IsDeathReAdmission','@IsDeathReAdmissionPending','@IsCHESSNewPositiveNotRequiredYTD','@IsCHESSICUHDUStepUpNotRequiredYTD', '@IsCHESSICUHDUStepDownNotRequiredYTD', '@IsCHESSDischargeDeathNotRequiredYTD',
+    '@IsCHESSDischargesNotRequiredYTD','@IsCHESSPositiveDeathsNotRequiredYTD', '@IsCPNSDeathDetectedNotRequired',
+    '@IsCPNSDeathDiagnosedNotRequired')" data-pageindex="@i" style="padding-top:0.25em;!outline:none; border-radius:2px; border: 1px solid transparent;box-sizing: border-box; min-width: 1.5em; padding: 0.5em 1em; margin-left: 2px; text-align: center; text-decoration:none !important; cursor:pointer">@i</a>
                                     </li>
                                 }
                                 else if (IsBreathing == true)
                                 {
                                     <li id="@linkID">
-                                        <a href="javascript:void(0);" onclick="GetPage('@i','','0','@sortcolumn', '@sorttype','@PatientLocation','@IsCurrentIPCount', '@IsNotUpdatedLast20HoursCount', '@IsNotUpdatedLast12HoursCount', '@IsUpdatedLast12HoursCount','@NoOxygen', '@Oxygen', '@NonInvasiveVentilation','@MechanicalVentilation','@NotUpdatedAtAll','@IsNewPositiveYTD','@IsNewPositiveYTDPending','@IsICUHDUStepUpYTD','@IsICUHDUStepUpYTDPending','@IsICUHDUStepDownYTD','@IsICUHDUStepDownYTDPending','@IsDischargeDeathYTD','@IsDischargeDeathYTDPending','@IsDischargesYTD','@IsDischargesYTDPending','@IsPositiveDeathsYTD','@IsPositiveDeathsYTDPending','@IsDeathYTD','@IsDeathYTDPending','@IsDeathDetected','@IsDeathDetectedPending','@IsDeathDiagnosed','@IsDeathDiagnosedPending','@IsDeathReAdmission','@IsDeathReAdmissionPending')" data-pageindex="@i" style="padding-top:0.25em;!outline:none; border-radius:2px; border: 1px solid transparent;box-sizing: border-box; min-width: 1.5em; padding: 0.5em 1em; margin-left: 2px; text-align: center; text-decoration:none !important; cursor:pointer">@i</a>
+                                        <a href="javascript:void(0);" onclick="GetPage('@i','','0','@sortcolumn', '@sorttype','@PatientLocation','@IsCurrentIPCount', '@IsNotUpdatedLast20HoursCount', '@IsNotUpdatedLast12HoursCount', '@IsUpdatedLast12HoursCount','@NoOxygen', '@Oxygen', '@NonInvasiveVentilation','@MechanicalVentilation','@NotUpdatedAtAll','@IsNewPositiveYTD','@IsNewPositiveYTDPending','@IsICUHDUStepUpYTD','@IsICUHDUStepUpYTDPending','@IsICUHDUStepDownYTD','@IsICUHDUStepDownYTDPending','@IsDischargeDeathYTD','@IsDischargeDeathYTDPending','@IsDischargesYTD','@IsDischargesYTDPending','@IsPositiveDeathsYTD','@IsPositiveDeathsYTDPending','@IsDeathYTD','@IsDeathYTDPending','@IsDeathDetected','@IsDeathDetectedPending','@IsDeathDiagnosed','@IsDeathDiagnosedPending','@IsDeathReAdmission','@IsDeathReAdmissionPending','@IsCHESSNewPositiveNotRequiredYTD','@IsCHESSICUHDUStepUpNotRequiredYTD', '@IsCHESSICUHDUStepDownNotRequiredYTD', '@IsCHESSDischargeDeathNotRequiredYTD',
+    '@IsCHESSDischargesNotRequiredYTD','@IsCHESSPositiveDeathsNotRequiredYTD', '@IsCPNSDeathDetectedNotRequired',
+    '@IsCPNSDeathDiagnosedNotRequired')" data-pageindex="@i" style="padding-top:0.25em;!outline:none; border-radius:2px; border: 1px solid transparent;box-sizing: border-box; min-width: 1.5em; padding: 0.5em 1em; margin-left: 2px; text-align: center; text-decoration:none !important; cursor:pointer">@i</a>
                                     </li>
                                 }
                             }
@@ -170,7 +196,9 @@
                 if (pageIndex != totalPages)
                 {
                     int nextPage = pageIndex + 1;
-                    <li><a onclick="GetPage('@nextPage','','0','@sortcolumn', '@sorttype','@PatientLocation','@IsCurrentIPCount', '@IsNotUpdatedLast20HoursCount', '@IsNotUpdatedLast12HoursCount', '@IsUpdatedLast12HoursCount','@NoOxygen', '@Oxygen', '@NonInvasiveVentilation','@MechanicalVentilation','@NotUpdatedAtAll','@IsNewPositiveYTD','@IsNewPositiveYTDPending','@IsICUHDUStepUpYTD','@IsICUHDUStepUpYTDPending','@IsICUHDUStepDownYTD','@IsICUHDUStepDownYTDPending','@IsDischargeDeathYTD','@IsDischargeDeathYTDPending','@IsDischargesYTD','@IsDischargesYTDPending','@IsPositiveDeathsYTD','@IsPositiveDeathsYTDPending','@IsDeathYTD','@IsDeathYTDPending','@IsDeathDetected','@IsDeathDetectedPending','@IsDeathDiagnosed','@IsDeathDiagnosedPending','@IsDeathReAdmission','@IsDeathReAdmissionPending')" data-pageindex="@nextPage" href="javascript:void(0);" style="box-sizing:border-box; padding: 0.5em 1em; min-width:1.5em; margin-left:2px; text-align:center; text-decoration:none !important; border:1px solid transparent; border-radius: 2px;">Next</a></li>
+                    <li><a onclick="GetPage('@nextPage','','0','@sortcolumn', '@sorttype','@PatientLocation','@IsCurrentIPCount', '@IsNotUpdatedLast20HoursCount', '@IsNotUpdatedLast12HoursCount', '@IsUpdatedLast12HoursCount','@NoOxygen', '@Oxygen', '@NonInvasiveVentilation','@MechanicalVentilation','@NotUpdatedAtAll','@IsNewPositiveYTD','@IsNewPositiveYTDPending','@IsICUHDUStepUpYTD','@IsICUHDUStepUpYTDPending','@IsICUHDUStepDownYTD','@IsICUHDUStepDownYTDPending','@IsDischargeDeathYTD','@IsDischargeDeathYTDPending','@IsDischargesYTD','@IsDischargesYTDPending','@IsPositiveDeathsYTD','@IsPositiveDeathsYTDPending','@IsDeathYTD','@IsDeathYTDPending','@IsDeathDetected','@IsDeathDetectedPending','@IsDeathDiagnosed','@IsDeathDiagnosedPending','@IsDeathReAdmission','@IsDeathReAdmissionPending','@IsCHESSNewPositiveNotRequiredYTD','@IsCHESSICUHDUStepUpNotRequiredYTD', '@IsCHESSICUHDUStepDownNotRequiredYTD', '@IsCHESSDischargeDeathNotRequiredYTD',
+    '@IsCHESSDischargesNotRequiredYTD','@IsCHESSPositiveDeathsNotRequiredYTD', '@IsCPNSDeathDetectedNotRequired',
+    '@IsCPNSDeathDiagnosedNotRequired')" data-pageindex="@nextPage" href="javascript:void(0);" style="box-sizing:border-box; padding: 0.5em 1em; min-width:1.5em; margin-left:2px; text-align:center; text-decoration:none !important; border:1px solid transparent; border-radius: 2px;">Next</a></li>
                 }
                 else
                 {

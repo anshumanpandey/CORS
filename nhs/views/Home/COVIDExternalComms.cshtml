@@ -16,7 +16,11 @@
     {
         isCPNSReadonly = true;
     }
-    if(Model.CovidChessComms.TestResult.ToUpper() == "DIAGNOSED" || Model.CovidChessComms.TestResult.ToUpper() == "DETECTED")
+    if(Model.CovidChessComms.TestResult == null)
+    {
+        isCHESSReadonly = false;
+    }
+    else if(Model.CovidChessComms.TestResult.ToUpper() == "DIAGNOSED" || Model.CovidChessComms.TestResult.ToUpper() == "DETECTED")
     {
         isCHESSReadonly = false;
     }
@@ -498,7 +502,17 @@
                                                                                                                                                                       IsDeathDiagnosed = Convert.ToBoolean(Session["IsDeathDiagnosed"]),
                                                                                                                                                                       IsDeathDiagnosedPending = Convert.ToBoolean(Session["IsDeathDiagnosedPending"]),
                                                                                                                                                                       IsDeathReAdmission = Convert.ToBoolean(Session["IsDeathReAdmission"]),
-                                                                                                                                                                      IsDeathReAdmissionPending = Convert.ToBoolean(Session["IsDeathReAdmissionPending"])
+                                                                                                                                                                      IsDeathReAdmissionPending = Convert.ToBoolean(Session["IsDeathReAdmissionPending"]),
+                                                                                                                                                                      IsCHESSNewPositiveNotRequiredYTD = Convert.ToBoolean(Session["IsCHESSNewPositiveNotRequiredYTD"]),
+                                                                                                                                                                      IsCHESSICUHDUStepUpNotRequiredYTD = Convert.ToBoolean(Session["IsCHESSICUHDUStepUpNotRequiredYTD"]),
+                                                                                                                                                                      IsCHESSICUHDUStepDownNotRequiredYTD = Convert.ToBoolean(Session["IsCHESSICUHDUStepDownNotRequiredYTD"]),
+                                                                                                                                                                      IsCHESSDischargeDeathNotRequiredYTD = Convert.ToBoolean(Session["IsCHESSDischargeDeathNotRequiredYTD"]),
+                                                                                                                                                                      IsCHESSDischargesNotRequiredYTD = Convert.ToBoolean(Session["IsCHESSDischargesNotRequiredYTD"]),
+                                                                                                                                                                      IsCHESSPositiveDeathsNotRequiredYTD = Convert.ToBoolean(Session["IsCHESSPositiveDeathsNotRequiredYTD"]),
+                                                                                                                                                                      IsCPNSDeathNotRequiredYTD = Convert.ToBoolean(Session["IsCPNSDeathNotRequiredYTD"]),
+                                                                                                                                                                      IsCPNSDeathDetectedNotRequired = Convert.ToBoolean(Session["IsCPNSDeathDetectedNotRequired"]),
+                                                                                                                                                                      IsCPNSDeathDiagnosedNotRequired = Convert.ToBoolean(Session["IsCPNSDeathDiagnosedNotRequired"]),
+                                                                                                                                                                      IsCPNSDeathReAdmissionNotRequired = Convert.ToBoolean(Session["IsCPNSDeathReAdmissionNotRequired"])
                                                                                                                                                                   })'">Yes</button>
                         }
                         </div>
@@ -569,7 +583,17 @@
                                                                                                                                                                           IsDeathDiagnosed = Convert.ToBoolean(Session["IsDeathDiagnosed"]),
                                                                                                                                                                           IsDeathDiagnosedPending = Convert.ToBoolean(Session["IsDeathDiagnosedPending"]),
                                                                                                                                                                           IsDeathReAdmission = Convert.ToBoolean(Session["IsDeathReAdmission"]),
-                                                                                                                                                                          IsDeathReAdmissionPending = Convert.ToBoolean(Session["IsDeathReAdmissionPending"])})'">Yes</button>
+                                                                                                                                                                          IsDeathReAdmissionPending = Convert.ToBoolean(Session["IsDeathReAdmissionPending"]),
+                                                                                                                                                                          IsCHESSNewPositiveNotRequiredYTD = Convert.ToBoolean(Session["IsCHESSNewPositiveNotRequiredYTD"]),
+                                                                                                                                                                          IsCHESSICUHDUStepUpNotRequiredYTD = Convert.ToBoolean(Session["IsCHESSICUHDUStepUpNotRequiredYTD"]),
+                                                                                                                                                                          IsCHESSICUHDUStepDownNotRequiredYTD = Convert.ToBoolean(Session["IsCHESSICUHDUStepDownNotRequiredYTD"]),
+                                                                                                                                                                          IsCHESSDischargeDeathNotRequiredYTD = Convert.ToBoolean(Session["IsCHESSDischargeDeathNotRequiredYTD"]),
+                                                                                                                                                                          IsCHESSDischargesNotRequiredYTD = Convert.ToBoolean(Session["IsCHESSDischargesNotRequiredYTD"]),
+                                                                                                                                                                          IsCHESSPositiveDeathsNotRequiredYTD = Convert.ToBoolean(Session["IsCHESSPositiveDeathsNotRequiredYTD"]),
+                                                                                                                                                                          IsCPNSDeathNotRequiredYTD = Convert.ToBoolean(Session["IsCPNSDeathNotRequiredYTD"]),
+                                                                                                                                                                          IsCPNSDeathDetectedNotRequired = Convert.ToBoolean(Session["IsCPNSDeathDetectedNotRequired"]),
+                                                                                                                                                                          IsCPNSDeathDiagnosedNotRequired = Convert.ToBoolean(Session["IsCPNSDeathDiagnosedNotRequired"]),
+                                                                                                                                                                          IsCPNSDeathReAdmissionNotRequired = Convert.ToBoolean(Session["IsCPNSDeathReAdmissionNotRequired"])})'">Yes</button>
                             }
                         </div>
                         <div class="col-md-4">
@@ -606,14 +630,14 @@
 $(function () {
     $("#BtnNext").click(function () {
         
-        if($("#hdnTestResult").val().toUpperCase() == "DETECTED" || $("#hdnTestResult").val().toUpperCase() == "DIAGNOSED")
-        {
-            if ($('input[name="CHESSContacted"]:checked').val() == 'No')
-            {
-                alert("For positive cases CHESS Notification is mandatory.");
-                return false;
-            }
-        }
+        //if($("#hdnTestResult").val().toUpperCase() == "DETECTED" || $("#hdnTestResult").val().toUpperCase() == "DIAGNOSED")
+        //{
+        //    if ($('input[name="CHESSContacted"]:checked').val() == 'No')
+        //    {
+        //        alert("For positive cases CHESS Notification is mandatory.");
+        //        return false;
+        //    }
+        //}
     });
 });
 </script>

@@ -1,0 +1,192 @@
+﻿@{
+    int totalPages = ViewBag.TotalPagesCount;
+    int pageIndex = ViewBag.PageNumber;
+    int totalRecordCount = ViewBag.TotalRecordCount;
+    int modalRecordCount = ViewBag.ModalRecordCount - 1;
+    int pageSize = 0;
+    bool IsPostive = false;
+    bool IsNegative = false;
+    bool IsPending = false;
+    bool IsPostiveNotified = false;
+    bool IsNegativeNotified = false;
+    bool IsPendingNotified = false;
+    bool IsPositiveLast24hours = false;
+    bool IsPositiveInPatientLast24hours = false;
+    bool IsCancelledLast24hours = false;
+    bool IsPostiveNotifiedLast24hours = false;
+    bool IsInPatientNotifiedLast24hours = false;
+    bool IsNotifiedCancelledLast24hours = false;
+    bool TotalTestsOrdered = false;
+    bool TotalTestsOrderedInPatient = false;
+    bool PositiveTestCases = false;
+    bool PositiveTestCasesICU = false;
+    bool NegativeTestCases = false;
+    bool PositiveDischarges = false;
+    bool PositiveDeaths = false;
+    bool PositiveInPatient = false;
+    bool PendingInPatient = false;
+    bool PositiveInPatientLast24hours = false;
+    bool NegativeInPatientLast24hours = false;
+    bool PositiveICUInPatientLast24hours = false;
+    bool PendingICUInPatient = false;
+    bool PositiveDischargeCountLast24hours = false;
+    bool PositiveDeathCountLast24hours = false;
+    bool IsPositiveAdmissions = false;
+    bool IsPositiveDeaths = false;
+    bool IsPositiveDischargesLast24hours = false;
+    bool IsPositiveDeathLast24hours = false;
+    string sortcolumn = "";
+
+    if (Convert.ToBoolean(Session["TestDashboard"]) == true)
+    {
+        pageSize = Convert.ToInt32(Session["TestPageSize"]);
+        sortcolumn = Convert.ToString(Session["TestColumn"]);
+        IsPostive = Convert.ToBoolean(Session["IsPostive"]);
+        IsNegative = Convert.ToBoolean(Session["IsNegative"]);
+        IsPending = Convert.ToBoolean(Session["IsPending"]);
+        IsPostiveNotified = Convert.ToBoolean(Session["IsPostiveNotNotified"]);
+        IsNegativeNotified = Convert.ToBoolean(Session["IsNegativeNotNotified"]);
+        IsPendingNotified = Convert.ToBoolean(Session["IsPendingGreaterthan2days"]);
+        IsPositiveLast24hours = Convert.ToBoolean(Session["IsPositiveLast24hours"]);
+        IsPositiveInPatientLast24hours = Convert.ToBoolean(Session["IsPositiveInPatientLast24hours"]);
+        IsCancelledLast24hours = Convert.ToBoolean(Session["IsNegativeLast24hours"]);
+        IsPostiveNotifiedLast24hours = Convert.ToBoolean(Session["IsPostiveNotNotifiedLast24hours"]);
+        IsInPatientNotifiedLast24hours = Convert.ToBoolean(Session["IsInPatientNotNotifiedLast24hours"]);
+        IsNotifiedCancelledLast24hours = Convert.ToBoolean(Session["IsNegativeNotNotifiedLast24hours"]);
+        IsPositiveAdmissions = Convert.ToBoolean(Session["IsPositiveAdmissions"]);
+        IsPositiveDeaths = Convert.ToBoolean(Session["IsPositiveDeaths"]);
+        IsPositiveDischargesLast24hours = Convert.ToBoolean(Session["IsPositiveDischargesLast24hours"]);
+        IsPositiveDeathLast24hours = Convert.ToBoolean(Session["IsPositiveDeathLast24hours"]);
+    }
+    else if (Convert.ToBoolean(Session["PatientDashboard"]) == true)
+    {
+        pageSize = Convert.ToInt32(Session["COVIDPageSize"]);
+        sortcolumn = Convert.ToString(Session["COVIDColumn"]);
+        TotalTestsOrdered = Convert.ToBoolean(Session["IsTotalTestsOrdered"]);
+        TotalTestsOrderedInPatient = Convert.ToBoolean(Session["IsTotalTestsOrderedInPatient"]);
+        PositiveTestCases = Convert.ToBoolean(Session["IsPositiveTestCases"]);
+        PositiveTestCasesICU = Convert.ToBoolean(Session["IsPositiveTestCasesICU"]);
+        NegativeTestCases = Convert.ToBoolean(Session["IsNegativeTestCases"]);
+        PositiveDischarges = Convert.ToBoolean(Session["IsPositiveDischarges"]);
+        PositiveDeaths = Convert.ToBoolean(Session["IsPositiveDeaths"]);
+        PositiveInPatient = Convert.ToBoolean(Session["IsPositiveInPatient"]);
+        PendingInPatient = Convert.ToBoolean(Session["IsPendingInPatient"]);
+        PositiveInPatientLast24hours = Convert.ToBoolean(Session["IsPositiveInPatientLast24hours"]);
+        NegativeInPatientLast24hours = Convert.ToBoolean(Session["IsNegativeInPatientLast24hours"]);
+        PositiveICUInPatientLast24hours = Convert.ToBoolean(Session["IsPositiveICUInPatientLast24hours"]);
+        PendingICUInPatient = Convert.ToBoolean(Session["IsPendingICUInPatient"]);
+        PositiveDischargeCountLast24hours = Convert.ToBoolean(Session["IsPositiveDischargeCountLast24hours"]);
+        PositiveDeathCountLast24hours = Convert.ToBoolean(Session["IsPositiveDeathCountLast24hours"]);
+    }
+
+    bool sorttype = true;
+    int firstRecord = (pageSize * (pageIndex - 1)) + 1;
+    int lastRecord = firstRecord + modalRecordCount;
+
+    if (modalRecordCount < 0)
+    {
+        firstRecord = 0;
+        lastRecord = 0;
+    }
+
+
+    <input type="hidden" name="hdfTotalRecords" id="hdfTotalRecords" value="@totalRecordCount" />
+    <div class="row">
+        <div class="col-md-4">
+            <div class="pageCountcontainer">
+                <br/>
+                <span>Showing @firstRecord to @lastRecord of @totalRecordCount</span>
+            </div>
+        </div>
+        
+            <div class="col-md-8"><br />
+                <ul class="pagination pull-right">
+                    @*========Set Previous Page Link==============*@
+
+                    @if (pageIndex != 1)
+                    {
+                        int previousPage = pageIndex - 1;
+                        <li><a onclick="GetPage('@previousPage','','0','@sortcolumn', '@sorttype','@TotalTestsOrdered','@TotalTestsOrderedInPatient','@PositiveTestCases','@PositiveTestCasesICU','@NegativeTestCases','@PositiveDischarges','@PositiveDeaths','@PositiveInPatient','@PendingInPatient','@PositiveInPatientLast24hours','@NegativeInPatientLast24hours','@PositiveTestCasesICU','@PendingICUInPatient','@PositiveDischargeCountLast24hours','@PositiveDeathCountLast24hours', '@IsPositiveAdmissions', '@IsPositiveDeaths', '@IsPositiveDischargesLast24hours','@IsPositiveDeathLast24hours')" href="javascript:void(0);" style="padding: 0.5em 1em; box-shadow:none" data-pageindex="@previousPage">Previous</a></li>
+
+                    }
+                    else
+                    {
+                        <li><a href="javascript:void(0);" style="cursor:default; border: 1px solid transparent; background: transparent; color:#666 !important; padding: 0.5em 1em; box-shadow:none">Previous</a></li>
+                    }
+
+                    @*==============End==============*@
+
+                    @{
+
+                        int start;
+                        if (pageIndex <= 5)
+                        {
+                            start = 1;
+                        }
+                        else
+                        {
+                            start = pageIndex - 4;
+                            int counterDifference = totalPages - start;
+                            if (counterDifference < 8)
+                            {
+                                start = totalPages - 7;
+                            }
+                        }
+
+                        for (int i = start; i < start + 8; i++)
+                        {
+                            if (i > totalPages) { continue; }
+
+                            if (i > 0)
+                            {
+                                string linkID = "pglink-" + i.ToString();
+
+
+                                if (i == pageIndex)
+                                {
+                                   
+                                    //current page
+                                    <li id="@linkID"><span style="border: 1px solid #979797; background:linear-gradient(to bottom, #fff 0%, #dcdcdc 100%); box-sizing: border-box; min-width: 1.5em; padding: 0.5em 1em; margin-left: 2px; text-align: center; text-decoration:none !important; cursor:pointer">@i</span></li>
+                                }
+                                else
+                                {
+                                    if (Convert.ToBoolean(Session["TestDashboard"]) == true)
+                                    {
+                                        <li id="@linkID">
+                                            <a href="javascript:void(0);" onclick="GetPage('@i','','0','@sortcolumn', '@sorttype','@IsPostive','@IsNegative','@IsPending','@IsPostiveNotified','@IsNegativeNotified','@IsPendingNotified','@IsPositiveLast24hours','@IsPositiveInPatientLast24hours','@IsCancelledLast24hours','@IsPostiveNotifiedLast24hours','@IsInPatientNotifiedLast24hours','@IsNotifiedCancelledLast24hours', '@IsPositiveAdmissions', '@IsPositiveDeaths', '@IsPositiveDischargesLast24hours','@IsPositiveDeathLast24hours')" data-pageindex="@i" style="padding-top:0.25em;!outline:none; border-radius:2px; border: 1px solid transparent;box-sizing: border-box; min-width: 1.5em; padding: 0.5em 1em; margin-left: 2px; text-align: center; text-decoration:none !important; cursor:pointer">@i</a>
+                                        </li>
+                                    }
+                                    else if (Convert.ToBoolean(Session["PatientDashboard"]) == true)
+                                    {
+                                        <li id="@linkID">
+                                            <a href="javascript:void(0);" onclick="GetPage('@i','','0','@sortcolumn', '@sorttype','@TotalTestsOrdered','@TotalTestsOrderedInPatient','@PositiveTestCases','@PositiveTestCasesICU','@NegativeTestCases','@PositiveDischarges','@PositiveDeaths','@PositiveInPatient','@PendingInPatient','@PositiveInPatientLast24hours','@NegativeInPatientLast24hours','@PositiveTestCasesICU','@PendingICUInPatient','@PositiveDischargeCountLast24hours','@PositiveDeathCountLast24hours', '@IsPositiveAdmissions', '@IsPositiveDeaths', '@IsPositiveDischargesLast24hours','@IsPositiveDeathLast24hours')" data-pageindex="@i" style="padding-top:0.25em;!outline:none; border-radius:2px; border: 1px solid transparent;box-sizing: border-box; min-width: 1.5em; padding: 0.5em 1em; margin-left: 2px; text-align: center; text-decoration:none !important; cursor:pointer">@i</a>
+                                        </li>
+                                    }
+                                }
+                            }
+                        }
+
+
+                        @*========Set Next Page Link==============*@
+
+                    if (pageIndex != totalPages)
+                    {
+                        int nextPage = pageIndex + 1;
+                        <li><a onclick="GetPage('@nextPage','','0','@sortcolumn', '@sorttype','@TotalTestsOrdered','@TotalTestsOrderedInPatient','@PositiveTestCases','@PositiveTestCasesICU','@NegativeTestCases','@PositiveDischarges','@PositiveDeaths','@PositiveInPatient','@PendingInPatient','@PositiveInPatientLast24hours','@NegativeInPatientLast24hours','@PositiveTestCasesICU','@PendingICUInPatient','@PositiveDischargeCountLast24hours','@PositiveDeathCountLast24hours', '@IsPositiveAdmissions', '@IsPositiveDeaths', '@IsPositiveDischargesLast24hours','@IsPositiveDeathLast24hours')" data-pageindex="@nextPage" href="javascript:void(0);" style="box-sizing:border-box; padding: 0.5em 1em; min-width:1.5em; margin-left:2px; text-align:center; text-decoration:none !important; border:1px solid transparent; border-radius: 2px;">Next</a></li>
+                    }
+                    else
+                    {
+                        <li><a class="next-problem" href="javascript:void(0);" style="cursor:default; border: 1px solid transparent; background: transparent; color:#666 !important; padding: 0.5em 1em; box-shadow:none">Next</a></li>
+                    }
+                    @*==============End==============*@
+
+                    }
+                </ul>
+
+            </div>
+         
+    </div>
+
+
+}
+

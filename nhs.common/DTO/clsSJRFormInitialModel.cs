@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+
 //using System.ComponentModel.DataAnnotations;
 
 namespace NHS.Common
@@ -83,6 +84,7 @@ namespace NHS.Common
         public Nullable<int> Patient_ID { get; set; }
 
         public string PatientID { get; set; }
+
         public string InitialManagement { get; set; }        
         public Nullable<int> InitialManagementCareRatingID { get; set; }
         public string OngoingCare { get; set; }

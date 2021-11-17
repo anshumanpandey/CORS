@@ -40,16 +40,17 @@
                                     <th align="left" width="4%" style="text-align:center;">Patient ID</th>
                                     <th align="left" width="10%" style="text-align:center;">Name (Age)</th>
                                     @*<th align="left" width="4%" style="text-align:center;">Gender</th>*@
-                                    <th align="left" width="4%" style="text-align:center;">DQ</th>
                                     <th align="left" width="5%" style="">Encounter<br/> Type</th>
                                     <th align="left" width="8%" style="">Order Date</th>
                                     <th align="left" width="5%" style="">Order Status</th>
                                     <th align="left" width="8%" style="">Event/Result</th>
+                                    <th align="left" width="8%" style="">Actual Test Result</th>
                                     <th align="left" width="10%" style="">Result Date Time</th>
                                     <th align="left" width="20%" style="">Clinical Display</th>
                                     <th align="left" width="10%" style="">COVID EDL Diagnosis</th>
                                     <th align="left" width="10%" style="">COVID EDL Problem</th>
                                     <th align="left" width="5%" style="">Notified</th>
+                                    <th align="left" width="4%" style="text-align:center;">DQ</th>
                                     <th align="left" width="5%" style="">Status</th>
                                     @if (!ViewBag.IsReadOnly)
                                     {
@@ -73,6 +74,7 @@
                                             <td align="left" style="">@item.OrderDateTime</td>
                                             <td align="left" style="">&nbsp;&nbsp;&nbsp;@item.TestStatus</td>
                                             <td align="left">&nbsp;&nbsp;&nbsp;@item.TestResult</td>
+                                            <td align="left">&nbsp;&nbsp;&nbsp;@item.ACTUAL_TEST_RESULT</td>
                                             <td align="left" style="">@item.TestResultDateTime</td>
                                             <td align="left">@item.Clinical_Display_Line.Trim()</td>
                                             <td align="left">@item.COVID_Diagnosis.Trim()</td>

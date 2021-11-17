@@ -1,0 +1,372 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+    <title>@ViewBag.Title</title>
+    @*@Styles.Render("~/css/css")*@
+    @*<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">*@
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    @*<link href="~/css/jquery-ui.min.css" rel="stylesheet" />*@
+    <link href="~/css/bootstrap.min.css?v=1.1" rel="stylesheet" />
+    <link href="~/css/font-awesome.min.css?v=1.1" rel="stylesheet" />
+    <link href="~/css/responsive.css?v=1.1" rel="stylesheet" />
+    <link href="~/css/style.css?v=1.1" rel="stylesheet" />
+
+
+    @*<link href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css" />*@
+    <link href="~/css/datatables.min.css" rel="stylesheet" />
+    <link href="~/css/responsive.bootstrap.min.css" rel="stylesheet" />
+    @*<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css?v=1.1" />*@
+    <style>
+        .navbar-nav.side-nav ul .sub-menu li:before, .navbar-nav.side-nav li .sub-menu li:before {
+            font-family: 'Font Awesome 5 Free';
+            content: none !important;
+        }
+
+        .navbar-nav.side-nav ul .sub-menu li, .navbar-nav.side-nav li .sub-menu li {
+            background-color: #a9d7cc;
+            border-bottom: 1px solid #bbbbbb;
+        }
+
+        a.ex3:hover, a.ex3:active {
+            background: ;
+        }
+    </style>
+    <script src="~/Scripts/js/jquery-1.12.4.min.js"></script>
+    @*<script src="~/Scripts/jquery-3.3.1.min.js"></script>*@
+    <script src="~/Scripts/js/jquery-ui.min.js"></script>
+    <script src="~/Scripts/js/bootstrap.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="~/Scripts/js/jquery.dataTables.min.js?v=1.1"></script>
+    <script type="text/javascript" charset="utf8" src="~/Scripts/js/dataTables.responsive.min.js?v=1.1"></script>
+    @*<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>*@
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <script src="~/Scripts/js/respond-1.4.2.min.js"></script>
+    <script src="~/Scripts/js/custom.js?v=1.1"></script>
+    <!-- jQuery -->
+    @*<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>*@
+</head>
+<body>
+    <!--== Start loader Section ==-->
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+    </div>
+    <!--== end loader Section ==-->
+    <!--== Start header Section ==-->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light">
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-brand" href="#">
+            <a href="@Url.Action("Index", "home")">
+                <img src="~/images/CORS-GIF.png" alt="" /></a>
+        </div>
+        
+        @if (Session["FullName"] != null)
+        {
+            if (Session["FullName"].ToString() != "")
+            {
+                <span style="color:#fff;padding-right:30px; position:inherit; color:#70a397;font-size:14px"><br /><br /><br /><br /><br /><br /><br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Logged In : @Session["FullName"].ToString()</b></span>
+            }
+            else
+            {
+                @Url.Action("Index", "Account");
+            }
+        }
+        else
+        {
+            @Url.Action("Index", "Account");
+        }
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav side-nav">    
+                <li data-toggle="collapse" data-target="#products1" class="nav-item collapsed active">
+                    <a href="#"><i class="fas fa-th-list"></i> Reviews <span class="arrow"></span></a>
+                </li>
+                <ul class="sub-menu collapse" id="products1">
+                    <li data-toggle="collapse" data-target="#products4" class="nav-item collapsed active">
+                        @*<a href="/Home/MedicalExaminerDashboard">
+                            Medical Examiner Dashboard
+                        </a>*@
+                        <a href="#">Mortality <span class="arrow"></span></a>
+                        <ul class="sub-menu collapse" id="products4">
+                            <li>
+                                <a href="@Url.Action("MedicalExaminerDashboard", "home", new { id = 0, isReset = false} )">
+                                    Hospital Deaths
+                                </a>
+                            </li>
+                            @*<li>
+        <a href="@Url.Action("NotImplemented", "home")" class="ex3">
+            Paeds
+        </a>
+    </li>*@
+                            
+                        </ul>
+                    </li>
+                    <li data-toggle="collapse" data-target="#products12" class="nav-item collapsed active">
+                        @*<a href="/Home/MedicalExaminerDashboard">
+                Medical Examiner Dashboard
+            </a>*@
+                        <a href="#">Infections <span class="arrow"></span></a>
+                        <ul class="sub-menu collapse" id="products12">
+                            <li>
+                                <a href="@Url.Action("COVIDPatientDashboard", "home", new { isReset = true, ismenu = true } )">
+                                    COVID19 Patients
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("COVIDDashboard", "home", new { isReset = true } )">
+                                    COVID19 Test Orders
+                                </a>
+                            </li>                            
+                            @*<li>
+                    <a href="@Url.Action("NotImplemented", "home")" class="ex3">
+                        Paeds
+                    </a>
+                </li>*@
+
+                        </ul>
+                    </li>
+
+                            @*<li>
+                    <a href="@Url.Action("NotImplemented", "home")" class="ex3">
+                        Specialty
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("NotImplemented", "home")" class="ex3">
+                        Procedures
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("NotImplemented", "home")" class="ex3">
+                        Diseases/Condition
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("NotImplemented", "home")" class="ex3">
+                        Activity and Coding
+                    </a>
+                </li>*@
+                        </ul>
+<li data-toggle="collapse" data-target="#products2" class="nav-item collapsed active">
+                    <a href="#"><i class="fas fa-th-list"></i> Reports <span class="arrow"></span></a>
+                </li>
+                <ul class="sub-menu collapse" id="products2">
+                    <li data-toggle="collapse" data-target="#products3" >
+                        @*<a href="/Home/MedicalExaminerDashboard">
+                            Medical Examiner Dashboard
+                        </a>*@
+                            <a href="#">Mortality <span class="arrow"></span></a>
+                            <ul class="sub-menu collapse" id="products3">
+                                <li>
+                                    <a href="@Url.Action("MROutcomeDashboard", "home" )">
+                                        Outcome Review Dashboard
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("SJRTracking", "home")" class="ex3">
+                                        SJR Tracking Dashboard
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("NotImplemented", "Home")" class="ex3">
+                                        ME Tracking Dashboard
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("InsightDashboard", "home")" class="ex3">
+                                        Insight Dashboard
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("PatientExtract", "home", new { id = 0, isReset = false})" class="ex3">
+                                        Patient Print Report
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("NotImplemented", "home",new { id = 0, qapreview = false, medtriage = false, meoreview = false})" class="ex3">
+                                        Data Extract
+                                    </a>
+                                </li>
+                            </ul>
+                            </li>
+                            <li data-toggle="collapse" data-target="#products27" class="nav-item collapsed active">
+                                @*<a href="/Home/MedicalExaminerDashboard">
+                        Medical Examiner Dashboard
+                    </a>*@
+                                <a href="#">COVID19 <span class="arrow"></span></a>
+                                <ul class="sub-menu collapse" id="products27">
+                                    <li>
+                                        <a href="@Url.Action("COVIDExternalCommsReport", "home", new { isReset = true } )">
+                                            External Comms Dashboard
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("COVIDBreathingSupportReport", "home", new { isReset = true } )">
+                                            Breathing Support Dashboard
+                                        </a>
+                                    </li>
+                                    @*<li>
+                            <a href="@Url.Action("NotImplemented", "home")" class="ex3">
+                                Paeds
+                            </a>
+                        </li>*@
+
+                                </ul>
+                            </li>
+                            <li>
+                            <ul>
+                                <li data-toggle="collapse" data-target="#summaries" class="nav-item collapsed active">
+                                    <a href="#">Issue Summaries <span class="arrow"></span></a>
+                                    <ul class="sub-menu collapse" id="summaries">
+                                        <li>
+                                            <a href="@Url.Action("CodingIssueSummary", "home" )">
+                                                Coding Issue Summary
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("DQIssueSummary", "home")" class="ex3">
+                                                DQ Issue Summary
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("UrgentMESummary", "home")" class="ex3">
+                                                Urgent ME Required Summary
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("OtherReferralSummary", "home")" class="ex3">
+                                                Other Referral Summary
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("FullSJRSummary", "home")" class="ex3">
+                                                Full SJR Summary
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("FullSJR2Summary", "home")" class="ex3">
+                                                Full SJR2 Summary
+                                            </a>
+                                        </li>
+                                    </ul> 
+                                </li>
+                            </ul>
+                            <ul>
+                                <li>
+                                    <a href="@Url.Action("NotImplemented", "home")" class="ex3">
+                                        National Audits
+                                    </a>
+                                </li> 
+                            </ul> 
+                     </li>                           
+                </ul>
+                <li data-toggle="collapse" data-target="#DataManagementLayout" class="nav-item collapsed active">
+                    <a href="#"><i class="fas fa-th-list"></i> Data Management <span class="arrow"></span></a>
+                </li>
+                <ul class="sub-menu collapse" id="DataManagementLayout">
+                    <li data-toggle="collapse" data-target="#DataManagementScreen" class="nav-item collapsed active">
+                        @*<a href="/Home/MedicalExaminerDashboard">
+                            Medical Examiner Dashboard
+                        </a>*@
+                        <a href="#">Data Sources <span class="arrow"></span></a>
+                        <ul class="sub-menu collapse" id="DataManagementScreen">
+                            <li>
+                                <a href="@Url.Action("DataManagementDetails", "DataManagement")">
+                                    Inpatient deaths
+                                </a>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li>
+                                <a href="@Url.Action("NotImplemented", "home")" style="background-color:grey;color:black"> Data Assurance <span class="arrow"></span></a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+				@if (Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                {
+				<li data-toggle="collapse" data-target="#SettingLayout" class="nav-item collapsed active">
+                    <a href="#"><i class="fas fa-th-list"></i> Settings <span class="arrow"></span></a>
+                </li>
+                <ul class="sub-menu collapse" id="SettingLayout">
+                    <li>
+                        <a href="@Url.Action("Setting", "Home")">
+                            Website Setting
+                        </a>
+                    </li>
+					 <li>
+                        <a href="@Url.Action("FeedbackType", "Home")">
+                            Feedback Type
+                        </a>
+                    </li>
+					 <li>
+                        <a href="@Url.Action("CommentType", "Home")">
+                            Comment Type
+                        </a>
+                    </li>
+					 <li>
+                        <a href="@Url.Action("Speciality", "Home")">
+                            Speciality
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Wards", "Home")">
+                            Wards
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Consultants", "Home")">
+                            Clinicians
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Roles", "Home")">
+                            Roles
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Users", "Home")">
+                            Users
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("RolePermission", "Home")">
+                            Module Permissions
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("NotificationSettings", "Home")">
+                            Notification Settings
+                        </a>
+                    </li>
+                </ul>
+                }
+                <li data-toggle="collapse" data-target="#AccountLayout" class="nav-item collapsed active">
+                    <a href="#"><i class="fas fa-th-list"></i> Account <span class="arrow"></span></a>
+                </li>
+                <ul class="sub-menu collapse" id="AccountLayout">
+                    <li>
+                        <a href="@Url.Action("Logout", "Account")">
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+            </ul>
+        </div>
+    </nav>
+    <br /><br />
+    <!--== end header Section ==-->
+    <div class="main-container">
+        @RenderBody()
+    </div>
+    @RenderSection("scripts", required: false)
+    
+</body>
+</html>

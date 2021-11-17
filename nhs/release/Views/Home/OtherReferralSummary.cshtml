@@ -1,0 +1,86 @@
+﻿@model List<NHS.Common.OtherReferralSummary>
+@{
+    ViewBag.Title = "DQ Issue Summary";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .form-control:disabled, .form-control[readonly] {
+        background-color: #fdfdfd;
+        opacity: 1;
+    }
+</style>
+<br />
+<br />
+<div align="left" style="width:90%">
+    <h4>Other Referral Summary</h4><br />
+</div>
+<span style="color:green">@TempData["AlertMessage"]</span>
+<div class="col-sm-12">
+    <div class="row">
+        <div style="width:90%;">
+            <table class="stripe row-border order-column" style="overflow:auto;width:100% !important" id="tblWards">
+                <thead>
+                    <tr bgcolor="#a9d7cc" style="color:black;  font-size:12px;">
+                        <th align="left" width="10%">Patient ID</th>
+                        <th align="left" width="15%">Patient Name</th>
+                        <th align="left" width="15%">Date Of Death</th>
+                        <th align="left" width="15%">Referral Date</th>
+                        <th align="left" width="15%">Referral Type</th>
+                        <th align="left" width="15%">Referral Reason</th>
+                        <th align="left" width="15%">Referred By</th>
+                    </tr>
+                </thead>
+                <tbody style="font-size:12px;padding:0px;">
+                    @if (Model.Count > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr class="Entries">
+                                <td align="left" width="10%">&nbsp;&nbsp;@item.PatientID</td>
+                                <td align="left" width="15%">&nbsp;&nbsp;@item.PatientName</td>
+                                <td align="left" width="15%">&nbsp;&nbsp;@item.DateOfDeath</td>
+                                <td align="left" width="15%">&nbsp;&nbsp;@item.ReferralDate</td>
+                                <td align="left" width="15%">&nbsp;&nbsp;@item.ReferralType</td>
+                                <td align="left" width="15%">&nbsp;&nbsp;@item.ReferralReason</td>
+                                <td align="left" width="15%">&nbsp;&nbsp;@item.ReferredBy</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="14" class="text-center" align="center">No Records Found.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+        $(document).ready(function () {
+            $('#tblWards').DataTable(
+                {
+                    "ordering": true,
+                    "paging": true,
+                    "searching": true,
+                    "pageLength": 10,
+                    "order": [[3, "desc"]],
+                    "aoColumns": [
+                        { "sName": "PatientID", "sTitle": "Patient ID", "bSortable": "true" },
+                        { "sName": "PatientName", "sTitle": "Patient Name", "bSortable": "true" },
+                        { "sName": "DateOfDeath", "sTitle": "Date of Death", "bSortable": "true" },
+                        { "sName": "ReferralDate", "sTitle": "Referral Date", "bSortable": "true" },
+                        { "sName": "ReferralType", "sTitle": "Referral Type", "bSortable": "true" },
+                        { "sName": "ReferralReason", "sTitle": "Referral Reason", "bSortable": "true" },
+                        { "sName": "ReferredBy", "sTitle": "ReferredBy", "bSortable": "true" }
+                    ],
+                    "lengthMenu": [
+                        [10, 20, 50, 100, -1],
+                        ['10 rows', '20 rows', '50 rows', '100 rows', 'Show all']],
+                    "scrollX": true,
+                });
+        });
+</script>
+
+

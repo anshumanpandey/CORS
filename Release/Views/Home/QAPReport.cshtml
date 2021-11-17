@@ -1,0 +1,413 @@
+﻿@model NHS.Common.clsQAPReview
+@{
+    ViewBag.Title = "QAP Report";
+    Layout = "~/Views/Shared/_PopopLayout.cshtml";
+}
+<style>
+    .cls_mar_top {
+        margin-top: 7px;
+    }
+
+    .IsRevCom {
+        margin-top: 7px;
+        padding-left: 16px;
+        margin-bottom: 7px;
+    }
+
+    .square1 {
+        height: 30px;
+        width: 100px;
+        /*background-color: forestgreen;*/
+        border-color: #000000;
+    }
+
+    .square2 {
+        height: 30px;
+        width: 100px;
+        /*background-color: forestgreen;*/
+        border-color: #000000;
+    }
+
+    .square3 {
+        height: 30px;
+        width: 100px;
+        /*background-color: forestgreen;*/
+        border-color: #000000;
+    }
+
+    .square4 {
+        height: 30px;
+        width: 100px;
+        /*background-color: forestgreen;*/
+        border-color: #000000;
+    }
+
+    .square5 {
+        height: 30px;
+        width: 100px;
+        /*background-color: forestgreen;*/
+        border-color: #000000;
+    }
+
+    .square6 {
+        height: 30px;
+        width: 100px;
+        /*background-color: forestgreen;*/
+        border-color: #000000;
+    }
+</style>
+<br />
+<br />
+<div class="container">
+    <div class="row form-group">
+        <div class="col-xs-12 col-lg-12">
+            <div align="right">
+                <button type="button" id="btnPrint" class="btn btn-primary">Print/Export</button>
+            </div>
+            <div class="row" align="right">
+                @*<div class="col-md-12">
+                    <input type="image" src="~/images/Delete.png" width="30" height="30" alt="Submit" id="btnClose1" title="Close" />
+                </div>*@
+            </div>
+            @*<ul class="nav nav-pills nav-justified thumbnail setup-panel">
+                    <li class="active">
+                        <a href="@Url.Action("Stage2SJRformFirstStep", "home", new { id=Model.Patient_ID })">
+                            <h4 class="list-group-item-heading">
+                                <b>Phase of Care Assessment</b>
+                            </h4>
+                        </a>
+                    </li>
+                    <li class="disabled">
+                        <a href="@Url.Action("Stage2SJRFormSecondStep", "home", new { id=Model.Patient_ID })">
+                            <h4 class="list-group-item-heading">
+                                <b>Assessment Of Problems in Healthcare</b>
+                            </h4>
+                        </a>
+                    </li>
+                </ul>*@
+        </div>
+    </div>
+    <div>
+        <div class="row setup-content" id="step-1">
+            <div class="col-xs-12 col-lg-12">
+                    <div class="col-md-12 well text-center">
+                        <div class="form-section" style="text-align:left">
+                            <h3 class="stage_title">SUMMARY OF DEATH CERTIFICATION </h3><br />
+                            @*<div class="lable_title">
+                                    <h2>PHASE OF CARE: INITIAL MANAGEMENT (FIRST 24 HOURS) </h2>
+                                </div>*@
+                            <input type="hidden" id="hdfConcern" name="hdfConcern" value="" />
+
+                            <div class="row">
+
+                                @*<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                        <div class="row_bar">
+                                            <span>Synopsis of circumstances, medical history and preliminary view of the cause of death</span>
+                                        </div>
+                                    </div>*@
+
+                                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5" style="margin:0 0 20px 0;">
+                                    <table style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;" width="100%">
+                                        <tbody>
+                                            <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;" width="40%"><b>Patient ID</b></td>
+                                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.PatientId</td>
+                                            </tr>
+                                            <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Patient Name</b></td>
+                                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.PatientName</td>
+
+                                            </tr>
+                                            <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>DOB</b></td>
+                                                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.DOB</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="row_bar">
+                                        <span><b>Synopsis of circumstances, medical history and preliminary view of the cause of death</b></span>
+                                             @Html.TextAreaFor(model => model.Synopsis, 10, 200, new { @class = "form-control", @readonly = true, placeholder = "This information is to provide support your proposed cause of death or referral to the coroner. Please include information regarding any concerns raised." })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="row_bar">
+                                        <span><b>Doctor's decision and action</b></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row_bar">
+                                        <b>Do you have any concerns about the quality of care this patient received?</b>
+
+                                                    @if (Model.Concern == true)
+                                                    {
+                                                        <span>Yes </span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>No </span>
+                                                    }                                                
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="col-md-6">
+                                    <div class="row_bar">
+                                        <span><i><b>If no preliminary view can be formed make a note of the reason.</b></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row_bar">
+                                        <span><b>Approximate interval between onset and death</b></span>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="col-md-1">
+                                    <div class="row_bar">
+                                        <span><b>1a</b></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="row_bar">
+                                                    @Html.EditorFor(model => model.Reason1a, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row_bar">
+                                                    @Html.EditorFor(model => model.Interval1, new { htmlAttributes = new { @class = "form-control", @readonly = true } })                                       
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="row_bar">
+                                        <span><b>1b</b></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="row_bar">
+                                            @Html.EditorFor(model => model.Reason1b, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row_bar">
+                                            @Html.EditorFor(model => model.Interval2, new { htmlAttributes = new { @class = "form-control", @readonly = true } })                                                
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="row_bar">
+                                        <span><b>1c</b></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="row_bar">
+                                            @Html.EditorFor(model => model.Reason1c, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row_bar">
+                                        @Html.EditorFor(model => model.Interval3, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="row_bar">
+                                        <span><b>2</b></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="row_bar">
+                                        @Html.EditorFor(model => model.Reason2, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row_bar">
+                                        @Html.EditorFor(model => model.Interval4, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-11">
+                                            <span><b><i>I feel able to complete the MCCD with no need for coroner referral (Only valid for a doctor that attended the deceased)</i></b> </span>
+                                        </div>
+                                        <div class="col-md-1">
+                                            @if (Model.MCCD == true)
+                                            {
+                                                <span>Yes</span>
+                                            }
+                                            else
+                                            {
+                                                <span>No</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-11">
+                                            <span><b><i>I feel this case requires referral to the coroner for further action for the following reason</i></b> </span>
+                                        </div>
+                                        <div class="col-md-1">
+                                            @if (Model.Referral == true)
+                                            {
+                                                <span>Yes</span>
+                                            }
+                                            else
+                                            {
+                                                <span>No</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                @if (Model.Referral == true)
+                                {
+                                    <div id="reasonlabel" style="display:block;" class="col-md-12">
+                                        <div class="row_bar">
+                                            <b>Reason</b>
+                                        </div>
+                                    </div>
+                                    <div id="reasontextarea" style="display:block;" class="col-md-12">
+                                        <div class="row_bar">
+                                            @Html.TextAreaFor(model => model.Reason, 5, 200, new { @class = "form-control", placeholder = "" })
+                                        </div>
+                                    </div>
+                                }                                            
+                                <div class="col-md-12">
+                                    <div class="row_bar">
+                                        <b>Medical practitioner's name and contact details</b>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="row_bar">
+                                        <span><b>Full Name (print)</b></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="row_bar">
+                                        <span>@Model.FullName</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="row_bar">
+                                        <span><b>GMC No.</b></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="row_bar">
+                                        <span>@Model.GMCNo</span>
+                                    </div>
+                                </div>
+                                <br /><br /><br />
+                                <div class="col-md-3">
+                                    <div class="row_bar">
+                                        <span><b>Location/Department</b></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="row_bar">
+                                        <span>@Model.Location</span>
+                                    </div>
+                                </div>
+                                <br /><br /><br />
+                                <div class="col-md-3">
+                                    <div class="row_bar">
+                                        <span><b>Personal phone/bleep No.</b></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="row_bar">
+                                        <span>@Model.Phone</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="row_bar">
+                                        <span><b>Alternative/out-of-hours No.</b></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="row_bar">
+                                        <span>@Model.AlternatePhone</span>
+                                    </div>
+                                </div>
+
+                                
+                                    <div class="col-md-2" id="dvNameLabelSign">
+                                        <div class="row_bar">
+                                            <span><b><i>Signature</i></b></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" id="dvNameSpanSign">
+                                        <div class="row_bar">
+                                                <span><b><i>@Model.CreatedBy</i></b></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" id="dvDateLabel">
+                                        <div class="row_bar">
+                                            <span><b><i>Date</i></b></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" id="dvDateSpan">
+                                        <div class="row_bar">
+                                                <span><b><i>@Model.CreatedDate</i></b></span>
+                                        </div>
+                                    </div>                                
+                                <div class="col-md-12 cls_mar_top">
+                                    <div class="row_bar">
+                                        <span><i>The doctor providing the information in this form needs to be available to respond, if asked, to any enquiries from a medical examiner or office.</i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+            </div>
+        </div>
+        <br />
+        <br />
+    </div>
+    @*changes*@
+</div>
+<script type="text/javascript">
+$("#btnPrint").click(function () {
+    $("#btnPrint").hide();
+    var HTML_Width = $(".container").width();
+    var HTML_Height = $(".container").height();
+    var top_left_margin = 1;
+    var PDF_Width = HTML_Width + (top_left_margin * 2);
+    var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+    var canvas_image_width = HTML_Width;
+    var canvas_image_height = HTML_Height;
+
+    var totalPDFPages = Math.ceil(HTML_Height / PDF_Height);
+    var scale = 1.0;
+    var qualityjpg = 1.0;
+    var top_left_margin = 15;
+    var PDF_Width = HTML_Width + (top_left_margin * 2);
+    var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+    //}
+
+    html2canvas($(".container")[0], { allowTaint: true, scale: scale }).then(function (canvas) {
+        canvas.getContext('2d');
+        //console.log(canvas.height+"  "+canvas.width);
+
+
+        var imgData = canvas.toDataURL("image/png", qualityjpg);
+        console.log(imgData);
+        var pdf = new jsPDF('portrait', 'pt', [PDF_Width, PDF_Height]);
+        pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin * 4, canvas_image_width, canvas_image_height);
+        for (var i = 1; i < totalPDFPages; i++) {
+            pdf.addPage(PDF_Width, PDF_Height);
+            pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
+        }
+        var blob = pdf.output("blob");
+        var objectUrl = URL.createObjectURL(blob);
+        window.open(objectUrl);
+    });
+    $("#btnPrint").show();
+});
+</script>
+
+
+
+

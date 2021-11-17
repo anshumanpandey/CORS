@@ -1,0 +1,756 @@
+﻿@model NHS.Common.SJR2Report
+@{
+    ViewBag.Title = "SJR 2 Report";
+    Layout = "~/Views/Shared/_PopopLayout.cshtml";
+}
+<style>
+    .square1 {
+        height: 30px;
+        width: 100px;
+        /*background-color: forestgreen;*/
+        border-color: #000000;
+    }
+
+    .square2 {
+        height: 30px;
+        width: 100px;
+        /*background-color: forestgreen;*/
+        border-color: #000000;
+    }
+
+    .square3 {
+        height: 30px;
+        width: 100px;
+        /*background-color: forestgreen;*/
+        border-color: #000000;
+    }
+
+    .square4 {
+        height: 30px;
+        width: 100px;
+        /*background-color: forestgreen;*/
+        border-color: #000000;
+    }
+
+    .square5 {
+        height: 30px;
+        width: 100px;
+        /*background-color: forestgreen;*/
+        border-color: #000000;
+    }
+
+    .square6 {
+        height: 30px;
+        width: 100px;
+        /*background-color: forestgreen;*/
+        border-color: #000000;
+    }
+</style>
+<br />
+<br />
+<div class="container">
+    <div class="col-xs-12 col-lg-12">
+        <div align="right">
+            <button type="button" id="btnPrint" class="btn btn-primary">Print/Export</button>
+        </div>
+        <div class="col-md-12 well text-center">
+            <div class="form-section" style="text-align:left">
+                <h3 class="stage_title">STAGE 2: STRUCTURED JUDGEMENT REVIEW </h3>
+
+                <div class="row">
+                    <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5" style="margin:0 0 20px 0;">
+                        <table style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;" width="100%">
+                            <tbody>
+                                <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;" width="40%"><b>Patient ID</b></td>
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.PatientID</td>
+                                </tr>
+                                <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Patient Name</b></td>
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.PatientName </td>
+
+                                </tr>
+                                <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>DOB</b></td>
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.DOB</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+
+                <div class="lable_title">
+                    <h2>PHASE OF CARE: INITIAL MANAGEMENT (FIRST 24 HOURS) </h2>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="row_bar">
+                            @Html.TextAreaFor(model => model.InitialManagement, 5, 200, new { @class = "form-control", @readonly = "readonly", placeholder = "Please record your explicit judgements about the quality of care the patient received and whether it was in accordance with current good practice (for example, your professional standards or your professional perspective). If there is any other information that you think is important or relevant that you wish to comment on then please do so." })
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span>Please rate the care received by the patient during this phase</span>
+                            </div>
+                            <div class="col-md-6">
+                                <span>@Model.InitialManagementRating</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lable_title">
+                        <h2>&nbsp;&nbsp;&nbsp;PHASE OF CARE: ONGOING CARE</h2>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row_bar">
+                            @Html.TextAreaFor(model => model.OngoingCare, 5, 200, new { @class = "form-control", @readonly = true })
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span>Please rate the care received by the patient during this phase</span>
+                            </div>
+                            <div class="col-md-6">
+                                <span>@Model.OngoingCareRating</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lable_title">
+                        <h2>&nbsp;&nbsp;&nbsp;PHASE OF CARE: CARE DURING A PROCEDURE (EXCLUDING IV CANNULATION)</h2>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row_bar">
+                            @Html.TextAreaFor(model => model.CareDuringProcedure, 5, 200, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span>Please rate the care received by the patient during this phase</span>
+                            </div>
+                            <div class="col-md-6">
+                                <span>@Model.CareDuringProcedureRating</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lable_title">
+                        <h2>&nbsp;&nbsp;&nbsp;PHASE OF CARE: END OF LIFE CARE</h2>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row_bar">
+                            @Html.TextAreaFor(model => model.EndLifeCare, 5, 200, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span>Please rate the care received by the patient during this phase</span>
+                            </div>
+                            <div class="col-md-6">
+                                <span>@Model.EndLifeCareRating</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lable_title">
+                        <h2>&nbsp;&nbsp;&nbsp;PHASE OF CARE: OVERALL ASSESSMENT</h2>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row_bar">
+                            @Html.TextAreaFor(model => model.OverAllAssessment, 5, 200, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span>Please rate the care received by the patient during this phase</span>
+                            </div>
+                            <div class="col-md-6">
+                                <span>@Model.OverAllAssessmentRating</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span>Quality of documentation</span>
+                            </div>
+                            <div class="col-md-6">
+                                <span>@Model.QualityDocumentationRating</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-lg-12">
+        <div class="col-md-12 well">
+            <div class="form-section">
+                <div class="col-md-12">
+                    <div class="lable_title">
+                        <h2>ASSESSMENT OF PROBLEMS IN HEALTHCARE</h2>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <span><b>Were there any problems with the care of the patient?</b></span>
+                        </div>
+                        <div class="col-md-7">
+                            @if (Model.ProblemOccured == true)
+                            {
+                                <span>Yes</span>
+                            }
+                            else
+                            {
+                                <span>No</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="lable_title">
+                        <h2>PROBLEM TYPES </h2>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row_bar">
+                        <span><b>1. Problem in assessment, investigation or diagnosis (including assessment of pressure ulcer risk, venous thromboembolism (VTE) risk, history of falls)</b></span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <span><b>Did the problem lead to harm?</b> </span>
+                        </div>
+                        <div class="col-md-7">
+                            @if (Model.AssessmentResponseID == 0)
+                            {
+                                <span>&nbsp;</span>
+                            }
+                            else if (Model.AssessmentResponseID == 1)
+                            {
+                                <span>Yes</span>
+                            }
+                            else if (Model.AssessmentResponseID == 2)
+                            {
+                                <span>No</span>
+                            }
+                            else if (Model.AssessmentResponseID == 3)
+                            {
+                                <span>Probably</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <span><b>In which phase(s) did the problem occur?</b> </span>
+                        </div>
+                        <div class="col-md-7">
+                            @if (Model.AssessmentCarePhaseID == 0)
+                            {
+                                <span>&nbsp;</span>
+                            }
+                            else if (Model.AssessmentCarePhaseID == 1)
+                            {
+                                <span>Admission and initial assessment</span>
+                            }
+                            else if (Model.AssessmentCarePhaseID == 2)
+                            {
+                                <span>Ongoing care</span>
+                            }
+                            else if (Model.AssessmentCarePhaseID == 3)
+                            {
+                                <span>Care during procedure</span>
+                            }
+                            else if (Model.AssessmentCarePhaseID == 4)
+                            {
+                                <span>Perioperative care</span>
+                            }
+                            else if (Model.AssessmentCarePhaseID == 5)
+                            {
+                                <span>End-of-life care</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row_bar">
+                        <span><b>2. Problem with medication / IV fluids / electrolytes / oxygen (other than anaesthetic)</b> </span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <span><b>Did the problem lead to harm?</b> </span>
+                        </div>
+                        <div class="col-md-7">
+                            @if (Model.MedicationResponseID == 0)
+                            {
+                                <span>&nbsp;</span>
+                            }
+                            else if (Model.MedicationResponseID == 1)
+                            {
+                                <span>Yes</span>
+                            }
+                            else if (Model.MedicationResponseID == 2)
+                            {
+                                <span>No</span>
+                            }
+                            else if (Model.MedicationResponseID == 3)
+                            {
+                                <span>Probably</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <span><b>In which phase(s) did the problem occur?</b> </span>
+                        </div>
+                        <div class="col-md-7">
+                            @if (Model.MedicationCarePhaseID == 0)
+                            {
+                                <span>&nbsp;</span>
+                            }
+                            else if (Model.MedicationCarePhaseID == 1)
+                            {
+                                <span>Admission and initial assessment</span>
+                            }
+                            else if (Model.MedicationCarePhaseID == 2)
+                            {
+                                <span>Ongoing care</span>
+                            }
+                            else if (Model.MedicationCarePhaseID == 3)
+                            {
+                                <span>Care during procedure</span>
+                            }
+                            else if (Model.MedicationCarePhaseID == 4)
+                            {
+                                <span>Perioperative care</span>
+                            }
+                            else if (Model.MedicationCarePhaseID == 5)
+                            {
+                                <span>End-of-life care</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row_bar">
+                        <span><b>3. Problem related to treatment and management plan (including prevention of pressure ulcers, falls, VTE)</b> </span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <span><b>Did the problem lead to harm?</b> </span>
+                        </div>
+                        <div class="col-md-7">
+                            @if (Model.TreatmentResponseID == 0)
+                            {
+                                <span>&nbsp;</span>
+                            }
+                            else if (Model.TreatmentResponseID == 1)
+                            {
+                                <span>Yes</span>
+                            }
+                            else if (Model.TreatmentResponseID == 2)
+                            {
+                                <span>No</span>
+                            }
+                            else if (Model.TreatmentResponseID == 3)
+                            {
+                                <span>Probably</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <span><b>In which phase(s) did the problem occur?</b> </span>
+                        </div>
+                        <div class="col-md-7">
+                            @if (Model.TreatmentCarePhaseID == 0)
+                            {
+                                <span>&nbsp;</span>
+                            }
+                            else if (Model.TreatmentCarePhaseID == 1)
+                            {
+                                <span>Admission and initial assessment</span>
+                            }
+                            else if (Model.TreatmentCarePhaseID == 2)
+                            {
+                                <span>Ongoing care</span>
+                            }
+                            else if (Model.TreatmentCarePhaseID == 3)
+                            {
+                                <span>Care during procedure</span>
+                            }
+                            else if (Model.TreatmentCarePhaseID == 4)
+                            {
+                                <span>Perioperative care</span>
+                            }
+                            else if (Model.TreatmentCarePhaseID == 5)
+                            {
+                                <span>End-of-life care</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row_bar">
+                        <span><b>4. Problem with infection management</b> </span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <span><b>Did the problem lead to harm?</b> </span>
+                        </div>
+                        <div class="col-md-7">
+                            @if (Model.InfectionResponseID == 0)
+                            {
+                                <span>&nbsp;</span>
+                            }
+                            else if (Model.InfectionResponseID == 1)
+                            {
+                                <span>Yes</span>
+                            }
+                            else if (Model.InfectionResponseID == 2)
+                            {
+                                <span>No</span>
+                            }
+                            else if (Model.InfectionResponseID == 3)
+                            {
+                                <span>Probably</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <span><b>In which phase(s) did the problem occur?</b> </span>
+                        </div>
+                        <div class="col-md-7">
+                            @if (Model.InfectionCarePhaseID == 0)
+                            {
+                                <span>&nbsp;</span>
+                            }
+                            else if (Model.InfectionCarePhaseID == 1)
+                            {
+                                <span>Admission and initial assessment</span>
+                            }
+                            else if (Model.InfectionCarePhaseID == 2)
+                            {
+                                <span>Ongoing care</span>
+                            }
+                            else if (Model.InfectionCarePhaseID == 3)
+                            {
+                                <span>Care during procedure</span>
+                            }
+                            else if (Model.InfectionCarePhaseID == 4)
+                            {
+                                <span>End-of-life care</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row_bar">
+                        <span><b>5. Problem related to operation / invasive procedure other than infection control)</b> </span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <span><b>Did the problem lead to harm?</b> </span>
+                        </div>
+                        <div class="col-md-7">
+                            @if (Model.ProcedureResponseID == 0)
+                            {
+                                <span>&nbsp;</span>
+                            }
+                            else if (Model.ProcedureResponseID == 1)
+                            {
+                                <span>Yes</span>
+                            }
+                            else if (Model.ProcedureResponseID == 2)
+                            {
+                                <span>No</span>
+                            }
+                            else if (Model.ProcedureResponseID == 3)
+                            {
+                                <span>Probably</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <span><b>In which phase(s) did the problem occur?</b> </span>
+                        </div>
+                        <div class="col-md-7">
+                            @if (Model.ProcedureCarePhaseID == 0)
+                            {
+                                <span>&nbsp;</span>
+                            }
+                            else if (Model.ProcedureCarePhaseID == 1)
+                            {
+                                <span>Admission and initial assessment</span>
+                            }
+                            else if (Model.ProcedureCarePhaseID == 2)
+                            {
+                                <span>Ongoing care</span>
+                            }
+                            else if (Model.ProcedureCarePhaseID == 3)
+                            {
+                                <span>Care during procedure</span>
+                            }
+                            else if (Model.ProcedureCarePhaseID == 4)
+                            {
+                                <span>End-of-life care </span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row_bar">
+                        <span><b>6. Problem in clinical monitoring(including failure to plan, to undertake, or to recognise and respond to changes)</b></span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <span><b>Did the problem lead to harm?</b> </span>
+                        </div>
+                        <div class="col-md-7">
+                            @if (Model.MonitoringResponseID == 0)
+                            {
+                                <span>&nbsp;</span>
+                            }
+                            else if (Model.MonitoringResponseID == 1)
+                            {
+                                <span>Yes</span>
+                            }
+                            else if (Model.MonitoringResponseID == 2)
+                            {
+                                <span>No</span>
+                            }
+                            else if (Model.MonitoringResponseID == 3)
+                            {
+                                <span>Probably</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row_bar">
+                        <span><b>7. Problem in resuscitation following a cardiac or respiratory arrest (including cardiopulmonary resuscitation)</b> </span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <span><b>Did the problem lead to harm?</b> </span>
+                        </div>
+                        <div class="col-md-7">
+                            @if (Model.ResuscitationResponseID == 0)
+                            {
+                                <span>&nbsp;</span>
+                            }
+                            else if (Model.ResuscitationResponseID == 1)
+                            {
+                                <span>Yes</span>
+                            }
+                            else if (Model.ResuscitationResponseID == 2)
+                            {
+                                <span>No</span>
+                            }
+                            else if (Model.ResuscitationResponseID == 3)
+                            {
+                                <span>Probably</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row_bar">
+                        <span><b>8. Problem in any other type not fitting the categories above (including communication and organisational issues)</b>  </span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <span><b>Did the problem lead to harm?</b> </span>
+                        </div>
+                        <div class="col-md-7">
+                            @if (Model.OthertypeResponseID == 0)
+                            {
+                                <span>&nbsp;</span>
+                            }
+                            else if (Model.OthertypeResponseID == 1)
+                            {
+                                <span>Yes</span>
+                            }
+                            else if (Model.OthertypeResponseID == 1)
+                            {
+                                <span>No</span>
+                            }
+                            else if (Model.OthertypeResponseID == 1)
+                            {
+                                <span>Probably</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <span><b>In which phase(s) did the problem occur?</b> </span>
+                        </div>
+                        <div class="col-md-7">
+                            @if (Model.OthertypeCarePhaseID == 0)
+                            {
+                                <span>&nbsp;</span>
+                            }
+                            else if (Model.OthertypeCarePhaseID == 1)
+                            {
+                                <span>Admission and initial assessment</span>
+                            }
+                            else if (Model.OthertypeCarePhaseID == 2)
+                            {
+                                <span>Ongoing care</span>
+                            }
+                            else if (Model.OthertypeCarePhaseID == 3)
+                            {
+                                <span>Care during procedure</span>
+                            }
+                            else if (Model.OthertypeCarePhaseID == 4)
+                            {
+                                <span>Perioperative care</span>
+                            }
+                            else if (Model.OthertypeCarePhaseID == 5)
+                            {
+                                <span>End-of-life care</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <span><b>AVOIDABILITY SCORE</b></span>
+                        </div>
+                        <div class="col-md-7">
+                            @if (Model.AvoidabilityScoreID == 0)
+                            {
+                                <span>Grade 0: No suboptimal care (unavoidable)</span>
+                            }
+                            else if (Model.AvoidabilityScoreID == 1)
+                            {
+                                <span>Grade 1: Suboptimal care, but different management would have made no difference to the outcome (unavoidable)</span>
+                            }
+                            else if (Model.AvoidabilityScoreID == 2)
+                            {
+                                <span>Grade 2: Suboptimal care, different care MIGHT have made a difference (possible avoidable death)</span>
+                            }
+                            else if (Model.AvoidabilityScoreID == 1)
+                            {
+                                <span>Grade 3: Suboptimal care, different care WOULD REASONABLY BE EXPECTED to have made a difference (probable avoidable death)</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row_bar">
+                        <span><b>Key Learning/Comments</b> </span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row_bar">
+                        @Html.TextAreaFor(model => model.LearningComments, 5, 100, new { @class = "form-control", @readonly = true })
+                    </div>
+                </div><br />
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <span><b>Reviewer Speciality</b></span>
+                        </div>
+                        <div class="col-md-7">
+                            <span>@Model.SpecialityName</span>
+                        </div>
+                    </div>
+                </div><br />
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-3" id="dvNameLabel">
+                            <span><b>Name of Reviewer :</b></span>
+                        </div>
+                        <div class="col-md-3" id="dvNameSpan">
+                            <span><b><i>@Model.CreatedBy</i></b></span>
+                        </div>
+                        <div class="col-md-3" id="dvDateLabel">
+                            <span><b>Date :</b></span>
+                        </div>
+                        <div class="col-md-3" id="dvDateSpan">
+                            <span><b><i>@Model.CreateDate</i></b></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+$("#btnPrint").click(function () {
+    $("#btnPrint").hide();
+    var HTML_Width = $(".container").width();
+    var HTML_Height = $(".container").height();
+    var top_left_margin = 1;
+    var PDF_Width = HTML_Width + (top_left_margin * 2);
+    var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+    var canvas_image_width = HTML_Width;
+    var canvas_image_height = HTML_Height;
+
+    var totalPDFPages = Math.ceil(HTML_Height / PDF_Height);
+    var scale = 1.0;
+    var qualityjpg = 1.0;
+    var top_left_margin = 15;
+    var PDF_Width = HTML_Width + (top_left_margin * 2);
+    var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+    //}
+
+    html2canvas($(".container")[0], { allowTaint: true, scale: scale }).then(function (canvas) {
+        canvas.getContext('2d');
+        //console.log(canvas.height+"  "+canvas.width);
+
+
+        var imgData = canvas.toDataURL("image/png", qualityjpg);
+        console.log(imgData);
+        var pdf = new jsPDF('portrait', 'pt', [PDF_Width, PDF_Height]);
+        pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin * 4, canvas_image_width, canvas_image_height);
+        for (var i = 1; i < totalPDFPages; i++) {
+            pdf.addPage(PDF_Width, PDF_Height);
+            pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
+        }
+        var blob = pdf.output("blob");
+        var objectUrl = URL.createObjectURL(blob);
+        window.open(objectUrl);
+    });
+    $("#btnPrint").show();
+});
+</script>
+

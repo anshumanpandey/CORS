@@ -1,0 +1,558 @@
+﻿@model NHS.Common.clsPatientDetails
+@using NHS.Common;
+@{
+    /**/
+
+    ViewBag.Title = "Mortality Review";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .ClrGreen {
+        background-color: #008000;
+    }
+
+    .ClrGreen1 {
+        background-color: #008000;
+    }
+
+    .clrGrey {
+        background-color: #808080
+    }
+
+    .clrAmber {
+        background-color: #ffbf00
+    }
+
+    .clrGreySjrOutcome {
+        background-color: #808080
+    }
+
+    .clrAmberSjrOutcome {
+        background-color: #ffbf00
+    }
+
+    .clrGreenSjrOutcome {
+        background-color: #008000
+    }
+</style>
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        @if (Convert.ToBoolean(Session["MedicalExaminerDashboard"]) == true)
+        {
+            <div class="col-md-2">
+                <a href="@Url.Action("MedicalExaminerDashboard", "home", new {
+                        id = 0,
+                        startdate = Convert.ToString(Session["StartDate"]),
+                        enddate = Convert.ToString(Session["EndDate"]),
+                        patientype = Convert.ToString(Session["PatientType"]),
+                        dischargespeciality = Convert.ToString(Session["Speciality"]),
+                        wardofdeath = Convert.ToString(Session["WardDeath"]),
+                        consultant = Convert.ToString(Session["DischargeConsultant"]),
+                        isReset = false
+                    })"><img src="~/images/BackArrowimages.png?v=1.1" width="50" height="40" alt=""></a>
+                @*<a herf="/home/MedicalExaminerDashboard"><img src="~/images/back-158491_640.png" width="120" height="90" alt="" ></a>*@
+            </div>
+        }
+        else if (Convert.ToBoolean(Session["PatientReportList"]) == true)
+        {
+            <div class="col-md-2">
+                <a href="@Url.Action("PatientReportList", "home", new { id = 0, qapreview = false, medtriage = false, meoreview = false })"><img src="~/images/BackArrowimages.png?v=1.1" width="50" height="40" alt=""></a>
+                @*<a herf="/home/MedicalExaminerDashboard"><img src="~/images/back-158491_640.png" width="120" height="90" alt="" ></a>*@
+            </div>
+        }
+        else
+        {
+            <div class="col-md-2">
+                <a href="@Url.Action("PatientExtract", "home", new { id = 0, qapreview = false, medtriage = false, meoreview = false })"><img src="~/images/BackArrowimages.png?v=1.1" width="50" height="40" alt=""></a>
+                @*<a herf="/home/MedicalExaminerDashboard"><img src="~/images/back-158491_640.png" width="120" height="90" alt="" ></a>*@
+            </div>
+        }
+        @*<div class="col-md-8 text-center">
+                        <span style="font-size:16px;">
+                            <b>Patient ID</b> - </span><span style="font-size:16px;">@Model.PatientId</span><br/> <span style="font-size:16px;"><b>Patient Name</b> -</span><span style="font-size:16px;">
+                                @Model.PatientName
+                            </span><br /> <span style="font-size:16px;">
+               <b>DOB</b> -
+            </span><span style="font-size:16px;">
+                                @String.Format("{0:dd/MM/yy}", @Model.DOB)
+                            </span>
+
+                            @*<h5>Patient ID</h5><h6>@ViewBag.Id</h6> <h5>Patient Name -</h5><h6>@ViewBag.Name</h6> <h5>DOB</h5><h6>@ViewBag.DOB</h6>
+            </div>*@
+        <div class="col-md-8">
+            &nbsp;
+        </div>
+        <div class="col-md-2">
+            <div class="card">
+                @if (Model.Gender.Trim().ToUpper() == "FEMALE" || Model.Gender.Trim().ToUpper().IndexOf("FEMALE") > 0)
+                {
+                    <img src="~/images/femaleuser.jpg?v=1.1" />
+                }
+                else
+                {
+                    <img src="~/images/user.png?v=1.1" />
+                }
+                <div class="card-body" style="text-align:center;top:-20%;">
+                    <a href="javascript:var x=window.open(@ViewBag.PatientHistoryLink);">Patient History</a>
+                </div>                
+            </div>
+        </div>
+    </div>
+
+    <div class="row text-center">
+        @*<table border="1" style="border-color:#000000; width:15%">
+                <tr style="border-color:#000000">
+                    <td align="left" style="border-color:#000000">
+                        Patient ID
+                    </td>
+                    <td style="border-color:#000000">
+                        @Model.PatientId
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left"style="border-color:#000000">
+                        Patient Name
+                    </td>
+                    <td style="border-color:#000000">
+                        @Model.PatientName
+                    </td>
+                </tr>
+                <tr><td align="left"style="border-color:#000000">
+                    DOB </td><td style="border-color:#000000">@String.Format("{0:dd/MM/yy}", @Model.DOB)</td>
+                </tr>
+            </table>*@
+        <table style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;width:25%">
+            <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc;"><b>Patient ID</b></td>
+                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc;  "><b>@Model.PatientId</b></td>
+            </tr>
+            <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc;"><b>Patient Name</b></td>
+                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc;  "><b>@Model.PatientName</b></td>
+            </tr>
+            <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc;"><b>DOB</b></td>
+                <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; "><b>@Model.DOB</b></td>
+            </tr>
+        </table>
+        @*@if (Model.PatientType == "AAPC")
+            {*@
+        <div style="height:430px;width:430px;border:15px solid #9aa5b0;border-radius:50%; position: relative;margin:-10% auto;margin-left:10%">
+            @if (Model.QAPReview == 1)
+            {
+                <a href="@Url.Action("QAPReviewFirstStep", "home", new { id = Model.ID })" class="box3" style="top: -10%; left: 47%;transform: translate(-40%, -20%);"><img src="~/images/61.png?v=1.1" title="QAP Review" width="150" height="150" /></a>
+                @*<a href='@Url.Action("PatientDetails", "home", new {id=Model.ID})' class="box3 ClrAmber" style="top: -60px; left: 50%;transform: translate(-50%);" id="jqMedicalExaminerTriage">
+                <p style="position: relative;top: 30%">Medical Examiner Triage </p>
+                <img src="~/images/53.png" />
+            </a>*@
+            }
+
+            else if (Model.QAPReview == 2)
+            {
+                @*<a href='@Url.Action("PatientDetails", "home", new {id=Model.ID})' class="box3 clr1" style="top: -60px; left: 50%;transform: translate(-50%);" id="jqMedicalExaminerTriage">
+                <p style="position: relative;top: 30%;">Medical Examiner Triage </p>
+            </a>*@
+                <a href="@Url.Action("QAPReviewFirstStep", "home", new { id = Model.ID })" class="box3" style="top: -10%; left: 47%;transform: translate(-40%, -30%);"><img src="~/images/63.png?v=1.1" title="QAP Review" width="150" height="150" /></a>
+            }
+            else if (Model.QAPReview == 3)
+            {
+                @*<a href='@Url.Action("PatientDetails", "home", new {id=Model.ID})' class="box3 ClrGreen" style="top: -60px; left: 50%;transform: translate(-50%);" id="jqMedicalExaminerTriage">
+                <p style="position: relative;top: 30%;">Medical Examiner Triage </p>
+            </a>*@
+                <a href="@Url.Action("QAPReviewFirstStep", "home", new { id = Model.ID })" class="box3" style="top: -10%; left: 47%;transform: translate(-40%, -20%);"><img src="~/images/62.png?v=1.1" title="QAP Review" width="150" height="150" /></a>
+            }
+            else
+            {
+                <a href="@Url.Action("QAPReviewFirstStep", "home", new { id = Model.ID })" class="box3" style="top: -10%; left: 47%;transform: translate(-40%, -30%);"><img src="~/images/64.png?v=1.1" title="QAP Review" width="150" height="150" /></a>
+            }
+
+            @if (Model.MedTriage == 1)
+            {
+                <a href="@Url.Action("PatientDetails", "home", new { id = Model.ID })" class="box3" style="top: 10%; left: 95%;transform: translate(-50%);"><img src="~/images/53.png?v=1.1" title="Medical Examiner Triage" width="150" height="150" /></a>
+                @*<a href='@Url.Action("PatientDetails", "home", new {id=Model.ID})' class="box3 ClrAmber" style="top: -60px; left: 50%;transform: translate(-50%);" id="jqMedicalExaminerTriage">
+                <p style="position: relative;top: 30%">Medical Examiner Triage </p>
+                <img src="~/images/53.png" />
+            </a>*@
+            }
+
+            else if (Model.MedTriage == 2)
+            {
+                @*<a href='@Url.Action("PatientDetails", "home", new {id=Model.ID})' class="box3 clr1" style="top: -60px; left: 50%;transform: translate(-50%);" id="jqMedicalExaminerTriage">
+                <p style="position: relative;top: 30%;">Medical Examiner Triage </p>
+            </a>*@
+                <a href="@Url.Action("PatientDetails", "home", new { id = Model.ID })" class="box3" style="top: 10%; left: 95%;transform: translate(-50%);"><img src="~/images/54.png?v=1.1" title="Medical Examiner Triage" width="150" height="150" /></a>
+            }
+            else if (Model.MedTriage == 3)
+            {
+                @*<a href='@Url.Action("PatientDetails", "home", new {id=Model.ID})' class="box3 ClrGreen" style="top: -60px; left: 50%;transform: translate(-50%);" id="jqMedicalExaminerTriage">
+                <p style="position: relative;top: 30%;">Medical Examiner Triage </p>
+            </a>*@
+                <a href="@Url.Action("PatientDetails", "home", new { id = Model.ID })" class="box3" style="top: 10%; left: 95%;transform: translate(-50%);"><img src="~/images/52.png?v=1.1" title="Medical Examiner Triage" width="150" height="150" /></a>
+            }
+            else
+            {
+                <a href="@Url.Action("PatientDetails", "home", new { id = Model.ID })" class="box3" style="top: 10%; left: 95%;transform: translate(-50%);"><img src="~/images/54.png?v=1.1" title="Medical Examiner Triage" width="150" height="150" /></a>
+            }
+            @if (Model.SJR1 == 0)
+            {
+                @*<a href='@Url.Action("Stage2SJRformFirstStep", "home", new { id = Model.ID })' class="box3 clrGrey" style="top: 50%;left: 100%; transform: translate(-50%,-50%);" id="jqSJRStage1">
+                <p style="position: relative;top: 30%"> SJR Stage<br /> 1</p>
+            </a>*@
+                <a href='@Url.Action("Stage2SJRformFirstStep", "home", new { id = Model.ID })' class="box3" style="top: 80%;left: 95%; transform: translate(-50%,-50%);" id="jqSJRStage1">
+                    <img src="~/images/31.png?v=1.1" title="SJR Stage 1" width="150" height="150" />
+                </a>
+            }
+            else if (Model.SJR1 == 1)
+            {
+                <a href='@Url.Action("Stage2SJRformFirstStep", "home", new { id = Model.ID })' class="box3" style="top: 80%;left: 95%; transform: translate(-50%,-50%);" id="jqSJRStage1">
+                    <img src="~/images/33.png?v=1.1" title="SJR Stage 1" width="150" height="150" />
+                </a>
+            }
+            else if (Model.SJR1 == 2)
+            {
+                <a href='@Url.Action("Stage2SJRformFirstStep", "home", new { id = Model.ID })' class="box3" style="top: 80%;left: 95%; transform: translate(-50%,-50%);" id="jqSJRStage1">
+                    <img src="~/images/34.png?v=1.1" title="SJR Stage 1" width="150" height="150" />
+                </a>
+            }
+
+            else if (Model.SJR1 == 3)
+            {
+                <a href='@Url.Action("Stage2SJRformFirstStep", "home", new { id = Model.ID })' class="box3" style="top: 80%;left: 95%; transform: translate(-50%,-50%);" id="jqSJRStage1">
+                    <img src="~/images/32.png?v=1.1" title="SJR Stage 1" width="150" height="150" />
+                </a>
+            }
+            @*else
+        {
+            <a href='@Url.Action("Stage2SJRformFirstStep", "home", new { id = Model.PatientId })' class="box clr1" style="top: 50%;left: 100%; transform: translate(-50%,-50%);" id="jqSJRStage1">
+                <p style="position: relative;top: 30px;"> SJR stage<br /> 1</p>
+            </a>
+        }*@
+
+
+            @if (Model.SJR2 == 0)
+            {
+                <a href='@Url.Action("Stage3SJRFormFirstStep", "home", new { id = Model.ID })' class="box3" style="top: 80%; left: 5%;transform: translate(-50%,-50%);" id="jqSJRStage2">
+                    @*<p style="position: relative;top: 30%"> SJR Stage <br />2</p>*@
+                    <img src="~/images/44.png?v=1.1" title="SJR Stage 2" width="150" height="150" />
+                </a>
+            }
+            else if (Model.SJR2 == 1)
+            {
+                <a href='@Url.Action("Stage3SJRFormFirstStep", "home", new { id = Model.ID })' class="box3" style="top: 80%; left: 5%;transform: translate(-50%,-50%);" id="jqSJRStage2">
+                    <img src="~/images/42.png?v=1.1" title="SJR Stage 2" width="150" height="150" />
+                </a>
+            }
+
+            else if (Model.SJR2 == 2)
+            {
+                <a href='@Url.Action("Stage3SJRFormFirstStep", "home", new { id = Model.ID })' class="box3" style="top: 80%; left: 5%;transform: translate(-50%,-50%);" id="jqSJRStage2">
+                    <img src="~/images/41.png?v=1.1" title="SJR Stage 2" width="150" height="150" />
+                </a>
+            }
+
+            else if (Model.SJR2 == 3)
+            {
+                <a href='@Url.Action("Stage3SJRFormFirstStep", "home", new { id = Model.ID })' class="box3" style="top: 80%; left: 5%;transform: translate(-50%,-50%);" id="jqSJRStage2">
+                    <img src="~/images/43.png?v=1.1" title="SJR Stage 2" width="150" height="150" />
+                </a>
+            }
+            @*else
+        {
+            <a href='@Url.Action("Stage3SJRFormFirstStep", "home", new {id = Model.PatientId})' class="box clr1" style="top: 50%; left: 0;transform: translate(-50%,-50%);background: #8f8989;" id="jqSJRStage2">
+                <p style="position: relative;top: 30px;"> SJR stage <br />2</p>
+            </a>
+        }*@
+
+
+            @if (Model.SJROutcome == 0)
+            {
+                <a href='@Url.Action("SJROutcome", "home", new { id = Model.ID })' class="box3" style="top: 100%;left: 50%;transform: translate(-50%,-50%);" id="jqSJROutcome">
+                    <img src="~/images/1.png?v=1.1" title="SJR Outcome" width="150" height="150" />
+                </a>
+                @*<div href="#" class="box2" style="top: 50%; left: 50%;transform: translate(-50%,-50%);" id="jqMortality">
+                <p style="position: relative;top: 38px;font-size: 22px;"> Mortality<br /> review</p>
+            </div>*@
+            }
+            else if (Model.SJROutcome == 1)
+            {
+                <a href='@Url.Action("SJROutcome", "home", new { id = Model.ID })' class="box3" style="top: 100%;left: 50%;transform: translate(-50%,-50%);" id="jqSJROutcome">
+                    <img src="~/images/3.png?v=1.1" title="SJR Outcome" width="150" height="150" />
+                </a>
+                @*<div href="#" class="box2" style="top: 50%; left: 50%;transform: translate(-50%,-50%);" id="jqMortality">
+                <p style="position: relative;top: 38px;font-size: 22px;"> Mortality<br /> review</p>
+            </div>*@
+            }
+
+            else if (Model.SJROutcome == 2)
+            {
+                <a href='@Url.Action("SJROutcome", "home", new { id = Model.ID })' class="box3" style="top: 100%;left: 50%;transform: translate(-50%,-50%);" id="jqSJROutcome">
+                    <img src="~/images/4.png?v=1.1" title="SJR Outcome" width="150" height="150" />
+                </a>
+
+            }
+
+            else if (Model.SJROutcome == 3)
+            {
+                <a href='@Url.Action("SJROutcome", "home", new { id = Model.ID })' class="box3" style="top: 100%;left: 50%;transform: translate(-50%,-50%);" id="jqSJROutcome">
+                    <img src="~/images/2.png?v=1.1" title="SJR Outcome" width="150" height="150" />
+                </a>
+
+                @*<a class="box clrGreenSjrOutcome" style="top: 50%; left: 50%;transform: translate(-50%,-50%);" id="jqMortality">
+                <p style="position: relative;top: 20px;font-size: 22px;color:white"> Mortality<br /> review</p>
+            </a>*@
+            }
+            @if (Model.CodingReview == 3)
+            {
+                <a href="@Url.Action("CodingReview", "home", new { id = Model.ID })" class="box3" style="top: 10%; left: 5%;transform: translate(-50%);"><img src="~/images/12.png?v=1.1" title="Coding Review" width="150" height="150" /></a>
+            }
+            else if (Model.CodingReview == 2)
+            {
+                @*<a href='@Url.Action("PatientDetails", "home", new {id=Model.ID})' class="box3 clr1" style="top: -60px; left: 50%;transform: translate(-50%);" id="jqMedicalExaminerTriage">
+                        <p style="position: relative;top: 30%;">Medical Examiner Triage </p>
+                    </a>*@
+                <a href="@Url.Action("CodingReview", "home", new { id = Model.ID })" class="box3" style="top: 10%; left: 5%;transform: translate(-50%);"><img src="~/images/13.png?v=1.1" title="Coding Review" width="150" height="150" /></a>
+            }
+            else if (Model.CodingReview == 1)
+            {
+                @*<a href='@Url.Action("PatientDetails", "home", new {id=Model.ID})' class="box3 clr1" style="top: -60px; left: 50%;transform: translate(-50%);" id="jqMedicalExaminerTriage">
+                        <p style="position: relative;top: 30%;">Medical Examiner Triage </p>
+                    </a>*@
+                <a href="@Url.Action("CodingReview", "home", new { id = Model.ID })" class="box3" style="top: 10%; left: 5%;transform: translate(-50%);"><img src="~/images/11.png?v=1.1" title="Coding Review" width="150" height="150" /></a>
+            }
+            else if (Model.CodingReview == 0 || Model.PrimaryDiagnosis.ToUpper().Equals("AWAITING CODING") || Model.PrimaryDiagnosis.ToUpper().Equals("PENDING"))
+            {
+                <a href="@Url.Action("CodingReview", "home", new { id = Model.ID })" class="box3" style="top: 10%; left: 5%;transform: translate(-50%);">
+            <img src="~/images/14.png?v=1.1" title="Coding Review" width="150" height="150" /></a>
+                @*<a href='@Url.Action("PatientDetails", "home", new {id=Model.ID})' class="box3 ClrAmber" style="top: -60px; left: 50%;transform: translate(-50%);" id="jqMedicalExaminerTriage">
+                <p style="position: relative;top: 30%">Medical Examiner Triage </p>
+                <img src="~/images/53.png" />
+            </a>*@
+            }
+
+            
+            
+            else
+            {
+                <a href="#" class="box3" style="top: 10%; left: 5%;transform: translate(-50%);"><img src="~/images/14.png?v=1.1" title="Medical Examiner Triage" width="150" height="150" /></a>
+            }
+
+
+            @*changes 09-05-19*@
+
+            @if (Model.IsFullSJRRequired == false)
+            {
+                if (Model.QAPReview == 3 && Model.MedTriage == 3)
+                {
+                    //MRR=3(green)
+                    <div href="#" class="box3" style="top: 50%; left: 50%;transform: translate(-50%,-50%);" id="jqMortality">
+                        <img src="~/images/23.png?v=1.1" title="Mortality Review" width="150" height="150" />
+                    </div>
+                    @*<div class="m-review-hdr">
+                    <img src="~/images/MR3.png?v=1.1" title="Mortality Review" />
+                </div>*@
+                }
+                else if (Model.QAPReview == 3 || Model.MedTriage == 1|| Model.MedTriage==3)
+                {
+                    //MRR=1(Amber)
+                    <div href="#" class="box3" style="top: 50%; left: 50%;transform: translate(-50%,-50%);" id="jqMortality">
+                        <img src="~/images/22.png?v=1.1" title="Mortality Review" width="150" height="150" />
+                    </div>
+                    @*<div class="m-review-hdr">
+                    <img src="~/images/MR2.png?v=1.1" title="Mortality Review" />
+                </div>*@
+
+
+                }
+                else if (Model.QAPReview == 2 && Model.MedTriage == 2)
+                {
+                    //MRR=2(red)
+                    <div href="#" class="box3" style="top: 50%; left: 50%;transform: translate(-50%,-50%);" id="jqMortality">
+                        <img src="~/images/21.png?v=1.1" title="Mortality Review" width="150" height="150" />
+                    </div>
+                    @*<div class="m-review-hdr">
+                    <img src="~/images/1.png?v=1.1" title="Mortality Review" />
+                </div>*@
+                }
+            }
+            else
+            {
+                if (Model.Stage2SJRRequired == false)
+                {
+                    if (Model.QAPReview == 3 && Model.MedTriage == 3 && Model.SJR1 == 3 && Model.SJROutcome == 3)
+                    {
+                        //MRR=3(green)
+                        <div href="#" class="box3" style="top: 50%; left: 50%;transform: translate(-50%,-50%);" id="jqMortality">
+                            <img src="~/images/23.png?v=1.1" title="Mortality Review" width="150" height="150" />
+                        </div>
+                        @*<div class="m-review-hdr">
+                        <img src="~/images/MR3.png?v=1.1" title="Mortality Review" />
+                    </div>*@
+                    }
+                    else
+                    {
+                        //MRR=1(Amber)
+                        <div href="#" class="box3" style="top: 50%; left: 50%;transform: translate(-50%,-50%);" id="jqMortality">
+                            <img src="~/images/22.png?v=1.1" title="Mortality Review" width="150" height="150" />
+                        </div>
+                        @*<div class="m-review-hdr">
+                        <img src="~/images/MR2.png?v=1.1" title="Mortality Review" />
+                    </div>*@
+                    }
+                }
+                else
+                {
+                    if (Model.QAPReview == 3 && Model.MedTriage == 3 && Model.SJR1 == 3 && Model.SJROutcome == 3 && Model.SJR2 == 3)
+                    {
+                        //MRR=3(green)
+                        <div href="#" class="box3" style="top: 50%; left: 50%;transform: translate(-50%,-50%);" id="jqMortality">
+                            <img src="~/images/23.png?v=1.1" title="Mortality Review" width="150" height="150" />
+                        </div>
+                        @*<div class="m-review-hdr">
+                        <img src="~/images/MR3.png?v=1.1" title="Mortality Review" />
+                    </div>*@
+                    }
+                    else
+                    {
+                        //MRR=1(Amber)
+                        <div href="#" class="box3" style="top: 50%; left: 50%;transform: translate(-50%,-50%);" id="jqMortality">
+                            <img src="~/images/22.png?v=1.1" title="Mortality Review" width="150" height="150" />
+                        </div>
+                        @*<div class="m-review-hdr">
+                        <img src="~/images/MR2.png?v=1.1" title="Mortality Review" />
+                    </div>*@
+                    }
+                }
+            }
+
+            @*changes 09-05-19*@
+
+
+
+
+
+
+
+
+
+
+
+            @*@if (Model.SJR1 == 2 || Model.SJR2 == 2 || Model.SJROutcome == 2 || Model.QAPReview == 2 || Model.SJR1 == 0 || Model.SJR2 == 0 || Model.SJROutcome == 0 || Model.QAPReview == 0 || Model.SJR1 == 0)
+            {
+                <div href="#" class="box3" style="top: 50%; left: 50%;transform: translate(-50%,-50%);" id="jqMortality">
+                    <img src="~/images/21.png?v=1.1" title="Mortality Review" width="150" height="150" />
+                </div>
+            }
+            else if (Model.SJR1 == 1 || Model.SJR2 == 1 || Model.SJROutcome == 1 || Model.QAPReview == 1)
+            {
+                <div href="#" class="box3" style="top: 50%; left: 50%;transform: translate(-50%,-50%);" id="jqMortality">
+                    <img src="~/images/22.png?v=1.1" title="Mortality Review" width="150" height="150" />
+                </div>
+            }
+            else
+            {
+                if (Model.IsFullSJRRequired == false)
+                {
+                    if (Model.MedTriage == 3 && Model.QAPReview == 3)
+                    {
+                        <div href="#" class="box3" style="top: 50%; left: 50%;transform: translate(-50%,-50%);" id="jqMortality">
+                            <img src="~/images/23.png?v=1.1" title="Mortality Review" width="150" height="150" />
+                        </div>
+                    }
+                }
+                else
+                {
+                    if (Model.Stage2SJRRequired == false)
+                    {
+                        if (Model.MedTriage == 3 && Model.SJROutcome == 3 && Model.SJR1 == 3 && Model.QAPReview == 3)
+                        {
+                            <div href="#" class="box3" style="top: 50%; left: 50%;transform: translate(-50%,-50%);" id="jqMortality">
+                                <img src="~/images/23.png?v=1.1" title="Mortality Review" width="150" height="150" />
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        if (Model.MedTriage == 3 && Model.SJROutcome == 3 && Model.SJR1 == 3 && Model.SJR2 == 3 && Model.QAPReview == 3)
+                        {
+                            <div href="#" class="box3" style="top: 50%; left: 50%;transform: translate(-50%,-50%);" id="jqMortality">
+                                <img src="~/images/23.png?v=1.1" title="Mortality Review" width="150" height="150" />
+                            </div>
+                        }
+                    }
+                }
+            }*@
+        </div>
+        @*}*@
+        
+    </div>
+    <br/><br /><br /><br /><br /><br /><br /><br />
+
+    <p>&nbsp;</p>
+    <div align="center">
+        <table style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;width:25%">
+            <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                <td style="width:40px" align="center"><b>Print</b></td>
+                @if (Model.QAPReview != 3)
+            {
+                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc;"><button type="button" id="btnQAP" disabled class="btn btn-primary">QAP Review</button></td>
+                }
+                else
+                {
+                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc;"><button type="button" id="btnQAP" class="btn btn-primary" onclick="window.open('@Url.Action("QAPReport", "Home", new { id = Model.ID }) ')">QAP Review</button></td>
+                }
+                @if (Model.MedTriage != 3)
+            {
+                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc;"><button type="button" id="btnMedTriage" disabled class="btn btn-primary">ME Triage</button></td>
+                }
+                else
+                {
+                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc;"><button type="button" id="btnMedTriage" class="btn btn-primary" onclick="window.open('@Url.Action("PatientDetailView", "Home", new { id = Model.ID }) ')">ME Triage</button></td>
+                }
+                @if (Model.MEOReview != 3)
+                {
+                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc;"><button type="button" disabled id="btnMEO" class="btn btn-primary">MEO Review</button></td>
+                }
+                else
+                {
+                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc;"><button type="button" id="btnMEO" class="btn btn-primary" onclick="window.open('@Url.Action("MEOReport", "Home", new { id = Model.ID }) ')">MEO Review</button></td>
+                }
+                @if (Model.SJR1 != 3)
+                {
+                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc;"><button type="button" disabled id="btnSJR1" class="btn btn-primary">SJR Review</button></td>
+                }
+                else
+                {
+                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc;"><button type="button" id="btnSJR1" class="btn btn-primary" onclick="window.open('@Url.Action("SJR1Report", "Home", new { id = Model.ID }) ')">SJR Review</button></td>
+                }
+                @if (Model.SJROutcome != 3)
+                {
+                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc;"><button type="button" id="btnSJR2" disabled class="btn btn-primary">SJR Outcome</button></td>
+                }
+                else
+                {
+                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc;"><button type="button" id="btnSJR2" class="btn btn-primary" onclick="window.open('@Url.Action("SJROutcomeView", "Home", new { id = Model.ID }) ')">SJR Outcome</button></td>
+                }
+                @if (Model.SJR2 != 3)
+                {
+                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc;"><button type="button" id="btnSJR2" disabled class="btn btn-primary">SJR 2 Review</button></td>
+                }
+                else
+                {
+                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc;"><button type="button" id="btnSJR2" class="btn btn-primary" onclick="window.open('@Url.Action("SJR2Report", "Home", new { id = Model.ID }) ')">SJR 2 Review</button></td>
+                }
+                
+                @if (Model.CodingReview != 3)
+                {
+                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc;"><button type="button" id="btnSJR2" disabled class="btn btn-primary">Quality Review</button></td>
+                }
+                else
+                {
+                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc;"><button type="button" id="btnSJR2" class="btn btn-primary" onclick="window.open('@Url.Action("QualityReviewReport", "Home", new { id = Model.ID }) ')">Quality Review</button></td>
+                }
+            </tr>
+        </table>
+    </div>
+</div>

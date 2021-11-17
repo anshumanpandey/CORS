@@ -52,4 +52,10 @@ D:\Anshu Laptop\C drive\code backup\cors 01-04\cors-rbh\cors-rbh\NHS.Data\bin\De
 D:\Anshu Laptop\C drive\code backup\cors 01-04\cors-rbh\cors-rbh\NHS.Data\obj\Debug\NHS.Data.dll
 D:\Anshu Laptop\C drive\code backup\cors 01-04\cors-rbh\cors-rbh\NHS.Data\obj\Debug\NHS.Data.pdb
 D:\Anshu Laptop\C drive\code backup\cors 01-04\cors-rbh\cors-rbh\NHS.Data\bin\Debug\NHS.Common.dll
-D:\Anshu Laptop\C drive\code backup\cors 01-04\cors-rbh\cors-rbh\NHS.Data\obj\Debug\NHS.Data.csprojResolveAssemblyReference.cache
+E:\Anshu Laptop\C drive\code backup\cors 01-04\cors-rbh\cors-rbh\NHS.Data\bin\Debug\NHS.Data.dll
+E:\Anshu Laptop\C drive\code backup\cors 01-04\cors-rbh\cors-rbh\NHS.Data\bin\Debug\NHS.Data.pdb
+E:\Anshu Laptop\C drive\code backup\cors 01-04\cors-rbh\cors-rbh\NHS.Data\bin\Debug\NHS.Common.dll
+E:\Anshu Laptop\C drive\code backup\cors 01-04\cors-rbh\cors-rbh\NHS.Data\bin\Debug\NHS.Common.pdb
+E:\Anshu Laptop\C drive\code backup\cors 01-04\cors-rbh\cors-rbh\NHS.Data\obj\Debug\NHS.Data.dll
+E:\Anshu Laptop\C drive\code backup\cors 01-04\cors-rbh\cors-rbh\NHS.Data\obj\Debug\NHS.Data.pdb
+E:\Anshu Laptop\C drive\code backup\cors 01-04\cors-rbh\cors-rbh\NHS.Data\obj\Debug\NHS.Data.csprojResolveAssemblyReference.cache

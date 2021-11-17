@@ -243,7 +243,8 @@
                         else
                         {
                             if (string.IsNullOrEmpty(Model.sourceReview)) { Model.sourceReview = "999"; }
-                            if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                            if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN"
+                                || Model.CreatedBy.ToUpper() != "")
                             {
                                 if (!string.IsNullOrEmpty(Model.sourceReview))
                                 {
@@ -410,7 +411,7 @@
                                 }
                                 else
                                 {
-                                    <select class="form-control" id="ddlSourceReview" disabled name="ddlSourceReview" style="width: 50%;">
+                                    <select class="form-control" id="ddlSourceReview" name="ddlSourceReview" style="width: 50%;">
                                         <option selected value="999">
                                             Select a value
                                         </option>
@@ -723,7 +724,8 @@
                         }
                         else
                         {
-                            if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                            if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN"
+                                || Model.CreatedBy.ToUpper() != "")
                             {
                                 if (!string.IsNullOrEmpty(Model.Spell))
                                 {
@@ -802,7 +804,8 @@
                         }
                         else
                         {
-                            if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                            if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN"
+                                || Model.CreatedBy.ToUpper() != "")
                             {
                                 if (!string.IsNullOrEmpty(Model.Summary))
                                 {
@@ -920,7 +923,8 @@
                         else
                         {
                             if (string.IsNullOrEmpty(Model.isCodingIssue)) { Model.isCodingIssue = "N/A"; }
-                            if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                            if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN"
+                                || Model.CreatedBy.ToUpper() != "")
                             {
                                 if (!string.IsNullOrEmpty(Model.isCodingIssue))
                                 {
@@ -1085,7 +1089,8 @@
                         }
                         else
                         {
-                            if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                            if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN"
+                                || Model.CreatedBy.ToUpper() != "")
                             {
                                 if (!string.IsNullOrEmpty(Model.isTimingIssue))
                                 {
@@ -1253,7 +1258,8 @@
                         }
                         else
                         {
-                            if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                            if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN"
+                                || Model.CreatedBy.ToUpper() != "")
                                 
                             {
                                 if (!string.IsNullOrEmpty(Model.isDataSysIssue))
@@ -1354,7 +1360,7 @@
                 </div>
                 <div class="row">
 
-                    <div class="col-md-6">@Html.Label("Delayed or Missing Co-morbidities recording")</div>
+                    <div class="col-md-6">@Html.Label("Delayed or Missing Co-morbidities recording on EPR")</div>
                     <div class="col-md-6">
 
                         @*@if (role == "Consultant")
@@ -1421,7 +1427,8 @@
                         }
                         else
                         {
-                            if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                            if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN"
+                                || Model.CreatedBy.ToUpper() != "")
                             {
                                 if (!string.IsNullOrEmpty(Model.isClinicalReview))
                                 {
@@ -1591,7 +1598,8 @@
                         }
                         else
                         {
-                            if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                            if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN"
+                                || Model.CreatedBy.ToUpper() != "")
                             {
                                 if (!string.IsNullOrEmpty(Model.isProcessReview))
                                 {
@@ -1743,7 +1751,8 @@
                         }
                         else
                         {
-                            if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+                            if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN"
+                                || Model.CreatedBy.ToUpper() != "")
                             {
                                 if (!string.IsNullOrEmpty(Model.Recom))
                                 {
@@ -1896,7 +1905,8 @@
         }
         else
         {
-            if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN")
+            if (Model.CreatedBy.ToUpper() == Convert.ToString(Session["FullName"]).ToUpper() || Convert.ToString(Session["Role"]).ToUpper() == "ADMIN"
+                || Model.CreatedBy.ToUpper() != "")
             {
                 <div class="col-md-12" align="right">
                     <button id="BtnPrevious" name="BtnPrevious" class="btn btn-primary btn-lg">Previous</button>

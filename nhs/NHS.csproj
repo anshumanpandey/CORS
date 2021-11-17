@@ -54,7 +54,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="NHS.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\nhs.data\bin\Debug\NHS.Common.dll</HintPath>
+      <HintPath>..\nhs.common\bin\Debug\NHS.Common.dll</HintPath>
     </Reference>
     <Reference Include="NHS.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -1042,6 +1042,18 @@
     <Content Include="Views\Home\COVIDBreathingSupportReport.cshtml" />
     <Content Include="Views\Shared\_BreathingTracker.cshtml" />
     <Content Include="Views\Shared\_BreathingReportPagerControl.cshtml" />
+    <Content Include="Views\Home\BariatricsDashboard.cshtml" />
+    <Content Include="Views\Shared\_BariatricsDetails.cshtml" />
+    <Content Include="Views\Home\NurseAssessment.cshtml" />
+    <Content Include="Views\Home\NotAuthorizedBariatric.cshtml" />
+    <Content Include="Views\Home\MedicalMDT.cshtml" />
+    <Content Include="Views\Home\GroupSessions.cshtml" />
+    <Content Include="Views\Home\VirtualMDT.cshtml" />
+    <Content Include="Views\Home\SurgicalMDT.cshtml" />
+    <Content Include="Views\Home\Surgery.cshtml" />
+    <Content Include="Views\Home\PostOpMedical.cshtml" />
+    <Content Include="Views\Home\PostOpDietician.cshtml" />
+    <Content Include="Views\Shared\_BariatricsPageControl.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

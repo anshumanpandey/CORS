@@ -279,7 +279,12 @@ ul, menu, dir {
         height: auto;
         display: block;
     }
-
+.lable_title_blue h2 {
+    font-size: 17px;
+    /*margin-bottom: 20px;*/
+    color: #4F81BD;
+    font-weight: 600;
+}
 .lable_title h2 {
     font-size: 17px;
     /*margin-bottom: 20px;*/
@@ -400,6 +405,8 @@ body {
 
 .navbar-expand-lg .navbar-nav.side-nav {
     flex-direction: column;
+      height:600px;
+  overflow:scroll;
 }
 
 
@@ -1152,6 +1159,9 @@ td a {
 .ds_table th {
         background-color: #a9d7cc;
     }
+.ds_tableblue th {
+        background-color: #4F81BD;
+    }
 .ds_table th {
 	padding: 10px 15px;
 	border-bottom: 1px solid #111;
@@ -1202,6 +1212,16 @@ td a {
 }
 .ds_filter_btn a {
 	color: #539283 !important;
+	/* background-color: #e9ecef; */
+	padding: 3px 5px;
+	border-radius: 3px;
+	float: left;
+	font-style: italic;
+	font-size: 14px;
+}
+
+.ds_filter_btnblue a {
+	color: #4F81BD !important;
 	/* background-color: #e9ecef; */
 	padding: 3px 5px;
 	border-radius: 3px;

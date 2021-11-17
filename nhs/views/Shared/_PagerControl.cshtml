@@ -35,6 +35,15 @@
     bool IsPositiveDeaths = false;
     bool IsPositiveDischargesLast24hours = false;
     bool IsPositiveDeathLast24hours = false;
+    bool IsActivePositiveDetected = false;
+    bool IsActivePositiveDiagnosed = false;
+    bool IsFirstTestResultPending = false;
+    bool IsFiveSevenReTestPending = false;
+    bool IsActiveNegative = false;
+    bool IsFiveDaysReTest = false;
+    bool IsFiveSevenReTestNegative = false;
+    bool IsUntested = false;
+
     string sortcolumn = "";
 
     if (Convert.ToBoolean(Session["TestDashboard"]) == true)
@@ -56,7 +65,14 @@
         IsPositiveAdmissions = Convert.ToBoolean(Session["IsPositiveAdmissions"]);
         IsPositiveDeaths = Convert.ToBoolean(Session["IsPositiveDeaths"]);
         IsPositiveDischargesLast24hours = Convert.ToBoolean(Session["IsPositiveDischargesLast24hours"]);
-        IsPositiveDeathLast24hours = Convert.ToBoolean(Session["IsPositiveDeathLast24hours"]);
+        IsActivePositiveDetected = Convert.ToBoolean(Session["IsActivePositiveDetected"]);
+        IsActivePositiveDiagnosed = Convert.ToBoolean(Session["IsActivePositiveDiagnosed"]);
+        IsFirstTestResultPending = Convert.ToBoolean(Session["IsFirstTestResultPending"]);
+        IsFiveSevenReTestPending = Convert.ToBoolean(Session["IsFiveSevenReTestPending"]);
+        IsActiveNegative = Convert.ToBoolean(Session["IsActiveNegative"]);
+        IsFiveDaysReTest = Convert.ToBoolean(Session["IsFiveDaysReTest"]);
+        IsFiveSevenReTestNegative = Convert.ToBoolean(Session["IsFiveSevenReTestNegative"]);
+        IsUntested = Convert.ToBoolean(Session["IsUntested"]);
     }
     else if (Convert.ToBoolean(Session["PatientDashboard"]) == true)
     {
@@ -77,6 +93,14 @@
         PendingICUInPatient = Convert.ToBoolean(Session["IsPendingICUInPatient"]);
         PositiveDischargeCountLast24hours = Convert.ToBoolean(Session["IsPositiveDischargeCountLast24hours"]);
         PositiveDeathCountLast24hours = Convert.ToBoolean(Session["IsPositiveDeathCountLast24hours"]);
+        IsActivePositiveDetected = Convert.ToBoolean(Session["IsActivePositiveDetected"]);
+        IsActivePositiveDiagnosed = Convert.ToBoolean(Session["IsActivePositiveDiagnosed"]);
+        IsFirstTestResultPending = Convert.ToBoolean(Session["IsFirstTestResultPending"]);
+        IsFiveSevenReTestPending = Convert.ToBoolean(Session["IsFiveSevenReTestPending"]);
+        IsActiveNegative = Convert.ToBoolean(Session["IsActiveNegative"]);
+        IsFiveDaysReTest = Convert.ToBoolean(Session["IsFiveDaysReTest"]);
+        IsFiveSevenReTestNegative = Convert.ToBoolean(Session["IsFiveSevenReTestNegative"]);
+        IsUntested = Convert.ToBoolean(Session["IsUntested"]);
     }
 
     bool sorttype = true;
@@ -106,7 +130,7 @@
                     @if (pageIndex != 1)
                     {
                         int previousPage = pageIndex - 1;
-                        <li><a onclick="GetPage('@previousPage','','0','@sortcolumn', '@sorttype','@TotalTestsOrdered','@TotalTestsOrderedInPatient','@PositiveTestCases','@PositiveTestCasesICU','@NegativeTestCases','@PositiveDischarges','@PositiveDeaths','@PositiveInPatient','@PendingInPatient','@PositiveInPatientLast24hours','@NegativeInPatientLast24hours','@PositiveTestCasesICU','@PendingICUInPatient','@PositiveDischargeCountLast24hours','@PositiveDeathCountLast24hours', '@IsPositiveAdmissions', '@IsPositiveDeaths', '@IsPositiveDischargesLast24hours','@IsPositiveDeathLast24hours')" href="javascript:void(0);" style="padding: 0.5em 1em; box-shadow:none" data-pageindex="@previousPage">Previous</a></li>
+                        <li><a onclick="GetPage('@previousPage','','0','@sortcolumn', '@sorttype','@TotalTestsOrdered','@TotalTestsOrderedInPatient','@PositiveTestCases','@PositiveTestCasesICU','@NegativeTestCases','@PositiveDischarges','@PositiveDeaths','@PositiveInPatient','@PendingInPatient','@PositiveInPatientLast24hours','@NegativeInPatientLast24hours','@PositiveTestCasesICU','@PendingICUInPatient','@PositiveDischargeCountLast24hours','@PositiveDeathCountLast24hours', '@IsPositiveAdmissions', '@IsPositiveDeaths', '@IsPositiveDischargesLast24hours','@IsPositiveDeathLast24hours','@IsActivePositiveDetected','@IsActivePositiveDiagnosed','@IsFirstTestResultPending','@IsFiveSevenReTestPending','@IsActiveNegative','@IsFiveDaysReTest','@IsFiveSevenReTestNegative','@IsUntested')" href="javascript:void(0);" style="padding: 0.5em 1em; box-shadow:none" data-pageindex="@previousPage">Previous</a></li>
 
                     }
                     else
@@ -153,13 +177,13 @@
                                     if (Convert.ToBoolean(Session["TestDashboard"]) == true)
                                     {
                                         <li id="@linkID">
-                                            <a href="javascript:void(0);" onclick="GetPage('@i','','0','@sortcolumn', '@sorttype','@IsPostive','@IsNegative','@IsPending','@IsPostiveNotified','@IsNegativeNotified','@IsPendingNotified','@IsPositiveLast24hours','@IsPositiveInPatientLast24hours','@IsCancelledLast24hours','@IsPostiveNotifiedLast24hours','@IsInPatientNotifiedLast24hours','@IsNotifiedCancelledLast24hours', '@IsPositiveAdmissions', '@IsPositiveDeaths', '@IsPositiveDischargesLast24hours','@IsPositiveDeathLast24hours')" data-pageindex="@i" style="padding-top:0.25em;!outline:none; border-radius:2px; border: 1px solid transparent;box-sizing: border-box; min-width: 1.5em; padding: 0.5em 1em; margin-left: 2px; text-align: center; text-decoration:none !important; cursor:pointer">@i</a>
+                                            <a href="javascript:void(0);" onclick="GetPage('@i','','0','@sortcolumn', '@sorttype','@IsPostive','@IsNegative','@IsPending','@IsPostiveNotified','@IsNegativeNotified','@IsPendingNotified','@IsPositiveLast24hours','@IsPositiveInPatientLast24hours','@IsCancelledLast24hours','@IsPostiveNotifiedLast24hours','@IsInPatientNotifiedLast24hours','@IsNotifiedCancelledLast24hours', '@IsPositiveAdmissions', '@IsPositiveDeaths', '@IsPositiveDischargesLast24hours','@IsPositiveDeathLast24hours','@IsActivePositiveDetected','@IsActivePositiveDiagnosed','@IsFirstTestResultPending','@IsFiveSevenReTestPending','@IsActiveNegative','@IsFiveDaysReTest','@IsFiveSevenReTestNegative','@IsUntested')" data-pageindex="@i" style="padding-top:0.25em;!outline:none; border-radius:2px; border: 1px solid transparent;box-sizing: border-box; min-width: 1.5em; padding: 0.5em 1em; margin-left: 2px; text-align: center; text-decoration:none !important; cursor:pointer">@i</a>
                                         </li>
                                     }
                                     else if (Convert.ToBoolean(Session["PatientDashboard"]) == true)
                                     {
                                         <li id="@linkID">
-                                            <a href="javascript:void(0);" onclick="GetPage('@i','','0','@sortcolumn', '@sorttype','@TotalTestsOrdered','@TotalTestsOrderedInPatient','@PositiveTestCases','@PositiveTestCasesICU','@NegativeTestCases','@PositiveDischarges','@PositiveDeaths','@PositiveInPatient','@PendingInPatient','@PositiveInPatientLast24hours','@NegativeInPatientLast24hours','@PositiveTestCasesICU','@PendingICUInPatient','@PositiveDischargeCountLast24hours','@PositiveDeathCountLast24hours', '@IsPositiveAdmissions', '@IsPositiveDeaths', '@IsPositiveDischargesLast24hours','@IsPositiveDeathLast24hours')" data-pageindex="@i" style="padding-top:0.25em;!outline:none; border-radius:2px; border: 1px solid transparent;box-sizing: border-box; min-width: 1.5em; padding: 0.5em 1em; margin-left: 2px; text-align: center; text-decoration:none !important; cursor:pointer">@i</a>
+                                            <a href="javascript:void(0);" onclick="GetPage('@i','','0','@sortcolumn', '@sorttype','@TotalTestsOrdered','@TotalTestsOrderedInPatient','@PositiveTestCases','@PositiveTestCasesICU','@NegativeTestCases','@PositiveDischarges','@PositiveDeaths','@PositiveInPatient','@PendingInPatient','@PositiveInPatientLast24hours','@NegativeInPatientLast24hours','@PositiveTestCasesICU','@PendingICUInPatient','@PositiveDischargeCountLast24hours','@PositiveDeathCountLast24hours', '@IsPositiveAdmissions', '@IsPositiveDeaths', '@IsPositiveDischargesLast24hours','@IsPositiveDeathLast24hours','@IsActivePositiveDetected','@IsActivePositiveDiagnosed','@IsFirstTestResultPending','@IsFiveSevenReTestPending','@IsActiveNegative','@IsFiveDaysReTest','@IsFiveSevenReTestNegative','@IsUntested')" data-pageindex="@i" style="padding-top:0.25em;!outline:none; border-radius:2px; border: 1px solid transparent;box-sizing: border-box; min-width: 1.5em; padding: 0.5em 1em; margin-left: 2px; text-align: center; text-decoration:none !important; cursor:pointer">@i</a>
                                         </li>
                                     }
                                 }
@@ -172,7 +196,7 @@
                     if (pageIndex != totalPages)
                     {
                         int nextPage = pageIndex + 1;
-                        <li><a onclick="GetPage('@nextPage','','0','@sortcolumn', '@sorttype','@TotalTestsOrdered','@TotalTestsOrderedInPatient','@PositiveTestCases','@PositiveTestCasesICU','@NegativeTestCases','@PositiveDischarges','@PositiveDeaths','@PositiveInPatient','@PendingInPatient','@PositiveInPatientLast24hours','@NegativeInPatientLast24hours','@PositiveTestCasesICU','@PendingICUInPatient','@PositiveDischargeCountLast24hours','@PositiveDeathCountLast24hours', '@IsPositiveAdmissions', '@IsPositiveDeaths', '@IsPositiveDischargesLast24hours','@IsPositiveDeathLast24hours')" data-pageindex="@nextPage" href="javascript:void(0);" style="box-sizing:border-box; padding: 0.5em 1em; min-width:1.5em; margin-left:2px; text-align:center; text-decoration:none !important; border:1px solid transparent; border-radius: 2px;">Next</a></li>
+                        <li><a onclick="GetPage('@nextPage','','0','@sortcolumn', '@sorttype','@TotalTestsOrdered','@TotalTestsOrderedInPatient','@PositiveTestCases','@PositiveTestCasesICU','@NegativeTestCases','@PositiveDischarges','@PositiveDeaths','@PositiveInPatient','@PendingInPatient','@PositiveInPatientLast24hours','@NegativeInPatientLast24hours','@PositiveTestCasesICU','@PendingICUInPatient','@PositiveDischargeCountLast24hours','@PositiveDeathCountLast24hours', '@IsPositiveAdmissions', '@IsPositiveDeaths', '@IsPositiveDischargesLast24hours','@IsPositiveDeathLast24hours','@IsActivePositiveDetected','@IsActivePositiveDiagnosed','@IsFirstTestResultPending','@IsFiveSevenReTestPending','@IsActiveNegative','@IsFiveDaysReTest','@IsFiveSevenReTestNegative','@IsUntested')" data-pageindex="@nextPage" href="javascript:void(0);" style="box-sizing:border-box; padding: 0.5em 1em; min-width:1.5em; margin-left:2px; text-align:center; text-decoration:none !important; border:1px solid transparent; border-radius: 2px;">Next</a></li>
                     }
                     else
                     {

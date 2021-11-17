@@ -22,13 +22,21 @@ namespace NHS.Controllers
             return View(usermodel);
         }
 
-        public ActionResult Register()
+        public ActionResult Register(bool notinDB, string userID)
         {
             AppUsers usermodel = new AppUsers();
             string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
             DBEngine dBEngine = new DBEngine(connectionString);
             ViewBag.RoleDDM = dBEngine.GetRoles(0);
             ViewBag.SpecialityDDM = dBEngine.GetSpecialitiesForDropDown(0);
+            if (notinDB)
+            {
+                TempData["AlertLoginMessage1"] = "Your LOG IN details are correct but you do not have an active CORS account.";
+                TempData["AlertLoginMessage2"] = "Please ";
+                TempData["AlertLoginMessage3"] = "REGISTER ";
+                TempData["AlertLoginMessage4"] = "below to gain access to CORS";
+                usermodel.UserName =  userID;
+            }
             return View(usermodel);
         }
 
@@ -91,8 +99,13 @@ namespace NHS.Controllers
             AppUsers usermodel = new AppUsers();
             string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
             DBEngine dBEngine = new DBEngine(connectionString);
-            int dbReturn = dBEngine.CreateUser(Request.Form["EmailID"], Request.Form["FirstName"], Request.Form["LastName"], Request.Form["UserName"], Request.Form["ddlSpeciality"], Convert.ToInt32(Request.Form["DischargeRole"]), Request.Form["Code"], 0);
-            if(dbReturn == 0)
+            Roles role = dBEngine.GetRoleByID(Convert.ToInt32(Request.Form["DischargeRole"]), 0);
+            int dbReturn = -1;
+            bool rolepreapproved = false;
+            if (role.RoleName == "QAP" || role.RoleName == "Consultant")
+                rolepreapproved = true;
+            dbReturn = dBEngine.CreateUser(Request.Form["EmailID"], Request.Form["FirstName"], Request.Form["LastName"], Request.Form["UserName"], Request.Form["ddlSpeciality"], Convert.ToInt32(Request.Form["DischargeRole"]), Request.Form["Code"], 0, rolepreapproved);
+            if (dbReturn == 0 && !rolepreapproved)
             {
                 Alert alertMessage = new Alert();
                 alertMessage.AlertType = ALERTTYPE.Error;
@@ -163,7 +176,6 @@ namespace NHS.Controllers
             if (username.IndexOf("\\") > 0)
             {
                 username = username.Split("\\".ToCharArray())[1];
-               // domain = username.Split("\\".ToCharArray())[0];
             }
             domain = dBEngine.GetDomainName(0) ;
             
@@ -171,14 +183,25 @@ namespace NHS.Controllers
             
             try
             {
-                isValidFromAD = ValidateCredentials(username, password, domain);
-                //isValidFromAD = true;
+                //isValidFromAD = ValidateCredentials(username, password, domain);
+                isValidFromAD = true;
 
                 if (isValidFromAD)
                 {
                     usermodel = dBEngine.ValidateUser(username, password);
                     actionname = "Index";
-                    if (usermodel.IsFound)
+                    if(usermodel.IsApproved == false && usermodel.IsFound)
+                    {
+                        Alert alertMessage = new Alert();
+                        alertMessage.AlertType = ALERTTYPE.LoginError3;
+                        alertMessage.MessageType = ALERTMESSAGETYPE.TextWithClose;
+                        alertMessage.LoginMessage1 = "Your LOG IN details are correct but you do not have an active CORS account.";
+                        alertMessage.LoginMessage2 = "Please call Extn 8066/6761/5252/8335 for assistance.";
+                        TempData["AlertLoginMessage1"] = alertMessage.LoginMessage1;
+                        TempData["AlertLoginMessage2"] = alertMessage.LoginMessage2;
+                        controllername = "Account";
+                    }
+                    else if (usermodel.IsFound && usermodel.IsApproved)
                     {
                         //Session.Abandon();
                         Session.Timeout = 1440;
@@ -201,21 +224,32 @@ namespace NHS.Controllers
                     }
                     else
                     {
-                        Alert alertMessage = new Alert();
-                        alertMessage.AlertType = ALERTTYPE.Error;
-                        alertMessage.MessageType = ALERTMESSAGETYPE.TextWithClose;
-                        alertMessage.Message = "You are not authorised to access this app. Please call 8066/6761/5252/8335.";
-                        TempData["AlertMessage"] = alertMessage.Message;
                         controllername = "Account";
+                        actionname = "Register";
+                        Alert alertMessage = new Alert();
+                        alertMessage.AlertType = ALERTTYPE.LoginError2;
+                        alertMessage.MessageType = ALERTMESSAGETYPE.TextWithClose;
+                        alertMessage.LoginMessage1 = "Your LOG IN details are correct but you do not have an active CORS account.";
+                        alertMessage.LoginMessage2 = "Please ";
+                        alertMessage.LoginMessage3 = "REGISTER ";
+                        alertMessage.LoginMessage4 = "below to gain access to CORS";
+                        bool notinDB = true;
+                        return RedirectToAction("Register", "Account", new { notinDB = notinDB, userID = username });
                     }
                 }
                 else
                 {
                     Alert alertMessage = new Alert();
-                    alertMessage.AlertType = ALERTTYPE.Error;
+                    alertMessage.AlertType = ALERTTYPE.LoginError1;
                     alertMessage.MessageType = ALERTMESSAGETYPE.TextWithClose;
-                    alertMessage.Message = "Credentials provided do not match with AD.";
-                    TempData["AlertMessage"] = alertMessage.Message;
+                    alertMessage.LoginMessage1 = "Your LOG IN details ";
+                    alertMessage.LoginMessage2 = "DO NOT MATCH ";
+                    alertMessage.LoginMessage3 = "your normal RBFT windows account details, pls try again.";
+                    alertMessage.LoginMessage4 = "You can also call Extn 8066/6761/5252/8335 for assistance.";
+                    TempData["AlertLoginMessage1"] = alertMessage.LoginMessage1;
+                    TempData["AlertLoginMessage2"] = alertMessage.LoginMessage2;
+                    TempData["AlertLoginMessage3"] = alertMessage.LoginMessage3;
+                    TempData["AlertLoginMessage4"] = alertMessage.LoginMessage4;
                     controllername = "Account";
                 }
             }

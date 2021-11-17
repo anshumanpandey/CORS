@@ -1,0 +1,587 @@
+﻿@model List<NHS.Common.DTO.clsCOVIDPatientDetails>
+@using NHS.Models;
+@{
+    ViewBag.Title = "COVID 19 Patient Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    <style>
+        #Newpatient {
+            font-size: 13px;
+        }
+
+            #Newpatient:hover {
+                text-decoration: underline;
+                color: cornflowerblue !important;
+            }
+
+        #DOD_ToolTip {
+            display: none;
+            position: absolute;
+            border: 1px solid gray;
+            WIDTH: 254PX;
+            HEIGHT: 100PX;
+            Z-INDEX: 999999;
+            background-color: white;
+        }
+
+        #DRow {
+            padding-right: 1px !Important;
+        }
+
+        #DateOfDeath:hover {
+            cursor: context-menu;
+        }
+        /*.tooltip {
+            border:1px solid gray;
+            padding:5px !important;
+        }*/
+        #DateOfDeath.tooltip {
+            border: 1px solid gray;
+            padding: 5px !important;
+        }
+    </style>
+}
+
+
+
+
+<br />
+<br />
+@*<script src="cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>*@
+
+<!-- DataTables -->
+
+<div>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td width="40%">
+                <div id="showfilterdiv" class="ds_filter_btn" style="display:none !important;">
+                    <a href="javascript:void(0);" onclick="ShowFilter()" id="showfilter" @*class="ds_filter_btn_show"*@> <img src="~/images/show-arrow.png" alt="" />Show Advanced Filters</a>
+                </div>
+                <div id="hidefilterdiv" class="ds_filter_btn" style="display:block !important;">
+                    <a href="javascript:void(0);" onclick="HideFilter()" id="hidefilter" @*class="ds_filter_btn_hide"*@> <img src="~/images/hide-arrow.png" alt="" />Hide Advanced Filters</a>
+                </div>
+            </td>
+            <td width="60%" align="right" style="padding:10px 15px"><b>Data Refreshed: From @ViewBag.UpdatedSource at @ViewBag.UpdatedDate</b></td>
+        </tr>
+
+    </table>
+</div>
+<div class="col-sm-12">
+    <div class="row">
+        <div class="col-md-12">
+            <form action="@Url.Action("COVIDPatientDashboard", "Home", new { buttonsubmit = true })" method="post">
+                <div class="row" id="filtercondition">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="row_bar">
+                                    <input style="font-size:10px;height:38px; margin:0 0 0 0; width:100%" class="form-control  datepicker" readonly="readonly" type="text" id="txtStartDate" name="txtStartDate" placeholder="All Dates" value="Admission Start Date @DateTime.ParseExact(Session["COVIDPatientStartDate"].ToString(), "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture).ToString("dd/MM/yyyy")">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="row_bar">
+                                    <input style="font-size:10px; margin:0 0 0 0; height:38px;width:100%" class="form-control  datepicker" readonly="readonly" type="text" id="txtEndDate" name="txtEndDate" placeholder="All Dates" value="Admission End Date @DateTime.ParseExact(Session["COVIDPatientEndDate"].ToString(), "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture).ToString("dd/MM/yyyy")">&nbsp;&nbsp;
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="row_bar">
+                                    <select style="font-size:12px;  margin:0 0 0 0;" class="form-control" id="ddlPatientType" name="ddlPatientType">
+                                        @if (Convert.ToString(Session["COVIDPatientType"]) == "0")
+                                        {
+                                            <option selected value="0">
+                                                All Patient Type
+                                            </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="0">
+                                                All Patient Type
+                                            </option>
+                                        }
+                                        @foreach (var item in ViewBag.PatientType)
+                                        {
+                                            if (item.PatientType.ToUpper().Replace("Current", "") == Convert.ToString(Session["COVIDPatientType"]).ToUpper() && Convert.ToString(Session["COVIDPatientType"]) != "0"
+                                                && Convert.ToString(Session["COVIDPatientType"]) != "")
+                                            {
+                                                <option selected value="@item.PatientType">@item.PatientType</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.PatientType">@item.PatientType</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="row_bar">
+                                    <select style="font-size:12px;  margin:0 0 0 0;" class="form-control" id="ddlAdmissionStatus" name="ddlAdmissionStatus">
+                                        @if (Convert.ToString(Session["COVIDAdmissionStatus"]) == "0")
+                                        {
+                                            <option selected value="0">
+                                                All Admission Status
+                                            </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="0">
+                                                All  Admission Status
+                                            </option>
+                                        }
+                                        @foreach (var item in ViewBag.AdmissionStatus)
+                                        {
+                                            if (!string.IsNullOrEmpty(item.AdmissionStatus))
+                                            {
+                                                if (item.AdmissionStatus == Convert.ToString(Session["COVIDAdmissionStatus"]) && Convert.ToString(Session["COVIDAdmissionStatus"]) != "0"
+                                                    && Convert.ToString(Session["COVIDAdmissionStatus"]) != "")
+                                                {
+                                                    <option selected value="@item.AdmissionStatus">@item.AdmissionStatus</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.AdmissionStatus">@item.AdmissionStatus</option>
+                                                }
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>                            
+                            <div class="col-md-3">
+                                <div class="row_bar">
+                                    <select style="font-size:12px;  margin:0 0 0 0;" class="form-control" id="ddlAgeGroup" name="ddlAgeGroup">
+                                        @if (Convert.ToString(Session["COVIDAgeGroup"]) == "0")
+                                        {
+                                            <option selected value="0">
+                                                All Age Group
+                                            </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="0">
+                                                All Age Group
+                                            </option>
+                                        }
+                                        @foreach (var item in ViewBag.AgeGroup)
+                                        {
+                                            if (!string.IsNullOrEmpty(item.Age_Group))
+                                            {
+                                                if (item.Age_Group == Convert.ToString(Session["COVIDAgeGroup"]) && Convert.ToString(Session["COVIDAgeGroup"]) != "0"
+                                                    && Convert.ToString(Session["COVIDAgeGroup"]) != "")
+                                                {
+                                                    <option selected value="@item.Age_Group">@item.Age_Group</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Age_Group">@item.Age_Group</option>
+                                                }
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="row_bar">
+                                    <select style="font-size:12px;  margin:0 0 0 0;" class="form-control" id="ddlTestResults" name="ddlTestResults">
+                                        @if (Convert.ToString(Session["COVIDTestResults"]) == "0")
+                                        {
+                                            <option selected value="0">
+                                                All Test Results
+                                            </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="0">
+                                                All Test Results
+                                            </option>
+                                        }
+                                        @foreach (var item in ViewBag.TestResults)
+                                        {
+                                            if (!string.IsNullOrEmpty(item.TestResult))
+                                            {
+                                                if (item.TestResult == Convert.ToString(Session["COVIDTestResults"]) && Convert.ToString(Session["COVIDTestResults"]) != "0"
+                                                    && Convert.ToString(Session["COVIDTestResults"]) != "")
+                                                {
+                                                    <option selected value="@item.TestResult">@item.TestResult</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.TestResult">@item.TestResult</option>
+                                                }
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="row_bar">
+                                    <select style="font-size:12px;  margin:0 0 0 0;" class="form-control" id="ddlBreathingStatus" name="ddlBreathingStatus">
+                                        @if (Convert.ToString(Session["COVIDBreathingStatus"]) == "0")
+                                        {
+                                            <option selected value="0">
+                                                All Breathing Status
+                                            </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="0">
+                                                All Breathing Status
+                                            </option>
+                                        }
+                                        @foreach (var item in ViewBag.BreathingStatus)
+                                        {
+                                            if (!string.IsNullOrEmpty(item.BreathingStatus))
+                                            {
+                                                if (item.BreathingStatus == Convert.ToString(Session["COVIDBreathingStatus"]) && Convert.ToString(Session["COVIDBreathingStatus"]) != "0"
+                                                    && Convert.ToString(Session["COVIDBreathingStatus"]) != "")
+                                                {
+                                                    <option selected value="@item.BreathingStatus">@item.BreathingStatus</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.BreathingStatus">@item.BreathingStatus</option>
+                                                }
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="row_bar">
+                                    <select style="font-size:12px;  margin:0 0 0 0;" class="form-control" id="ddlLastLocation" name="ddlLastLocation">
+                                        @if (Convert.ToString(Session["COVIDLastLocation"]) == "0")
+                                        {
+                                            <option selected value="0">
+                                                All Last Location
+                                            </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="0">
+                                                All  Last Location
+                                            </option>
+                                        }
+                                        @foreach (var item in ViewBag.LastLocation)
+                                        {
+                                            if (!string.IsNullOrEmpty(item.LastLocation))
+                                            {
+                                                if (item.LastLocation == Convert.ToString(Session["COVIDLastLocation"]) && Convert.ToString(Session["COVIDLastLocation"]) != "0"
+                                                    && Convert.ToString(Session["COVIDLastLocation"]) != "")
+                                                {
+                                                    <option selected value="@item.LastLocation">@item.LastLocation</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.LastLocation">@item.LastLocation</option>
+                                                }
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-1">
+                                @*<div class="row_bar">
+                                        <button id="btnSearch" type="submit" class="btn btn-primary btn-md" name="btnSearch">Search </button>
+                                    </div>*@
+                                <div class="ds_filter_cont">
+
+                                    <ul>
+                                        <li><button id="btnSearch" type="submit" data-toggle="tooltip" title="Search"><img src="~/images/search-icon.png" alt="" /></button"></li>
+                                        <li><button id="btnReset" type="button" data-toggle="tooltip" title="Reset Filters"><img src="~/images/refresh-icon.png" alt="" /></button></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br />
+    <div class="col-md-12" style="text-align: center;padding: 4px 0;background-color: #a9d7cc;margin: 0 0 18px 0; font-size:20px;">
+        @if (Convert.ToString(Session["COVIDPatientType"]) != "0")
+        {
+            <span><b><i>Showing Results for Patient Type: @Convert.ToString(Session["COVIDPatientType"])</i></b></span>
+        }
+        else
+        {
+            <span><b><i>Showing Results for All Patient Types</i></b></span>
+        }
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-6">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="right" valign="middle" style="font-size:14px; padding:5px; border-bottom:0px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;"><b>COVID19 - Admissions (@DateTime.ParseExact(Session["COVIDPatientStartDate"].ToString(), "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture).ToString("dd/MM/yyyy") - @DateTime.ParseExact(Session["COVIDPatientEndDate"].ToString(), "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture).ToString("dd/MM/yyyy"))&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Rate &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+                </tr>
+                <tr>
+                    <td>
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <td rowspan="4" align="center" valign="middle" style="font-size:50px; font-weight:bold; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;"><a href="javascript:void(0)" onclick="GetPage(1,'', 0,'','', true, false, false,false,false,false,false,false,false,false, false, false, false, false, false, true)" data-toggle="tooltip" title="Total Tests Ordered" style="display:block;"><b><u>@ViewBag.TotalTestsOrdered</u></b></a></td>
+                                @*<td style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;"></td>
+                                    <td style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;"></td>
+                                    <td style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;"><b>Action</b></td>*@
+                            </tr>
+                            <tr>
+                                <td style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;"><b>+ve Result</b></td>
+                                <td width="12%" style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;" align="center"><a href="javascript:void(0)" onclick="GetPage(1, '', 0, '', '', false, false, true, false, false, false, false, false, false, false, false, false, false, false,false, true)" data-toggle="tooltip" title="Positive Cases" style="display:block;"><b><u>@ViewBag.PositiveTestCases</u></b></a></td>
+                                <td width="12%" style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;color:red" align="center"><a href="#" data-toggle="tooltip" title="Positive Rate%" style="display:block;cursor: default;"><b>@ViewBag.PositiveRatePercentage%</b></a></td>
+
+                            </tr>
+                            <tr>
+                                <td style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;"><b>+ve Results with ICU care</b></td>
+                                @if (ViewBag.PositiveTestCasesICU != "0")
+                                {
+                                    <td style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;" align="center"><a href="javascript:void(0)" onclick="GetPage(1, '', 0, '', '', false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, true)" data-toggle="tooltip" title="Positive ICU" style="display:block;"><b><u>@ViewBag.PositiveTestCasesICU</u></b></a></td>
+                                }
+                                else
+                                {
+                                    <td style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;" align="center"><a href="javascript:void(0)" onclick="GetPage(1, '', 0, '', '', false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, true)" data-toggle="tooltip" title="Positive ICU" style="display:block;">&nbsp;</td>
+                                }
+                                @if (ViewBag.PositiveICURatePercentage != "0.0")
+                                {
+                                    <td style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;color:red" align="center"><a href="#" data-toggle="tooltip" title="Positive ICU Rate%" style="display:block;cursor: default;"><b>@ViewBag.PositiveICURatePercentage%</b></a></td>
+                                }
+                                else
+                                {
+                                    <td style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;color:red" align="center"><a href="#" data-toggle="tooltip" title="Positive ICU Rate%" style="display:block;cursor: default;">&nbsp;</a></td>
+                                }
+                            </tr>
+                            <tr>
+                                <td style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;"><b>-ve Results</b> </td>
+                                <td style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;" align="center"><a href="javascript:void(0)" onclick="GetPage(1, '', 0, '', '', false, false, false, false, true, false, false, false, false, false, false, false, false, false,false, true)" data-toggle="tooltip" title="Negative Cases" style="display:block;"><b><u>@ViewBag.NegativeTestCases</u></b></a></td>
+                                <td style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;color:red" align="center"><a href="#" data-toggle="tooltip" title="Negative Rate%" style="display:block;cursor: default;"><b>@ViewBag.NegativeRatePercentage%</b></a></td>
+
+                            </tr>
+                            <tr>
+                                @if (Convert.ToString(Session["COVIDPatientType"]) == "Inpatient")
+                                {
+                                    <td align="center" valign="middle" style="font-size:14px; padding:6px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;"><b>@Convert.ToString(Session["COVIDPatientType"])</b></td>
+                                }
+                                else if (Convert.ToString(Session["COVIDPatientType"]) == "0")
+                                {
+                                    <td align="center" valign="middle" style="font-size:14px; padding:6px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;"><b>All Patients </b></td>
+                                }
+                                else
+                                {
+                                    <td align="center" valign="middle" style="font-size:14px; padding:6px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;"><b>@Convert.ToString(Session["COVIDPatientType"]) Patients</b></td>
+                                }
+                                <td style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;"><b>+ve Discharges / Deaths</b></td>
+                                <td style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;" align="center" class="dischargedeath"><a href="javascript:void(0)" onclick="GetPage(1, '', 0, '', '', false, false, false, false, false, true, false, false, false, false, false, false, false, false,false, true)" data-toggle="tooltip" title="Positive Discharges" ><b><u>@ViewBag.PositiveDischarges</u></b>  / </a><a href="javascript:void(0)" onclick="GetPage(1, '', 0, '', '', false, false, false, false, false, false, true, false, false, false, false, false, false, false,false, true)" data-toggle="tooltip" title="Positive Deaths">&nbsp;<b><u>@ViewBag.PositiveDeaths</u></b></a></td>
+                                <td style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;" align="center"><b>&nbsp;</b></td>
+                            </tr>
+                        </table>
+
+
+                    </td>
+                </tr>
+            </table>
+
+
+
+        </div>
+
+        <div class="col-md-6">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                     <td align="right" valign="middle" style="font-size:14px; padding:5px; border-bottom:0px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;"><b>COVID19 Live Status &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+                </tr>
+                <tr>
+                    <td>
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <td rowspan="4" align="center" valign="middle" style="font-size:50px; font-weight:bold; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;"><a href="javascript:void(0)" onclick="GetPage(1, '', 0, '', '', false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, true)" data-toggle="tooltip" title="Total - InPatient" style="display:block;"><b><u>@ViewBag.TotalTestsOrderedInPatient</u></b></a></td>
+                                @*<td rowspan="4" align="center" valign="middle" style="font-size:50px; font-weight:bold; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;"><a href="#" data-toggle="tooltip" title="Total Tests Ordered - Last 24 hours" style="display:block;"><b>@ViewBag.TotalTestsOrderedLast24hrs</b></a></td>*@
+                                @*<td style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;"></td>
+                                    <td style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;"></td>
+                                    <td style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;" align="center"><b>Action</b></td>*@
+                            </tr>
+                            <tr>
+                                <td style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;"><b>Patients In Trust (+ve and Pending)</b></td>
+                                <td width="12%" style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;" align="center"><a href="javascript:void(0)" onclick="GetPage(1, '', 0, '', '', false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, true)" data-toggle="tooltip" title="Positive Cases" style="display:block;"><b><u>@ViewBag.PositiveInPatient</u></b></a></td>
+                                <td width="12%" style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;color:red" align="center"><a href="javascript:void(0)" onclick="GetPage(1, '', 0, '', '', false, false, false, false, false, false, false, false, true, false, false, false, false, false,false, true)" data-toggle="tooltip" title="Pending Cases" style="display:block;"><b><u>@ViewBag.PendingInPatient</u></b></a></td>
+                                @*<td width="19%" style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;" align="center"><a href="#" data-toggle="tooltip" title="Positive Cases - Last 24 hours" style="display:block;"><b>@ViewBag.PostivePatientDiagnosisLast24hrs</b></a></td>
+                                    <td width="19%" style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;color:red" align="center"><a href="#" data-toggle="tooltip" title="Positive Cases - Last 24 hours Not Notified" style="display:block;color:red !important"><b>@ViewBag.NotNotifiedPostivePatientDiagnosisLast24hrs</b></a></td>*@
+                            </tr>
+                            <tr>
+                                <td style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;"><b>Patients In ICU (+ve and Pending)</b></td>
+                                <td style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;" align="center"><a href="javascript:void(0)" onclick="GetPage(1, '', 0, '', '', false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, true)" data-toggle="tooltip" title="Positive ICU" style="display:block;"><b><u>@ViewBag.PositiveInPatientICU</u></b></a></td>
+                                <td style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;color:red" align="center"><a href="javascript:void(0)" onclick="GetPage(1, '', 0, '', '', false, false, false, false, false, false, false, false, false, false, false, false, true, false,false, true)" data-toggle="tooltip" title="Pending ICU" style="display:block;"><b><u>@ViewBag.PendingICUInPatient</u></b></a></td>
+                                @*<td style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;" align="center"><a href="#" data-toggle="tooltip" title="InPatient Positive Cases - Last 24 hours" style="display:block;"><b>@ViewBag.PositiveInpatientDiagnosisLast24hrs</b></a></td>
+                                    <td style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;color:red" align="center"><a href="#" data-toggle="tooltip" title="InPatient Positive Cases - Last 24 hours Not Notified" style="display:block;color:red !important"><b>@ViewBag.NotNotifiedInPatientDiagnosisLast24hrs</b></a></td>*@
+                            </tr>
+                            <tr>
+                                <td style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;"><b>Results In Last 24 hours (+ve and -ve)</b></td>
+                                <td style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;" align="center"><a href="javascript:void(0)" onclick="GetPage(1, '', 0, '', '', false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, true)" data-toggle="tooltip" title="Positive Cases - Last 24 hours" style="display:block;"><b><u>@ViewBag.PositiveInPatientLast24hours</u></b></a></td>
+                                <td style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;color:red" align="center"><a href="javascript:void(0)" onclick="GetPage(1, '', 0, '', '', false, false, false, false, false, false, false, false, false, false, true, false, false, false,false, true)" data-toggle="tooltip" title="Negative Cases - Last 24 hours" style="display:block;"><b><u>@ViewBag.NegativeInPatientLast24hours</u></b></a></td>
+                                @*<td style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;" align="center"><a href="#" data-toggle="tooltip" title="Negative Cases - Last 24 hours" style="display:block;"><b>@ViewBag.NegativeLast24hours</b></a></td>
+                                    <td style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;color:red" align="center"><a href="#" data-toggle="tooltip" title="Negative Cases - Last 24 hours Not Notified" style="display:block;color:red !important"><b>@ViewBag.NotNotifiedNegativeLast24hours</b></a></td>*@
+                            </tr>
+                            <tr>
+                                @if (Convert.ToString(Session["COVIDPatientType"]) != "0")
+                                {
+                                    <td align="center" valign="middle" style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;"><b>Current @Convert.ToString(Session["COVIDPatientType"]) </b></td>
+                                }
+                                else
+                                {
+                                    <td align="center" valign="middle" style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;"><b>Current All Patients </b></td>
+                                }
+                                <td style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;"><b>+ve Discharges / Deaths In Last 24 hours</b></td>
+                                <td style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;" align="center" class="dischargedeath"><a href="javascript:void(0)" onclick="GetPage(1, '', 0, '', '', false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, true)" data-toggle="tooltip" title="Positive Discharges - Last 24 hours"><b><u>@ViewBag.PositiveDischargeCountLast24hours</u></b> / </a>  <a href="javascript:void(0)" onclick="GetPage(1, '', 0, '', '', false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true)" data-toggle="tooltip" title="Positive Deaths - Last 24 hours"><b><u>@ViewBag.PositiveDeathCountLast24hours</u></b></a></td>
+                                <td style="font-size:14px; padding:5px; border-bottom:1px #343a40 solid; border-left:1px #343a40 solid; border-right:1px #343a40 solid; border-top:1px #343a40 solid;">&nbsp;</td>
+                            </tr>
+                        </table>
+
+
+                    </td>
+                </tr>
+            </table>
+
+
+
+        </div>
+
+    </div>
+
+    <br />
+
+
+
+    <div class="row">
+        <div class="col-md-12" style="padding-left:0;">
+            @*<div class="panel panel-info">*@
+            @*<div class="panel-heading">Search</div>*@
+            @*<div class="panel-body">*@
+            <div class="" style="margin:10px 0 10px 0;">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td>
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td align="left" width="82%"><label>Show <select id="tblPatientDetails_length" name="tblPatientDetails_length" aria-controls="tblPatientDetails" class=""><option value="10">10 rows</option><option value="20">20 rows</option><option value="50">50 rows</option><option value="100">100 rows</option><option value="-1">Show All</option></select>&nbsp;&nbsp; entries</label></td>
+                                    <td align="right">Search:</td>
+                                    <td align="right">
+                                        <input type="text" name="searchfield" id="searchfield" value="@ViewBag.SearchText" style="margin-left: 0.5em" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="dvCustomerList">
+                @Html.Partial("_COVIDPatientDetails", Model)
+            </div>
+        </div>
+        @*</div>*@
+        @*</div>*@
+    </div>
+</div>
+<input type="hidden" id="Reset" name="Reset" value="" />
+<br />
+<br />
+
+<script>
+    $(function () {
+        $("#searchfield").keyup(function () {
+            var searchfield = $("#searchfield").val();
+            var pagesize = $("#tblPatientDetails_length").val();
+            GetPage(1, searchfield, pagesize);
+        });
+    });
+</script>
+<script>
+    function HideFilter()
+    {
+        $("#filtercondition").fadeOut(400);
+        $("#showfilterdiv").show();
+        $("#hidefilterdiv").hide();
+    }
+    function ShowFilter() {
+        $("#filtercondition").fadeIn(400);
+        $("#hidefilterdiv").show();
+        $("#showfilterdiv").hide();
+    }
+</script>
+<script>
+    $(function () {
+        $("#tblPatientDetails_length").change(function () {
+            var searchfield = $("#searchfield").val();
+            var pagesize = $("#tblPatientDetails_length").val();
+            GetPage(1, searchfield, pagesize);
+        });
+    });
+</script>
+<script type="text/javascript">
+$(function () {
+    $("#btnSearch").click(function () {
+window.location.href = "@Url.Action("COVIDPatientDashboard", "Home", new { isReset = false, buttonsubmit = true })";
+    });
+});
+$(function () {
+    $("#btnReset").click(function () {
+        window.location.href = "@Url.Action("COVIDPatientDashboard", "Home", new { isReset = true })";
+    });
+});
+    (function ($) {
+        $(".datepicker").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy'
+        });
+    })(jQuery)
+</script>
+<script language="javascript">
+setInterval(function(){
+   window.location.reload(1);
+}, 1800000);
+</script>
+<script>
+    function GetPage(pPageNo, searchfield, pageSize, SortColumn, frompager, IsTotalTestsOrdered, IsTotalTestsOrderedInPatient, IsPositiveTestCases, IsPositiveTestCasesICU,
+        IsNegativeTestCases, IsPositiveDischarges, IsPositiveDeaths, IsPositiveInPatient,
+        IsPendingInPatient, IsPositiveLast24hours, IsNegativeLast24hours, IsPositiveICUInPatient,
+        IsPendingICUInPatient, IsPositiveDischargeCountLast24hours, IsPositiveDeathCountLast24hours, fromfilter) {
+        var pageSize = $("#tblPatientDetails_length").val();
+        var dataActionUrl = '@Url.Action("MoreCOVIDPatientDetails", "Home")';
+        //alert(IsPositiveDischarges);
+        if (frompager == 'onclick')
+        {
+            //alert(frompager);
+            frompager = true;
+        }
+        if (fromfilter == true) {
+            $('#tblPatientDetails_length').val("10").attr("selected", "selected");
+            $("#searchfield").val('');
+            pageSize = 10;
+        }
+        $.ajax({
+            url: dataActionUrl,
+            data: {
+                pageNumber: pPageNo, searchfield: searchfield, pageSize: pageSize, SortColumn: SortColumn, IsTotalTestsOrdered: IsTotalTestsOrdered,
+                IsTotalTestsOrderedInPatient: IsTotalTestsOrderedInPatient, IsPositiveTestCases: IsPositiveTestCases, IsPositiveTestCasesICU: IsPositiveTestCasesICU,
+                IsNegativeTestCases: IsNegativeTestCases,
+                IsPositiveDischarges: IsPositiveDischarges, IsPositiveDeaths: IsPositiveDeaths,
+                IsPositiveInPatient: IsPositiveInPatient,
+                IsPendingInPatient: IsPendingInPatient, IsPositiveLast24hours: IsPositiveLast24hours,
+                IsNegativeLast24hours: IsNegativeLast24hours, IsPositiveICUInPatient: IsPositiveICUInPatient,
+                IsPendingICUInPatient: IsPendingICUInPatient,
+                IsPositiveDischargeCountLast24hours: IsPositiveDischargeCountLast24hours, IsPositiveDeathCountLast24hours: IsPositiveDeathCountLast24hours, fromfilter: fromfilter, frompager: frompager
+            },
+            type: "POST",
+            success: function (data) {
+                $("#dvCustomerList").empty();
+                $("#dvCustomerList").html(data);
+                //$("#loader-wrapper1").hide();
+                //$("#loader").hide();
+            },
+            error: function (data) {
+                //$("#loader-wrapper1").hide();
+                //$("#loader").hide();
+            }
+        });
+    }
+</script>

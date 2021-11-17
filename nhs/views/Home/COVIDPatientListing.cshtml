@@ -124,10 +124,13 @@
         PatientLocation, IsCurrentIPCount, IsNotUpdatedLast20HoursCount,
         IsNotUpdatedLast12HoursCount, IsUpdatedLast12HoursCount,
         NoOxygen, Oxygen, NonInvasiveVentilation, MechanicalVentilation,NotUpdatedAtAll,
-        IsNewPositive, IsPostiveBacklog, IsPositiveBacklogPending, IsPositiveLive, IsPositiveLivePending,
-        IsDischargeDeath, IsDischargeDeathBacklog, IsDischargeDeathBacklogPending,
-        IsDischargeDeathLive, IsDischargeDeathLivePending, IsDeath, IsDeathBacklog, IsDeathBacklogPending,
-        IsDeathLive, IsDeathLivePending, fromfilter) {
+       IsNewPositiveYTD, IsNewPositiveYTDPending, IsICUHDUStepUpYTD, IsICUHDUStepUpYTDPending, IsICUHDUStepDownYTD,
+       IsICUHDUStepDownYTDPending, IsDischargeDeathYTD, IsDischargeDeathYTDPending, IsDischargesYTD, IsDischargesYTDPending, 
+       IsPositiveDeathsYTD, IsPositiveDeathsYTDPending, IsDeathYTD, IsDeathYTDPending, IsDeathDetected, IsDeathDetectedPending,
+       IsDeathDiagnosed, IsDeathDiagnosedPending, IsDeathReAdmission, IsDeathReAdmissionPending, IsCHESSNewPositiveNotRequiredYTD,
+       IsCHESSICUHDUStepUpNotRequiredYTD, IsCHESSICUHDUStepDownNotRequiredYTD, IsCHESSDischargeDeathNotRequiredYTD,
+       IsCHESSDischargesNotRequiredYTD, IsCHESSPositiveDeathsNotRequiredYTD, IsCPNSDeathNotRequiredYTD,
+       IsCPNSDeathDetectedNotRequired, IsCPNSDeathDiagnosedNotRequired, IsCPNSDeathReAdmissionNotRequired, fromfilter) {
         var pageSize = $("#tblPatientDetails_length").val();
         var dataActionUrl = '@Url.Action("MorePatientListing", "Home")';
         if (frompager == 'onclick')
@@ -150,14 +153,13 @@
                 IsNotUpdatedLast12HoursCount: IsNotUpdatedLast12HoursCount, IsUpdatedLast12HoursCount: IsUpdatedLast12HoursCount,
                 NoOxygen: NoOxygen, Oxygen: Oxygen, NonInvasiveVentilation: NonInvasiveVentilation,
                 MechanicalVentilation: MechanicalVentilation,NotUpdatedAtAll:NotUpdatedAtAll,
-                IsNewPositive:IsNewPositive, IsPostiveBacklog:IsPostiveBacklog, 
-                IsPositiveBacklogPending:IsPositiveBacklogPending, IsPositiveLive:IsPositiveLive, 
-                IsPositiveLivePending:IsPositiveLivePending,
-                IsDischargeDeath:IsDischargeDeath, IsDischargeDeathBacklog:IsDischargeDeathBacklog,
-                IsDischargeDeathBacklogPending:IsDischargeDeathBacklogPending,
-                IsDischargeDeathLive:IsDischargeDeathLive, IsDischargeDeathLivePending:IsDischargeDeathLivePending,
-                IsDeath:IsDeath, IsDeathBacklog:IsDeathBacklog, IsDeathBacklogPending:IsDeathBacklogPending,
-                IsDeathLive:IsDeathLive, IsDeathLivePending:IsDeathLivePending,
+                IsNewPositiveYTD : IsNewPositiveYTD, IsNewPositiveYTDPending : IsNewPositiveYTDPending, IsICUHDUStepUpYTD : IsICUHDUStepUpYTD, IsICUHDUStepUpYTDPending : IsICUHDUStepUpYTDPending, IsICUHDUStepDownYTD : IsICUHDUStepDownYTD,
+                IsICUHDUStepDownYTDPending: IsICUHDUStepDownYTDPending, IsDischargeDeathYTD: IsDischargeDeathYTD, IsDischargeDeathYTDPending: IsDischargeDeathYTDPending, IsDischargesYTD: IsDischargesYTD, IsDischargesYTDPending: IsDischargesYTDPending,
+                IsPositiveDeathsYTD: IsPositiveDeathsYTD, IsPositiveDeathsYTDPending: IsPositiveDeathsYTDPending, IsDeathYTD: IsDeathYTD, IsDeathYTDPending: IsDeathYTDPending, IsDeathDetected: IsDeathDetected, IsDeathDetectedPending: IsDeathDetectedPending,
+                IsDeathDiagnosed: IsDeathDiagnosed, IsDeathDiagnosedPending: IsDeathDiagnosedPending, IsDeathReAdmission: IsDeathReAdmission, IsDeathReAdmissionPending: IsDeathReAdmissionPending, IsCHESSNewPositiveNotRequiredYTD: IsCHESSNewPositiveNotRequiredYTD,
+                IsCHESSICUHDUStepUpNotRequiredYTD: IsCHESSICUHDUStepUpNotRequiredYTD, IsCHESSICUHDUStepDownNotRequiredYTD: IsCHESSICUHDUStepDownNotRequiredYTD, IsCHESSDischargeDeathNotRequiredYTD: IsCHESSDischargeDeathNotRequiredYTD,
+                IsCHESSDischargesNotRequiredYTD: IsCHESSDischargesNotRequiredYTD, IsCHESSPositiveDeathsNotRequiredYTD: IsCHESSPositiveDeathsNotRequiredYTD, IsCPNSDeathNotRequiredYTD: IsCPNSDeathNotRequiredYTD,
+                IsCPNSDeathDetectedNotRequired: IsCPNSDeathDetectedNotRequired, IsCPNSDeathDiagnosedNotRequired: IsCPNSDeathDiagnosedNotRequired, IsCPNSDeathReAdmissionNotRequired: IsCPNSDeathReAdmissionNotRequired,
                 fromfilter: fromfilter, frompager: frompager
             },
             type: "POST",

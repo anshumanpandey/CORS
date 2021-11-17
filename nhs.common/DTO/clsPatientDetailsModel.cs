@@ -430,6 +430,14 @@ namespace NHS.Common
         public string CareGroup { get; set; }
     }
 
+    public class BereavedReasons
+    {
+        public int ID { get; set; }
+        public string Reason_Code { get; set; }
+
+        public string Reason { get; set; }
+    }
+
     public class DischargeConsultants
     { 
         public string DischargeConsultantCode { get; set; }
@@ -466,6 +474,11 @@ namespace NHS.Common
     public class AdmissionStatuses
     {
         public string AdmissionStatus { get; set; }
+    }
+
+    public class AdmissionGroups
+    {
+        public string AdmissionGroup { get; set; }
     }
 
     public class MortalityFilterDDM
@@ -526,6 +539,8 @@ namespace NHS.Common
         public List<PatientTypes> lstPatientType { get; set; }
 
         public List<AgeGroup> lstAgeGroup { get; set; }
+
+        public List<AdmissionGroups> lstAdmissionGroup { get; set; }
 
         public List<TestResults> lstTestResult { get; set; }
 

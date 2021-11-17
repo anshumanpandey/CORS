@@ -1,0 +1,286 @@
+﻿
+@{
+    ViewBag.Title = "UserDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-sm-12">
+    <div class="row">
+        <div class="col-md-10">
+            <h2 style="margin-left:40px"><b>User Details</b></h2>
+        </div>
+        <div class="col-md-1">
+            <button type="button" class="btn btn-primary btn-block" id="myBtnUserManagementAdd">Add</button>
+        </div>
+    </div>
+    <hr style="height:2px;background-color:black">
+    <br />
+    <br />
+
+    <div class="col-md-10" style="text-align:center;margin-left:110px">
+
+
+        <table class="table table-bordered" id="assets-data-table">
+            <tr bgcolor="#005db3" style="color:white;">
+                <th style="text-align:center">User Name</th>
+                <th style="text-align:center">Email Id </th>
+                <th style="text-align:center">Role</th>
+                <th colspan="2" style="text-align:center;">Action</th>
+
+            </tr>
+            <tbody>
+                <tr style="color:black;color:black" bgcolor="cadetblue">
+                    @*<td><a href="~/Views/CORS/CORSPatient.cshtml">M11231</a></td>*@
+                    <td>ABC</td>
+                    <td>abc@domain.com</td>
+                    <td>Review</td>
+                    <td>
+
+                        <input type="image" src="~/images/edit-icon.png" width="20px" height="20px" alt="Submit" id="myBtnUserManagementEdit" title="Edit" />
+                        @*<img />  <button type="button" class="btn btn-primary btn-block" id="myBtnUserManagementEdit" style="padding:0px;" src="images/edit2.png">Edit</button>*@
+                    </td>
+                    <td>
+                        @*<button type="button" class="btn btn-primary btn-block" id="myBtnUserManagementDelete" style="padding:0px;">Delete</button>*@
+                        <input type="image" src="~/images/Delete.png" width="20px" height="20px" alt="Submit" id="myBtnUserManagementDelete" title="Delete" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="modal fade" id="myModelUserManagementDelete">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">User Delete  Form </h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="form-section" style="text-align:left">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row_bar">
+                                <div>Doy you want to delete ?</div>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-primary btn-block" id="btnDelete">Delete</button>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-primary btn-block" id="btnClose" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Modal footer -->
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>*@
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModalUserManagementEdit">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">User Edit Form </h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="form-section" style="text-align:left">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="row_bar">
+                                <label class="label_part">Name </label>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <input class="form-control" type="text" placeholder="" id="txtName" value="">
+                        </div>
+                    </div>
+                    <div class="row" style="text-align:center">
+                        <div class="col-md-12">
+                            <div class="row_bar">
+                                <label class="label_part">OR</label>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="row_bar">
+                                <label class="label_part">Email</label>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <input class="form-control" type="text" placeholder="" id="txtEmailId">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="row_bar">
+                                <label class="label_part">Role</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-9">
+                            <div class="row_bar">
+                                <select class="form-control" id="ddlUserRoles" name="ddlUserRoles">
+                                    <option value="-1">Select</option>
+                                    @*<option value="1">Review</option>
+        <option value="2">Report</option>*@
+                                    @foreach (var item in ViewBag.Drodown)
+                                    {
+                                        <option value="@item.ID">@item.RoleName</option>
+                                    }
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-primary btn-block" id="btnUpdate">Update</button>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-primary btn-block" id="btnClose" data-dismiss="modal">Cancel</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <!-- Modal footer -->
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>*@
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModalUserManagementAdd">
+    <form action="/UserManagemet/UserDetails" method="post">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">User Add Form</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="form-section" style="text-align:left">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="row_bar">
+                                    <label class="label_part">Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                @*@Html.EditorFor(model => model.RoleName, new { htmlAttributes = new { @class = "form-control" } })*@
+                                <input class="form-control" type="text" placeholder="" id="txtRoleName">
+                            </div>
+                        </div>
+                        <div class="row" style="text-align:center">
+                            <div class="col-md-12">
+                                <div class="row_bar">
+                                    <label class="label_part">OR</label>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="row_bar">
+                                    <label class="label_part">Email</label>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <input class="form-control" type="text" placeholder="" id="txtEmail" name="txtEmail">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="row_bar">
+                                    <label class="label_part">Role</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-9">
+                                <div class="row_bar">
+                                    <select class="form-control" id="ddlUserRoles" name="ddlUserRoles">
+                                        <option value="-1">
+                                            Select </ option >
+                                            < option value="1">John
+                                        </option>
+                                        <option value="2"> John KK</option>
+                                        <option value="3"> John ss</option>
+                                        <option value="4"> John dd</option>
+                                        <option value="5"> John ggf</option>
+                                    </select>
+                                    @*@Html.DropDownListFor(Model.,new SelectList(ViewBag.data, "Slected")*@
+
+                                    @*@Html.DropDownList("Message")*@
+                                    @*@Html.DropDownListFor(m => m., new SelectListItem(Model., "ID", "RolName"), "Select User")*@
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="submit" class="btn btn-primary btn-block" id="btnSave">Save</button>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-primary btn-block" id="btnClose" data-dismiss="modal">Cancel</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- Modal footer -->
+                @*<div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>*@
+
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#myBtnUserManagementEdit").click(function () {
+            $("#myModalUserManagementEdit").modal();
+        });
+        $("#myBtnUserManagementDelete").click(function () {
+            $("#myModelUserManagementDelete").modal();
+        });
+        $("#myBtnUserManagementAdd").click(function () {
+            $("#myModalUserManagementAdd").modal();
+        });
+    });
+</script>
+

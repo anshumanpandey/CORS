@@ -1,0 +1,96 @@
+﻿@model List<NHS.Common.Specialities>
+@{
+    ViewBag.Title = "Add New Patient";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .form-control:disabled, .form-control[readonly] {
+        background-color: #fdfdfd;
+        opacity: 1;
+    }
+</style>
+<br />
+<br />
+
+<div align="left" style="width:90%">
+    <h4>Specialities</h4>
+</div>
+<span style="color:green">@TempData["AlertMessage"]</span>
+<div class="col-sm-12">
+    <div align="right" style="width:90%">
+        <a href='@Url.Action("AddSpeciality", "Home")'>Add New Speciality</a>
+    </div>
+    <br />
+    <div class="row">
+        <div style="width:90%;">
+            <table class="stripe row-border order-column" style="overflow:auto;width:100% !important" id="tblSpeciality">
+                <thead>
+                    <tr bgcolor="#a9d7cc" style="color:black;  font-size:12px;">
+                        <th align="left" width="30%">Speciality Code</th>
+                        <th align="left" width="30%">Speciality Name</th>
+                        <th align="left" width="30%">Care Group</th>
+                        <th align="left" width="10%">Action</th>
+                    </tr>
+                </thead>
+                <tbody style="font-size:12px;padding:0px;">
+                    @foreach (var item in Model)
+                    {
+                        <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                            <td width="30%" align="left">&nbsp;&nbsp;@item.SpecialityCode</td>
+                            <td width="30%" align="left">&nbsp;&nbsp;@item.SpecialityName</td>
+                            <td width="30%" align="left">&nbsp;&nbsp;@item.CareGroup</td>
+                            <td width="10%" align="left">&nbsp;&nbsp;<a href="@Url.Action("EditSpeciality", "Home", new { id = item.SpecialityID})"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="@Url.Action("DeleteSpeciality", "Home", new { id = item.SpecialityID})"><i class="fas fa-trash-alt"></i></a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+$(document).ready(function () {
+    $('#tblSpeciality').DataTable(
+        {
+            "ordering": true,
+            "paging": true,
+            "searching": true,
+            "pageLength": 10,
+            "order": [[1, "desc"]],
+            "aoColumns": [
+                { "sName": "SpecialityCode", "sTitle": "Speciality Code", "bSortable": "true" },
+                { "sName": "SpecialityName", "sTitle": "Speciality Name", "bSortable": "true" },
+                { "sName": "CareGroup", "sTitle": "Care Group", "bSortable": "true" },
+                { "sName": "Action", "sTitle": "Action", "bSortable": "false" }
+            ],
+            "lengthMenu": [
+                [10, 20, 50, 100, -1],
+                ['10 rows', '20 rows', '50 rows', '100 rows', 'Show all']],
+            "scrollX": true,
+        });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>

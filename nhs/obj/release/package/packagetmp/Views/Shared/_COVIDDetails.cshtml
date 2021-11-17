@@ -1,0 +1,219 @@
+﻿@model List<NHS.Common.DTO.clsCOVIDDetails>
+
+<style>
+
+
+</style>
+
+
+
+<div class="">
+    <table class="stripe row-border order-column ds_table" style="overflow:auto;" id="tblPatientDetails">
+        <thead style="font-weight: bold;">
+            <tr bgcolor="#a9d7cc" style="color:black;  font-size:11px;border-top: 1px solid #ddd; border-right: 1px solid #ddd !important;">
+                <th align="left" width="5%" style="cursor: pointer;" onclick="GetPage(1,'',0,'PatientID')">MRN</th>
+                <th align="left" width="11%" style="cursor: pointer;" onclick="GetPage(1,'',0,'PatientName')">Name (Age)</th>
+                <th align="left" width="6%" style="cursor: pointer;" onclick="GetPage(1,'',0,'Gender')">Gender</th>
+                <th align="left" width="4%" style="cursor: pointer;" onclick="GetPage(1,'',0,'AdmissionStatus')">Admission <br /> Status</th>
+                <th align="left" width="5%" style="cursor: pointer;" onclick="GetPage(1,'',0,'NumberOfTests')">No. of <br /> Tests</th>
+                <th align="left" width="8%" style="cursor: pointer;" onclick="GetPage(1,'',0,'OrderDateTime')">Order DateTime</th>
+                <th align="left" width="6%" style="cursor: pointer;" onclick="GetPage(1,'',0,'OrderedBy')">Ordered By</th>
+                <th align="left" width="4%" style="cursor: pointer;" onclick="GetPage(1,'',0,'TestStatus')">Order Status</th>
+                <th align="left" width="3%" style="cursor: pointer;" onclick="GetPage(1,'',0,'TestDuration')">Test<br /> Duration</th>
+                <th align="center" width="7%" style="cursor: pointer;" onclick="GetPage(1,'',0,'TestResultDateTime')">Test Result<br />DateTime </th>
+                <th align="center" width="4%" style="cursor: pointer;" onclick="GetPage(1,'',0,'TestResult')">Test Result</th>
+                <th align="left" width="4%" style="cursor: pointer;" onclick="GetPage(1,'',0,'TestOrderLocation')">Order<br /> Location</th>
+                <th align="left" width="4%" style="cursor: pointer;" onclick="GetPage(1,'',0,'LastPatientLocation')">Patient<br /> Last <br />Location</th>
+                <th align="left" width="5%" style="cursor: pointer;" onclick="GetPage(1,'',0,'BedType')">Bed <br /> Type</th>
+                <th align="left" width="5%" style="cursor: pointer;" onclick="GetPage(1,'',0,'BreathingStatus')">Breathing <br />Status</th>
+                <th align="left" width="5%" style="cursor: pointer;" onclick="GetPage(1,'',0,'Notified')">Notified?</th>
+                <th align="left" width="5%" style="cursor: pointer;" onclick="GetPage(1,'',0,'DQ')">&nbsp;&nbsp;&nbsp;&nbsp;DQ</th>
+            </tr>
+        </thead>
+        <tbody style="font-size:11px;padding:0px;" class="ds_table">
+            @if (Model.Count > 0)
+            {
+                foreach (var item in Model)
+                {
+                    <tr class="Entries">
+                        <td align="left" class="PID"><u>@Html.ActionLink(item.PatientID.Trim(), "COVIDReviewCycle", new { id = item.ID, patientID = item.PatientID }, new { @style = "color:blue;" })</u></td>
+                        <td align="left">@item.PatientName.Trim() (@item.Age.ToString())</td>
+                        <td align="left">&nbsp;&nbsp;@item.Gender.Trim()</td>
+                        <td align="left" style="">
+                            <a href="#" data-toggle="tooltip" title="Admission DateTime:@item.AdmissionDateTime" style="display:block;">
+                                @item.AdmissionStatus
+                            </a>
+                        </td>
+                        <td align="left" style="">&nbsp;&nbsp;&nbsp;@item.NumberOfTests</td>
+                        <td align="left" style="">@item.OrderDateTime</td>
+                        <td align="left" style="">@item.OrderedBy</td>
+
+                        @if (item.TestStatus.ToUpper().Trim() == "COMPLETED")
+                        {
+                            <td align="left" style="color:#52d26a">@item.TestStatus</td>
+                        }
+                        else if (item.TestStatus.ToUpper().Trim() == "CANCELLED" || item.TestStatus.ToUpper().Trim() == "DISCONTINUED")
+                        {
+                            <td align="left" style="color:#ff2e37">@item.TestStatus</td>
+                        }
+                        else
+                        {
+                            <td align="left" style="color:#fec600">@item.TestStatus</td>
+                        }
+                        @if (item.TestDuration > 2)
+                        {
+                            <td align="left" style="color:#ff2e37">&nbsp;&nbsp;@item.TestDuration.ToString() days</td>
+                        }
+                        else
+                        {
+                            <td align="left" style="">&nbsp;&nbsp;@item.TestDuration.ToString() days</td>
+                        }
+                        @if (string.IsNullOrEmpty(item.TestResultDateTime))
+                        {
+                            <td align="left" style="">&nbsp;&nbsp;Pending</td>
+                        }
+                        else
+                        {
+                            <td align="left" style="">@item.TestResultDateTime</td>
+                        }
+                        @if (item.TestResult.ToUpper().Trim() == "NOT DETECTED")
+                        {
+                            <td align="center"><a href="@Url.Action("COVIDTestResults", "Home", new { id = item.ID})"><img src="~/images/GreenCircle.png" width="18" height="18" title="Not Detected"></a></td>
+                        }
+                        else if (item.TestResult.ToUpper().Trim() == "DETECTED" || item.TestResult.ToUpper().Trim() == "DIAGNOSED")
+                        {
+                            <td align="center"><a href="@Url.Action("COVIDTestResults", "Home", new { id = item.ID})"><img src="~/images/RedC.png" width="18" height="18" title="Detected"></a></td>
+                        }
+                        else if (item.TestResult.ToUpper().Trim() == "PENDING")
+                        {
+                            <td align="center"><a href="@Url.Action("COVIDTestResults", "Home", new { id = item.ID})"><img src="~/images/amber.png" width="18" height="18" title="Pending"></a></td>
+                        }
+                        else if (item.TestResult.ToUpper().Trim() == "NOT TESTED")
+                        {
+                            <td align="center"><a href="@Url.Action("COVIDTestResults", "Home", new { id = item.ID})"><img src="~/images/purple.png" width="18" height="18" title="Not Tested"></a></td>
+                        }
+                        else if (item.TestResult.ToUpper().Trim() == "UNKNOWN" || item.TestResult.ToUpper().Trim() == "SAMPLE FAIL")
+                        {
+                            <td align="center"><a href="@Url.Action("COVIDTestResults", "Home", new { id = item.ID})"><img src="~/images/GeryImg.png" width="18" height="18" title="Not Tested"></a></td>
+                        }
+                        else if (item.TestResult.ToUpper().Trim() == "COLD")
+                        {
+                            <td align="center"><a href="@Url.Action("COVIDTestResults", "Home", new { id = item.ID})"><img src="~/images/blue.jpg" width="18" height="18" title="Not Tested"></a></td>
+                        }
+                        <td align="left" style="">@item.TestOrderLocation</td>
+                        <td align="left" style="">@item.LastPatientLocation</td>
+                        @if (item.BedTypeUpdated == 0)
+                        {
+                            <td align="center">
+                                <a href="@Url.Action("COVIDLevelOfCare", "Home", new { patientid = item.PatientID, id = item.ID})" data-toggle="tooltip" title="Breathing Status: @item.BreathingStatusFullText &#010;Last Updated Date: @item.LastUpdatedBedTypeDate &#010;Last Updated By: @item.LastUpdatedBedTypeBy" style="display:block;">
+                                    <u>@item.BedType</u>
+                                </a>
+                            </td>
+                        }
+                        else if (item.BedTypeUpdated == 2)
+                        {
+                            <td align="center">
+                                <a href="@Url.Action("COVIDLevelOfCare", "Home", new { patientid = item.PatientID, id = item.ID})" data-toggle="tooltip" title="Breathing Status: @item.BedTypeFullText &#010;Last Updated Date: @item.LastUpdatedBedTypeDate &#010;Last Updated By: @item.LastUpdatedBedTypeBy" style="display:block;color:#fec600 !important;">
+                                    <u>@item.BedType</u>
+                                </a>
+                            </td>
+                        }
+                        else if (item.BedTypeUpdated == 3)
+                        {
+                            <td align="center">
+                                <a href="@Url.Action("COVIDLevelOfCare", "Home", new { patientid = item.PatientID, id = item.ID})" data-toggle="tooltip" title="Breathing Status: @item.BedTypeFullText &#010;Last Updated Date: @item.LastUpdatedBedTypeDate &#010;Last Updated By: @item.LastUpdatedBedTypeBy" style="display:block;color:#ed373e !important;">
+                                    <u>@item.BedType</u>
+                                </a>
+                            </td>
+                        }
+                        else if (item.BedTypeUpdated == 1)
+                        {
+                            <td align="center">
+                                <a href="@Url.Action("COVIDLevelOfCare", "Home", new { patientid = item.PatientID, id = item.ID})" data-toggle="tooltip" title="Breathing Status: @item.BedTypeFullText &#010;Last Updated Date: @item.LastUpdatedBedTypeDate &#010;Last Updated By: @item.LastUpdatedBedTypeBy" style="display:block;color:#52d26a !important;">
+                                    <u>@item.BedType</u>
+                                </a>
+                            </td>
+                        }
+                        @if (item.BreathingStatusUpdated == 0)
+                        {
+                            <td align="center">
+                                <a href="@Url.Action("COVIDBreathing", "Home", new { patientid = item.PatientID, id = item.ID})" data-toggle="tooltip" title="Breathing Status: @item.BedTypeFullText &#010;Last Updated Date: @item.LastUpdatedBreathingDate &#010;Last Updated By: @item.LastUpdatedBreathingBy" style="display:block;">
+                                    <u>@item.BreathingStatus</u>
+                                </a>
+                            </td>
+                        }
+                        else if (item.BreathingStatusUpdated == 2)
+                        {
+                            <td align="center">
+                                <a href="@Url.Action("COVIDBreathing", "Home", new { patientid = item.PatientID, id = item.ID})" data-toggle="tooltip" title="Breathing Status: @item.BreathingStatusFullText &#010;Last Updated Date: @item.LastUpdatedBreathingDate &#010;Last Updated By: @item.LastUpdatedBreathingBy" style="display:block;color:#fec600 !important;">
+                                    <u>@item.BreathingStatus</u>
+                                </a>
+                            </td>
+                        }
+                        else if (item.BreathingStatusUpdated == 3)
+                        {
+                            <td align="center">
+                                <a href="@Url.Action("COVIDBreathing", "Home", new { patientid = item.PatientID, id = item.ID})" data-toggle="tooltip" title="Breathing Status: @item.BreathingStatusFullText &#010;Last Updated Date: @item.LastUpdatedBreathingDate &#010;Last Updated By: @item.LastUpdatedBreathingBy" style="display:block;color:#ed373e !important;">
+                                    <u>@item.BreathingStatus</u>
+                                </a>
+                            </td>
+                        }
+                        else if (item.BreathingStatusUpdated == 1)
+                        {
+                            <td align="center">
+                                <a href="@Url.Action("COVIDBreathing", "Home", new { patientid = item.PatientID, id = item.ID})" data-toggle="tooltip" title="Breathing Status: @item.BreathingStatusFullText &#010;Last Updated Date: @item.LastUpdatedBreathingDate &#010;Last Updated By: @item.LastUpdatedBreathingBy" style="display:block;color:#52d26a !important;">
+                                    <u>@item.BreathingStatus</u>
+                                </a>
+                            </td>
+                        }
+                        @if (item.Notified == 0)
+                        {
+                            <td align="center"><a href='@Url.Action("COVIDComms", "home", new { id = item.ID })'><img src="~/images/GeryImg.png" width="18" height="18" title="Pending"></a></td>
+                        }
+                        else if (item.Notified == 2)
+                        {
+                            <td align="center"><a href='@Url.Action("COVIDComms", "home", new { id = item.ID })'><img src="~/images/RedC.png" width="18" height="18" title="No"></a></td>
+                        }
+                        else if (item.Notified == 3)
+                        {
+                            <td align="center"><a href='@Url.Action("COVIDComms", "home", new { id = item.ID })'><img src="~/images/GreenCircle.png" width="18" height="18" title="Yes"></a></td>
+                        }
+                        @if (item.DQ == "0")
+                        {
+                            <td align="center"><a href='@Url.Action("COVIDDataAssurance", "home", new { id = item.ID })'><img src="~/images/GeryImg.png" width="18" height="18" title=""></td>
+                        }
+                        else if (item.DQ == "1")
+                        {
+                            <td align="center"><a href='@Url.Action("COVIDDataAssurance", "home", new { id = item.ID })'><img src="~/images/amber.png" width="18" height="18" title="Cancelled/Discontinued"></td>
+                        }
+                        else if (item.DQ == "2")
+                        {
+                            <td align="center"><a href='@Url.Action("COVIDDataAssurance", "home", new { id = item.ID })'><img src="~/images/RedC.png" width="18" height="18" title="Multiple Tests and Pending 5 days or more"></td>
+                        }
+                        else if (item.DQ == "3")
+                        {
+                            <td align="center"><a href='@Url.Action("COVIDDataAssurance", "home", new { id = item.ID })'><img src="~/images/purple.png" width="18" height="18" title="Result with No Order"></td>
+                        }
+                        else if (item.DQ == "4")
+                        {
+                            <td align="center"><a href='@Url.Action("COVIDDataAssurance", "home", new { id = item.ID })'><img src="~/images/GreenCircle.png" width="18" height="18" title="Order with Result"></td>
+                        }
+
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="14" class="text-center" align="center">No Records Found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+@*@if (Convert.ToInt32(ViewBag.TotalRecordCount) > 10)
+{*@
+    @Html.Partial("_PagerControl")
+@*}*@

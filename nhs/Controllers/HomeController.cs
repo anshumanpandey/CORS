@@ -41,9 +41,284 @@ namespace NHS.Controllers
             }
         }
 
+        public ActionResult NurseAssessment(int patientID, int MRN)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
+            DBEngine dBEngine = new DBEngine(connectionString);
+            clsNurseAssessment nurse = dBEngine.GetNurseAssessmentByID(patientID, MRN, Convert.ToInt32(Session["LoginUserID"]));
+            List<RolePermission> permissions = dBEngine.GetRolePermission(0, 0, "", "", "", Convert.ToInt32(Session["LoginUserID"]), "Bariatric Nurse Assessment", Convert.ToString(Session["Role"]));
+            bool isnoaccess = false;
+            if (permissions.Count > 0)
+            {
+                ViewBag.IsReadOnly = permissions[0].IsReadOnly;
+                isnoaccess = permissions[0].NoAccess;
+            }
+            else
+            {
+                ViewBag.IsReadOnly = true;
+                isnoaccess = true;
+            }
+            if (isnoaccess == false)
+            {
+                return View(nurse);
+            }
+            else
+            {
+                return RedirectToAction("NotAuthorizedBariatric", new { id = patientID });
+            }
+        }
+
+        public ActionResult MedicalMDT(int patientID, int MRN)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
+            DBEngine dBEngine = new DBEngine(connectionString);
+            clsMedicalMDT nurse = dBEngine.GetMedicalMDTByID(patientID, MRN, Convert.ToInt32(Session["LoginUserID"]));
+            List<RolePermission> permissions = dBEngine.GetRolePermission(0, 0, "", "", "", Convert.ToInt32(Session["LoginUserID"]), "Bariatric Medical MDT", Convert.ToString(Session["Role"]));
+            bool isnoaccess = false;
+            if (permissions.Count > 0)
+            {
+                ViewBag.IsReadOnly = permissions[0].IsReadOnly;
+                isnoaccess = permissions[0].NoAccess;
+            }
+            else
+            {
+                ViewBag.IsReadOnly = true;
+                isnoaccess = true;
+            }
+            if (isnoaccess == false)
+            {
+                return View(nurse);
+            }
+            else
+            {
+                return RedirectToAction("NotAuthorizedBariatric", new { id = patientID });
+            }
+        }
+
+        public ActionResult VirtualMDT(int patientID, int MRN)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
+            DBEngine dBEngine = new DBEngine(connectionString);
+            clsVirtualMDT nurse = dBEngine.GetVirtualMDTByID(patientID, MRN, Convert.ToInt32(Session["LoginUserID"]));
+            List<RolePermission> permissions = dBEngine.GetRolePermission(0, 0, "", "", "", Convert.ToInt32(Session["LoginUserID"]), "Bariatric Virtual MDT", Convert.ToString(Session["Role"]));
+            bool isnoaccess = false;
+            if (permissions.Count > 0)
+            {
+                ViewBag.IsReadOnly = permissions[0].IsReadOnly;
+                isnoaccess = permissions[0].NoAccess;
+            }
+            else
+            {
+                ViewBag.IsReadOnly = true;
+                isnoaccess = true;
+            }
+            if (isnoaccess == false)
+            {
+                return View(nurse);
+            }
+            else
+            {
+                return RedirectToAction("NotAuthorizedBariatric", new { id = patientID });
+            }
+        }
+
+        public ActionResult SurgicalMDT(int patientID, int MRN)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
+            DBEngine dBEngine = new DBEngine(connectionString);
+            clsSurgicalMDT nurse = dBEngine.GetSurgicalMDTByID(patientID, MRN, Convert.ToInt32(Session["LoginUserID"]));
+            List<RolePermission> permissions = dBEngine.GetRolePermission(0, 0, "", "", "", Convert.ToInt32(Session["LoginUserID"]), "Bariatric Surgical MDT", Convert.ToString(Session["Role"]));
+            bool isnoaccess = false;
+            if (permissions.Count > 0)
+            {
+                ViewBag.IsReadOnly = permissions[0].IsReadOnly;
+                isnoaccess = permissions[0].NoAccess;
+            }
+            else
+            {
+                ViewBag.IsReadOnly = true;
+                isnoaccess = true;
+            }
+            if (isnoaccess == false)
+            {
+                return View(nurse);
+            }
+            else
+            {
+                return RedirectToAction("NotAuthorizedBariatric", new { id = patientID });
+            }
+        }
+
+        public ActionResult Surgery(int patientID, int MRN)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
+            DBEngine dBEngine = new DBEngine(connectionString);
+            clsSurgery nurse = dBEngine.GetSurgeryByID(patientID, MRN, Convert.ToInt32(Session["LoginUserID"]));
+            List<RolePermission> permissions = dBEngine.GetRolePermission(0, 0, "", "", "", Convert.ToInt32(Session["LoginUserID"]), "Bariatric Surgery", Convert.ToString(Session["Role"]));
+            bool isnoaccess = false;
+            if (permissions.Count > 0)
+            {
+                ViewBag.IsReadOnly = permissions[0].IsReadOnly;
+                isnoaccess = permissions[0].NoAccess;
+            }
+            else
+            {
+                ViewBag.IsReadOnly = true;
+                isnoaccess = true;
+            }
+            if (isnoaccess == false)
+            {
+                return View(nurse);
+            }
+            else
+            {
+                return RedirectToAction("NotAuthorizedBariatric", new { id = patientID });
+            }
+        }
+
+        public ActionResult PostOpMedical(int patientID, int MRN)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
+            DBEngine dBEngine = new DBEngine(connectionString);
+            clsPostOpMedical nurse = dBEngine.GetPostOpMedicalByID(patientID, MRN, Convert.ToInt32(Session["LoginUserID"]));
+            List<RolePermission> permissions = dBEngine.GetRolePermission(0, 0, "", "", "", Convert.ToInt32(Session["LoginUserID"]), "Bariatric Post-Op Medical", Convert.ToString(Session["Role"]));
+            bool isnoaccess = false;
+            if (permissions.Count > 0)
+            {
+                ViewBag.IsReadOnly = permissions[0].IsReadOnly;
+                isnoaccess = permissions[0].NoAccess;
+            }
+            else
+            {
+                ViewBag.IsReadOnly = true;
+                isnoaccess = true;
+            }
+            if (isnoaccess == false)
+            {
+                return View(nurse);
+            }
+            else
+            {
+                return RedirectToAction("NotAuthorizedBariatric", new { id = patientID });
+            }
+        }
+
+        public ActionResult PostOpDietician(int patientID, int MRN)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
+            DBEngine dBEngine = new DBEngine(connectionString);
+            clsPostOpDietician nurse = dBEngine.GetPostOpDieticianByID(patientID, MRN, Convert.ToInt32(Session["LoginUserID"]));
+            List<RolePermission> permissions = dBEngine.GetRolePermission(0, 0, "", "", "", Convert.ToInt32(Session["LoginUserID"]), "Bariatric Post-Op Dietician", Convert.ToString(Session["Role"]));
+            bool isnoaccess = false;
+            if (permissions.Count > 0)
+            {
+                ViewBag.IsReadOnly = permissions[0].IsReadOnly;
+                isnoaccess = permissions[0].NoAccess;
+            }
+            else
+            {
+                ViewBag.IsReadOnly = true;
+                isnoaccess = true;
+            }
+            if (isnoaccess == false)
+            {
+                return View(nurse);
+            }
+            else
+            {
+                return RedirectToAction("NotAuthorizedBariatric", new { id = patientID });
+            }
+        }
+
+        public ActionResult GroupSessions(int patientID, int MRN)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
+            DBEngine dBEngine = new DBEngine(connectionString);
+            clsGroupSessions nurse = dBEngine.GetGroupSessionsByID(patientID, MRN, Convert.ToInt32(Session["LoginUserID"]));
+            List<RolePermission> permissions = dBEngine.GetRolePermission(0, 0, "", "", "", Convert.ToInt32(Session["LoginUserID"]), "Bariatric Medical MDT", Convert.ToString(Session["Role"]));
+            bool isnoaccess = false;
+            if (permissions.Count > 0)
+            {
+                ViewBag.IsReadOnly = permissions[0].IsReadOnly;
+                isnoaccess = permissions[0].NoAccess;
+            }
+            else
+            {
+                ViewBag.IsReadOnly = true;
+                isnoaccess = true;
+            }
+            if (isnoaccess == false)
+            {
+                return View(nurse);
+            }
+            else
+            {
+                return RedirectToAction("NotAuthorizedBariatric", new { id = patientID });
+            }
+        }
+
         public ActionResult NotImplemented()
         {
             return View();
+        }
+
+        public ActionResult BariatricsDashboard(int id, bool isReset)
+        {
+            List<clsBariatricDetails> patientdetails = new List<clsBariatricDetails>();
+            string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
+            DBEngine dBEngine = new DBEngine(connectionString);
+            Session["BAPPStartDate"] = System.DateTime.Now.AddDays(-180).ToString("dd/MM/yyyy");
+            Session["BAPPEndDate"] = System.DateTime.Now.ToString("dd/MM/yyyy");
+            Session["BAPPPageIndex"] = 1;
+            Session["BAPPPageSize"] = 10;
+            Session["BAPPOrderColumn"] = "";
+            Session["BAPPSortType"] = "";
+            Session["BAPPSearchText"] = "";
+            patientdetails = dBEngine.GetBariatricPatientDetails(Convert.ToInt32(Session["BAPPPageIndex"]), Convert.ToInt32(Session["BAPPPageSize"]), Convert.ToDateTime(Session["BAPPStartDate"]), Convert.ToDateTime(Session["BAPPEndDate"]), Convert.ToString(Session["BAPPOrderColumn"]), Convert.ToString(Session["BAPPSortType"]), Convert.ToString(Session["BAPPSearchText"]), Convert.ToInt32(Session["LoginUserID"]));
+            int totalPagesCount = 0;
+            if (patientdetails.Count > 0)
+                totalPagesCount = (int)Math.Ceiling((float)patientdetails[0].TotalCount / Convert.ToInt32(Session["BAPPPageSize"]));
+            else
+                totalPagesCount = 0;
+            ViewBag.PageNumber = 1;
+            ViewBag.SearchText = "";
+            ViewBag.TotalPagesCount = totalPagesCount;
+            if (patientdetails.Count > 0)
+                ViewBag.TotalRecordCount = patientdetails[0].TotalCount;
+            else
+                ViewBag.TotalRecordCount = 0;
+            ViewBag.ModalRecordCount = patientdetails.Count;
+            ViewBag.PageSize = Convert.ToInt32(Session["BAPPPageSize"]);
+            ViewBag.PageNumber = Convert.ToInt32(Session["BAPPPageIndex"]);
+            ViewBag.PathwayStatus = dBEngine.GetBariatricPathwayStatus(Convert.ToInt32(Session["LoginUserID"]));
+            ViewBag.PathwayEvents = dBEngine.GetBariatricPathwayEvent(Convert.ToInt32(Session["LoginUserID"]));
+            ViewBag.PathwayStatusDischarged = 10;
+            ViewBag.PathwayStatusSurgeryCompleted = 10;
+            ViewBag.PathwayStatusActive = 10;
+            ViewBag.PathwayStatusAwaitingSurgery = 10;
+            ViewBag.SearchText = Convert.ToString(Session["BAPPSearchText"]);
+            Session["PathwayStatus"] = "";
+            Session["PathwayEvents"] = "";
+            List<RolePermission> permissions = dBEngine.GetRolePermission(0, 0, "", "", "", Convert.ToInt32(Session["LoginUserID"]), "Bariatric Dashboard", Convert.ToString(Session["Role"]));
+            bool isnoaccess = false;
+            if (permissions.Count > 0)
+            {
+                ViewBag.IsReadOnly = permissions[0].IsReadOnly;
+                isnoaccess = permissions[0].NoAccess;
+            }
+            else
+            {
+                ViewBag.IsReadOnly = true;
+                isnoaccess = true;
+            }
+            if (isnoaccess == false)
+            {
+                return View(patientdetails);
+            }
+            else
+            {
+                return RedirectToAction("NotAuthorizedBariatric", new { id = 0 });
+            }
         }
 
         
@@ -991,6 +1266,7 @@ namespace NHS.Controllers
             return View(usermodel);
         }
 
+        
         public ActionResult NotAuthorizedPatientDetails(int? id)
         {
             bool isUser = GetUserDetailsFromAD();
@@ -1027,6 +1303,11 @@ namespace NHS.Controllers
                 dBEngine.LogException(ex.Message, this.ToString(), "ValidateUser", System.DateTime.Now, Convert.ToInt32(Session["LoginUserID"]));
             }
             return View(patientDetails[0]);
+        }
+
+        public ActionResult NotAuthorizedBariatric(int? id)
+        {
+            return View();
         }
 
         public ActionResult NotAuthorizedSJR(int? id, bool isdashboard = false)
@@ -1552,7 +1833,7 @@ namespace NHS.Controllers
                 if (formCollection["QAPReview"] == "on") formCollection["QAPReview"] = "true"; else formCollection["QAPReview"] = "false";
                 if (formCollection["Concern"] == "on") formCollection["Concern"] = "true"; else formCollection["Concern"] = "false";
                 if (formCollection["Referral"] == "on") formCollection["Referral"] = "true"; else formCollection["Referral"] = "false";
-                int retVal = dBEngine.UpdateQAPReview(Convert.ToBoolean(formCollection["MCCD"]), Convert.ToBoolean(formCollection["Referral"]), formCollection["Synopsis"], formCollection["Reason"], formCollection["FullName"],
+                int retVal = dBEngine.UpdateQAPReview(Convert.ToBoolean(formCollection["MCCD"]), Convert.ToBoolean(formCollection["Referral"]), formCollection["Synopsis"], formCollection["Reason"], Convert.ToString(Session["FullName"]),
                     formCollection["GMCNo"], formCollection["Location"], formCollection["Phone"], formCollection["AlternatePhone"],
                     Convert.ToBoolean(formCollection["Concern"]), formCollection["Reason1a"], formCollection["Period1a"], Convert.ToDecimal(formCollection["Value1a"]), formCollection["Reason1b"], formCollection["Period1b"], Convert.ToDecimal(formCollection["Value1b"]), formCollection["Reason1c"], formCollection["Period1c"], Convert.ToDecimal(formCollection["Value1c"]), formCollection["Reason2"], formCollection["Period2"], Convert.ToDecimal(formCollection["Value2"]), Convert.ToBoolean(formCollection["QAPReview"]), id, Convert.ToInt32(Session["LoginUserID"]));
                 actionName = "MortalityReview";
@@ -1739,7 +2020,7 @@ namespace NHS.Controllers
                     int retVal = dBEngine.UpdateSJROutcome(Convert.ToBoolean(formCollection["Stage2SJRRequired"]), formCollection["Stage2SJRDateSent"],
                     formCollection["Stage2SJRSentTo"], formCollection["ReferenceNumber"], formCollection["DateReceived"], formCollection["SIRIComments"],
                     Convert.ToBoolean(formCollection["MSGRequired"]), formCollection["MSGDiscussionDate"], Convert.ToInt32(formCollection["AvoidabilityScoreID"]),
-                    formCollection["Comments"], formCollection["FeedbackToNoK"], Convert.ToInt32(formCollection["SpecialityID"]), Convert.ToBoolean(formCollection["ReviewCompleted"]), formCollection["DateSJR1Requested"], formCollection["SJR1RequestSentTo"], Convert.ToBoolean(formCollection["RandomSampleReview"]), id, Convert.ToInt32(Session["LoginUserID"]), IsFinished);
+                    formCollection["Comments"], formCollection["FeedbackToNoK"], Convert.ToInt32(formCollection["SpecialityID"]), Convert.ToBoolean(formCollection["ReviewCompleted"]), formCollection["DateSJR1Requested"], formCollection["SJR1RequestSentTo"], Convert.ToBoolean(formCollection["RandomSampleReview"]), id, Convert.ToInt32(Session["LoginUserID"]), IsFinished, formCollection["ComplaintReferenceNumber"]);
                     if (Convert.ToBoolean(formCollection["Stage2SJRRequired"]) && Convert.ToBoolean(formCollection["ReviewCompleted"]))
                     {
                         List<clsPatientDetails> patient = dBEngine.GetPatientDetailsByID(id, Convert.ToInt32(Session["LoginUserID"]));
@@ -1774,7 +2055,7 @@ namespace NHS.Controllers
                     int retVal = dBEngine.UpdateSJROutcome(Convert.ToBoolean(formCollection["Stage2SJRRequired"]), formCollection["Stage2SJRDateSent"],
                     formCollection["Stage2SJRSentTo"], formCollection["ReferenceNumber"], formCollection["DateReceived"], formCollection["SIRIComments"],
                     Convert.ToBoolean(formCollection["MSGRequired"]), formCollection["MSGDiscussionDate"], Convert.ToInt32(formCollection["AvoidabilityScoreID"]),
-                    formCollection["Comments"], formCollection["FeedbackToNoK"], Convert.ToInt32(formCollection["SpecialityID"]), Convert.ToBoolean(formCollection["ReviewCompleted"]), formCollection["DateSJR1Requested"], formCollection["SJR1RequestSentTo"], Convert.ToBoolean(formCollection["RandomSampleReview"]), id, Convert.ToInt32(Session["LoginUserID"]), IsFinished);
+                    formCollection["Comments"], formCollection["FeedbackToNoK"], Convert.ToInt32(formCollection["SpecialityID"]), Convert.ToBoolean(formCollection["ReviewCompleted"]), formCollection["DateSJR1Requested"], formCollection["SJR1RequestSentTo"], Convert.ToBoolean(formCollection["RandomSampleReview"]), id, Convert.ToInt32(Session["LoginUserID"]), IsFinished, formCollection["ComplaintReferenceNumber"]);
                     if (Convert.ToBoolean(formCollection["Stage2SJRRequired"]) && Convert.ToBoolean(formCollection["ReviewCompleted"]))
                     {
                         List<clsPatientDetails> patient = dBEngine.GetPatientDetailsByID(id, Convert.ToInt32(Session["LoginUserID"]));
@@ -2122,6 +2403,7 @@ namespace NHS.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Stage2SJRformFirstStep(FormCollection formCollection, string BtnNext, int? id)
         {
             string actionName = "";
@@ -2159,6 +2441,7 @@ namespace NHS.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Stage2SJRformSecondStep(FormCollection formCollection, string BtnPrevious, string BtnSave, string BtnFinish, int? id)
         {
             string actionName = "";
@@ -2836,6 +3119,7 @@ namespace NHS.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Stage3SJRformFirstStep(FormCollection formCollection, string BtnNext, int? id)
         {
             string actionName = "";
@@ -2873,6 +3157,7 @@ namespace NHS.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Stage3SJRformSecondStep(FormCollection formCollection, string BtnPrevious, string BtnSave, string BtnFinish, int? id)
         {
             string actionName = "";
@@ -4116,6 +4401,7 @@ namespace NHS.Controllers
             string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
             DBEngine dBEngine = new DBEngine(connectionString);
             ViewBag.SpecialityDDM = dBEngine.GetSpecialitiesForDropDown(Convert.ToInt32(Session["LoginUserID"]));
+            ViewBag.ReasonDDM = dBEngine.GetBereavedReasons(Convert.ToInt32(Session["LoginUserID"]));
             try
             {
                 if (id == null || id == 0)
@@ -4184,6 +4470,225 @@ namespace NHS.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPost]
+        public ActionResult MedicalMDT(FormCollection formCollection)
+        {
+            int id = 0;
+            int mrn = 0;
+            if (formCollection["Patient_ID"] != null)
+                id = Convert.ToInt32(formCollection["Patient_ID"]);
+            if (formCollection["MRN"] != null)
+                mrn = Convert.ToInt32(formCollection["MRN"]);
+            string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
+            DBEngine dBEngine = new DBEngine(connectionString);
+            bool PsychologyRefSent = false;
+            if (formCollection["PsychologyRefSent"] == "Yes") PsychologyRefSent = true;
+            bool PsychologyAssessmentReceived = false;
+            if (formCollection["PsychologyAssessmentReceived"] == "Yes") PsychologyAssessmentReceived = true;
+            bool MedicalFollowUp = false;
+            if (formCollection["MedicalFollowUp"] == "Yes") MedicalFollowUp = true;
+            bool ReferToGroupSession = false;
+            if (formCollection["ReferToGroupSession"] == "Yes") ReferToGroupSession = true;
+            try
+            {
+                int returnVal = dBEngine.UpdateMedicalMDT(id, mrn, PsychologyRefSent, PsychologyAssessmentReceived, formCollection["PsychologyComments"], MedicalFollowUp, ReferToGroupSession, formCollection["MedicalFollowComments"], formCollection["Comments"], Convert.ToInt32(Session["LoginUserID"]));
+            }
+            catch (Exception ex)
+            { throw ex; }
+            return RedirectToAction("BariatricsDashboard", new { id = 0, isReset = false });
+        }
+
+        [HttpPost]
+        public ActionResult VirtualMDT(FormCollection formCollection)
+        {
+            int id = 0;
+            int mrn = 0;
+            if (formCollection["Patient_ID"] != null)
+                id = Convert.ToInt32(formCollection["Patient_ID"]);
+            if (formCollection["MRN"] != null)
+                mrn = Convert.ToInt32(formCollection["MRN"]);
+            string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
+            DBEngine dBEngine = new DBEngine(connectionString);
+            bool SurgicalMDT = false;
+            if (formCollection["SurgicalMDT"] == "on") SurgicalMDT = true;
+            bool FutureReview = false;
+            if (formCollection["FutureReview"] == "on") FutureReview = true;
+            bool FutureMedicalReview = false;
+            if (formCollection["FutureMedicalReview"] == "on") FutureMedicalReview = true;
+            bool RebookVMMDT = false;
+            if (formCollection["RebookVMMDT"] == "on") RebookVMMDT = true;
+            bool Discharge = false;
+            if (formCollection["Discharge"] == "on") Discharge = true;
+            try
+            {
+                int returnVal = dBEngine.UpdateVirtualMDT(id, mrn, SurgicalMDT, FutureReview, FutureMedicalReview, RebookVMMDT, Discharge, formCollection["Comments"], Convert.ToInt32(Session["LoginUserID"]));
+            }
+            catch (Exception ex)
+            { throw ex; }
+            return RedirectToAction("BariatricsDashboard", new { id = 0, isReset = false });
+        }
+
+        [HttpPost]
+        public ActionResult SurgicalMDT(FormCollection formCollection)
+        {
+            int id = 0;
+            int mrn = 0;
+            if (formCollection["Patient_ID"] != null)
+                id = Convert.ToInt32(formCollection["Patient_ID"]);
+            if (formCollection["MRN"] != null)
+                mrn = Convert.ToInt32(formCollection["MRN"]);
+            string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
+            DBEngine dBEngine = new DBEngine(connectionString);
+            bool SurgeryCompleted = false;
+            if (formCollection["SurgeryCompleted"] == "on") SurgeryCompleted = true;
+            try
+            {
+                int returnVal = dBEngine.UpdateSurgery(id, mrn, SurgeryCompleted, formCollection["Comments"], Convert.ToInt32(Session["LoginUserID"]));
+            }
+            catch (Exception ex)
+            { throw ex; }
+            return RedirectToAction("BariatricsDashboard", new { id = 0, isReset = false });
+        }
+
+        [HttpPost]
+        public ActionResult Surgery(FormCollection formCollection)
+        {
+            int id = 0;
+            int mrn = 0;
+            if (formCollection["Patient_ID"] != null)
+                id = Convert.ToInt32(formCollection["Patient_ID"]);
+            if (formCollection["MRN"] != null)
+                mrn = Convert.ToInt32(formCollection["MRN"]);
+            string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
+            DBEngine dBEngine = new DBEngine(connectionString);
+            bool SurgeryCompleted = false;
+            if (formCollection["SurgeryCompleted"] == "on") SurgeryCompleted = true;
+            try
+            {
+                int returnVal = dBEngine.UpdateSurgery(id, mrn, SurgeryCompleted, formCollection["Comments"], Convert.ToInt32(Session["LoginUserID"]));
+            }
+            catch (Exception ex)
+            { throw ex; }
+            return RedirectToAction("BariatricsDashboard", new { id = 0, isReset = false });
+        }
+
+        [HttpPost]
+        public ActionResult PostOpMedical(FormCollection formCollection)
+        {
+            int id = 0;
+            int mrn = 0;
+            if (formCollection["Patient_ID"] != null)
+                id = Convert.ToInt32(formCollection["Patient_ID"]);
+            if (formCollection["MRN"] != null)
+                mrn = Convert.ToInt32(formCollection["MRN"]);
+            string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
+            DBEngine dBEngine = new DBEngine(connectionString);
+            bool Discharge = false;
+            if (formCollection["Discharge"] == "on") Discharge = true;
+            try
+            {
+                int returnVal = dBEngine.UpdatePostOpMedical(id, mrn, Discharge, formCollection["Comments"], Convert.ToInt32(Session["LoginUserID"]));
+            }
+            catch (Exception ex)
+            { throw ex; }
+            return RedirectToAction("BariatricsDashboard", new { id = 0, isReset = false });
+        }
+
+        [HttpPost]
+        public ActionResult PostOpDietician(FormCollection formCollection)
+        {
+            int id = 0;
+            int mrn = 0;
+            if (formCollection["Patient_ID"] != null)
+                id = Convert.ToInt32(formCollection["Patient_ID"]);
+            if (formCollection["MRN"] != null)
+                mrn = Convert.ToInt32(formCollection["MRN"]);
+            string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
+            DBEngine dBEngine = new DBEngine(connectionString);
+            bool Discharge = false;
+            if (formCollection["Discharge"] == "on") Discharge = true;
+            try
+            {
+                int returnVal = dBEngine.UpdatePostOpDietician(id, mrn, Discharge, formCollection["Comments"], Convert.ToInt32(Session["LoginUserID"]));
+            }
+            catch (Exception ex)
+            { throw ex; }
+            return RedirectToAction("BariatricsDashboard", new { id = 0, isReset = false });
+        }
+        [HttpPost]
+        public ActionResult GroupSessions(FormCollection formCollection)
+        {
+            int id = 0;
+            int mrn = 0;
+            if (formCollection["Patient_ID"] != null)
+                id = Convert.ToInt32(formCollection["Patient_ID"]);
+            if (formCollection["MRN"] != null)
+                mrn = Convert.ToInt32(formCollection["MRN"]);
+            string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
+            DBEngine dBEngine = new DBEngine(connectionString);
+            bool RepeatSession = false;
+            if (formCollection["RepeatSession"] == "Yes") RepeatSession = true;
+            bool RepeatSession1 = false;
+            if (formCollection["RepeatSession1"] == "Yes") RepeatSession1 = true;
+            bool RepeatSession2 = false;
+            if (formCollection["RepeatSession2"] == "Yes") RepeatSession2 = true;
+            bool RepeatSession3 = false;
+            if (formCollection["RepeatSession3"] == "Yes") RepeatSession3 = true;
+            bool RepeatSession4 = false;
+            if (formCollection["RepeatSession4"] == "Yes") RepeatSession4 = true;
+            bool VirtualMDTReferral = false;
+            if (formCollection["VirtualMDTReferral"] == "Yes") VirtualMDTReferral = true;
+            bool IndividualFollowup = false;
+            if (formCollection["IndividualFollowup"] == "Yes") IndividualFollowup = true;
+            bool Discharged = false;
+            if (formCollection["Discharged"] == "Yes") Discharged = true;
+            try
+            {
+                int returnVal = dBEngine.UpdateGroupSessions(id, mrn, formCollection["Group1Comments"], formCollection["Group2Comments"], formCollection["Group3Comments"], formCollection["Group4Comments"], RepeatSession,RepeatSession1,RepeatSession2,RepeatSession3,RepeatSession4, IndividualFollowup, VirtualMDTReferral,Discharged,formCollection["DischargeComments"], formCollection["Comments"], Convert.ToInt32(Session["LoginUserID"]));
+            }
+            catch (Exception ex)
+            { throw ex; }
+            return RedirectToAction("BariatricsDashboard", new { id = 0, isReset = false });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="formCollection"></param>
+        /// <param name="BtnPrevious"></param>
+        /// <param name="BtnNext"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult NurseAssessment(FormCollection formCollection)
+        {
+            int id = 0;
+            int mrn = 0;
+            if(formCollection["Patient_ID"] != null)
+                id = Convert.ToInt32(formCollection["Patient_ID"]);
+            if (formCollection["MRN"] != null)
+                mrn = Convert.ToInt32(formCollection["MRN"]);
+            string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
+            DBEngine dBEngine = new DBEngine(connectionString);
+            bool AgreementReceived = false;
+            if (formCollection["AgreementReceived"] == "Yes") AgreementReceived = true;
+            try
+            {
+                int returnVal = dBEngine.UpdateNurseAssessment(id, mrn, AgreementReceived, formCollection["Comments"], Convert.ToInt32(Session["LoginUserID"]));
+            }
+            catch(Exception ex)
+            { throw ex; }
+            return RedirectToAction("BariatricsDashboard", new { id=0, isReset = false});
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="formCollection"></param>
+        /// <param name="BtnPrevious"></param>
+        /// <param name="BtnNext"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost]
         public ActionResult FinalOutcome(FormCollection formCollection, string BtnPrevious, string BtnNext, int id)
         {
             clsMedicalExaminerDecision medicalExaminerDecision = new clsMedicalExaminerDecision();
@@ -4202,6 +4707,9 @@ namespace NHS.Controllers
             bool isBuried = false;
             bool isCremated = false;
             bool isBypassedMESystem = false;
+            bool UrgentBodyRelease = false;
+            bool DeathCertificateRejected = false;
+            bool InteractionBereaved = false;
             string actionName = "";
 
             string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
@@ -4241,6 +4749,9 @@ namespace NHS.Controllers
                     if (Convert.ToString(formCollection["IsBuried"]) == "on") isBuried = true;
                     if (Convert.ToString(formCollection["IsCremated"]) == "on") isCremated = true;
                     if (Convert.ToString(formCollection["IsBypassedMESystem"]) == "on") isBypassedMESystem = true;
+                    if (Convert.ToString(formCollection["UrgentBodyRelease"]) == "on") UrgentBodyRelease = true;
+                    if (Convert.ToString(formCollection["DeathCertificateRejected"]) == "on") DeathCertificateRejected = true;
+                    if (Convert.ToString(formCollection["InteractionBereaved"]) == "on") InteractionBereaved = true;
                     if (medicalExaminerDecision.MEOReviewCompleted == true)
                         isMEOReviewCompleted = true;
                     if (isDeathCertificate == true)
@@ -4273,7 +4784,7 @@ namespace NHS.Controllers
                     int retVal = dBEngine.UpdateFinalOutcome(isDeathCertificate, isCornerReferralComplete, isCoronerDecisionInquest, isCoronerDecisionPostMortem,
                        isCoronerDecision100A, isCoronerDecisionGPissue, formCollection["CauseOfDeath1Final"], formCollection["CauseOfDeath2Final"], formCollection["CauseOfDeath3Final"],
                        formCollection["CauseOfDeath4Final"], deathCertificateDate, formCollection["DeathCertificateTime"], timetype, formCollection["ddlCauseOdfDeath"], id, isCoronerDecisionNFAction, isForensicPM, isBuried,
-                       isCremated, isBypassedMESystem, isMEOReviewCompleted, 0, Convert.ToInt32(Session["LoginUserID"]));
+                       isCremated, isBypassedMESystem, isMEOReviewCompleted, 0, UrgentBodyRelease, formCollection["UrgentBodyReleaseComment"], DeathCertificateRejected, formCollection["DeathCertificateRejectionReason"], InteractionBereaved, Convert.ToInt32(formCollection["InteractionBereavedReason"]), Convert.ToInt32(Session["LoginUserID"]));
                 }
             }
             catch (Exception ex)
@@ -4664,7 +5175,7 @@ namespace NHS.Controllers
             
             string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
             DBEngine dBEngine = new DBEngine(connectionString);
-            COVIDPatientFilterDDM filterddm = dBEngine.GetCOVIDpatientFilterDDM(Convert.ToInt32(Session["LoginUserID"]));
+            COVIDPatientFilterDDM filterddm = dBEngine.GetCOVIDpatientFilterDDM(Convert.ToString(Session["COVIDPatientType"]), Convert.ToInt32(Session["LoginUserID"]));
             ViewBag.TestResults = filterddm.lstTestResult;
             BreathingSupportReport breathingreport = dBEngine.GetCOVIDBreathingSupportReport(1, Convert.ToInt32(Session["BreathingSupportReportPageSize"]), Convert.ToString(Session["BreathingReportTestResults"]), "", Convert.ToString(Session["BreathingReportTestResults"]), Convert.ToInt32(Session["LoginUserID"]));
             int totalRecords = 0;
@@ -5110,6 +5621,20 @@ namespace NHS.Controllers
             return View(coviddetails);
         }
 
+        [HttpPost]
+        public JsonResult GetLocations(string patienttype)
+        {
+            List<SelectListItem> locations = new List<SelectListItem>();
+            string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
+            DBEngine dBEngine = new DBEngine(connectionString);
+            List<LastLocations> lstlocations = dBEngine.GetLastLocations(patienttype, Convert.ToInt32(Session["LoginUserID"]));
+            locations.Add(new SelectListItem { Text = "All Locations", Value = "0" });
+            for (int count = 0; count < lstlocations.Count; count++)
+                locations.Add(new SelectListItem { Text = lstlocations[count].LastLocation, Value = lstlocations[count].LastLocation });
+            return Json(new SelectList(locations, "Value", "Text"));
+        }
+
+
         public ActionResult COVIDPatientDashboard(FormCollection formCollection, bool isReset = false, bool buttonsubmit = false, bool ismenu = false)
         {
             Session["TestID"] = 0;
@@ -5131,6 +5656,8 @@ namespace NHS.Controllers
                 Session["COVIDLastLocation"] = "0";
             if (Session["COVIDAdmissionStatus"] == null)
                 Session["COVIDAdmissionStatus"] = "0";
+            if (Session["COVIDAdmissionGroup"] == null)
+                Session["COVIDAdmissionGroup"] = "0";
             if (Session["COVIDColumn"] == null)
                 Session["COVIDColumn"] = "";
             if (Session["COVIDSortType"] == null)
@@ -5171,13 +5698,16 @@ namespace NHS.Controllers
             {
                 if (Convert.ToInt32(Session["LoginUserID"]) > 0)
                 {
-                    filterddm = dBEngine.GetCOVIDpatientFilterDDM(Convert.ToInt32(Session["LoginUserID"]));
+                    if (string.IsNullOrEmpty(Convert.ToString(Session["COVIDPatientType"])))
+                        Session["COVIDPatientType"] = "Inpatient";
+                    filterddm = dBEngine.GetCOVIDpatientFilterDDM(Convert.ToString(Session["COVIDPatientType"]),Convert.ToInt32(Session["LoginUserID"]));
                     ViewBag.AgeGroup = filterddm.lstAgeGroup;
                     ViewBag.TestResults = filterddm.lstTestResult;
                     ViewBag.BreathingStatus = filterddm.lstBreathingStatuses;
                     ViewBag.LastLocation = filterddm.lstLastLocation;
                     ViewBag.AdmissionStatus = filterddm.lstAdmissionStatus;
                     ViewBag.PatientType = filterddm.lstPatientType;
+                    ViewBag.Admissiongroup = filterddm.lstAdmissionGroup;
                     ViewBag.UpdatedSource = filterddm.datamanagement.SourceSystem;
                     ViewBag.UpdatedDate = filterddm.datamanagement.UpdateDate;
                     ViewBag.UpdatedTime = filterddm.datamanagement.UpdateTime;
@@ -5202,10 +5732,14 @@ namespace NHS.Controllers
                             else
                                 Session["COVIDPatientType"] = "Inpatient";
                             Session["COVIDAgeGroup"] = "0";
+                            Session["COVIDAdmissionGroup"] = "0";
                             Session["COVIDTestResults"] = "0";
                             Session["COVIDBreathingStatus"] = "0";
                             Session["COVIDLastLocation"] = "0";
-                            Session["COVIDAdmissionStatus"] = "0";
+                            if (!ismenu)
+                                Session["COVIDAdmissionStatus"] = "0";
+                            else
+                                Session["COVIDAdmissionStatus"] = "Current IP";
                             Session["TotalTestsOrdered"] = null;
                             Session["TotalTestsOrderedInPatient"] = null;
                             Session["PositiveTestCases"] = null;
@@ -5257,12 +5791,14 @@ namespace NHS.Controllers
                                 Session["COVIDPatientType"] = "Inpatient";
                             if (string.IsNullOrEmpty(Convert.ToString(Session["COVIDAgeGroup"])))
                                 Session["COVIDAgeGroup"] = "0";
+                            if (string.IsNullOrEmpty(Convert.ToString(Session["COVIDAdmissionGroup"])))
+                                Session["COVIDAdmissionGroup"] = "0";
                             if (string.IsNullOrEmpty(Convert.ToString(Session["COVIDBreathingStatus"])))
                                 Session["COVIDBreathingStatus"] = "0";
                             if (string.IsNullOrEmpty(Convert.ToString(Session["COVIDTestResults"])))
                                 Session["COVIDTestResults"] = "0";
                             if (string.IsNullOrEmpty(Convert.ToString(Session["COVIDAdmissionStatus"])))
-                                Session["COVIDAdmissionStatus"] = "0";
+                                Session["COVIDAdmissionStatus"] = "Current IP";
                             if (string.IsNullOrEmpty(Convert.ToString(Session["COVIDLastLocation"])))
                                 Session["COVIDLastLocation"] = "0";
                             if (Session["IsTotalTestsOrdered"] == null)
@@ -5317,7 +5853,7 @@ namespace NHS.Controllers
                             Session["COVIDBreathingStatus"] = formCollection["ddlBreathingStatus"];
                             Session["COVIDLastLocation"] = formCollection["ddlLastLocation"];
                             Session["COVIDAdmissionStatus"] = formCollection["ddlAdmissionStatus"];
-
+                            Session["COVIDAdmissionGroup"] = formCollection["ddlAdmissionGroup"];
                             Session["TotalTestsOrdered"] = null;
                             Session["TotalTestsOrderedInPatient"] = null;
                             Session["PositiveTestCases"] = null;
@@ -5337,7 +5873,7 @@ namespace NHS.Controllers
                             Session["PositiveDeathCountLast24hours"] = null;
                         }
                     }
-                    coviddetails = dBEngine.GetCOVIDPatientDetails(DateTime.ParseExact(Session["COVIDPatientStartDate"].ToString(), "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture), DateTime.ParseExact(Session["COVIDPatientEndDate"].ToString(), "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture), Session["COVIDPatientType"].ToString(), Session["COVIDAgeGroup"].ToString(), Session["COVIDTestResults"].ToString(), Session["COVIDBreathingStatus"].ToString(), Session["COVIDLastLocation"].ToString(), Session["COVIDAdmissionStatus"].ToString(), Convert.ToInt32(Session["COVIDPatientPageNo"]), Convert.ToInt32(Session["COVIDPageSize"]), "", Convert.ToBoolean(Session["IsTotalTestsOrdered"]), Convert.ToBoolean(Session["IsTotalTestsOrderedInPatient"]), Convert.ToBoolean(Session["IsPositiveTestCases"]), Convert.ToBoolean(Session["IsPositiveTestCasesICU"]), Convert.ToBoolean(Session["IsNegativeTestCases"]), Convert.ToBoolean(Session["IsPositiveDischarges"]), Convert.ToBoolean(Session["IsPositiveDeaths"]), Convert.ToBoolean(Session["IsPositiveInPatient"]), Convert.ToBoolean(Session["IsPendingInPatient"]), Convert.ToBoolean(Session["IsPositiveICUInPatient"]), Convert.ToBoolean(Session["IsPendingICUInPatient"]), Convert.ToBoolean(Session["IsPositiveInPatientLast24hours"]), Convert.ToBoolean(Session["IsNegativeInPatientLast24hours"]), Convert.ToBoolean(Session["IsPositiveDischargeCountLast24hours"]), Convert.ToBoolean(Session["IsPositiveDeathCountLast24hours"]), Convert.ToString(Session["COVIDColumn"]), Convert.ToString(Session["COVIDSortType"]), Convert.ToInt32(Session["LoginUserID"]));
+                    coviddetails = dBEngine.GetCOVIDPatientDetails(DateTime.ParseExact(Session["COVIDPatientStartDate"].ToString(), "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture), DateTime.ParseExact(Session["COVIDPatientEndDate"].ToString(), "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture), Session["COVIDPatientType"].ToString(), Session["COVIDAgeGroup"].ToString(), Session["COVIDTestResults"].ToString(), Session["COVIDBreathingStatus"].ToString(), Session["COVIDLastLocation"].ToString(), Session["COVIDAdmissionStatus"].ToString(), Session["COVIDAdmissionGroup"].ToString(), Convert.ToInt32(Session["COVIDPatientPageNo"]), Convert.ToInt32(Session["COVIDPageSize"]), "", Convert.ToBoolean(Session["IsTotalTestsOrdered"]), Convert.ToBoolean(Session["IsTotalTestsOrderedInPatient"]), Convert.ToBoolean(Session["IsPositiveTestCases"]), Convert.ToBoolean(Session["IsPositiveTestCasesICU"]), Convert.ToBoolean(Session["IsNegativeTestCases"]), Convert.ToBoolean(Session["IsPositiveDischarges"]), Convert.ToBoolean(Session["IsPositiveDeaths"]), Convert.ToBoolean(Session["IsPositiveInPatient"]), Convert.ToBoolean(Session["IsPendingInPatient"]), Convert.ToBoolean(Session["IsPositiveICUInPatient"]), Convert.ToBoolean(Session["IsPendingICUInPatient"]), Convert.ToBoolean(Session["IsPositiveInPatientLast24hours"]), Convert.ToBoolean(Session["IsNegativeInPatientLast24hours"]), Convert.ToBoolean(Session["IsPositiveDischargeCountLast24hours"]), Convert.ToBoolean(Session["IsPositiveDeathCountLast24hours"]), Convert.ToBoolean(Session["IsActivePositiveDetected"]), Convert.ToBoolean(Session["IsActivePositiveDiagnosed"]), Convert.ToBoolean(Session["IsFirstTestResultPending"]), Convert.ToBoolean(Session["IsFiveSevenReTestPending"]),Convert.ToBoolean(Session["IsActiveNegative"]), Convert.ToBoolean(Session["IsFiveDaysReTest"]), Convert.ToBoolean(Session["IsFiveSevenReTestNegative"]), Convert.ToBoolean(Session["IsUntested"]), Convert.ToString(Session["COVIDColumn"]), Convert.ToString(Session["COVIDSortType"]), Convert.ToInt32(Session["LoginUserID"]));
 
                     if (coviddetails.Count > 0)
                     {
@@ -5487,6 +6023,73 @@ namespace NHS.Controllers
                     }
                     else
                         ViewBag.PositiveDeathCountLast24hours = "0";
+                    if (coviddetails.Count > 0)
+                    {
+                        ViewBag.ActivePositiveDetected = coviddetails[0].ActivePositiveDetected.ToString();
+                        if (buttonsubmit == true || isReset == true)
+                            Session["ActivePositiveDetected"] = ViewBag.ActivePositiveDetected;
+                    }
+                    else
+                        ViewBag.ActivePositiveDetected = "0";
+
+                    if (coviddetails.Count > 0)
+                    {
+                        ViewBag.ActivePositiveDiagnosed = coviddetails[0].ActivePositiveDiagnosed.ToString();
+                        if (buttonsubmit == true || isReset == true)
+                            Session["ActivePositiveDiagnosed"] = ViewBag.ActivePositiveDiagnosed;
+                    }
+                    else
+                        ViewBag.ActivePositiveDiagnosed = "0";
+
+                    if (coviddetails.Count > 0)
+                    {
+                        ViewBag.FirstTestResultPending = coviddetails[0].FirstTestResultPending.ToString();
+                        if (buttonsubmit == true || isReset == true)
+                            Session["FirstTestResultPending"] = ViewBag.FirstTestResultPending;
+                    }
+                    else
+                        ViewBag.FirstTestResultPending = "0";
+
+                    if (coviddetails.Count > 0)
+                    {
+                        ViewBag.FiveSevenReTestPending = coviddetails[0].FiveSevenReTestPending.ToString();
+                        if (buttonsubmit == true || isReset == true)
+                            Session["FiveSevenReTestPending"] = ViewBag.FiveSevenReTestPending;
+                    }
+                    else
+                        ViewBag.FiveSevenReTestPending = "0";
+                    if (coviddetails.Count > 0)
+                    {
+                        ViewBag.ActiveNegative = coviddetails[0].ActiveNegative.ToString();
+                        if (buttonsubmit == true || isReset == true)
+                            Session["ActiveNegative"] = ViewBag.ActiveNegative;
+                    }
+                    else
+                        ViewBag.ActiveNegative = "0";
+                    if (coviddetails.Count > 0)
+                    {
+                        ViewBag.FiveDaysReTest = coviddetails[0].FiveDaysReTest.ToString();
+                        if (buttonsubmit == true || isReset == true)
+                            Session["FiveDaysReTest"] = ViewBag.FiveDaysReTest;
+                    }
+                    else
+                        ViewBag.FiveDaysReTest = "0";
+                    if (coviddetails.Count > 0)
+                    {
+                        ViewBag.FiveSevenReTestNegative = coviddetails[0].FiveSevenReTestNegative.ToString();
+                        if (buttonsubmit == true || isReset == true)
+                            Session["FiveSevenReTestNegative"] = ViewBag.FiveSevenReTestNegative;
+                    }
+                    else
+                        ViewBag.FiveSevenReTestNegative = "0";
+                    if (coviddetails.Count > 0)
+                    {
+                        ViewBag.Untested = coviddetails[0].Untested.ToString();
+                        if (buttonsubmit == true || isReset == true)
+                            Session["Untested"] = ViewBag.Untested;
+                    }
+                    else
+                        ViewBag.Untested = "0";
 
                     int totalRecords = 0;
                     if (coviddetails.Count > 0)
@@ -5545,7 +6148,10 @@ namespace NHS.Controllers
         }
 
         [HttpPost]
-        public ActionResult MoreCOVIDPatientDetails(int pageNumber = 1, int pageSize = 10, string searchfield = "", string SortColumn = "", bool frompager = false, bool IsTotalTestsOrdered = false, bool IsTotalTestsOrderedInPatient = false, bool IsPositiveTestCases = false, bool IsPositiveTestCasesICU = false, bool IsNegativeTestCases = false, bool IsPositiveDischarges = false, bool IsPositiveDeaths = false, bool IsPositiveInPatient = false, bool IsPendingInPatient = false, bool IsPositiveLast24hours = false, bool IsNegativeLast24hours = false, bool IsPositiveICUInPatient = false,  bool IsPendingICUInPatient = false, bool IsPositiveDischargeCountLast24hours = false, bool IsPositiveDeathCountLast24hours = false, bool fromfilter = false)
+        public ActionResult MoreCOVIDPatientDetails(int pageNumber = 1, int pageSize = 10, string searchfield = "", string SortColumn = "", bool frompager = false, bool IsTotalTestsOrdered = false, bool IsTotalTestsOrderedInPatient = false, bool IsPositiveTestCases = false, bool IsPositiveTestCasesICU = false, bool IsNegativeTestCases = false, bool IsPositiveDischarges = false, bool IsPositiveDeaths = false, bool IsPositiveInPatient = false, bool IsPendingInPatient = false, bool IsPositiveLast24hours = false, bool IsNegativeLast24hours = false, bool IsPositiveICUInPatient = false,  bool IsPendingICUInPatient = false, bool IsPositiveDischargeCountLast24hours = false, bool IsPositiveDeathCountLast24hours = false, 
+            bool IsActivePositiveDetected = false, bool IsActivePositiveDiagnosed = false, bool IsFirstTestResultPending = false, bool IsFiveSevenReTestPending = false, bool IsActiveNegative = false,
+            bool IsFiveDaysReTest = false, bool IsFiveSevenReTestNegative = false, bool IsUntested = false,
+            bool fromfilter = false)
         {
             if (SortColumn != "")
             {
@@ -5646,6 +6252,38 @@ namespace NHS.Controllers
                     Session["IsPositiveDeathCountLast24hours"] = IsPositiveDeathCountLast24hours;
                 else
                     IsPositiveDeathCountLast24hours = Convert.ToBoolean(Session["IsPositiveDeathCountLast24hours"]);
+                if (Session["IsActivePositiveDetected"] == null || fromfilter == true)
+                    Session["IsActivePositiveDetected"] = IsActivePositiveDetected;
+                else
+                    IsActivePositiveDetected = Convert.ToBoolean(Session["IsActivePositiveDetected"]);
+                if (Session["IsActivePositiveDiagnosed"] == null || fromfilter == true)
+                    Session["IsActivePositiveDiagnosed"] = IsActivePositiveDiagnosed;
+                else
+                    IsActivePositiveDiagnosed = Convert.ToBoolean(Session["IsActivePositiveDiagnosed"]);
+                if (Session["IsFirstTestResultPending"] == null || fromfilter == true)
+                    Session["IsFirstTestResultPending"] = IsFirstTestResultPending;
+                else
+                    IsFirstTestResultPending = Convert.ToBoolean(Session["IsFirstTestResultPending"]);
+                if (Session["IsFiveSevenReTestPending"] == null || fromfilter == true)
+                    Session["IsFiveSevenReTestPending"] = IsFiveSevenReTestPending;
+                else
+                    IsFiveSevenReTestPending = Convert.ToBoolean(Session["IsFiveSevenReTestPending"]);
+                if (Session["IsActiveNegative"] == null || fromfilter == true)
+                    Session["IsActiveNegative"] = IsActiveNegative;
+                else
+                    IsActiveNegative = Convert.ToBoolean(Session["IsActiveNegative"]);
+                if (Session["IsFiveDaysReTest"] == null || fromfilter == true)
+                    Session["IsFiveDaysReTest"] = IsFiveDaysReTest;
+                else
+                    IsFiveDaysReTest = Convert.ToBoolean(Session["IsFiveDaysReTest"]);
+                if (Session["IsFiveSevenReTestNegative"] == null || fromfilter == true)
+                    Session["IsFiveSevenReTestNegative"] = IsFiveSevenReTestNegative;
+                else
+                    IsFiveSevenReTestNegative = Convert.ToBoolean(Session["IsFiveSevenReTestNegative"]);
+                if (Session["IsUntested"] == null || fromfilter == true)
+                    Session["IsUntested"] = IsUntested;
+                else
+                    IsUntested = Convert.ToBoolean(Session["IsUntested"]);
                 if (pageSize != Convert.ToInt32(Session["COVIDPageSize"]))
                     Session["COVIDPageSize"] = pageSize;
                 if (Session["COVIDSortType"] == null)
@@ -5653,7 +6291,7 @@ namespace NHS.Controllers
                 if (Session["COVIDPatientPageNo"] == null || Convert.ToInt32(Session["COVIDPatientPageNo"]) != pageNumber)
                     Session["COVIDPatientPageNo"] = pageNumber;
 
-                coviddetails = dBEngine.GetCOVIDPatientDetails(DateTime.ParseExact(Session["COVIDPatientStartDate"].ToString(), "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture), DateTime.ParseExact(Session["COVIDPatientEndDate"].ToString(), "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture), Session["COVIDPatientType"].ToString(), Session["COVIDAgeGroup"].ToString(), Session["COVIDTestResults"].ToString(), Session["COVIDBreathingStatus"].ToString(), Session["COVIDLastLocation"].ToString(), Session["COVIDAdmissionStatus"].ToString(), Convert.ToInt32(Session["COVIDPatientPageNo"]), Convert.ToInt32(Session["COVIDPageSize"]), searchfield, IsTotalTestsOrdered, IsTotalTestsOrderedInPatient, IsPositiveTestCases, IsPositiveTestCasesICU, IsNegativeTestCases, IsPositiveDischarges, IsPositiveDeaths, IsPositiveInPatient, IsPendingInPatient, IsPositiveICUInPatient, IsPendingICUInPatient, IsPositiveLast24hours, IsNegativeLast24hours, IsPositiveDischargeCountLast24hours, IsPositiveDeathCountLast24hours, Session["COVIDColumn"].ToString(), Session["COVIDSortType"].ToString(), Convert.ToInt32(Session["LoginUserID"]));
+                coviddetails = dBEngine.GetCOVIDPatientDetails(DateTime.ParseExact(Session["COVIDPatientStartDate"].ToString(), "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture), DateTime.ParseExact(Session["COVIDPatientEndDate"].ToString(), "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture), Session["COVIDPatientType"].ToString(), Session["COVIDAgeGroup"].ToString(), Session["COVIDTestResults"].ToString(), Session["COVIDBreathingStatus"].ToString(), Session["COVIDLastLocation"].ToString(), Session["COVIDAdmissionStatus"].ToString(), Session["COVIDAdmissionGroup"].ToString(), Convert.ToInt32(Session["COVIDPatientPageNo"]), Convert.ToInt32(Session["COVIDPageSize"]), searchfield, IsTotalTestsOrdered, IsTotalTestsOrderedInPatient, IsPositiveTestCases, IsPositiveTestCasesICU, IsNegativeTestCases, IsPositiveDischarges, IsPositiveDeaths, IsPositiveInPatient, IsPendingInPatient, IsPositiveICUInPatient, IsPendingICUInPatient, IsPositiveLast24hours, IsNegativeLast24hours, IsPositiveDischargeCountLast24hours, IsPositiveDeathCountLast24hours, IsActivePositiveDetected, IsActivePositiveDiagnosed, IsFirstTestResultPending, IsFiveSevenReTestPending, IsActiveNegative, IsFiveDaysReTest, IsFiveSevenReTestNegative, IsUntested, Session["COVIDColumn"].ToString(), Session["COVIDSortType"].ToString(), Convert.ToInt32(Session["LoginUserID"]));
                 if (Session["TotalTestsOrdered"] != null)
                 {
                     ViewBag.TotalTestsOrdered = Session["TotalTestsOrdered"];
@@ -5892,6 +6530,118 @@ namespace NHS.Controllers
                     else
                         ViewBag.PositiveDeathCountLast24hours = "0";
                 }
+                if (Session["ActivePositiveDetected"] != null)
+                {
+                    ViewBag.ActivePositiveDetected = Session["ActivePositiveDetected"];
+                }
+                else
+                {
+                    if (coviddetails.Count > 0)
+                    {
+                        ViewBag.ActivePositiveDetected = coviddetails[0].ActivePositiveDetected.ToString();
+                        Session["ActivePositiveDetected"] = ViewBag.ActivePositiveDetected;
+                    }
+                    else
+                        ViewBag.ActivePositiveDetected = "0";
+                }
+                if (Session["ActivePositiveDiagnosed"] != null)
+                {
+                    ViewBag.ActivePositiveDiagnosed = Session["ActivePositiveDiagnosed"];
+                }
+                else
+                {
+                    if (coviddetails.Count > 0)
+                    {
+                        ViewBag.ActivePositiveDiagnosed = coviddetails[0].ActivePositiveDiagnosed.ToString();
+                        Session["ActivePositiveDiagnosed"] = ViewBag.ActivePositiveDiagnosed;
+                    }
+                    else
+                        ViewBag.ActivePositiveDiagnosed = "0";
+                }
+                if (Session["FirstTestResultPending"] != null)
+                {
+                    ViewBag.FirstTestResultPending = Session["FirstTestResultPending"];
+                }
+                else
+                {
+                    if (coviddetails.Count > 0)
+                    {
+                        ViewBag.FirstTestResultPending = coviddetails[0].FirstTestResultPending.ToString();
+                        Session["FirstTestResultPending"] = ViewBag.FirstTestResultPending;
+                    }
+                    else
+                        ViewBag.FirstTestResultPending = "0";
+                }
+                if (Session["FiveSevenReTestPending"] != null)
+                {
+                    ViewBag.FiveSevenReTestPending = Session["FiveSevenReTestPending"];
+                }
+                else
+                {
+                    if (coviddetails.Count > 0)
+                    {
+                        ViewBag.FiveSevenReTestPending = coviddetails[0].FiveSevenReTestPending.ToString();
+                        Session["FiveSevenReTestPending"] = ViewBag.FiveSevenReTestPending;
+                    }
+                    else
+                        ViewBag.FiveSevenReTestPending = "0";
+                }
+                if (Session["ActiveNegative"] != null)
+                {
+                    ViewBag.ActiveNegative = Session["ActiveNegative"];
+                }
+                else
+                {
+                    if (coviddetails.Count > 0)
+                    {
+                        ViewBag.ActiveNegative = coviddetails[0].ActiveNegative.ToString();
+                        Session["ActiveNegative"] = ViewBag.ActiveNegative;
+                    }
+                    else
+                        ViewBag.ActiveNegative = "0";
+                }
+                if (Session["FiveDaysReTest"] != null)
+                {
+                    ViewBag.FiveDaysReTest = Session["FiveDaysReTest"];
+                }
+                else
+                {
+                    if (coviddetails.Count > 0)
+                    {
+                        ViewBag.FiveDaysReTest = coviddetails[0].FiveDaysReTest.ToString();
+                        Session["FiveDaysReTest"] = ViewBag.FiveDaysReTest;
+                    }
+                    else
+                        ViewBag.FiveDaysReTest = "0";
+                }
+                if (Session["FiveSevenReTestNegative"] != null)
+                {
+                    ViewBag.FiveSevenReTestNegative = Session["FiveSevenReTestNegative"];
+                }
+                else
+                {
+                    if (coviddetails.Count > 0)
+                    {
+                        ViewBag.FiveSevenReTestNegative = coviddetails[0].FiveSevenReTestNegative.ToString();
+                        Session["FiveSevenReTestNegative"] = ViewBag.FiveSevenReTestNegative;
+                    }
+                    else
+                        ViewBag.FiveSevenReTestNegative = "0";
+                }
+                if (Session["Untested"] != null)
+                {
+                    ViewBag.Untested = Session["Untested"];
+                }
+                else
+                {
+                    if (coviddetails.Count > 0)
+                    {
+                        ViewBag.Untested = coviddetails[0].Untested.ToString();
+                        Session["Untested"] = ViewBag.Untested;
+                    }
+                    else
+                        ViewBag.Untested = "0";
+                }
                 int totalRecords = 0;
                 if (coviddetails.Count > 0)
                 {
@@ -6124,7 +6874,7 @@ namespace NHS.Controllers
         }
 
         [HttpPost]
-        public ActionResult MorePatientListing(int pPageNo = 1, string searchfield = "", int pageSize = 0, string SortColumn = "", bool frompager = false, bool IsExternalComms = false, bool IsBreathing = false, bool IsLevelOfCare = false, bool IsTotalCurrentIPCount = false, string PatientLocation = "", bool IsCurrentIPCount = false, bool IsNotUpdatedLast20HoursCount = false, bool IsNotUpdatedLast12HoursCount = false, bool IsUpdatedLast12HoursCount = false, bool NoOxygen = false, bool Oxygen = false, bool NonInvasiveVentilation = false, bool MechanicalVentilation = false, bool NotUpdatedAtAll = false, bool IsNewPositiveYTD = false, bool IsNewPositiveYTDPending = false, bool IsICUHDUStepUpYTD = false, bool IsICUHDUStepUpYTDPending = false, bool IsICUHDUStepDownYTD = false, bool IsICUHDUStepDownYTDPending = false, bool IsDischargeDeathYTD = false, bool IsDischargeDeathYTDPending = false, bool IsDischargesYTD = false, bool IsDischargesYTDPending = false, bool IsPositiveDeathsYTD = false, bool IsPositiveDeathsYTDPending = false, bool IsDeathYTD = false, bool IsDeathYTDPending = false, bool IsDeathDetected = false, bool IsDeathDetectedPending = false, bool IsDeathDiagnosed = false, bool IsDeathDiagnosedPending = false, bool IsDeathReAdmission = false, bool IsDeathReAdmissionPending = false, bool fromfilter = false)
+        public ActionResult MorePatientListing(int pPageNo = 1, string searchfield = "", int pageSize = 0, string SortColumn = "", bool frompager = false, bool IsExternalComms = false, bool IsBreathing = false, bool IsLevelOfCare = false, bool IsTotalCurrentIPCount = false, string PatientLocation = "", bool IsCurrentIPCount = false, bool IsNotUpdatedLast20HoursCount = false, bool IsNotUpdatedLast12HoursCount = false, bool IsUpdatedLast12HoursCount = false, bool NoOxygen = false, bool Oxygen = false, bool NonInvasiveVentilation = false, bool MechanicalVentilation = false, bool NotUpdatedAtAll = false, bool IsNewPositiveYTD = false, bool IsNewPositiveYTDPending = false, bool IsICUHDUStepUpYTD = false, bool IsICUHDUStepUpYTDPending = false, bool IsICUHDUStepDownYTD = false, bool IsICUHDUStepDownYTDPending = false, bool IsDischargeDeathYTD = false, bool IsDischargeDeathYTDPending = false, bool IsDischargesYTD = false, bool IsDischargesYTDPending = false, bool IsPositiveDeathsYTD = false, bool IsPositiveDeathsYTDPending = false, bool IsDeathYTD = false, bool IsDeathYTDPending = false, bool IsDeathDetected = false, bool IsDeathDetectedPending = false, bool IsDeathDiagnosed = false, bool IsDeathDiagnosedPending = false, bool IsDeathReAdmission = false, bool IsDeathReAdmissionPending = false, bool IsCHESSNewPositiveNotRequiredYTD = false, bool IsCHESSICUHDUStepUpNotRequiredYTD = false, bool IsCHESSICUHDUStepDownNotRequiredYTD = false, bool IsCHESSDischargeDeathNotRequiredYTD = false, bool IsCHESSDischargesNotRequiredYTD = false, bool IsCHESSPositiveDeathsNotRequiredYTD = false, bool IsCPNSDeathNotRequiredYTD = false, bool IsCPNSDeathDetectedNotRequired = false, bool IsCPNSDeathDiagnosedNotRequired = false, bool IsCPNSDeathReAdmissionNotRequired = false, bool fromfilter = false)
         {
             Session["PatientListSearchText"] = searchfield;
             if (SortColumn != "")
@@ -6172,7 +6922,7 @@ namespace NHS.Controllers
             List<clsCOVIDPatientList> patientDetails = dBEngine.GetCOVIDPatientList(Convert.ToInt32(Session["PatientListPageNo"]), Convert.ToInt32(Session["PatientListPageSize"]), Convert.ToString(Session["PatientListSearchText"]), Convert.ToString(Session["PatientLocation"]), Convert.ToBoolean(Session["IsCurrentIPCount"]), Convert.ToBoolean(Session["IsNotUpdatedLast20HoursCount"]),
                 Convert.ToBoolean(Session["IsNotUpdatedLast12HoursCount"]), Convert.ToBoolean(Session["IsUpdatedLast12HoursCount"]), Convert.ToBoolean(Session["NoOxygen"]), Convert.ToBoolean(Session["Oxygen"]), Convert.ToBoolean(Session["NonInvasiveVentilation"]), Convert.ToBoolean(Session["MechanicalVentilation"]), Convert.ToBoolean(Session["NotUpdatedAtAll"]),
                  Convert.ToBoolean(Session["IsNewPositiveYTD"]), Convert.ToBoolean(Session["IsNewPositiveYTDPending"]), Convert.ToBoolean(Session["IsICUHDUStepUpYTD"]), Convert.ToBoolean(Session["IsICUHDUStepUpYTDPending"]), Convert.ToBoolean(Session["IsICUHDUStepDownYTD"]),
-                Convert.ToBoolean(Session["IsICUHDUStepDownYTDPending"]), Convert.ToBoolean(Session["IsDischargeDeathYTD"]), Convert.ToBoolean(Session["IsDischargeDeathYTDPending"]), Convert.ToBoolean(Session["IsDischargesYTD"]), Convert.ToBoolean(Session["IsDischargesYTDPending"]), Convert.ToBoolean(Session["IsPositiveDeathsYTD"]), Convert.ToBoolean(Session["IsPositiveDeathsYTDPending"]), Convert.ToBoolean(Session["IsDeathYTD"]), Convert.ToBoolean(Session["IsDeathYTDPending"]), Convert.ToBoolean(Session["IsDeathDetected"]), Convert.ToBoolean(Session["IsDeathDetectedPending"]), Convert.ToBoolean(Session["IsDeathDiagnosed"]), Convert.ToBoolean(Session["IsDeathDiagnosedPending"]), Convert.ToBoolean(Session["IsDeathReAdmission"]), Convert.ToBoolean(Session["IsDeathReAdmissionPending"]), Convert.ToString(Session["PatientListColumn"]), Convert.ToString(Session["PatientListSortType"]), Convert.ToString(Session["BreathingReportTestResults"]), Convert.ToInt32(Session["LoginUserID"]));
+                Convert.ToBoolean(Session["IsICUHDUStepDownYTDPending"]), Convert.ToBoolean(Session["IsDischargeDeathYTD"]), Convert.ToBoolean(Session["IsDischargeDeathYTDPending"]), Convert.ToBoolean(Session["IsDischargesYTD"]), Convert.ToBoolean(Session["IsDischargesYTDPending"]), Convert.ToBoolean(Session["IsPositiveDeathsYTD"]), Convert.ToBoolean(Session["IsPositiveDeathsYTDPending"]), Convert.ToBoolean(Session["IsDeathYTD"]), Convert.ToBoolean(Session["IsDeathYTDPending"]), Convert.ToBoolean(Session["IsDeathDetected"]), Convert.ToBoolean(Session["IsDeathDetectedPending"]), Convert.ToBoolean(Session["IsDeathDiagnosed"]), Convert.ToBoolean(Session["IsDeathDiagnosedPending"]), Convert.ToBoolean(Session["IsDeathReAdmission"]), Convert.ToBoolean(Session["IsDeathReAdmissionPending"]), Convert.ToBoolean(Session["IsCHESSNewPositiveNotRequiredYTD"]), Convert.ToBoolean(Session["IsCHESSICUHDUStepUpNotRequiredYTD"]), Convert.ToBoolean(Session["IsCHESSICUHDUStepDownNotRequiredYTD"]), Convert.ToBoolean(Session["IsCHESSDischargeDeathNotRequiredYTD"]), Convert.ToBoolean(Session["IsCHESSDischargesNotRequiredYTD"]), Convert.ToBoolean(Session["IsCHESSPositiveDeathsNotRequiredYTD"]), Convert.ToBoolean(Session["IsCPNSDeathNotRequiredYTD"]), Convert.ToBoolean(Session["IsCPNSDeathDetectedNotRequired"]), Convert.ToBoolean(Session["IsCPNSDeathDiagnosedNotRequired"]), Convert.ToBoolean(Session["IsCPNSDeathReAdmissionNotRequired"]), Convert.ToString(Session["PatientListColumn"]), Convert.ToString(Session["PatientListSortType"]), Convert.ToString(Session["BreathingReportTestResults"]), Convert.ToInt32(Session["LoginUserID"]));
             int totalRecords = 0;
             if (patientDetails.Count > 0)
             {
@@ -6653,6 +7403,84 @@ namespace NHS.Controllers
             return PartialView("_COVIDDetails", coviddetails);
         }
 
+        [HttpPost]
+        public ActionResult MoreBAPPDetails(int pageNumber = 1, int pageSize = 10, string searchfield = "", string SortColumn = "", bool frompager = false, bool fromfilter = false)
+        {
+            Session["BAPPPageIndex"] = pageNumber;
+            Session["BAPPPageSize"] = pageSize;
+            Session["BAPPSearchText"] = searchfield;
+            if (SortColumn != "")
+            {
+                if (!frompager)
+                {
+                    if (Session["BAPPOrderColumn"] == null || Convert.ToString(Session["BAPPOrderColumn"]) != SortColumn)
+                    {
+                        Session["BAPPOrderColumn"] = SortColumn;
+                        Session["BAPPSortType"] = null;
+                    }
+                    if (Session["BAPPSortType"] == null)
+                        Session["BAPPSortType"] = "DESC";
+                    else if (Session["BAPPSortType"] != null && Convert.ToString(Session["BAPPOrderColumn"]) == SortColumn && Convert.ToString(Session["BAPPSortType"]) == "DESC")
+                        Session["BAPPSortType"] = "ASC";
+                    else if (Session["BAPPSortType"] != null && Convert.ToString(Session["BAPPOrderColumn"]) == SortColumn && Convert.ToString(Session["BAPPSortType"]) == "ASC")
+                        Session["BAPPSortType"] = "DESC";
+                }
+                else
+                {
+                    if (Session["BAPPOrderColumn"] == null || Convert.ToString(Session["BAPPOrderColumn"]) != SortColumn)
+                    {
+                        Session["BAPPOrderColumn"] = SortColumn;
+                        Session["BAPPSortType"] = null;
+                    }
+                    if (Session["TestSortType"] == null)
+                        Session["BAPPSortType"] = "DESC";
+                }
+            }
+            else
+            {
+                Session["BAPPOrderColumn"] = "ReferralDate";
+                Session["TestSortType"] = "DESC";
+            }
+            string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
+            DBEngine dBEngine = new DBEngine(connectionString);
+            List<clsBariatricDetails> coviddetails = new List<clsBariatricDetails>();
+            try
+            {                
+                if (pageSize != Convert.ToInt32(Session["BAPPPageSize"]))
+                    Session["BAPPPageSize"] = pageSize;
+                if (Session["BAPPSortType"] == null)
+                    Session["BAPPSortType"] = "DESC";
+                Session["BAPPPageNo"] = pageNumber;
+                coviddetails = dBEngine.GetBariatricPatientDetails(Convert.ToInt32(Session["BAPPPageIndex"]), Convert.ToInt32(Session["BAPPPageSize"]), Convert.ToDateTime(Session["BAPPStartDate"]), Convert.ToDateTime(Session["BAPPEndDate"]), Convert.ToString(Session["BAPPOrderColumn"]), Convert.ToString(Session["BAPPSortType"]), Convert.ToString(Session["BAPPSearchText"]), Convert.ToInt32(Session["LoginUserID"]));
+                
+                int totalRecords = 0;
+                if (coviddetails.Count > 0)
+                {
+                    totalRecords = coviddetails[0].TotalCount;
+                }
+
+                int totalPagesCount = 0;
+                int totalpages = 1;
+                if (Convert.ToInt32(Session["BAPPPageSize"]) != -1) totalpages = Convert.ToInt32(Session["BAPPPageSize"]);
+                else totalpages = totalRecords;
+                totalPagesCount = (int)Math.Ceiling((float)totalRecords / totalpages);
+
+                ViewBag.PageNumber = pageNumber;
+                ViewBag.TotalPagesCount = totalPagesCount;
+                ViewBag.TotalRecordCount = totalRecords;
+                ViewBag.ModalRecordCount = coviddetails.Count;
+                ViewBag.PageSize = Convert.ToInt32(Session["BAPPPageSize"]);
+                ViewBag.SearchText = searchfield;
+            }
+            catch (Exception ex)
+            {
+                dBEngine.LogException(ex.Message, "HomeController", "MoreBAPPDetails", System.DateTime.Now, Convert.ToInt32(Session["LoginUserID"]));
+            }
+            finally
+            { dBEngine = null; }
+            return PartialView("_BariatricsDetails", coviddetails);
+        }
+
         public ActionResult COVIDReviewCycle(int id, string patientID)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
@@ -6993,6 +7821,16 @@ namespace NHS.Controllers
             Session["IsDeathDiagnosedPending"] = null;
             Session["IsDeathReAdmission"] = null;
             Session["IsDeathReAdmissionPending"] = null;
+            Session["IsCHESSNewPositiveNotRequiredYTD"] = null;
+            Session["IsCHESSICUHDUStepUpNotRequiredYTD"] = null;
+            Session["IsCHESSICUHDUStepUpNotRequiredYTD"] = null;
+            Session["IsCHESSDischargeDeathNotRequiredYTD"] = null;
+            Session["IsCHESSDischargesNotRequiredYTD"] = null;
+            Session["IsCHESSPositiveDeathsNotRequiredYTD"] = null;
+            Session["IsCPNSDeathNotRequiredYTD"] = null;
+            Session["IsCPNSDeathDetectedNotRequired"] = null;
+            Session["IsCPNSDeathDiagnosedNotRequired"] = null;
+            Session["IsCPNSDeathReAdmissionNotRequired"] = null;
             Session["IsExternalComms"] = true;
             Session["IsBreathing"] = false;
             Session["IsLevelOfCare"] = false;
@@ -7006,7 +7844,7 @@ namespace NHS.Controllers
         public ActionResult COVIDPatientListing(int pPageNo = 1, string searchfield = "", int pageSize = 0, string SortColumn = "", bool frompager = false, bool IsExternalComms = false, bool IsBreathing = false, bool IsLevelOfCare = false, string PatientLocation = "", bool IsCurrentIPCount = false, bool IsNotUpdatedLast20HoursCount = false,
            bool IsNotUpdatedLast12HoursCount = false, bool IsUpdatedLast12HoursCount = false,
            bool NoOxygen = false, bool Oxygen = false, bool NonInvasiveVentilation = false,
-           bool MechanicalVentilation = false, bool NotUpdatedAtAll = false, bool IsNewPositiveYTD = false, bool IsNewPositiveYTDPending = false, bool IsICUHDUStepUpYTD = false, bool IsICUHDUStepUpYTDPending = false, bool IsICUHDUStepDownYTD = false, bool IsICUHDUStepDownYTDPending = false, bool IsDischargeDeathYTD = false, bool IsDischargeDeathYTDPending = false, bool IsDischargesYTD = false, bool IsDischargesYTDPending = false, bool IsPositiveDeathsYTD = false, bool IsPositiveDeathsYTDPending = false, bool IsDeathYTD = false, bool IsDeathYTDPending = false, bool IsDeathDetected = false, bool IsDeathDetectedPending = false, bool IsDeathDiagnosed = false, bool IsDeathDiagnosedPending = false,bool IsDeathReAdmission = false, bool IsDeathReAdmissionPending = false, bool fromfilter = false)
+           bool MechanicalVentilation = false, bool NotUpdatedAtAll = false, bool IsNewPositiveYTD = false, bool IsNewPositiveYTDPending = false, bool IsICUHDUStepUpYTD = false, bool IsICUHDUStepUpYTDPending = false, bool IsICUHDUStepDownYTD = false, bool IsICUHDUStepDownYTDPending = false, bool IsDischargeDeathYTD = false, bool IsDischargeDeathYTDPending = false, bool IsDischargesYTD = false, bool IsDischargesYTDPending = false, bool IsPositiveDeathsYTD = false, bool IsPositiveDeathsYTDPending = false, bool IsDeathYTD = false, bool IsDeathYTDPending = false, bool IsDeathDetected = false, bool IsDeathDetectedPending = false, bool IsDeathDiagnosed = false, bool IsDeathDiagnosedPending = false,bool IsDeathReAdmission = false, bool IsDeathReAdmissionPending = false, bool IsCHESSNewPositiveNotRequiredYTD = false, bool IsCHESSICUHDUStepUpNotRequiredYTD = false, bool IsCHESSICUHDUStepDownNotRequiredYTD = false, bool IsCHESSDischargeDeathNotRequiredYTD = false, bool IsCHESSDischargesNotRequiredYTD = false, bool IsCHESSPositiveDeathsNotRequiredYTD = false, bool IsCPNSDeathNotRequiredYTD = false, bool IsCPNSDeathDetectedNotRequired = false, bool IsCPNSDeathDiagnosedNotRequired = false, bool IsCPNSDeathReAdmissionNotRequired = false, bool fromfilter = false)
         {
             if (IsExternalComms)
             {
@@ -7152,7 +7990,51 @@ namespace NHS.Controllers
                 Session["IsDeathReAdmissionPending"] = IsDeathReAdmissionPending;
             else if (Convert.ToBoolean(Session["IsDeathReAdmissionPending"]) != IsDeathReAdmissionPending)
                 Session["IsDeathReAdmissionPending"] = IsDeathReAdmissionPending;
-
+            
+            if (Session["IsCHESSNewPositiveNotRequiredYTD"] == null)
+                Session["IsCHESSNewPositiveNotRequiredYTD"] = IsCHESSNewPositiveNotRequiredYTD;
+            else if (Convert.ToBoolean(Session["IsCHESSNewPositiveNotRequiredYTD"]) != IsCHESSNewPositiveNotRequiredYTD)
+                Session["IsCHESSNewPositiveNotRequiredYTD"] = IsCHESSNewPositiveNotRequiredYTD;
+            if (Session["IsCHESSICUHDUStepUpNotRequiredYTD"] == null)
+                Session["IsCHESSICUHDUStepUpNotRequiredYTD"] = IsCHESSICUHDUStepUpNotRequiredYTD;
+            else if (Convert.ToBoolean(Session["IsCHESSICUHDUStepUpNotRequiredYTD"]) != IsCHESSICUHDUStepUpNotRequiredYTD)
+                Session["IsCHESSICUHDUStepUpNotRequiredYTD"] = IsCHESSICUHDUStepUpNotRequiredYTD;
+            if (Session["IsCHESSICUHDUStepDownNotRequiredYTD"] == null)
+                Session["IsCHESSICUHDUStepDownNotRequiredYTD"] = IsCHESSICUHDUStepDownNotRequiredYTD;
+            else if (Convert.ToBoolean(Session["IsCHESSICUHDUStepDownNotRequiredYTD"]) != IsCHESSICUHDUStepDownNotRequiredYTD)
+                Session["IsCHESSICUHDUStepDownNotRequiredYTD"] = IsCHESSICUHDUStepDownNotRequiredYTD;
+            if (Session["IsCHESSICUHDUStepUpNotRequiredYTD"] == null)
+                Session["IsCHESSICUHDUStepUpNotRequiredYTD"] = IsCHESSICUHDUStepUpNotRequiredYTD;
+            else if (Convert.ToBoolean(Session["IsCHESSICUHDUStepUpNotRequiredYTD"]) != IsCHESSICUHDUStepUpNotRequiredYTD)
+                Session["IsCHESSICUHDUStepUpNotRequiredYTD"] = IsCHESSICUHDUStepUpNotRequiredYTD;
+            if (Session["IsCHESSDischargeDeathNotRequiredYTD"] == null)
+                Session["IsCHESSDischargeDeathNotRequiredYTD"] = IsCHESSDischargeDeathNotRequiredYTD;
+            else if (Convert.ToBoolean(Session["IsCHESSDischargeDeathNotRequiredYTD"]) != IsCHESSDischargeDeathNotRequiredYTD)
+                Session["IsCHESSDischargeDeathNotRequiredYTD"] = IsCHESSDischargeDeathNotRequiredYTD;
+            if (Session["IsCHESSDischargesNotRequiredYTD"] == null)
+                Session["IsCHESSDischargesNotRequiredYTD"] = IsCHESSDischargesNotRequiredYTD;
+            else if (Convert.ToBoolean(Session["IsCHESSDischargesNotRequiredYTD"]) != IsCHESSDischargesNotRequiredYTD)
+                Session["IsCHESSDischargesNotRequiredYTD"] = IsCHESSDischargesNotRequiredYTD;
+            if (Session["IsCHESSPositiveDeathsNotRequiredYTD"] == null)
+                Session["IsCHESSPositiveDeathsNotRequiredYTD"] = IsCHESSPositiveDeathsNotRequiredYTD;
+            else if (Convert.ToBoolean(Session["IsCHESSPositiveDeathsNotRequiredYTD"]) != IsCHESSPositiveDeathsNotRequiredYTD)
+                Session["IsCHESSPositiveDeathsNotRequiredYTD"] = IsCHESSPositiveDeathsNotRequiredYTD;
+            if (Session["IsCPNSDeathDetectedNotRequired"] == null)
+                Session["IsCPNSDeathDetectedNotRequired"] = IsCPNSDeathDetectedNotRequired;
+            else if (Convert.ToBoolean(Session["IsCPNSDeathDetectedNotRequired"]) != IsCPNSDeathDetectedNotRequired)
+                Session["IsCPNSDeathDetectedNotRequired"] = IsCPNSDeathDetectedNotRequired;
+            if (Session["IsCPNSDeathNotRequiredYTD"] == null)
+                Session["IsCPNSDeathNotRequiredYTD"] = IsCPNSDeathNotRequiredYTD;
+            else if (Convert.ToBoolean(Session["IsCPNSDeathNotRequiredYTD"]) != IsCPNSDeathNotRequiredYTD)
+                Session["IsCPNSDeathNotRequiredYTD"] = IsCPNSDeathNotRequiredYTD;
+            if (Session["IsCPNSDeathDiagnosedNotRequired"] == null)
+                Session["IsCPNSDeathDiagnosedNotRequired"] = IsCPNSDeathDiagnosedNotRequired;
+            else if (Convert.ToBoolean(Session["IsCPNSDeathDiagnosedNotRequired"]) != IsCPNSDeathDiagnosedNotRequired)
+                Session["IsCPNSDeathDiagnosedNotRequired"] = IsCPNSDeathDiagnosedNotRequired;
+            if (Session["IsCPNSDeathReAdmissionNotRequired"] == null)
+                Session["IsCPNSDeathReAdmissionNotRequired"] = IsCPNSDeathReAdmissionNotRequired;
+            else if (Convert.ToBoolean(Session["IsCPNSDeathReAdmissionNotRequired"]) != IsCPNSDeathReAdmissionNotRequired)
+                Session["IsCPNSDeathReAdmissionNotRequired"] = IsCPNSDeathReAdmissionNotRequired;
             Session["PatientListPageSize"] = 10;
             if (Session["PatientListSortType"] == null)
                 Session["PatientListSortType"] = "DESC";
@@ -7162,8 +8044,9 @@ namespace NHS.Controllers
                 Convert.ToString(Session["PatientLocation"]), Convert.ToBoolean(Session["IsCurrentIPCount"]), Convert.ToBoolean(Session["IsNotUpdatedLast20HoursCount"]),
                 Convert.ToBoolean(Session["IsNotUpdatedLast12HoursCount"]), Convert.ToBoolean(Session["IsUpdatedLast12HoursCount"]), Convert.ToBoolean(Session["NoOxygen"]), Convert.ToBoolean(Session["Oxygen"]), Convert.ToBoolean(Session["NonInvasiveVentilation"]), Convert.ToBoolean(Session["MechanicalVentilation"]), Convert.ToBoolean(Session["NotUpdatedAtAll"]),
                 Convert.ToBoolean(Session["IsNewPositiveYTD"]), Convert.ToBoolean(Session["IsNewPositiveYTDPending"]), Convert.ToBoolean(Session["IsICUHDUStepUpYTD"]), Convert.ToBoolean(Session["IsICUHDUStepUpYTDPending"]), Convert.ToBoolean(Session["IsICUHDUStepDownYTD"]),
-                Convert.ToBoolean(Session["IsICUHDUStepDownYTDPending"]), Convert.ToBoolean(Session["IsDischargeDeathYTD"]), Convert.ToBoolean(Session["IsDischargeDeathYTDPending"]), Convert.ToBoolean(Session["IsDischargesYTD"]), Convert.ToBoolean(Session["IsDischargesYTDPending"]), Convert.ToBoolean(Session["IsPositiveDeathsYTD"]), Convert.ToBoolean(Session["IsPositiveDeathsYTDPending"]), Convert.ToBoolean(Session["IsDeathYTD"]), Convert.ToBoolean(Session["IsDeathYTDPending"]), Convert.ToBoolean(Session["IsDeathDetected"]), Convert.ToBoolean(Session["IsDeathDetectedPending"]), Convert.ToBoolean(Session["IsDeathDiagnosed"]), Convert.ToBoolean(Session["IsDeathDiagnosedPending"]), Convert.ToBoolean(Session["IsDeathReAdmission"]), Convert.ToBoolean(Session["IsDeathReAdmissionPending"]), Convert.ToString(Session["PatientListColumn"]), Convert.ToString(Session["PatientListSortType"]), Convert.ToString(Session["BreathingReportTestResults"]), Convert.ToInt32(Session["LoginUserID"]));
-
+                Convert.ToBoolean(Session["IsICUHDUStepDownYTDPending"]), Convert.ToBoolean(Session["IsDischargeDeathYTD"]), Convert.ToBoolean(Session["IsDischargeDeathYTDPending"]), Convert.ToBoolean(Session["IsDischargesYTD"]), Convert.ToBoolean(Session["IsDischargesYTDPending"]), Convert.ToBoolean(Session["IsPositiveDeathsYTD"]), Convert.ToBoolean(Session["IsPositiveDeathsYTDPending"]), Convert.ToBoolean(Session["IsDeathYTD"]), Convert.ToBoolean(Session["IsDeathYTDPending"]), Convert.ToBoolean(Session["IsDeathDetected"]), Convert.ToBoolean(Session["IsDeathDetectedPending"]), Convert.ToBoolean(Session["IsDeathDiagnosed"]), Convert.ToBoolean(Session["IsDeathDiagnosedPending"]), Convert.ToBoolean(Session["IsDeathReAdmission"]), Convert.ToBoolean(Session["IsDeathReAdmissionPending"]), Convert.ToBoolean(Session["IsCHESSNewPositiveNotRequiredYTD"]), Convert.ToBoolean(Session["IsCHESSICUHDUStepUpNotRequiredYTD"]), Convert.ToBoolean(Session["IsCHESSICUHDUStepDownNotRequiredYTD"]), Convert.ToBoolean(Session["IsCHESSDischargeDeathNotRequiredYTD"]), Convert.ToBoolean(Session["IsCHESSDischargesNotRequiredYTD"]), Convert.ToBoolean(Session["IsCHESSPositiveDeathsNotRequiredYTD"]), Convert.ToBoolean(Session["IsCPNSDeathNotRequiredYTD"]), Convert.ToBoolean(Session["IsCPNSDeathDetectedNotRequired"]), Convert.ToBoolean(Session["IsCPNSDeathDiagnosedNotRequired"]), Convert.ToBoolean(Session["IsCPNSDeathReAdmissionNotRequired"]),
+                 Convert.ToString(Session["PatientListColumn"]), Convert.ToString(Session["PatientListSortType"]), Convert.ToString(Session["BreathingReportTestResults"]), Convert.ToInt32(Session["LoginUserID"]));
+            
             int totalRecords = 0;
             if (coviddetails.Count > 0)
             {

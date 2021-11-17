@@ -1,0 +1,177 @@
+﻿@model List<NHS.Common.DTO.clsCOVIDPatientList>
+@using NHS.Models;
+@{
+    ViewBag.Title = "COVID 19 Patient Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    <style>
+        #Newpatient {
+            font-size: 13px;
+        }
+
+            #Newpatient:hover {
+                text-decoration: underline;
+                color: cornflowerblue !important;
+            }
+
+        #DOD_ToolTip {
+            display: none;
+            position: absolute;
+            border: 1px solid gray;
+            WIDTH: 254PX;
+            HEIGHT: 100PX;
+            Z-INDEX: 999999;
+            background-color: white;
+        }
+
+        #DRow {
+            padding-right: 1px !Important;
+        }
+
+        #DateOfDeath:hover {
+            cursor: context-menu;
+        }
+        /*.tooltip {
+            border:1px solid gray;
+            padding:5px !important;
+        }*/
+        #DateOfDeath.tooltip {
+            border: 1px solid gray;
+            padding: 5px !important;
+        }
+    </style>
+}
+
+
+
+
+<br />
+<br />
+@*<script src="cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>*@
+
+<!-- DataTables -->
+<h2 align="center">Patient List</h2>
+<div class="row">
+    <div class="col-md-2">
+        @if (Convert.ToBoolean(Session["IsExternalComms"]) == true)
+        {
+            <a href="@Url.Action("COVIDExternalCommsReport", "home")"><img src="~/images/BackArrowimages.png?v=1.1" width="50" height="40" alt=""></a>
+        }
+        else if (Convert.ToBoolean(Session["IsBreathing"]) == true)
+        {
+            <a href="@Url.Action("COVIDBreathingSupportReport", "home")"><img src="~/images/BackArrowimages.png?v=1.1" width="50" height="40" alt=""></a>
+        }
+        @*<a herf="/home/MedicalExaminerDashboard"><img src="~/images/back-158491_640.png" width="120" height="90" alt="" ></a>*@
+    </div>
+    <div class="col-md-8">
+        &nbsp;
+    </div>
+</div>
+<div class="col-sm-12">
+    <div class="row">
+        <div class="col-md-12" style="padding-left:0;">
+            @*<div class="panel panel-info">*@
+            @*<div class="panel-heading">Search</div>*@
+            @*<div class="panel-body">*@
+            <div class="" style="margin:10px 0 10px 0;">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td>
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td align="left" width="82%"><label>Show <select id="tblPatientDetails_length" name="tblPatientDetails_length" aria-controls="tblPatientDetails" class=""><option value="10">10 rows</option><option value="20">20 rows</option><option value="50">50 rows</option><option value="100">100 rows</option><option value="-1">Show All</option></select>&nbsp;&nbsp; entries</label></td>
+                                    <td align="right">Search:</td>
+                                    <td align="right">
+                                        <input type="text" name="searchfield" id="searchfield" value="@ViewBag.SearchText" style="margin-left: 0.5em" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="dvCustomerList">
+                @Html.Partial("_COVIDPatientListing", Model)
+            </div>
+        </div>
+        @*</div>*@
+        @*</div>*@
+    </div>
+</div>
+<input type="hidden" id="Reset" name="Reset" value="" />
+<br />
+<br />
+
+<script>
+    $(function () {
+        $("#searchfield").keyup(function () {
+            var searchfield = $("#searchfield").val();
+            var pagesize = $("#tblPatientDetails_length").val();
+            GetPage(1, searchfield, pagesize);
+        });
+    });
+</script>
+<script>
+    $(function () {
+        $("#tblPatientDetails_length").change(function () {
+            var searchfield = $("#searchfield").val();
+            var pagesize = $("#tblPatientDetails_length").val();
+            GetPage(1, searchfield, pagesize);
+        });
+    });
+</script>
+<script>
+    function GetPage(pPageNo, searchfield, pageSize, SortColumn, frompager, IsExternalComms, IsBreathing, IsLevelOfCare,
+        PatientLocation, IsCurrentIPCount, IsNotUpdatedLast20HoursCount,
+        IsNotUpdatedLast12HoursCount, IsUpdatedLast12HoursCount,
+        NoOxygen, Oxygen, NonInvasiveVentilation, MechanicalVentilation,NotUpdatedAtAll,
+        IsNewPositive, IsPostiveBacklog, IsPositiveBacklogPending, IsPositiveLive, IsPositiveLivePending,
+        IsDischargeDeath, IsDischargeDeathBacklog, IsDischargeDeathBacklogPending,
+        IsDischargeDeathLive, IsDischargeDeathLivePending, IsDeath, IsDeathBacklog, IsDeathBacklogPending,
+        IsDeathLive, IsDeathLivePending, fromfilter) {
+        var pageSize = $("#tblPatientDetails_length").val();
+        var dataActionUrl = '@Url.Action("MorePatientListing", "Home")';
+        if (frompager == 'onclick')
+        {
+            //alert(frompager);
+            frompager = true;
+        }
+        if (fromfilter == true) {
+            $('#tblPatientDetails_length').val("10").attr("selected", "selected");
+            $("#searchfield").val('');
+            pageSize = 10;
+        }
+        $.ajax({
+            url: dataActionUrl,
+            data: {
+                pPageNo: pPageNo, searchfield: searchfield, pageSize: pageSize, SortColumn: SortColumn,
+                IsExternalComms: IsExternalComms, IsBreathing: IsBreathing, IsLevelOfCare: IsLevelOfCare,
+                PatientLocation: PatientLocation,
+                IsCurrentIPCount: IsCurrentIPCount, IsNotUpdatedLast20HoursCount: IsNotUpdatedLast20HoursCount,
+                IsNotUpdatedLast12HoursCount: IsNotUpdatedLast12HoursCount, IsUpdatedLast12HoursCount: IsUpdatedLast12HoursCount,
+                NoOxygen: NoOxygen, Oxygen: Oxygen, NonInvasiveVentilation: NonInvasiveVentilation,
+                MechanicalVentilation: MechanicalVentilation,NotUpdatedAtAll:NotUpdatedAtAll,
+                IsNewPositive:IsNewPositive, IsPostiveBacklog:IsPostiveBacklog, 
+                IsPositiveBacklogPending:IsPositiveBacklogPending, IsPositiveLive:IsPositiveLive, 
+                IsPositiveLivePending:IsPositiveLivePending,
+                IsDischargeDeath:IsDischargeDeath, IsDischargeDeathBacklog:IsDischargeDeathBacklog,
+                IsDischargeDeathBacklogPending:IsDischargeDeathBacklogPending,
+                IsDischargeDeathLive:IsDischargeDeathLive, IsDischargeDeathLivePending:IsDischargeDeathLivePending,
+                IsDeath:IsDeath, IsDeathBacklog:IsDeathBacklog, IsDeathBacklogPending:IsDeathBacklogPending,
+                IsDeathLive:IsDeathLive, IsDeathLivePending:IsDeathLivePending,
+                fromfilter: fromfilter, frompager: frompager
+            },
+            type: "POST",
+            success: function (data) {
+                $("#dvCustomerList").empty();
+                $("#dvCustomerList").html(data);
+                //$("#loader-wrapper1").hide();
+                //$("#loader").hide();
+            },
+            error: function (data) {
+                //$("#loader-wrapper1").hide();
+                //$("#loader").hide();
+            }
+        });
+    }
+</script>
+

@@ -1,0 +1,283 @@
+﻿@model NHS.Common.clsMedicalExaminerDecision
+@{
+    ViewBag.Title = "MEO Report";
+    Layout = "~/Views/Shared/_PopopLayout.cshtml";
+}
+<br />
+<br />
+<div class="container">
+    <div class="col-xs-12 col-lg-12">
+        <div align="right">
+            <button type="button" id="btnPrint" class="btn btn-primary">Print/Export</button>
+        </div>
+        <div class="col-md-12 well">
+            <div class="form-section">
+                <div class="lable_title">
+                    <h2>MEO Final Outcome</h2>
+                </div>
+                <div class="row">
+
+
+                    <br /><br />
+
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row_bar">
+                                    <b>Cause of Death</b>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="row_bar">
+                                    <b>1a</b>
+                                    @Html.EditorFor(model => model.CauseOfDeath1Final, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="row_bar">
+                                    <b>1b</b>
+                                    @Html.EditorFor(model => model.CauseOfDeath2Final, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row_bar">
+                                    <b>1c</b>
+                                    @Html.EditorFor(model => model.CauseOfDeath3Final, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row_bar">
+                                    <b>2</b>
+                                    @Html.EditorFor(model => model.CauseOfDeath4Final, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-12" style="margin-top: 44px !important;">
+                            <div class="row_bar"></div>
+                        </div>
+                        <div class="table_margin">
+                            <table width="100%" style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc;">
+                                <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                    <td width="40%" style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Patient ID</b></td>
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.Patient_Id</td>
+                                </tr>
+                                <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>Patient Name</b></td>
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.PatientName</td>
+
+                                </tr>
+                                <tr style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc">
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;"><b>DOB</b></td>
+                                    <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#a9d7cc; padding:5px 5px;">@Model.DOB</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>                    
+                    @if (!string.IsNullOrEmpty(Model.DeathCertificateDate))
+                    {
+                        <div id="deathtime" class="col-md-12" style="display:block;">
+                            <div class="row_bar">
+                                <span><b>Death Certificate Issue On:</b> </span><span>@Model.DeathCertificateDate &nbsp; @Model.DeathCertificateTime &nbsp; @Model.TimeType</span>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div id="deathtime" class="col-md-12" style="display:block;">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <span><b>Death Certificate Issue?</b> </span>
+                                </div>
+                                <div class="col-md-7">
+                                    <span>No</span>
+                                </div>                                
+                            </div>
+                        </div>
+                    }
+                    <br /><br />
+                    <div class="col-md-12">
+                        <div class="row_bar">
+                            <label class="label_part" for="defaultCheck1">(If Applicable) Coroner's decision</b> </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span><b>Inquest</b></span>
+                            </div>
+                            <div class="col-md-6">
+                                @if (Model.CoronerDecisionInquest == true)
+                                {
+                                    <span>Yes</span>
+                                }
+                                else
+                                {
+                                    <span>No</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span><b>Post-Mortem</b></span>
+                            </div>
+                            <div class="col-md-6">
+                                @if (Model.CoronerDecisionPostMortem == true)
+                                {
+                                    <span>Yes</span>
+                                }
+                                else
+                                {
+                                    <span>No</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span><b>100 A</b></span>
+                            </div>
+                            <div class="col-md-6">
+                                @if (Model.CoronerDecision100A == true)
+                                {
+                                    <span>Yes</span>
+                                }
+                                else
+                                {
+                                    <span>No</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span><b>GP Issue</b></span>
+                            </div>
+                            <div class="col-md-6">
+                                @if (Model.CoronerDecisionGPissue == true)
+                                {
+                                    <span>Yes</span>
+                                }
+                                else
+                                {
+                                    <span>No</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span><b>No Further Action</b></span>
+                            </div>
+                            <div class="col-md-6">
+                                @if (Model.NoFurtherAction == true)
+                                {
+                                    <span>Yes</span>
+                                }
+                                else
+                                {
+                                    <span>No</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span><b>Forensic PM</b></span>
+                            </div>
+                            <div class="col-md-6">
+                                @if (Model.CoronerDecisionForensicPM == true)
+                                {
+                                    <span>Yes</span>
+                                }
+                                else
+                                {
+                                    <span>No</span>
+                                }
+                            </div>
+                        </div>
+                    </div><br/><br/>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6" id="dvNameLabel">
+                                <div class="row_bar">
+                                    <span><b><i>Name of MEO (print)</i></b></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6" id="dvNameSpan">
+                                <div class="row_bar">
+                                    <span><b><i>@Model.CreatedBy</i></b></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6" id="dvDateLabel">
+                                <div class="row_bar">
+                                    <span><b><i>Date</i></b></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6" id="dvDateSpan">
+                                <div class="row_bar">
+                                    <span><b><i>@Model.MEOReviewCreatedDate</i></b></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+$("#btnPrint").click(function () {
+    $("#btnPrint").hide();
+    var HTML_Width = $(".container").width();
+    var HTML_Height = $(".container").height();
+    var top_left_margin = 1;
+    var PDF_Width = HTML_Width + (top_left_margin * 2);
+    var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+    var canvas_image_width = HTML_Width;
+    var canvas_image_height = HTML_Height;
+
+    var totalPDFPages = Math.ceil(HTML_Height / PDF_Height);
+    var scale = 1.0;
+    var qualityjpg = 1.0;
+    var top_left_margin = 15;
+    var PDF_Width = HTML_Width + (top_left_margin * 2);
+    var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+    //}
+
+    html2canvas($(".container")[0], { allowTaint: true, scale: scale }).then(function (canvas) {
+        canvas.getContext('2d');
+        //console.log(canvas.height+"  "+canvas.width);
+
+
+        var imgData = canvas.toDataURL("image/png", qualityjpg);
+        console.log(imgData);
+        var pdf = new jsPDF('portrait', 'pt', [PDF_Width, PDF_Height]);
+        pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin * 4, canvas_image_width, canvas_image_height);
+        for (var i = 1; i < totalPDFPages; i++) {
+            pdf.addPage(PDF_Width, PDF_Height);
+            pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
+        }
+        var blob = pdf.output("blob");
+        var objectUrl = URL.createObjectURL(blob);
+        window.open(objectUrl);
+    });
+    $("#btnPrint").show();
+});
+</script>
+
+
+
+

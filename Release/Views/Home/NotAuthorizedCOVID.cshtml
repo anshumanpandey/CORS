@@ -1,0 +1,28 @@
+﻿@model NHS.Common.DTO.clsCOVIDDetails
+@{
+    ViewBag.Title = "Not Authorized";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br /><br /><br />
+<div class="container">
+    <div class="row">
+        @if (ViewBag.IsDashboard == false)
+        {
+        <div class="col-md-2">
+            <a href="@Url.Action("COVIDReviewCycle", "home", new { id = Model.ID})"><img src="~/images/BackArrowimages.png" width="50" height="40" alt=""></a>
+            @*<a herf="/home/MedicalExaminerDashboard"><img src="~/images/back-158491_640.png" width="120" height="90" alt="" ></a>*@
+        </div>
+        }
+        else
+        {
+            <div class="col-md-2">
+                <a href="@Url.Action("Index", "home")"><img src="~/images/BackArrowimages.png" width="50" height="40" alt=""></a>
+                @*<a herf="/home/MedicalExaminerDashboard"><img src="~/images/back-158491_640.png" width="120" height="90" alt="" ></a>*@
+            </div>
+        }
+    </div>
+    <br /><br /><br /><br /><br /><br /><br />
+    <h2 align="center">Sorry. You are not authorized. Please contact your administrator.</h2>
+</div>
+

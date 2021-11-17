@@ -23,6 +23,14 @@ namespace NHS.Common
             }
         }
         public string Message { get; set; }
+
+        public string LoginMessage1 { get; set; }
+
+        public string LoginMessage2 { get; set; }
+
+        public string LoginMessage3 { get; set; }
+
+        public string LoginMessage4 { get; set; }
     }
 
     public enum ALERTTYPE
@@ -31,7 +39,10 @@ namespace NHS.Common
         Warning,
         Success,
         Info,
-        Error
+        Error,
+        LoginError1,
+        LoginError2,
+        LoginError3
     }
 
     public enum ALERTMESSAGETYPE

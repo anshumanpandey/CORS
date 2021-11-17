@@ -1,0 +1,48 @@
+﻿@model List<NHS.Common.clsPatientDetails>
+
+<div style="width:100%;">
+    <table class="stripe row-border order-column ds_table" style="overflow:auto;" id="tblPatientDetails">
+        <thead>
+            <tr bgcolor="#a9d7cc" style="color:black;  font-size:11px;">
+                <th align="left" width="8%" style="cursor: pointer;" onclick="GetList(1, '', 0, 'PatientID')">Patient ID</th>
+                <th align="left" width="15%" style="cursor: pointer;" onclick="GetList(1, '', 0, 'PatientName')">Name</th>
+                <th align="center" width="5%" style="cursor: pointer;" onclick="GetList(1, '', 0, 'DOB')">DOB</th>
+                <th align="center" width="5%" style="cursor: pointer;" onclick="GetList(1, '', 0, 'DateofAdmission')">Date of Admission</th>
+                <th align="center" width="8%" style="cursor: pointer;" onclick="GetList(1, '', 0, 'DateofDeath')">Date of Death</th>
+                <th align="left" width="10%" style="cursor: pointer;" onclick="GetList(1, '', 0, 'WardofDeath')">Ward of Death</th>
+                <th align="left" width="10%" style="cursor: pointer;" onclick="GetList(1, '', 0, 'DischargeConsultantName')">Discharge Consultant</th>
+                <th align="center" width="10%" style="cursor: pointer;" onclick="GetList(1, '', 0, 'DischargeSpeciality')">Discharge Speciality</th>
+                <th align="center" width="10%" style="cursor: pointer;" onclick="GetList(1, '', 0, 'PatientType')">  Patient Type </th>
+                <th align="center" width="3%" style="">Action</th>
+            </tr>
+        </thead>
+        <tbody style="font-size:11px;padding:0px;">
+            @if (Model.Count > 0)
+            {
+                foreach (var item in Model)
+                {
+                    <tr class="Entries">
+                        <td align="center" class="PID">@item.PatientId.Trim()</td>
+                        <td align="left">@item.PatientName.Trim() (@item.AgeAtDeath Yrs)</td>
+                        <td align="left">@item.DOB</td>
+                        <td align="center">@item.DateofAdmission</td>
+                        @*changes*@
+                        <td align="left" id="DateOfDeath">@item.DateofDeath</td>
+                        <td align="center">@item.WardofDeath.Trim()</td>
+                        <td align="center">@item.DischargeConsutantName.Trim()</td>
+                        <td align="center">@item.DischargeSpeciality.Trim()</td>
+                        <td align="left">@item.PatientTypeLongText</td>
+                        <td align="center" class="PID"><a href="@Url.Action("EditPatient", "Home", new { id = item.ID})"><i class="fas fa-edit"></i></a></td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="14" class="text-center" align="center">No Records Found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@Html.Partial("_CommonPagerControl")
