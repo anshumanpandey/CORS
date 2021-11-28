@@ -183,8 +183,8 @@ namespace NHS.Controllers
             
             try
             {
-                //isValidFromAD = ValidateCredentials(username, password, domain);
-                isValidFromAD = true;
+                isValidFromAD = ValidateCredentials(username, password, domain);
+                //isValidFromAD = true;
 
                 if (isValidFromAD)
                 {

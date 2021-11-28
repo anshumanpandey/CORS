@@ -47,6 +47,8 @@ namespace NHS.Controllers
             DBEngine dBEngine = new DBEngine(connectionString);
             clsNurseAssessment nurse = dBEngine.GetNurseAssessmentByID(patientID, MRN, Convert.ToInt32(Session["LoginUserID"]));
             List<RolePermission> permissions = dBEngine.GetRolePermission(0, 0, "", "", "", Convert.ToInt32(Session["LoginUserID"]), "Bariatric Nurse Assessment", Convert.ToString(Session["Role"]));
+            ViewBag.ActivityStatus = dBEngine.GetBariatricActivityStatus(Convert.ToInt32(Session["LoginUserID"]));
+            ViewBag.PathwayEvents = dBEngine.GetBariatricPathwayEvent(Convert.ToInt32(Session["LoginUserID"]));
             bool isnoaccess = false;
             if (permissions.Count > 0)
             {
@@ -74,6 +76,37 @@ namespace NHS.Controllers
             DBEngine dBEngine = new DBEngine(connectionString);
             clsMedicalMDT nurse = dBEngine.GetMedicalMDTByID(patientID, MRN, Convert.ToInt32(Session["LoginUserID"]));
             List<RolePermission> permissions = dBEngine.GetRolePermission(0, 0, "", "", "", Convert.ToInt32(Session["LoginUserID"]), "Bariatric Medical MDT", Convert.ToString(Session["Role"]));
+            ViewBag.ActivityStatus = dBEngine.GetBariatricActivityStatus(Convert.ToInt32(Session["LoginUserID"]));
+            ViewBag.PathwayEvents = dBEngine.GetBariatricPathwayEvent(Convert.ToInt32(Session["LoginUserID"]));
+            bool isnoaccess = false;
+            if (permissions.Count > 0)
+            {
+                ViewBag.IsReadOnly = permissions[0].IsReadOnly;
+                isnoaccess = permissions[0].NoAccess;
+            }
+            else
+            {
+                ViewBag.IsReadOnly = true;
+                isnoaccess = true;
+            }
+            if (isnoaccess == false)
+            {
+                return View(nurse);
+            }
+            else
+            {
+                return RedirectToAction("NotAuthorizedBariatric", new { id = patientID });
+            }
+        }
+
+        public ActionResult PsychologyAssess(int patientID, int MRN)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
+            DBEngine dBEngine = new DBEngine(connectionString);
+            clsPsychologyAssess nurse = dBEngine.GetPsychologyAssessByID(patientID, MRN, Convert.ToInt32(Session["LoginUserID"]));
+            List<RolePermission> permissions = dBEngine.GetRolePermission(0, 0, "", "", "", Convert.ToInt32(Session["LoginUserID"]), "Bariatric Psychology Assess", Convert.ToString(Session["Role"]));
+            ViewBag.ActivityStatus = dBEngine.GetBariatricActivityStatus(Convert.ToInt32(Session["LoginUserID"]));
+            ViewBag.PathwayEvents = dBEngine.GetBariatricPathwayEvent(Convert.ToInt32(Session["LoginUserID"]));
             bool isnoaccess = false;
             if (permissions.Count > 0)
             {
@@ -101,6 +134,8 @@ namespace NHS.Controllers
             DBEngine dBEngine = new DBEngine(connectionString);
             clsVirtualMDT nurse = dBEngine.GetVirtualMDTByID(patientID, MRN, Convert.ToInt32(Session["LoginUserID"]));
             List<RolePermission> permissions = dBEngine.GetRolePermission(0, 0, "", "", "", Convert.ToInt32(Session["LoginUserID"]), "Bariatric Virtual MDT", Convert.ToString(Session["Role"]));
+            ViewBag.ActivityStatus = dBEngine.GetBariatricActivityStatus(Convert.ToInt32(Session["LoginUserID"]));
+            ViewBag.PathwayEvents = dBEngine.GetBariatricPathwayEvent(Convert.ToInt32(Session["LoginUserID"]));
             bool isnoaccess = false;
             if (permissions.Count > 0)
             {
@@ -128,6 +163,8 @@ namespace NHS.Controllers
             DBEngine dBEngine = new DBEngine(connectionString);
             clsSurgicalMDT nurse = dBEngine.GetSurgicalMDTByID(patientID, MRN, Convert.ToInt32(Session["LoginUserID"]));
             List<RolePermission> permissions = dBEngine.GetRolePermission(0, 0, "", "", "", Convert.ToInt32(Session["LoginUserID"]), "Bariatric Surgical MDT", Convert.ToString(Session["Role"]));
+            ViewBag.ActivityStatus = dBEngine.GetBariatricActivityStatus(Convert.ToInt32(Session["LoginUserID"]));
+            ViewBag.PathwayEvents = dBEngine.GetBariatricPathwayEvent(Convert.ToInt32(Session["LoginUserID"]));
             bool isnoaccess = false;
             if (permissions.Count > 0)
             {
@@ -155,6 +192,8 @@ namespace NHS.Controllers
             DBEngine dBEngine = new DBEngine(connectionString);
             clsSurgery nurse = dBEngine.GetSurgeryByID(patientID, MRN, Convert.ToInt32(Session["LoginUserID"]));
             List<RolePermission> permissions = dBEngine.GetRolePermission(0, 0, "", "", "", Convert.ToInt32(Session["LoginUserID"]), "Bariatric Surgery", Convert.ToString(Session["Role"]));
+            ViewBag.ActivityStatus = dBEngine.GetBariatricActivityStatus(Convert.ToInt32(Session["LoginUserID"]));
+            ViewBag.PathwayEvents = dBEngine.GetBariatricPathwayEvent(Convert.ToInt32(Session["LoginUserID"]));
             bool isnoaccess = false;
             if (permissions.Count > 0)
             {
@@ -182,6 +221,8 @@ namespace NHS.Controllers
             DBEngine dBEngine = new DBEngine(connectionString);
             clsPostOpMedical nurse = dBEngine.GetPostOpMedicalByID(patientID, MRN, Convert.ToInt32(Session["LoginUserID"]));
             List<RolePermission> permissions = dBEngine.GetRolePermission(0, 0, "", "", "", Convert.ToInt32(Session["LoginUserID"]), "Bariatric Post-Op Medical", Convert.ToString(Session["Role"]));
+            ViewBag.ActivityStatus = dBEngine.GetBariatricActivityStatus(Convert.ToInt32(Session["LoginUserID"]));
+            ViewBag.PathwayEvents = dBEngine.GetBariatricPathwayEvent(Convert.ToInt32(Session["LoginUserID"]));
             bool isnoaccess = false;
             if (permissions.Count > 0)
             {
@@ -209,6 +250,8 @@ namespace NHS.Controllers
             DBEngine dBEngine = new DBEngine(connectionString);
             clsPostOpDietician nurse = dBEngine.GetPostOpDieticianByID(patientID, MRN, Convert.ToInt32(Session["LoginUserID"]));
             List<RolePermission> permissions = dBEngine.GetRolePermission(0, 0, "", "", "", Convert.ToInt32(Session["LoginUserID"]), "Bariatric Post-Op Dietician", Convert.ToString(Session["Role"]));
+            ViewBag.ActivityStatus = dBEngine.GetBariatricActivityStatus(Convert.ToInt32(Session["LoginUserID"]));
+            ViewBag.PathwayEvents = dBEngine.GetBariatricPathwayEvent(Convert.ToInt32(Session["LoginUserID"]));
             bool isnoaccess = false;
             if (permissions.Count > 0)
             {
@@ -235,7 +278,9 @@ namespace NHS.Controllers
             string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
             DBEngine dBEngine = new DBEngine(connectionString);
             clsGroupSessions nurse = dBEngine.GetGroupSessionsByID(patientID, MRN, Convert.ToInt32(Session["LoginUserID"]));
-            List<RolePermission> permissions = dBEngine.GetRolePermission(0, 0, "", "", "", Convert.ToInt32(Session["LoginUserID"]), "Bariatric Medical MDT", Convert.ToString(Session["Role"]));
+            List<RolePermission> permissions = dBEngine.GetRolePermission(0, 0, "", "", "", Convert.ToInt32(Session["LoginUserID"]), "Bariatric Group Sessions", Convert.ToString(Session["Role"]));
+            ViewBag.ActivityStatus = dBEngine.GetBariatricActivityStatus(Convert.ToInt32(Session["LoginUserID"]));
+            ViewBag.PathwayEvents = dBEngine.GetBariatricPathwayEvent(Convert.ToInt32(Session["LoginUserID"]));
             bool isnoaccess = false;
             if (permissions.Count > 0)
             {
@@ -262,19 +307,75 @@ namespace NHS.Controllers
             return View();
         }
 
-        public ActionResult BariatricsDashboard(int id, bool isReset)
+        public ActionResult BariatricsDashboard(FormCollection formCollection, bool isReset = false, bool buttonsubmit = false)
         {
             List<clsBariatricDetails> patientdetails = new List<clsBariatricDetails>();
             string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
             DBEngine dBEngine = new DBEngine(connectionString);
-            Session["BAPPStartDate"] = System.DateTime.Now.AddDays(-180).ToString("dd/MM/yyyy");
-            Session["BAPPEndDate"] = System.DateTime.Now.ToString("dd/MM/yyyy");
-            Session["BAPPPageIndex"] = 1;
-            Session["BAPPPageSize"] = 10;
-            Session["BAPPOrderColumn"] = "";
-            Session["BAPPSortType"] = "";
-            Session["BAPPSearchText"] = "";
-            patientdetails = dBEngine.GetBariatricPatientDetails(Convert.ToInt32(Session["BAPPPageIndex"]), Convert.ToInt32(Session["BAPPPageSize"]), Convert.ToDateTime(Session["BAPPStartDate"]), Convert.ToDateTime(Session["BAPPEndDate"]), Convert.ToString(Session["BAPPOrderColumn"]), Convert.ToString(Session["BAPPSortType"]), Convert.ToString(Session["BAPPSearchText"]), Convert.ToInt32(Session["LoginUserID"]));
+            if(Session["BAPPStartDate"] == null)
+                Session["BAPPStartDate"] = System.DateTime.Now.AddDays(-180).ToString("dd/MM/yyyy");
+            if(Session["BAPPEndDate"] == null)
+                Session["BAPPEndDate"] = System.DateTime.Now.ToString("dd/MM/yyyy");
+            if(Session["BAPPPageIndex"] == null)
+                Session["BAPPPageIndex"] = 1;
+            if(Session["BAPPPageSize"] == null) 
+                Session["BAPPPageSize"] = 10;
+            if(Session["BAPPOrderColumn"] == null)
+                Session["BAPPOrderColumn"] = "";
+            if(Session["BAPPSortType"] == null)
+                Session["BAPPSortType"] = "";
+            if(Session["BAPPSearchText"] == null)
+                Session["BAPPSearchText"] = "";
+            if (Session["PathwayStatus"] == null)
+                Session["PathwayStatus"] = "";
+            if (Session["ActivityStatus"] == null)
+                Session["ActivityStatus"] = "";
+            if (Session["PathwayEvent"] == null)
+                Session["PathwayEvent"] = "";
+            if (Session["Dischargedpreop"] == null)
+                Session["Dischargedpreop"] = "";
+            if (Session["Presurgerypostopmed"] == null)
+                Session["Presurgerypostopmed"] = "";
+            if (Session["Postopdiet"] == null)
+                Session["Postopdiet"] = "";
+            if (Session["Active"] == null)
+                Session["Active"] = "";
+            if (Session["AgreementOverdue"] == null)
+                Session["AgreementOverdue"] = "";
+            if (Session["Incompletegroupsession"] == null)
+                Session["Incompletegroupsession"] = "";
+            if (Session["Nosurgerydate"] == null)
+                Session["Nosurgerydate"] = "";
+            if (Session["AwaitingSurgery"] == null)
+                Session["AwaitingSurgery"] = "";
+            if (Session["Pendingpostdietappt"] == null)
+                Session["Pendingpostdietappt"] = "";
+
+            if(isReset)
+            {
+                Session["BAPPStartDate"] = System.DateTime.Now.AddDays(-180).ToString("dd/MM/yyyy");
+                Session["BAPPEndDate"] = System.DateTime.Now.ToString("dd/MM/yyyy");
+                Session["BAPPPageIndex"] = 1;
+                Session["BAPPPageSize"] = 10;
+                Session["BAPPOrderColumn"] = "";
+                Session["BAPPSortType"] = "";
+                Session["BAPPSearchText"] = "";
+                Session["PathwayStatus"] = "";
+                Session["ActivityStatus"] = "";
+                Session["PathwayEvent"] = "";
+                Session["Dischargedpreop"] = "";
+                Session["Presurgerypostopmed"] = "";
+                Session["Postopdiet"] = "";
+                Session["Active"] = "";
+                Session["AgreementOverdue"] = "";
+                Session["Incompletegroupsession"] = "";
+                Session["Nosurgerydate"] = "";
+                Session["AwaitingSurgery"] = "";
+                Session["Pendingpostdietappt"] = "";
+            }
+            Session["PathwayStatus"] = formCollection["ddlPathwayStatus"];
+            patientdetails = dBEngine.GetBariatricPatientDetails(Convert.ToInt32(Session["BAPPPageIndex"]), Convert.ToInt32(Session["BAPPPageSize"]), Convert.ToDateTime(Session["BAPPStartDate"]), Convert.ToDateTime(Session["BAPPEndDate"]), Convert.ToString(Session["PathwayStatus"]),
+                Convert.ToString(Session["ActivityStatus"]), Convert.ToString(Session["PathwayEvent"]), Convert.ToString(Session["BAPPOrderColumn"]), Convert.ToString(Session["BAPPSortType"]), Convert.ToString(Session["BAPPSearchText"]), Convert.ToInt32(Session["LoginUserID"]));
             int totalPagesCount = 0;
             if (patientdetails.Count > 0)
                 totalPagesCount = (int)Math.Ceiling((float)patientdetails[0].TotalCount / Convert.ToInt32(Session["BAPPPageSize"]));
@@ -284,21 +385,25 @@ namespace NHS.Controllers
             ViewBag.SearchText = "";
             ViewBag.TotalPagesCount = totalPagesCount;
             if (patientdetails.Count > 0)
+            {
                 ViewBag.TotalRecordCount = patientdetails[0].TotalCount;
+                Session["Dischargedpreop"] = patientdetails[0].Dischargedpreop;
+                Session["Presurgerypostopmed"] = patientdetails[0].Presurgerypostopmed;
+                Session["PostopdietCount"] = patientdetails[0].PostopdietCount;
+                Session["Active"] = patientdetails[0].Active;
+                Session["AgreementOverdue"] = patientdetails[0].AgreementOverdue;
+                Session["Incompletegroupsession"] = patientdetails[0].Incompletegroupsession;
+                Session["Nosurgerydate"] = patientdetails[0].Nosurgerydate;
+                Session["AwaitingSurgery"] = patientdetails[0].AwaitingSurgery;
+                Session["Pendingpostdietappt"] = patientdetails[0].Pendingpostdietappt;
+            }
             else
                 ViewBag.TotalRecordCount = 0;
             ViewBag.ModalRecordCount = patientdetails.Count;
             ViewBag.PageSize = Convert.ToInt32(Session["BAPPPageSize"]);
             ViewBag.PageNumber = Convert.ToInt32(Session["BAPPPageIndex"]);
-            ViewBag.PathwayStatus = dBEngine.GetBariatricPathwayStatus(Convert.ToInt32(Session["LoginUserID"]));
-            ViewBag.PathwayEvents = dBEngine.GetBariatricPathwayEvent(Convert.ToInt32(Session["LoginUserID"]));
-            ViewBag.PathwayStatusDischarged = 10;
-            ViewBag.PathwayStatusSurgeryCompleted = 10;
-            ViewBag.PathwayStatusActive = 10;
-            ViewBag.PathwayStatusAwaitingSurgery = 10;
             ViewBag.SearchText = Convert.ToString(Session["BAPPSearchText"]);
-            Session["PathwayStatus"] = "";
-            Session["PathwayEvents"] = "";
+            
             List<RolePermission> permissions = dBEngine.GetRolePermission(0, 0, "", "", "", Convert.ToInt32(Session["LoginUserID"]), "Bariatric Dashboard", Convert.ToString(Session["Role"]));
             bool isnoaccess = false;
             if (permissions.Count > 0)
@@ -4480,6 +4585,10 @@ namespace NHS.Controllers
                 mrn = Convert.ToInt32(formCollection["MRN"]);
             string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
             DBEngine dBEngine = new DBEngine(connectionString);
+            bool NotRequired = false;
+            if (formCollection["NotRequired"] == "on") NotRequired = true;
+            bool Discharged = false;
+            if (formCollection["Discharged"] == "on") Discharged = true;
             bool PsychologyRefSent = false;
             if (formCollection["PsychologyRefSent"] == "Yes") PsychologyRefSent = true;
             bool PsychologyAssessmentReceived = false;
@@ -4490,7 +4599,32 @@ namespace NHS.Controllers
             if (formCollection["ReferToGroupSession"] == "Yes") ReferToGroupSession = true;
             try
             {
-                int returnVal = dBEngine.UpdateMedicalMDT(id, mrn, PsychologyRefSent, PsychologyAssessmentReceived, formCollection["PsychologyComments"], MedicalFollowUp, ReferToGroupSession, formCollection["MedicalFollowComments"], formCollection["Comments"], Convert.ToInt32(Session["LoginUserID"]));
+                int returnVal = dBEngine.UpdateMedicalMDT(id, mrn, PsychologyRefSent, PsychologyAssessmentReceived, formCollection["PsychologyComments"], MedicalFollowUp, ReferToGroupSession, formCollection["MedicalFollowComments"], Convert.ToInt32(formCollection["ddlActivityStatus"]),
+                    Convert.ToInt32(formCollection["ddlPathwayEvent"]), NotRequired, Discharged, formCollection["DischargeComments"], formCollection["Comments"], Convert.ToInt32(Session["LoginUserID"]));
+            }
+            catch (Exception ex)
+            { throw ex; }
+            return RedirectToAction("BariatricsDashboard", new { id = 0, isReset = false });
+        }
+
+        [HttpPost]
+        public ActionResult PsychologyAssess(FormCollection formCollection)
+        {
+            int id = 0;
+            int mrn = 0;
+            if (formCollection["Patient_ID"] != null)
+                id = Convert.ToInt32(formCollection["Patient_ID"]);
+            if (formCollection["MRN"] != null)
+                mrn = Convert.ToInt32(formCollection["MRN"]);
+            string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
+            DBEngine dBEngine = new DBEngine(connectionString);
+            bool NotRequired = false;
+            if (formCollection["NotRequired"] == "on") NotRequired = true;
+            bool Discharged = false;
+            if (formCollection["Discharged"] == "on") Discharged = true;
+            try
+            {
+                int returnVal = dBEngine.UpdatePsychoAssess(id, mrn, Convert.ToInt32(formCollection["ddlActivityStatus"]), Convert.ToInt32(formCollection["ddlPathwayEvent"]), NotRequired, Discharged, formCollection["DischargeComments"], formCollection["Comments"], Convert.ToInt32(Session["LoginUserID"]));
             }
             catch (Exception ex)
             { throw ex; }
@@ -4516,11 +4650,13 @@ namespace NHS.Controllers
             if (formCollection["FutureMedicalReview"] == "on") FutureMedicalReview = true;
             bool RebookVMMDT = false;
             if (formCollection["RebookVMMDT"] == "on") RebookVMMDT = true;
-            bool Discharge = false;
-            if (formCollection["Discharge"] == "on") Discharge = true;
+            bool Discharged = false;
+            if (formCollection["Discharged"] == "on") Discharged = true;
+            bool NotRequired = false;
+            if (formCollection["NotRequired"] == "on") NotRequired = true;
             try
             {
-                int returnVal = dBEngine.UpdateVirtualMDT(id, mrn, SurgicalMDT, FutureReview, FutureMedicalReview, RebookVMMDT, Discharge, formCollection["Comments"], Convert.ToInt32(Session["LoginUserID"]));
+                int returnVal = dBEngine.UpdateVirtualMDT(id, mrn, SurgicalMDT, FutureReview, FutureMedicalReview, RebookVMMDT, Discharged, formCollection["DischargeComments"], NotRequired, Convert.ToInt32(formCollection["ddlActivityStatus"]), Convert.ToInt32(formCollection["ddlPathwayEvent"]), formCollection["Comments"], Convert.ToInt32(Session["LoginUserID"]));
             }
             catch (Exception ex)
             { throw ex; }
@@ -4539,10 +4675,16 @@ namespace NHS.Controllers
             string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
             DBEngine dBEngine = new DBEngine(connectionString);
             bool SurgeryCompleted = false;
-            if (formCollection["SurgeryCompleted"] == "on") SurgeryCompleted = true;
+            if (formCollection["BookSurgery"] == "on") SurgeryCompleted = true;
+            bool NotRequired = false;
+            if (formCollection["NotRequired"] == "on") NotRequired = true;
+            bool Discharged = false;
+            if (formCollection["Discharged"] == "on") Discharged = true;
+            bool FurtherSupport = false;
+            if (formCollection["FurtherSupport"] == "on") FurtherSupport = true;
             try
             {
-                int returnVal = dBEngine.UpdateSurgery(id, mrn, SurgeryCompleted, formCollection["Comments"], Convert.ToInt32(Session["LoginUserID"]));
+                int returnVal = dBEngine.UpdateSurgicalMDT(id, mrn, SurgeryCompleted, NotRequired, FurtherSupport, Discharged, Convert.ToInt32(formCollection["ddlActivityStatus"]), Convert.ToInt32(formCollection["ddlPathwayEvent"]), formCollection["DischargeComments"], formCollection["Comments"], Convert.ToInt32(Session["LoginUserID"]));
             }
             catch (Exception ex)
             { throw ex; }
@@ -4562,9 +4704,13 @@ namespace NHS.Controllers
             DBEngine dBEngine = new DBEngine(connectionString);
             bool SurgeryCompleted = false;
             if (formCollection["SurgeryCompleted"] == "on") SurgeryCompleted = true;
+            bool NotRequired = false;
+            if (formCollection["NotRequired"] == "on") NotRequired = true;
+            bool Discharged = false;
+            if (formCollection["Discharged"] == "on") Discharged = true;
             try
             {
-                int returnVal = dBEngine.UpdateSurgery(id, mrn, SurgeryCompleted, formCollection["Comments"], Convert.ToInt32(Session["LoginUserID"]));
+                int returnVal = dBEngine.UpdateSurgery(id, mrn, SurgeryCompleted,NotRequired, Discharged, formCollection["DischargeComments"],Convert.ToInt32(formCollection["ddlActivityStatus"]), Convert.ToInt32(formCollection["ddlPathwayEvent"]), formCollection["Comments"], Convert.ToInt32(Session["LoginUserID"]));
             }
             catch (Exception ex)
             { throw ex; }
@@ -4582,11 +4728,13 @@ namespace NHS.Controllers
                 mrn = Convert.ToInt32(formCollection["MRN"]);
             string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
             DBEngine dBEngine = new DBEngine(connectionString);
-            bool Discharge = false;
-            if (formCollection["Discharge"] == "on") Discharge = true;
+            bool Discharged = false;
+            if (formCollection["Discharged"] == "on") Discharged = true;
+            bool NotRequired = false;
+            if (formCollection["NotRequired"] == "on") NotRequired = true;
             try
             {
-                int returnVal = dBEngine.UpdatePostOpMedical(id, mrn, Discharge, formCollection["Comments"], Convert.ToInt32(Session["LoginUserID"]));
+                int returnVal = dBEngine.UpdatePostOpMedical(id, mrn, Discharged, NotRequired, Convert.ToInt32(formCollection["ddlActivityStatus"]), Convert.ToInt32(formCollection["ddlPathwayEvent"]), formCollection["DischargeComments"], formCollection["Comments"], Convert.ToInt32(Session["LoginUserID"]));
             }
             catch (Exception ex)
             { throw ex; }
@@ -4604,11 +4752,13 @@ namespace NHS.Controllers
                 mrn = Convert.ToInt32(formCollection["MRN"]);
             string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
             DBEngine dBEngine = new DBEngine(connectionString);
-            bool Discharge = false;
-            if (formCollection["Discharge"] == "on") Discharge = true;
+            bool Discharged = false;
+            if (formCollection["Discharged"] == "on") Discharged = true;
+            bool NotRequired = false;
+            if (formCollection["NotRequired"] == "on") NotRequired = true;
             try
             {
-                int returnVal = dBEngine.UpdatePostOpDietician(id, mrn, Discharge, formCollection["Comments"], Convert.ToInt32(Session["LoginUserID"]));
+                int returnVal = dBEngine.UpdatePostOpDietician(id, mrn, Discharged, NotRequired, Convert.ToInt32(formCollection["ddlActivityStatus"]), Convert.ToInt32(formCollection["ddlPathwayEvent"]), formCollection["DischargeComments"], formCollection["Comments"], Convert.ToInt32(Session["LoginUserID"]));
             }
             catch (Exception ex)
             { throw ex; }
@@ -4625,25 +4775,19 @@ namespace NHS.Controllers
                 mrn = Convert.ToInt32(formCollection["MRN"]);
             string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
             DBEngine dBEngine = new DBEngine(connectionString);
+            bool NotRequired = false;
+            if (formCollection["NotRequired"] == "on") NotRequired = true;
             bool RepeatSession = false;
             if (formCollection["RepeatSession"] == "Yes") RepeatSession = true;
-            bool RepeatSession1 = false;
-            if (formCollection["RepeatSession1"] == "Yes") RepeatSession1 = true;
-            bool RepeatSession2 = false;
-            if (formCollection["RepeatSession2"] == "Yes") RepeatSession2 = true;
-            bool RepeatSession3 = false;
-            if (formCollection["RepeatSession3"] == "Yes") RepeatSession3 = true;
-            bool RepeatSession4 = false;
-            if (formCollection["RepeatSession4"] == "Yes") RepeatSession4 = true;
             bool VirtualMDTReferral = false;
             if (formCollection["VirtualMDTReferral"] == "Yes") VirtualMDTReferral = true;
             bool IndividualFollowup = false;
             if (formCollection["IndividualFollowup"] == "Yes") IndividualFollowup = true;
             bool Discharged = false;
-            if (formCollection["Discharged"] == "Yes") Discharged = true;
+            if (formCollection["Discharged"] == "on") Discharged = true;
             try
             {
-                int returnVal = dBEngine.UpdateGroupSessions(id, mrn, formCollection["Group1Comments"], formCollection["Group2Comments"], formCollection["Group3Comments"], formCollection["Group4Comments"], RepeatSession,RepeatSession1,RepeatSession2,RepeatSession3,RepeatSession4, IndividualFollowup, VirtualMDTReferral,Discharged,formCollection["DischargeComments"], formCollection["Comments"], Convert.ToInt32(Session["LoginUserID"]));
+                int returnVal = dBEngine.UpdateGroupSessions(id, mrn, formCollection["Group1Comments"], formCollection["Group2Comments"], formCollection["Group3Comments"], formCollection["Group4Comments"], RepeatSession,formCollection["ddlRepeatSessionName"], IndividualFollowup, VirtualMDTReferral,Discharged,formCollection["DischargeComments"], NotRequired, Convert.ToInt32(formCollection["ddlActivityStatus"]), Convert.ToInt32(formCollection["ddlPathwayEvent"]), formCollection["Comments"], Convert.ToInt32(Session["LoginUserID"]));
             }
             catch (Exception ex)
             { throw ex; }
@@ -4670,10 +4814,15 @@ namespace NHS.Controllers
             string connectionString = ConfigurationManager.ConnectionStrings["NHSConStr"].ConnectionString;
             DBEngine dBEngine = new DBEngine(connectionString);
             bool AgreementReceived = false;
+            bool Discharged = false;
+            bool NotRequired = false;
+            if (formCollection["NotRequired"] == "on") NotRequired = true;
+            if (formCollection["Discharged"] == "on") Discharged = true;
             if (formCollection["AgreementReceived"] == "Yes") AgreementReceived = true;
+
             try
             {
-                int returnVal = dBEngine.UpdateNurseAssessment(id, mrn, AgreementReceived, formCollection["Comments"], Convert.ToInt32(Session["LoginUserID"]));
+                int returnVal = dBEngine.UpdateNurseAssessment(id, mrn, AgreementReceived, formCollection["Comments"], formCollection["DischargeComments"], NotRequired, Convert.ToInt32(formCollection["ddlActivityStatus"]), Convert.ToInt32(formCollection["ddlPathwayEvent"]), Discharged, Convert.ToInt32(Session["LoginUserID"]));
             }
             catch(Exception ex)
             { throw ex; }
@@ -7404,11 +7553,16 @@ namespace NHS.Controllers
         }
 
         [HttpPost]
-        public ActionResult MoreBAPPDetails(int pageNumber = 1, int pageSize = 10, string searchfield = "", string SortColumn = "", bool frompager = false, bool fromfilter = false)
+        public ActionResult MoreBAPPDetails(int pageNumber = 1, int pageSize = 10, string searchfield = "", string SortColumn = "", bool frompager = false, bool fromfilter = false, string activitystatus = "", string pathwayevent = "")
         {
             Session["BAPPPageIndex"] = pageNumber;
             Session["BAPPPageSize"] = pageSize;
             Session["BAPPSearchText"] = searchfield;
+            if (activitystatus != "")
+                Session["ActivityStatus"] = activitystatus;
+            if (pathwayevent != "")
+                Session["PathwayEvent"] = pathwayevent;
+
             if (SortColumn != "")
             {
                 if (!frompager)
@@ -7451,13 +7605,23 @@ namespace NHS.Controllers
                 if (Session["BAPPSortType"] == null)
                     Session["BAPPSortType"] = "DESC";
                 Session["BAPPPageNo"] = pageNumber;
-                coviddetails = dBEngine.GetBariatricPatientDetails(Convert.ToInt32(Session["BAPPPageIndex"]), Convert.ToInt32(Session["BAPPPageSize"]), Convert.ToDateTime(Session["BAPPStartDate"]), Convert.ToDateTime(Session["BAPPEndDate"]), Convert.ToString(Session["BAPPOrderColumn"]), Convert.ToString(Session["BAPPSortType"]), Convert.ToString(Session["BAPPSearchText"]), Convert.ToInt32(Session["LoginUserID"]));
+                coviddetails = dBEngine.GetBariatricPatientDetails(Convert.ToInt32(Session["BAPPPageIndex"]), Convert.ToInt32(Session["BAPPPageSize"]), Convert.ToDateTime(Session["BAPPStartDate"]), Convert.ToDateTime(Session["BAPPEndDate"]), Convert.ToString(Session["PathwayStatus"]),
+                Convert.ToString(Session["ActivityStatus"]), Convert.ToString(Session["PathwayEvent"]), Convert.ToString(Session["BAPPOrderColumn"]), Convert.ToString(Session["BAPPSortType"]), Convert.ToString(Session["BAPPSearchText"]), Convert.ToInt32(Session["LoginUserID"]));
                 
                 int totalRecords = 0;
                 if (coviddetails.Count > 0)
                 {
                     totalRecords = coviddetails[0].TotalCount;
                 }
+                Session["Dischargedpreop"] = coviddetails[0].Dischargedpreop;
+                Session["Presurgerypostopmed"] = coviddetails[0].Presurgerypostopmed;
+                Session["PostopdietCount"] = coviddetails[0].PostopdietCount;
+                Session["Active"] = coviddetails[0].Active;
+                Session["AgreementOverdue"] = coviddetails[0].AgreementOverdue;
+                Session["Incompletegroupsession"] = coviddetails[0].Incompletegroupsession;
+                Session["Nosurgerydate"] = coviddetails[0].Nosurgerydate;
+                Session["AwaitingSurgery"] = coviddetails[0].AwaitingSurgery;
+                Session["Pendingpostdietappt"] = coviddetails[0].Pendingpostdietappt;
 
                 int totalPagesCount = 0;
                 int totalpages = 1;

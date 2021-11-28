@@ -59,3 +59,10 @@ E:\Anshu Laptop\C drive\code backup\cors 01-04\cors-rbh\cors-rbh\NHS.Data\bin\De
 E:\Anshu Laptop\C drive\code backup\cors 01-04\cors-rbh\cors-rbh\NHS.Data\obj\Debug\NHS.Data.dll
 E:\Anshu Laptop\C drive\code backup\cors 01-04\cors-rbh\cors-rbh\NHS.Data\obj\Debug\NHS.Data.pdb
 E:\Anshu Laptop\C drive\code backup\cors 01-04\cors-rbh\cors-rbh\NHS.Data\obj\Debug\NHS.Data.csprojResolveAssemblyReference.cache
+C:\Users\AnshumanPandey\CORSLatest\NHS.Data\bin\Debug\NHS.Data.dll
+C:\Users\AnshumanPandey\CORSLatest\NHS.Data\bin\Debug\NHS.Data.pdb
+C:\Users\AnshumanPandey\CORSLatest\NHS.Data\bin\Debug\NHS.Common.dll
+C:\Users\AnshumanPandey\CORSLatest\NHS.Data\bin\Debug\NHS.Common.pdb
+C:\Users\AnshumanPandey\CORSLatest\NHS.Data\obj\Debug\NHS.Data.csprojResolveAssemblyReference.cache
+C:\Users\AnshumanPandey\CORSLatest\NHS.Data\obj\Debug\NHS.Data.dll
+C:\Users\AnshumanPandey\CORSLatest\NHS.Data\obj\Debug\NHS.Data.pdb

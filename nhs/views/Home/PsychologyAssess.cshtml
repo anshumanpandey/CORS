@@ -1,9 +1,9 @@
-﻿@model NHS.Common.clsVirtualMDT
+﻿@model NHS.Common.clsPsychologyAssess
 
 @{
     /**/
 
-    ViewBag.Title = "Virtual MDT";
+    ViewBag.Title = "Pyschology Assess";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -25,72 +25,46 @@
         </div>
     </div>
 </div>
-@using (Html.BeginForm("VirtualMDT", "Home", FormMethod.Post, new { @id = Model.Patient_ID, @mrn = Model.MRN }))
+@using (Html.BeginForm("PsychologyAssess", "Home", FormMethod.Post, new { @id = Model.Patient_ID, @mrn = Model.MRN }))
 {
     <input type="hidden" id="Patient_ID" name="Patient_ID" value="@Model.Patient_ID" />
     <input type="hidden" id="MRN" name="MRN" value="@Model.MRN" />
     <div class="lable_title_blue">
-        <h2>Virtual MDT</h2>
+        <h2>Pyschology Assess</h2>
     </div><br />
     <table width="99%" border="0" cellspacing="0" cellpadding="0">
         <tr>
             <td>
                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr>
-                        <td width="54%" align="left" valign="top">
+                        <td width="34%" align="left" valign="top">
                             <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                <tr>
-                                    <td width="40%">
-                                        @if (Model.NotRequired)
-                                        {
-                                            <input type="checkbox" id="NotRequired" name="NotRequired" checked><span>&nbsp;Appointment Not Required</span>
-                                        }
-                                        else
-                                        {
-                                            <input type="checkbox" id="NotRequired" name="NotRequired"><span>&nbsp;Appointment Not Required</span>
-                                        }
-                                    </td>
-                                    <td width="60%">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        @if (ViewBag.IsReadOnly)
-                                        {
-                                            if (Model.ID == 0)
-                                            {
-                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                    <tr>
-                                                        <td width="40%">Clinic Name</td>
-                                                        <td width="4%">&nbsp;</td>
-                                                        <td width="56%">
-                                                            <span>Test Clinic</span>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            }
-                                        }
-                                        else
-                                        {
-                                            if (Model.ID == 0)
-                                            {
-                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                    <tr>
-                                                        <td width="40%">Clinic Name</td>
-                                                        <td width="4%">&nbsp;</td>
-                                                        <td width="56%">
-                                                            <span>Test Clinic</span>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            }
-                                        }
-                                    </td>
-                                </tr>
                                 <tr>
                                     <td>
                                         <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                             <tr>
-                                                <td width="100%">&nbsp;</td>
+                                                <td width="100%">
+                                                    @if (Model.NotRequired)
+                                                    {
+                                                        <input type="checkbox" id="NotRequired" name="NotRequired" checked><span>&nbsp;Appointment Not Required</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" id="NotRequired" name="NotRequired"><span>&nbsp;Appointment Not Required</span>
+                                                    }
+                                                </td>
+
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td width="40%">&nbsp;</td>
+                                                <td width="60%">&nbsp;</td>
                                             </tr>
                                         </table>
                                     </td>
@@ -157,175 +131,6 @@
 
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                            <tr>
-                                                <td width="100%"><b>Other Outcome</b></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                            <tr>
-                                                <td width="100%">
-                                                    @if (ViewBag.IsReadOnly)
-                                                    {
-                                                        if (Model.ID == 0)
-                                                        {
-                                                            <input type="checkbox" id="SurgicalMDT" name="SurgicalMDT" disabled="disabled"><span>Surgical MDT</span>
-                                                        }
-                                                        else if (Model.SurgicalMDT == true)
-                                                        {
-                                                            <input type="checkbox" id="SurgicalMDT" name="SurgicalMDT" disabled="disabled" checked><span>Surgical MDT</span>
-                                                        }
-                                                        else
-                                                        {
-                                                            <input type="checkbox" id="SurgicalMDT" name="SurgicalMDT" disabled="disabled"><span>Surgical MDT</span>
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        if (Model.ID == 0)
-                                                        {
-                                                            <input type="checkbox" id="SurgicalMDT" name="SurgicalMDT"><span>Surgical MDT</span>
-                                                        }
-                                                        else if (Model.SurgicalMDT == true)
-                                                        {
-                                                            <input type="checkbox" id="SurgicalMDT" name="SurgicalMDT" checked><span>Surgical MDT</span>
-                                                        }
-                                                        else
-                                                        {
-                                                            <input type="checkbox" id="SurgicalMDT" name="SurgicalMDT"><span>Surgical MDT</span>
-                                                        }
-                                                    }
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                            <tr>
-                                                <td width="100%">
-                                                    @if (ViewBag.IsReadOnly)
-                                                    {
-                                                        if (Model.ID == 0)
-                                                        {
-                                                            <input type="checkbox" id="FutureReview" name="FutureReview" disabled="disabled"><span>Future Dietician/psychology review </span>
-                                                        }
-                                                        else if (Model.FutureReview == true)
-                                                        {
-                                                            <input type="checkbox" id="FutureReview" name="FutureReview" disabled="disabled" checked><span>Future Dietician/psychology review </span>
-                                                        }
-                                                        else
-                                                        {
-                                                            <input type="checkbox" id="FutureReview" name="FutureReview" disabled="disabled"><span>Future Dietician/psychology review </span>
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        if (Model.ID == 0)
-                                                        {
-                                                            <input type="checkbox" id="FutureReview" name="FutureReview"><span>Future Dietician/psychology review </span>
-                                                        }
-                                                        else if (Model.FutureReview == true)
-                                                        {
-                                                            <input type="checkbox" id="FutureReview" name="FutureReview" checked><span>Future Dietician/psychology review </span>
-                                                        }
-                                                        else
-                                                        {
-                                                            <input type="checkbox" id="FutureReview" name="FutureReview"><span>Future Dietician/psychology review </span>
-                                                        }
-                                                    }
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                            <tr>
-                                                <td width="100%">
-                                                    @if (ViewBag.IsReadOnly)
-                                                    {
-                                                        if (Model.ID == 0)
-                                                        {
-                                                            <input type="checkbox" id="FutureMedicalReview" name="FutureMedicalReview" disabled="disabled"><span>Future Medical review  </span>
-                                                        }
-                                                        else if (Model.FutureMedicalReview == true)
-                                                        {
-                                                            <input type="checkbox" id="FutureMedicalReview" name="FutureMedicalReview" disabled="disabled" checked><span>Future Medical review  </span>
-                                                        }
-                                                        else
-                                                        {
-                                                            <input type="checkbox" id="FutureMedicalReview" name="FutureMedicalReview" disabled="disabled"><span>Future Medical review  </span>
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        if (Model.ID == 0)
-                                                        {
-                                                            <input type="checkbox" id="FutureMedicalReview" name="FutureMedicalReview"><span>Future Medical review  </span>
-                                                        }
-                                                        else if (Model.FutureMedicalReview == true)
-                                                        {
-                                                            <input type="checkbox" id="FutureMedicalReview" name="FutureMedicalReview" checked><span>Future Medical review  </span>
-                                                        }
-                                                        else
-                                                        {
-                                                            <input type="checkbox" id="FutureMedicalReview" name="FutureMedicalReview"><span>Future Medical review  </span>
-                                                        }
-                                                    }
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                            <tr>
-                                                <td width="100%">
-                                                    @if (ViewBag.IsReadOnly)
-                                                    {
-                                                        if (Model.ID == 0)
-                                                        {
-                                                            <input type="checkbox" id="RebookVMMDT" name="RebookVMMDT" disabled="disabled"><span>Re-book VMMDT </span>
-                                                        }
-                                                        else if (Model.RebookVMMDT == true)
-                                                        {
-                                                            <input type="checkbox" id="RebookVMMDT" name="RebookVMMDT" disabled="disabled" checked><span>Re-book VMMDT </span>
-                                                        }
-                                                        else
-                                                        {
-                                                            <input type="checkbox" id="RebookVMMDT" name="RebookVMMDT" disabled="disabled"><span>Re-book VMMDT  </span>
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        if (Model.ID == 0)
-                                                        {
-                                                            <input type="checkbox" id="RebookVMMDT" name="RebookVMMDT"><span>Re-book VMMDT  </span>
-                                                        }
-                                                        else if (Model.RebookVMMDT == true)
-                                                        {
-                                                            <input type="checkbox" id="RebookVMMDT" name="RebookVMMDT" checked><span>Re-book VMMDT  </span>
-                                                        }
-                                                        else
-                                                        {
-                                                            <input type="checkbox" id="RebookVMMDT" name="RebookVMMDT"><span>Re-book VMMDT  </span>
-                                                        }
-                                                    }
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>                                
                             </table>
                         </td>
                         <td width="4%" align="left" valign="top">&nbsp;</td>
@@ -377,20 +182,54 @@
             <td>
                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr>
+                        @if (string.IsNullOrEmpty(Model.UpdatedBy) && !string.IsNullOrEmpty(Model.CreatedBy))
+                        {
+
+                            <td><span><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Created By:</b>&nbsp;</span></td>
+                            <td><span><b><i>@Model.CreatedBy</i></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+                            <td><span><b>Created Date:</b>&nbsp;</span></td>
+                            <td><span><b><i>@Model.CreatedDate</i></b></span></td>
+
+                        }
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        @if (!string.IsNullOrEmpty(Model.UpdatedBy) && !string.IsNullOrEmpty(Model.CreatedBy))
+                        {
+
+                            <td><span><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Updated By:</b>&nbsp;</span></td>
+                            <td><span><b><i>@Model.UpdatedBy</i></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+                            <td><span><b>Updated Date:</b>&nbsp;</span></td>
+                            <td><span><b><i>@Model.UpdatedDate</i></b></span></td>
+
+                        }
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
                         <td width="100%">
                             @if (Model.Discharged)
                             {
-                                <input type="checkbox" id="Discharged" name="Discharged" checked><span>&nbsp;Discharged?</span>
+                                <input type="checkbox" id="Discharged" name="Discharged" checked><span>&nbsp;Discharge?</span>
                             }
                             else
                             {
-                                <input type="checkbox" id="Discharged" name="Discharged"><span>&nbsp;Discharged?</span>
+                                <input type="checkbox" id="Discharged" name="Discharged"><span>&nbsp;Discharge?</span>
                             }
                         </td>
                     </tr>
                 </table>
             </td>
-        </tr>   
+        </tr>
         @if (string.IsNullOrEmpty(Model.DischargedBy))
         {
             <tr>
@@ -403,11 +242,11 @@
                             <td>
                                 @if (ViewBag.IsReadOnly)
                                 {
-                                    @Html.TextAreaFor(model => model.DischargeComments, 5, 50, new { @class = "form-control", style = "display: none;", @readonly = true, @id = "DischargeComments" })
+                                    @Html.TextAreaFor(model => model.Comments, 5, 50, new { @class = "form-control", style = "display: none;", @readonly = true, @id = "DischargeComments" })
                                 }
                                 else
                                 {
-                                    @Html.TextAreaFor(model => model.DischargeComments, 5, 50, new { @class = "form-control", style = "display: none;", @id = "DischargeComments" })
+                                    @Html.TextAreaFor(model => model.Comments, 5, 50, new { @class = "form-control", style = "display: none;", @id = "DischargeComments" })
                                 }
                             </td>
                         </tr>
@@ -439,40 +278,6 @@
                 </td>
             </tr>
         }
-        <tr>
-            <td>
-                <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                    <tr>
-                        @if (string.IsNullOrEmpty(Model.UpdatedBy) && !string.IsNullOrEmpty(Model.CreatedBy))
-                        {
-
-                            <td><span><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Created By:</b>&nbsp;</span></td>
-                            <td><span><b><i>@Model.CreatedBy</i></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
-                            <td><span><b>Created Date:</b>&nbsp;</span></td>
-                            <td><span><b><i>@Model.CreatedDate</i></b></span></td>
-
-                        }
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                    <tr>
-                        @if (!string.IsNullOrEmpty(Model.UpdatedBy) && !string.IsNullOrEmpty(Model.CreatedBy))
-                        {
-
-                            <td><span><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Updated By:</b>&nbsp;</span></td>
-                            <td><span><b><i>@Model.UpdatedBy</i></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
-                            <td><span><b>Updated Date:</b>&nbsp;</span></td>
-                            <td><span><b><i>@Model.UpdatedDate</i></b></span></td>
-
-                        }
-                    </tr>
-                </table>
-            </td>
-        </tr>             
     </table>
     if (!string.IsNullOrEmpty(Model.DischargedBy))
     {
@@ -486,7 +291,7 @@
                 </div>
             </div>
         </div>
-    }    
+    }
 
     <div class="pull-right">
         @if (ViewBag.IsReadOnly)
@@ -504,7 +309,7 @@
 <br /><br />
 
 <h2 style="font-size: 17px; margin-bottom: 20px; color: #4F81BD; font-weight: 600;">Appointments History</h2>
-@if (Model.PastAppointments.Count > 0)
+@if (Model.PastAppointments != null)
 {
 <div class="row">
     <div class="col-md-12">
@@ -516,22 +321,30 @@
                         <th align="left" width="70%" style="">Outcome</th>
                     </tr>
                 </thead>
-                <tbody style="font-size:11px;padding:0px;">                    
-                        @foreach (var item in Model.PastAppointments)
+                <tbody style="font-size:11px;padding:0px;">
+                    
+                        @if (Model.PastAppointments.Count > 0)
                         {
-                            <tr class="Entries">
-                                <td align="left" width="30%" style="">@item.AppointmentDate</td>
-                                <td align="left" width="70%" style="">@item.Outcome</td>
+                            foreach (var item in Model.PastAppointments)
+                            {
+                                <tr class="Entries">
+                                    <td align="left" width="30%" style="">@item.AppointmentDate</td>
+                                    <td align="left" width="70%" style="">@item.Outcome</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="14" class="text-center" align="center">No Records Found.</td>
                             </tr>
                         }
-                    }                    
                 </tbody>
             </table>
         </div>
     </div>
 </div>
 }
-
 <div class="modal fade" id="modelClose1">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
@@ -649,28 +462,6 @@
         $("#btnClose1").click(function () {
             $("#modelClose1").modal();
         });
-        //$("#BtnNext").click(function (event) {
-        //    if (!confirm('Are you sure that you want to submit the form'))
-        //        event.preventDefault();
-        //});
-    });
-</script>
-<script type="text/javascript">
-$(function () {
-    $("#btnModelClose1").click(function(){
-window.location.href = "@Url.Action("BariatricsDashboard", "Home", new { id = 0, isReset = false })";
-    });
-});
-</script>
-<script>
-        $(document).ready(function () {
-            $("#btnCloseYes").click(function () {
-                $("#modelClose1").modal('hide');
-            });
-            $("#btnSave").click(function () {
-                $("#modelCloseNext").modal();
-            });
-        });
         $("#Discharged").click(function () {
             if ($(this).is(':checked')) {
                 $("#modelDischarge").modal();
@@ -684,6 +475,43 @@ window.location.href = "@Url.Action("BariatricsDashboard", "Home", new { id = 0,
                 $("#DischargeDateLbl").css("display", "none");
             }
         });
+        //$("#BtnNext").click(function (event) {
+        //    if (!confirm('Are you sure that you want to submit the form'))
+        //        event.preventDefault();
+        //});
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+        $("#btnModelClose1").click(function () {
+            window.location.href = "@Url.Action("BariatricsDashboard", "Home", new { id = 0, isReset = false })";
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#btnCloseYes").click(function () {
+            $("#modelClose1").modal('hide');
+        });
+        $("#btnModelDischarge1").click(function () {
+            $("#modelDischarge").modal('hide');
+            $("#DischargeComments").css("display", "block");
+            $("#DischargeCommentsLbl").css("display", "block");
+        });
+        $("#btnModelDischarge2").click(function () {
+            $("#modelDischarge").modal('hide');
+            $('#Discharged').prop('checked', false);
+            $("#DischargeComments").css("display", "none");
+            $("#DischargeCommentsLbl").css("display", "none");
+            $("#DischargeByLbl").css("display", "none");
+            $("#DischargeByVal").css("display", "none");
+            $("#DischargeDateVal").css("display", "none");
+            $("#DischargeDateLbl").css("display", "none");
+        });
+        $("#btnSave").click(function () {
+            $("#modelCloseNext").modal();
+        });
+    });
 </script>
 <script>
     $(document).ready(function () {
@@ -712,23 +540,7 @@ window.location.href = "@Url.Action("BariatricsDashboard", "Home", new { id = 0,
         $("#btnCloseYes2").click(function () {
             $("#modelCloseNext").modal('hide');
         });
-        $("#btnModelDischarge1").click(function () {
-            $("#modelDischarge").modal('hide');
-            $("#DischargeComments").css("display", "block");
-            $("#DischargeCommentsLbl").css("display", "block");
-        });
-        $("#btnModelDischarge2").click(function () {
-            $("#modelDischarge").modal('hide');
-            $('#Discharged').prop('checked', false);
-            $("#DischargeComments").css("display", "none");
-            $("#DischargeCommentsLbl").css("display", "none");
-            $("#DischargeByLbl").css("display", "none");
-            $("#DischargeByVal").css("display", "none");
-            $("#DischargeDateVal").css("display", "none");
-            $("#DischargeDateLbl").css("display", "none");
-        });
     });
 </script>
-
 
 

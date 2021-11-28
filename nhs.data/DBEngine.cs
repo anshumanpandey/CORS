@@ -12777,13 +12777,13 @@ namespace NHS.Data
             return patienttypes;
         }
 
-        public List<PathwayStatuses> GetBariatricPathwayStatus(int userID)
+        public List<ActivityStatuses> GetBariatricActivityStatus(int userID)
         {
-            List<PathwayStatuses> patienttypes = new List<PathwayStatuses>();
+            List<ActivityStatuses> patienttypes = new List<ActivityStatuses>();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlDataReader dataReader = null;
-                SqlCommand dbCommand = new SqlCommand("usp_GetBariatricPathwayStatus", connection);
+                SqlCommand dbCommand = new SqlCommand("usp_GetBariatricActivityStatus", connection);
                 connection.Open();
                 try
                 {
@@ -12794,15 +12794,15 @@ namespace NHS.Data
 
                     while (dataReader.Read())
                     {
-                        PathwayStatuses patienttype = new PathwayStatuses();
+                        ActivityStatuses patienttype = new ActivityStatuses();
                         patienttype.ID = Convert.ToInt32(dataReader["ID"]);
-                        patienttype.PathwayStatus = Convert.ToString(dataReader["PathwayStatus"]);
+                        patienttype.ActivityStatus = Convert.ToString(dataReader["ActivityStatus"]);
                         patienttypes.Add(patienttype);
                     }
                 }
                 catch (Exception ex)
                 {
-                    LogException(ex.Message, this.ToString(), "GetBariatricPathwayStatus", System.DateTime.Now, userID);
+                    LogException(ex.Message, this.ToString(), "GetBariatricActivityStatus", System.DateTime.Now, userID);
                 }
                 finally
                 {
@@ -12814,7 +12814,7 @@ namespace NHS.Data
             return patienttypes;
         }
 
-        public List<clsBariatricDetails> GetBariatricPatientDetails(int pageindex, int pagesize, DateTime startdate, DateTime enddate, string ordercolumn, string sorttype, string searchtext, int userID)
+        public List<clsBariatricDetails> GetBariatricPatientDetails(int pageindex, int pagesize, DateTime startdate, DateTime enddate, string pathwaystatus, string activitystatus, string pathwayevent, string ordercolumn, string sorttype, string searchtext, int userID)
         {
             List<clsBariatricDetails> patienttypes = new List<clsBariatricDetails>();
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -12830,6 +12830,9 @@ namespace NHS.Data
                     dbCommand.Parameters.AddWithValue("@PageSize", pagesize);
                     dbCommand.Parameters.AddWithValue("@StartDate", startdate);
                     dbCommand.Parameters.AddWithValue("@EndDate", enddate);
+                    dbCommand.Parameters.AddWithValue("@PathwayStatus", pathwaystatus);
+                    dbCommand.Parameters.AddWithValue("@ActivityStatus", activitystatus);
+                    dbCommand.Parameters.AddWithValue("@PathwayEvent", pathwayevent);
                     dbCommand.Parameters.AddWithValue("@OrderColumn", ordercolumn);
                     dbCommand.Parameters.AddWithValue("@SortType", sorttype);
                     if (searchtext == "0") searchtext = "";
@@ -12857,6 +12860,16 @@ namespace NHS.Data
                         patienttype.PostOPDiet = Convert.ToString(dataReader["PostOPDiet"]);
                         patienttype.TotalCount = Convert.ToInt32(dataReader["TotalCount"]);
                         patienttype.WeekDifference = Convert.ToInt32(dataReader["WeekDifference"]);
+                        patienttype.Discharged = Convert.ToBoolean(dataReader["Discharged"]);
+                        patienttype.Dischargedpreop = Convert.ToInt32(dataReader["Dischargedpreop"]);
+                        patienttype.Presurgerypostopmed = Convert.ToInt32(dataReader["Presurgerypostopmed"]);
+                        patienttype.PostopdietCount = Convert.ToInt32(dataReader["PostopdietCount"]);
+                        patienttype.Active = Convert.ToInt32(dataReader["Active"]);
+                        patienttype.AgreementOverdue = Convert.ToInt32(dataReader["AgreementOverdue"]);
+                        patienttype.Incompletegroupsession = Convert.ToInt32(dataReader["Incompletegroupsession"]);
+                        patienttype.Nosurgerydate = Convert.ToInt32(dataReader["Nosurgerydate"]);
+                        patienttype.AwaitingSurgery = Convert.ToInt32(dataReader["AwaitingSurgery"]);
+                        patienttype.Pendingpostdietappt = Convert.ToInt32(dataReader["Pendingpostdietappt"]);
                         patienttypes.Add(patienttype);
                     }
                 }
@@ -17654,7 +17667,7 @@ namespace NHS.Data
             return retVal;
         }
 
-        public int UpdateNurseAssessment(int? patientID, int? MRN, bool AgreementReceived, string comments, int userID)
+        public int UpdateNurseAssessment(int? patientID, int? MRN, bool AgreementReceived, string comments, string dischargecomments, bool notrequired, int activitystatusID, int pathwayEventID, bool discharged, int userID)
         {
             int retVal = 0;
             if (patientID == null) patientID = 0;
@@ -17669,7 +17682,12 @@ namespace NHS.Data
                     dbCommand.Parameters.AddWithValue("@Patient_ID", patientID);
                     dbCommand.Parameters.AddWithValue("@MRN", MRN);
                     dbCommand.Parameters.AddWithValue("@AgreementReceived", AgreementReceived);
+                    dbCommand.Parameters.AddWithValue("@NotRequired", notrequired);
+                    dbCommand.Parameters.AddWithValue("@ActivityStatusID", activitystatusID);
+                    dbCommand.Parameters.AddWithValue("@PathwayEventID", pathwayEventID);
+                    dbCommand.Parameters.AddWithValue("@Discharged", discharged);
                     dbCommand.Parameters.AddWithValue("@Comments", comments);
+                    dbCommand.Parameters.AddWithValue("@DischargeComments", dischargecomments);
                     dbCommand.Parameters.AddWithValue("@userID", userID);
                     retVal = dbCommand.ExecuteNonQuery();
                 }
@@ -17685,7 +17703,7 @@ namespace NHS.Data
             return retVal;
         }
 
-        public int UpdateGroupSessions(int? patientID, int? MRN, string Group1Comments, string Group2Comments, string Group3Comments, string Group4Comments, bool RepeatSession, bool RepeatSession1, bool RepeatSession2, bool RepeatSession3, bool RepeatSession4,bool IndividualFollowup, bool VirtualMDTReferral, bool Discharged,  string DischargeComments, string comments, int userID)
+        public int UpdateGroupSessions(int? patientID, int? MRN, string Group1Comments, string Group2Comments, string Group3Comments, string Group4Comments, bool RepeatSession, string RepeatSessionName,bool IndividualFollowup, bool VirtualMDTReferral, bool Discharged,  string DischargeComments, bool NotRequired, int ActivityStatusID, int PathEventID, string comments, int userID)
         {
             int retVal = 0;
             if (patientID == null) patientID = 0;
@@ -17704,12 +17722,52 @@ namespace NHS.Data
                     dbCommand.Parameters.AddWithValue("@Group3Comments", Group3Comments);
                     dbCommand.Parameters.AddWithValue("@Group4Comments", Group4Comments);
                     dbCommand.Parameters.AddWithValue("@RepeatSession", RepeatSession);
-                    dbCommand.Parameters.AddWithValue("@RepeatSession1", RepeatSession1);
-                    dbCommand.Parameters.AddWithValue("@RepeatSession2", RepeatSession2);
-                    dbCommand.Parameters.AddWithValue("@RepeatSession3", RepeatSession3);
-                    dbCommand.Parameters.AddWithValue("@RepeatSession4", RepeatSession4);
+                    dbCommand.Parameters.AddWithValue("@RepeatSessionName", RepeatSessionName);
                     dbCommand.Parameters.AddWithValue("@IndividualFollowup", IndividualFollowup);
                     dbCommand.Parameters.AddWithValue("@VirtualMDTReferral", VirtualMDTReferral);
+                    dbCommand.Parameters.AddWithValue("@Discharged", Discharged);
+                    dbCommand.Parameters.AddWithValue("@NotRequired", NotRequired);
+                    dbCommand.Parameters.AddWithValue("@ActivityStatusID", ActivityStatusID);
+                    dbCommand.Parameters.AddWithValue("@PathwayEventID", PathEventID);
+                    dbCommand.Parameters.AddWithValue("@DischargeComments", DischargeComments);
+                    dbCommand.Parameters.AddWithValue("@Comments", comments);
+                    dbCommand.Parameters.AddWithValue("@userID", userID);
+                    retVal = dbCommand.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    LogException(ex.Message, this.ToString(), "UpdateGroupSessions", System.DateTime.Now, userID);
+                }
+                finally
+                {
+                    dbCommand = null;
+                }
+            }
+            return retVal;
+        }
+
+        public int UpdateVirtualMDT(int? patientID, int? MRN, bool SurgicalMDT, bool FutureReview, bool FutureMedicalReview, bool RebookVMMDT, bool Discharged,
+            string DischargeComments, bool NotRequired, int ActivityStatusID, int PathwayEventID, string comments, int userID)
+        {
+            int retVal = 0;
+            if (patientID == null) patientID = 0;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand dbCommand = new SqlCommand("usp_UpdateBariatricVirtualMDT", connection);
+                connection.Open();
+                try
+                {
+                    dbCommand.CommandType = CommandType.StoredProcedure;
+                    dbCommand.Parameters.AddWithValue("@Patient_ID", patientID);
+                    dbCommand.Parameters.AddWithValue("@MRN", MRN);
+                    dbCommand.Parameters.AddWithValue("@SurgicalMDT", SurgicalMDT);
+                    dbCommand.Parameters.AddWithValue("@NotRequired", NotRequired);
+                    dbCommand.Parameters.AddWithValue("@ActivityStatusID", ActivityStatusID);
+                    dbCommand.Parameters.AddWithValue("@PathwayEventID", PathwayEventID);
+                    dbCommand.Parameters.AddWithValue("@FutureReview", FutureReview);
+                    dbCommand.Parameters.AddWithValue("@FutureMedicalReview", FutureMedicalReview);
+                    dbCommand.Parameters.AddWithValue("@RebookVMMDT", RebookVMMDT);
                     dbCommand.Parameters.AddWithValue("@Discharged", Discharged);
                     dbCommand.Parameters.AddWithValue("@DischargeComments", DischargeComments);
                     dbCommand.Parameters.AddWithValue("@Comments", comments);
@@ -17728,42 +17786,7 @@ namespace NHS.Data
             return retVal;
         }
 
-        public int UpdateVirtualMDT(int? patientID, int? MRN, bool SurgicalMDT, bool FutureReview, bool FutureMedicalReview, bool RebookVMMDT, bool Discharge, string comments, int userID)
-        {
-            int retVal = 0;
-            if (patientID == null) patientID = 0;
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                SqlCommand dbCommand = new SqlCommand("usp_UpdateBariatricVirtualMDT", connection);
-                connection.Open();
-                try
-                {
-                    dbCommand.CommandType = CommandType.StoredProcedure;
-                    dbCommand.Parameters.AddWithValue("@Patient_ID", patientID);
-                    dbCommand.Parameters.AddWithValue("@MRN", MRN);
-                    dbCommand.Parameters.AddWithValue("@SurgicalMDT", SurgicalMDT);
-                    dbCommand.Parameters.AddWithValue("@FutureReview", FutureReview);
-                    dbCommand.Parameters.AddWithValue("@FutureMedicalReview", FutureMedicalReview);
-                    dbCommand.Parameters.AddWithValue("@RebookVMMDT", RebookVMMDT);
-                    dbCommand.Parameters.AddWithValue("@Discharge", Discharge);
-                    dbCommand.Parameters.AddWithValue("@Comments", comments);
-                    dbCommand.Parameters.AddWithValue("@userID", userID);
-                    retVal = dbCommand.ExecuteNonQuery();
-                }
-                catch (Exception ex)
-                {
-                    LogException(ex.Message, this.ToString(), "UpdateGroupSessions", System.DateTime.Now, userID);
-                }
-                finally
-                {
-                    dbCommand = null;
-                }
-            }
-            return retVal;
-        }
-
-        public int UpdatePostOpMedical(int? patientID, int? MRN, bool Discharge, string comments, int userID)
+        public int UpdatePostOpMedical(int? patientID, int? MRN, bool Discharged, bool NotRequired, int ActivityStatusID, int PathwayEventID, string DischargeComments, string comments, int userID)
         {
             int retVal = 0;
             if (patientID == null) patientID = 0;
@@ -17777,7 +17800,11 @@ namespace NHS.Data
                     dbCommand.CommandType = CommandType.StoredProcedure;
                     dbCommand.Parameters.AddWithValue("@Patient_ID", patientID);
                     dbCommand.Parameters.AddWithValue("@MRN", MRN);
-                    dbCommand.Parameters.AddWithValue("@Discharge", Discharge);
+                    dbCommand.Parameters.AddWithValue("@Discharged", Discharged);
+                    dbCommand.Parameters.AddWithValue("@NotRequired", NotRequired);
+                    dbCommand.Parameters.AddWithValue("@ActivityStatusID", ActivityStatusID);
+                    dbCommand.Parameters.AddWithValue("@PathwayEventID", PathwayEventID);
+                    dbCommand.Parameters.AddWithValue("@DischargeComments", DischargeComments);
                     dbCommand.Parameters.AddWithValue("@Comments", comments);
                     dbCommand.Parameters.AddWithValue("@userID", userID);
                     retVal = dbCommand.ExecuteNonQuery();
@@ -17794,7 +17821,7 @@ namespace NHS.Data
             return retVal;
         }
 
-        public int UpdatePostOpDietician(int? patientID, int? MRN, bool Discharge, string comments, int userID)
+        public int UpdatePostOpDietician(int? patientID, int? MRN, bool Discharged, bool NotRequired, int ActivityStatusID, int PathwayEventID, string DischargeComments, string comments, int userID)
         {
             int retVal = 0;
             if (patientID == null) patientID = 0;
@@ -17808,7 +17835,11 @@ namespace NHS.Data
                     dbCommand.CommandType = CommandType.StoredProcedure;
                     dbCommand.Parameters.AddWithValue("@Patient_ID", patientID);
                     dbCommand.Parameters.AddWithValue("@MRN", MRN);
-                    dbCommand.Parameters.AddWithValue("@Discharge", Discharge);
+                    dbCommand.Parameters.AddWithValue("@Discharged", Discharged);
+                    dbCommand.Parameters.AddWithValue("@NotRequired", NotRequired);
+                    dbCommand.Parameters.AddWithValue("@ActivityStatusID", ActivityStatusID);
+                    dbCommand.Parameters.AddWithValue("@PathwayEventID", PathwayEventID);
+                    dbCommand.Parameters.AddWithValue("@DischargeComments", DischargeComments);
                     dbCommand.Parameters.AddWithValue("@Comments", comments);
                     dbCommand.Parameters.AddWithValue("@userID", userID);
                     retVal = dbCommand.ExecuteNonQuery();
@@ -17825,7 +17856,8 @@ namespace NHS.Data
             return retVal;
         }
 
-        public int UpdateSurgicalMDT(int? patientID, int? MRN, bool BookSurgery, bool FurtherSupport, bool Discharge, string comments, int userID)
+        public int UpdateSurgicalMDT(int? patientID, int? MRN, bool BookSurgery, bool NotRequired,  
+            bool FurtherSupport, bool Discharged, int ActivityStatusID, int PathwayEventID, string DischargeComments, string comments, int userID)
         {
             int retVal = 0;
             if (patientID == null) patientID = 0;
@@ -17840,8 +17872,12 @@ namespace NHS.Data
                     dbCommand.Parameters.AddWithValue("@Patient_ID", patientID);
                     dbCommand.Parameters.AddWithValue("@MRN", MRN);
                     dbCommand.Parameters.AddWithValue("@BookSurgery", BookSurgery);
+                    dbCommand.Parameters.AddWithValue("@NotRequired", NotRequired);
                     dbCommand.Parameters.AddWithValue("@FurtherSupport", FurtherSupport);
-                    dbCommand.Parameters.AddWithValue("@Discharge", Discharge);
+                    dbCommand.Parameters.AddWithValue("@Discharged", Discharged);
+                    dbCommand.Parameters.AddWithValue("@ActivityStatusID", ActivityStatusID);
+                    dbCommand.Parameters.AddWithValue("@PathwayEventID", PathwayEventID);
+                    dbCommand.Parameters.AddWithValue("@DischargeComments", DischargeComments);
                     dbCommand.Parameters.AddWithValue("@Comments", comments);
                     dbCommand.Parameters.AddWithValue("@userID", userID);
                     retVal = dbCommand.ExecuteNonQuery();
@@ -17859,7 +17895,7 @@ namespace NHS.Data
         }
 
         public int UpdateMedicalMDT(int? patientID, int? MRN, bool PsychologyRefSent, bool PsychologyAssessmentReceived, string PsychologyComments,
-            bool MedicalFollowUp, bool ReferToGroupSession, string MedicalFollowComments, string comments, int userID)
+            bool MedicalFollowUp, bool ReferToGroupSession, string MedicalFollowComments, int ActivityStatusID, int PathwayEventID, bool NotRequired, bool Discharged, string DischargeComments, string comments, int userID)
         {
             int retVal = 0;
             if (patientID == null) patientID = 0;
@@ -17879,7 +17915,12 @@ namespace NHS.Data
                     dbCommand.Parameters.AddWithValue("@MedicalFollowUp", MedicalFollowUp);
                     dbCommand.Parameters.AddWithValue("@ReferToGroupSession", ReferToGroupSession);
                     dbCommand.Parameters.AddWithValue("@MedicalFollowComments", MedicalFollowComments);
+                    dbCommand.Parameters.AddWithValue("@ActivityStatusID", ActivityStatusID);
+                    dbCommand.Parameters.AddWithValue("@PathwayEventID", PathwayEventID);
                     dbCommand.Parameters.AddWithValue("@Comments", comments);
+                    dbCommand.Parameters.AddWithValue("@NotRequired", NotRequired);
+                    dbCommand.Parameters.AddWithValue("@Discharged", Discharged);
+                    dbCommand.Parameters.AddWithValue("@DischargeComments", DischargeComments);
                     dbCommand.Parameters.AddWithValue("@userID", userID);
                     retVal = dbCommand.ExecuteNonQuery();
                 }
@@ -17895,7 +17936,43 @@ namespace NHS.Data
             return retVal;
         }
 
-        public int UpdateSurgery(int? patientID, int? MRN, bool SurgeryCompleted, string comments, int userID)
+        public int UpdatePsychoAssess(int? patientID, int? MRN, int ActivityStatusID, int PathwayEventID, bool NotRequired, bool Discharged, string DischargeComments, string comments, int userID)
+        {
+            int retVal = 0;
+            if (patientID == null) patientID = 0;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand dbCommand = new SqlCommand("usp_UpdateBariatricPsychologyAssess", connection);
+                connection.Open();
+                try
+                {
+                    dbCommand.CommandType = CommandType.StoredProcedure;
+                    dbCommand.Parameters.AddWithValue("@Patient_ID", patientID);
+                    dbCommand.Parameters.AddWithValue("@MRN", MRN);
+                    dbCommand.Parameters.AddWithValue("@ActivityStatusID", ActivityStatusID);
+                    dbCommand.Parameters.AddWithValue("@PathwayEventID", PathwayEventID);
+                    dbCommand.Parameters.AddWithValue("@Comments", comments);
+                    dbCommand.Parameters.AddWithValue("@NotRequired", NotRequired);
+                    dbCommand.Parameters.AddWithValue("@Discharged", Discharged);
+                    dbCommand.Parameters.AddWithValue("@DischargeComments", DischargeComments);
+                    dbCommand.Parameters.AddWithValue("@userID", userID);
+                    retVal = dbCommand.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    LogException(ex.Message, this.ToString(), "UpdatePsychoAssess", System.DateTime.Now, userID);
+                }
+                finally
+                {
+                    dbCommand = null;
+                }
+            }
+            return retVal;
+        }
+
+        public int UpdateSurgery(int? patientID, int? MRN, bool SurgeryCompleted, bool NotRequired, bool Discharged, string DischargeComments, int ActivityStatusID,
+            int PathwayEventID, string comments, int userID)
         {
             int retVal = 0;
             if (patientID == null) patientID = 0;
@@ -17910,6 +17987,11 @@ namespace NHS.Data
                     dbCommand.Parameters.AddWithValue("@Patient_ID", patientID);
                     dbCommand.Parameters.AddWithValue("@MRN", MRN);
                     dbCommand.Parameters.AddWithValue("@SurgeryCompleted", SurgeryCompleted);
+                    dbCommand.Parameters.AddWithValue("@NotRequired", NotRequired);
+                    dbCommand.Parameters.AddWithValue("@Discharged", Discharged);
+                    dbCommand.Parameters.AddWithValue("@DischargeComments", DischargeComments);
+                    dbCommand.Parameters.AddWithValue("@ActivityStatusID", ActivityStatusID);
+                    dbCommand.Parameters.AddWithValue("@PathwayEventID", PathwayEventID);
                     dbCommand.Parameters.AddWithValue("@Comments", comments);
                     dbCommand.Parameters.AddWithValue("@userID", userID);
                     retVal = dbCommand.ExecuteNonQuery();
@@ -18120,7 +18202,7 @@ namespace NHS.Data
             List<clsAppointments> appointments = new List<clsAppointments>();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlCommand dbCmd = new SqlCommand("usp_GetNurseAssessmentByID", connection);
+                SqlCommand dbCmd = new SqlCommand("usp_GetBariartricNurseAssessmentByID", connection);
                 connection.Open();
                 try
                 {
@@ -18147,10 +18229,26 @@ namespace NHS.Data
                             nurse.MRN = Convert.ToInt32(dbReader["MRN"]);
                         else
                             nurse.MRN = 0;
+                        if (dbReader["ActivityStatusID"] != DBNull.Value)
+                            nurse.ActivityStatusID = Convert.ToInt32(dbReader["ActivityStatusID"]);
+                        else
+                            nurse.ActivityStatusID = 0;
+                        if (dbReader["PathwayEventID"] != DBNull.Value)
+                            nurse.PathwayEventID = Convert.ToInt32(dbReader["PathwayEventID"]);
+                        else
+                            nurse.PathwayEventID = 0;
                         if (dbReader["AgreementReceived"] != DBNull.Value)
                             nurse.AgreementReceived = Convert.ToBoolean(dbReader["AgreementReceived"]);
                         else
                             nurse.AgreementReceived = false;
+                        if (dbReader["NotRequired"] != DBNull.Value)
+                            nurse.NotRequired = Convert.ToBoolean(dbReader["NotRequired"]);
+                        else
+                            nurse.NotRequired = false;
+                        if (dbReader["Discharged"] != DBNull.Value)
+                            nurse.Discharged = Convert.ToBoolean(dbReader["Discharged"]);
+                        else
+                            nurse.Discharged = false;
                         if (dbReader["CreatedDate"] != DBNull.Value)
                             nurse.CreatedDate = Convert.ToDateTime(dbReader["CreatedDate"]).ToString("dd/MM/yyyy HH:mm");
                         else
@@ -18159,10 +18257,22 @@ namespace NHS.Data
                             nurse.UpdatedDate = Convert.ToDateTime(dbReader["CreatedDate"]).ToString("dd/MM/yyyy HH:mm");
                         else
                             nurse.UpdatedDate = "";
+                        if (dbReader["DischargedDate"] != DBNull.Value)
+                            nurse.DischargedDate = Convert.ToDateTime(dbReader["DischargedDate"]).ToString("dd/MM/yyyy HH:mm");
+                        else
+                            nurse.DischargedDate = "";
+                        if (dbReader["DischargedBy"] != DBNull.Value)
+                            nurse.DischargedBy = Convert.ToString(dbReader["DischargedBy"]);
+                        else
+                            nurse.DischargedBy = "";
                         if (dbReader["UpdatedBy"] != DBNull.Value)
                             nurse.UpdatedBy = Convert.ToString(dbReader["UpdatedBy"]);
                         else
                             nurse.UpdatedBy = "";
+                        if (dbReader["NHSNumber"] != DBNull.Value)
+                            nurse.NHSNumber = Convert.ToString(dbReader["NHSNumber"]);
+                        else
+                            nurse.NHSNumber = "";
                         if (dbReader["CreatedBy"] != DBNull.Value)
                             nurse.CreatedBy = Convert.ToString(dbReader["CreatedBy"]);
                         else
@@ -18171,6 +18281,10 @@ namespace NHS.Data
                             nurse.Comments = Convert.ToString(dbReader["Comments"]);
                         else
                             nurse.Comments = "";
+                        if (dbReader["DischargeComments"] != DBNull.Value)
+                            nurse.DischargeComments = Convert.ToString(dbReader["DischargeComments"]);
+                        else
+                            nurse.DischargeComments = "";
                     }
                     if (dbReader.NextResult())
                     {
@@ -18212,7 +18326,7 @@ namespace NHS.Data
             List<clsAppointments> appointments = new List<clsAppointments>();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlCommand dbCmd = new SqlCommand("usp_GetVirtualMDTByID", connection);
+                SqlCommand dbCmd = new SqlCommand("usp_GetBariatricVirtualMDTByID", connection);
                 connection.Open();
                 try
                 {
@@ -18235,10 +18349,22 @@ namespace NHS.Data
                             nurse.PatientName = Convert.ToString(dbReader["PatientName"]);
                         else
                             nurse.PatientName = "";
+                        if (dbReader["NHSNumber"] != DBNull.Value)
+                            nurse.NHSNumber = Convert.ToString(dbReader["NHSNumber"]);
+                        else
+                            nurse.NHSNumber = "";
                         if (dbReader["MRN"] != DBNull.Value)
                             nurse.MRN = Convert.ToInt32(dbReader["MRN"]);
                         else
                             nurse.MRN = 0;
+                        if (dbReader["ActivityStatusID"] != DBNull.Value)
+                            nurse.ActivityStatusID = Convert.ToInt32(dbReader["ActivityStatusID"]);
+                        else
+                            nurse.ActivityStatusID = 0;
+                        if (dbReader["PathwayEventID"] != DBNull.Value)
+                            nurse.PathwayEventID = Convert.ToInt32(dbReader["PathwayEventID"]);
+                        else
+                            nurse.PathwayEventID = 0;
                         if (dbReader["SurgicalMDT"] != DBNull.Value)
                             nurse.SurgicalMDT = Convert.ToBoolean(dbReader["SurgicalMDT"]);
                         else
@@ -18255,14 +18381,22 @@ namespace NHS.Data
                             nurse.RebookVMMDT = Convert.ToBoolean(dbReader["RebookVMMDT"]);
                         else
                             nurse.RebookVMMDT = false;
-                        if (dbReader["Discharge"] != DBNull.Value)
-                            nurse.Discharge = Convert.ToBoolean(dbReader["Discharge"]);
+                        if (dbReader["Discharged"] != DBNull.Value)
+                            nurse.Discharged = Convert.ToBoolean(dbReader["Discharged"]);
                         else
-                            nurse.Discharge = false;
+                            nurse.Discharged = false;
+                        if (dbReader["NotRequired"] != DBNull.Value)
+                            nurse.NotRequired = Convert.ToBoolean(dbReader["NotRequired"]);
+                        else
+                            nurse.NotRequired = false;
                         if (dbReader["CreatedDate"] != DBNull.Value)
                             nurse.CreatedDate = Convert.ToDateTime(dbReader["CreatedDate"]).ToString("dd/MM/yyyy HH:mm");
                         else
                             nurse.CreatedDate = "";
+                        if (dbReader["DischargedDate"] != DBNull.Value)
+                            nurse.DischargedDate = Convert.ToDateTime(dbReader["DischargedDate"]).ToString("dd/MM/yyyy HH:mm");
+                        else
+                            nurse.DischargedDate = "";
                         if (dbReader["UpdatedDate"] != DBNull.Value)
                             nurse.UpdatedDate = Convert.ToDateTime(dbReader["CreatedDate"]).ToString("dd/MM/yyyy HH:mm");
                         else
@@ -18275,10 +18409,18 @@ namespace NHS.Data
                             nurse.CreatedBy = Convert.ToString(dbReader["CreatedBy"]);
                         else
                             nurse.CreatedBy = "";
+                        if (dbReader["DischargedBy"] != DBNull.Value)
+                            nurse.DischargedBy = Convert.ToString(dbReader["DischargedBy"]);
+                        else
+                            nurse.DischargedBy = "";
                         if (dbReader["Comments"] != DBNull.Value)
                             nurse.Comments = Convert.ToString(dbReader["Comments"]);
                         else
                             nurse.Comments = "";
+                        if (dbReader["DischargeComments"] != DBNull.Value)
+                            nurse.DischargeComments = Convert.ToString(dbReader["DischargeComments"]);
+                        else
+                            nurse.DischargeComments = "";
                     }
                     if (dbReader.NextResult())
                     {
@@ -18320,7 +18462,7 @@ namespace NHS.Data
             List<clsAppointments> appointments = new List<clsAppointments>();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlCommand dbCmd = new SqlCommand("usp_GetSurgicalMDTByID", connection);
+                SqlCommand dbCmd = new SqlCommand("usp_GetBariartricSurgicalMDTByID", connection);
                 connection.Open();
                 try
                 {
@@ -18343,20 +18485,36 @@ namespace NHS.Data
                             nurse.PatientName = Convert.ToString(dbReader["PatientName"]);
                         else
                             nurse.PatientName = "";
+                        if (dbReader["NHSNumber"] != DBNull.Value)
+                            nurse.NHSNumber = Convert.ToString(dbReader["NHSNumber"]);
+                        else
+                            nurse.NHSNumber = "";
                         if (dbReader["MRN"] != DBNull.Value)
                             nurse.MRN = Convert.ToInt32(dbReader["MRN"]);
                         else
                             nurse.MRN = 0;
+                        if (dbReader["ActivityStatusID"] != DBNull.Value)
+                            nurse.ActivityStatusID = Convert.ToInt32(dbReader["ActivityStatusID"]);
+                        else
+                            nurse.ActivityStatusID = 0;
+                        if (dbReader["PathwayEventID"] != DBNull.Value)
+                            nurse.PathwayEventID = Convert.ToInt32(dbReader["PathwayEventID"]);
+                        else
+                            nurse.PathwayEventID = 0;
                         if (dbReader["BookSurgery"] != DBNull.Value)
                             nurse.BookSurgery = Convert.ToBoolean(dbReader["BookSurgery"]);
                         else
                             nurse.BookSurgery = false;
+                        if (dbReader["NotRequired"] != DBNull.Value)
+                            nurse.NotRequired = Convert.ToBoolean(dbReader["NotRequired"]);
+                        else
+                            nurse.NotRequired = false;
                         if (dbReader["FurtherSupport"] != DBNull.Value)
                             nurse.FurtherSupport = Convert.ToBoolean(dbReader["FurtherSupport"]);
                         else
                             nurse.FurtherSupport = false;
-                        if (dbReader["Discharge"] != DBNull.Value)
-                            nurse.Discharge = Convert.ToBoolean(dbReader["Discharge"]);
+                        if (dbReader["Discharged"] != DBNull.Value)
+                            nurse.Discharged = Convert.ToBoolean(dbReader["Discharged"]);
                         else
                             nurse.Discharge = false;
                         if (dbReader["CreatedDate"] != DBNull.Value)
@@ -18367,6 +18525,10 @@ namespace NHS.Data
                             nurse.UpdatedDate = Convert.ToDateTime(dbReader["CreatedDate"]).ToString("dd/MM/yyyy HH:mm");
                         else
                             nurse.UpdatedDate = "";
+                        if (dbReader["DischargedDate"] != DBNull.Value)
+                            nurse.DischargedDate = Convert.ToDateTime(dbReader["DischargedDate"]).ToString("dd/MM/yyyy HH:mm");
+                        else
+                            nurse.DischargedDate = "";
                         if (dbReader["UpdatedBy"] != DBNull.Value)
                             nurse.UpdatedBy = Convert.ToString(dbReader["UpdatedBy"]);
                         else
@@ -18375,10 +18537,18 @@ namespace NHS.Data
                             nurse.CreatedBy = Convert.ToString(dbReader["CreatedBy"]);
                         else
                             nurse.CreatedBy = "";
+                        if (dbReader["DischargedBy"] != DBNull.Value)
+                            nurse.DischargedBy = Convert.ToString(dbReader["DischargedBy"]);
+                        else
+                            nurse.DischargedBy = "";
                         if (dbReader["Comments"] != DBNull.Value)
                             nurse.Comments = Convert.ToString(dbReader["Comments"]);
                         else
                             nurse.Comments = "";
+                        if (dbReader["DischargeComments"] != DBNull.Value)
+                            nurse.DischargeComments = Convert.ToString(dbReader["DischargeComments"]);
+                        else
+                            nurse.DischargeComments = "";
                     }
                     if (dbReader.NextResult())
                     {
@@ -18420,7 +18590,7 @@ namespace NHS.Data
             List<clsAppointments> appointments = new List<clsAppointments>();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlCommand dbCmd = new SqlCommand("usp_GetGetMedicalMDTByID", connection);
+                SqlCommand dbCmd = new SqlCommand("usp_GetBariatricMedicalMDTByID", connection);
                 connection.Open();
                 try
                 {
@@ -18447,10 +18617,26 @@ namespace NHS.Data
                             nurse.MRN = Convert.ToInt32(dbReader["MRN"]);
                         else
                             nurse.MRN = 0;
+                        if (dbReader["ActivityStatusID"] != DBNull.Value)
+                            nurse.ActivityStatusID = Convert.ToInt32(dbReader["ActivityStatusID"]);
+                        else
+                            nurse.ActivityStatusID = 0;
+                        if (dbReader["PathwayEventID"] != DBNull.Value)
+                            nurse.PathwayEventID = Convert.ToInt32(dbReader["PathwayEventID"]);
+                        else
+                            nurse.PathwayEventID = 0;
                         if (dbReader["PsychologyRefSent"] != DBNull.Value)
                             nurse.PsychologyRefSent = Convert.ToBoolean(dbReader["PsychologyRefSent"]);
                         else
                             nurse.PsychologyRefSent = false;
+                        if (dbReader["NotRequired"] != DBNull.Value)
+                            nurse.NotRequired = Convert.ToBoolean(dbReader["NotRequired"]);
+                        else
+                            nurse.NotRequired = false;
+                        if (dbReader["Discharged"] != DBNull.Value)
+                            nurse.Discharged = Convert.ToBoolean(dbReader["Discharged"]);
+                        else
+                            nurse.Discharged = false;
                         if (dbReader["PsychologyAssessmentReceived"] != DBNull.Value)
                             nurse.PsychologyAssessmentReceived = Convert.ToBoolean(dbReader["PsychologyAssessmentReceived"]);
                         else
@@ -18479,6 +18665,10 @@ namespace NHS.Data
                             nurse.UpdatedDate = Convert.ToDateTime(dbReader["CreatedDate"]).ToString("dd/MM/yyyy HH:mm");
                         else
                             nurse.UpdatedDate = "";
+                        if (dbReader["DischargedDate"] != DBNull.Value)
+                            nurse.DischargedDate = Convert.ToDateTime(dbReader["DischargedDate"]).ToString("dd/MM/yyyy HH:mm");
+                        else
+                            nurse.DischargedDate = "";
                         if (dbReader["UpdatedBy"] != DBNull.Value)
                             nurse.UpdatedBy = Convert.ToString(dbReader["UpdatedBy"]);
                         else
@@ -18491,6 +18681,138 @@ namespace NHS.Data
                             nurse.Comments = Convert.ToString(dbReader["Comments"]);
                         else
                             nurse.Comments = "";
+                        if (dbReader["DischargeComments"] != DBNull.Value)
+                            nurse.DischargeComments = Convert.ToString(dbReader["DischargeComments"]);
+                        else
+                            nurse.DischargeComments = "";
+                        if (dbReader["NHSNumber"] != DBNull.Value)
+                            nurse.NHSNumber = Convert.ToString(dbReader["NHSNumber"]);
+                        else
+                            nurse.NHSNumber = "";
+                        if (dbReader["DischargedBy"] != DBNull.Value)
+                            nurse.DischargedBy = Convert.ToString(dbReader["DischargedBy"]);
+                        else
+                            nurse.DischargedBy = "";
+                    }
+                    if (dbReader.NextResult())
+                    {
+                        while (dbReader.Read())
+                        {
+                            clsAppointments appoinment = new clsAppointments();
+                            if (dbReader["AppointmentDate"] != null)
+                                appoinment.AppointmentDate = Convert.ToDateTime(dbReader["AppointmentDate"]).ToString("dd/MM/yyyy HH:mm");
+                            else
+                                appoinment.AppointmentDate = "";
+
+                            if (dbReader["Outcome"] != null)
+                                appoinment.Outcome = Convert.ToString(dbReader["Outcome"]);
+                            else
+                                appoinment.Outcome = "";
+                            appointments.Add(appoinment);
+                        }
+                    }
+                    nurse.PastAppointments = appointments;
+                }
+                catch (Exception ex)
+                {
+                    LogException(ex.Message, this.ToString(), "GetDomainName", System.DateTime.Now, userID);
+                }
+                finally
+                {
+                    if (!dbReader.IsClosed)
+                        dbReader.Close();
+                    dbCmd = null;
+                }
+            }
+            return nurse;
+        }
+
+        public clsPsychologyAssess GetPsychologyAssessByID(int patientID, int MRN, int userID)
+        {
+            SqlDataReader dbReader = null;
+            clsPsychologyAssess nurse = new clsPsychologyAssess();
+            List<clsAppointments> appointments = new List<clsAppointments>();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand dbCmd = new SqlCommand("usp_GetBariatricPsychologyAssessByID", connection);
+                connection.Open();
+                try
+                {
+
+                    dbCmd.CommandType = CommandType.StoredProcedure;
+                    dbCmd.Parameters.AddWithValue("@PatientID", patientID);
+                    dbCmd.Parameters.AddWithValue("@MRN", MRN);
+                    dbReader = dbCmd.ExecuteReader();
+                    while (dbReader.Read())
+                    {
+                        if (dbReader["ID"] != DBNull.Value)
+                            nurse.ID = Convert.ToInt32(dbReader["ID"]);
+                        else
+                            nurse.ID = 0;
+                        if (dbReader["Patient_ID"] != DBNull.Value)
+                            nurse.Patient_ID = Convert.ToInt32(dbReader["Patient_ID"]);
+                        else
+                            nurse.Patient_ID = 0;
+                        if (dbReader["PatientName"] != DBNull.Value)
+                            nurse.PatientName = Convert.ToString(dbReader["PatientName"]);
+                        else
+                            nurse.PatientName = "";
+                        if (dbReader["NHSNumber"] != DBNull.Value)
+                            nurse.NHSNumber = Convert.ToString(dbReader["NHSNumber"]);
+                        else
+                            nurse.NHSNumber = "";
+                        if (dbReader["MRN"] != DBNull.Value)
+                            nurse.MRN = Convert.ToInt32(dbReader["MRN"]);
+                        else
+                            nurse.MRN = 0;
+                        if (dbReader["ActivityStatusID"] != DBNull.Value)
+                            nurse.ActivityStatusID = Convert.ToInt32(dbReader["ActivityStatusID"]);
+                        else
+                            nurse.ActivityStatusID = 0;
+                        if (dbReader["PathwayEventID"] != DBNull.Value)
+                            nurse.PathwayEventID = Convert.ToInt32(dbReader["PathwayEventID"]);
+                        else
+                            nurse.PathwayEventID = 0;
+                        if (dbReader["NotRequired"] != DBNull.Value)
+                            nurse.NotRequired = Convert.ToBoolean(dbReader["NotRequired"]);
+                        else
+                            nurse.NotRequired = false;
+                        if (dbReader["Discharged"] != DBNull.Value)
+                            nurse.Discharged = Convert.ToBoolean(dbReader["Discharged"]);
+                        else
+                            nurse.Discharged = false;
+                        if (dbReader["CreatedDate"] != DBNull.Value)
+                            nurse.CreatedDate = Convert.ToDateTime(dbReader["CreatedDate"]).ToString("dd/MM/yyyy HH:mm");
+                        else
+                            nurse.CreatedDate = "";
+                        if (dbReader["UpdatedDate"] != DBNull.Value)
+                            nurse.UpdatedDate = Convert.ToDateTime(dbReader["CreatedDate"]).ToString("dd/MM/yyyy HH:mm");
+                        else
+                            nurse.UpdatedDate = "";
+                        if (dbReader["DischargedDate"] != DBNull.Value)
+                            nurse.DischargedDate = Convert.ToDateTime(dbReader["DischargedDate"]).ToString("dd/MM/yyyy HH:mm");
+                        else
+                            nurse.DischargedDate = "";
+                        if (dbReader["UpdatedBy"] != DBNull.Value)
+                            nurse.UpdatedBy = Convert.ToString(dbReader["UpdatedBy"]);
+                        else
+                            nurse.UpdatedBy = "";
+                        if (dbReader["CreatedBy"] != DBNull.Value)
+                            nurse.CreatedBy = Convert.ToString(dbReader["CreatedBy"]);
+                        else
+                            nurse.CreatedBy = "";
+                        if (dbReader["Comments"] != DBNull.Value)
+                            nurse.Comments = Convert.ToString(dbReader["Comments"]);
+                        else
+                            nurse.Comments = "";
+                        if (dbReader["DischargeComments"] != DBNull.Value)
+                            nurse.DischargeComments = Convert.ToString(dbReader["DischargeComments"]);
+                        else
+                            nurse.DischargeComments = "";
+                        if (dbReader["DischargedBy"] != DBNull.Value)
+                            nurse.DischargedBy = Convert.ToString(dbReader["DischargedBy"]);
+                        else
+                            nurse.DischargedBy = "";
                     }
                     if (dbReader.NextResult())
                     {
@@ -18532,7 +18854,7 @@ namespace NHS.Data
             List<clsAppointments> appointments = new List<clsAppointments>();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlCommand dbCmd = new SqlCommand("usp_GetSurgeryByID", connection);
+                SqlCommand dbCmd = new SqlCommand("usp_GetBariartricSurgeryByID", connection);
                 connection.Open();
                 try
                 {
@@ -18559,6 +18881,26 @@ namespace NHS.Data
                             nurse.MRN = Convert.ToInt32(dbReader["MRN"]);
                         else
                             nurse.MRN = 0;
+                        if (dbReader["NHSNumber"] != DBNull.Value)
+                            nurse.NHSNumber = Convert.ToString(dbReader["NHSNumber"]);
+                        else
+                            nurse.NHSNumber = "";
+                        if (dbReader["ActivityStatusID"] != DBNull.Value)
+                            nurse.ActivityStatusID = Convert.ToInt32(dbReader["ActivityStatusID"]);
+                        else
+                            nurse.ActivityStatusID = 0;
+                        if (dbReader["PathwayEventID"] != DBNull.Value)
+                            nurse.PathwayEventID = Convert.ToInt32(dbReader["PathwayEventID"]);
+                        else
+                            nurse.PathwayEventID = 0;
+                        if (dbReader["NotRequired"] != DBNull.Value)
+                            nurse.NotRequired = Convert.ToBoolean(dbReader["NotRequired"]);
+                        else
+                            nurse.NotRequired = false;
+                        if (dbReader["Discharged"] != DBNull.Value)
+                            nurse.Discharged = Convert.ToBoolean(dbReader["Discharged"]);
+                        else
+                            nurse.Discharged = false;
                         if (dbReader["SurgeryCompleted"] != DBNull.Value)
                             nurse.SurgeryCompleted = Convert.ToBoolean(dbReader["SurgeryCompleted"]);
                         else
@@ -18571,10 +18913,18 @@ namespace NHS.Data
                             nurse.UpdatedDate = Convert.ToDateTime(dbReader["CreatedDate"]).ToString("dd/MM/yyyy HH:mm");
                         else
                             nurse.UpdatedDate = "";
+                        if (dbReader["DischargedDate"] != DBNull.Value)
+                            nurse.DischargedDate = Convert.ToDateTime(dbReader["DischargedDate"]).ToString("dd/MM/yyyy HH:mm");
+                        else
+                            nurse.DischargedDate = "";
                         if (dbReader["UpdatedBy"] != DBNull.Value)
                             nurse.UpdatedBy = Convert.ToString(dbReader["UpdatedBy"]);
                         else
                             nurse.UpdatedBy = "";
+                        if (dbReader["DischargedBy"] != DBNull.Value)
+                            nurse.DischargedBy = Convert.ToString(dbReader["DischargedBy"]);
+                        else
+                            nurse.DischargedBy = "";
                         if (dbReader["CreatedBy"] != DBNull.Value)
                             nurse.CreatedBy = Convert.ToString(dbReader["CreatedBy"]);
                         else
@@ -18583,6 +18933,10 @@ namespace NHS.Data
                             nurse.Comments = Convert.ToString(dbReader["Comments"]);
                         else
                             nurse.Comments = "";
+                        if (dbReader["DischargeComments"] != DBNull.Value)
+                            nurse.DischargeComments = Convert.ToString(dbReader["DischargeComments"]);
+                        else
+                            nurse.DischargeComments = "";
                     }
                     if (dbReader.NextResult())
                     {
@@ -18624,7 +18978,7 @@ namespace NHS.Data
             List<clsAppointments> appointments = new List<clsAppointments>();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlCommand dbCmd = new SqlCommand("usp_GetPostOpMedicalByID", connection);
+                SqlCommand dbCmd = new SqlCommand("usp_GetBariartricPostOpMedicalByID", connection);
                 connection.Open();
                 try
                 {
@@ -18651,10 +19005,26 @@ namespace NHS.Data
                             nurse.MRN = Convert.ToInt32(dbReader["MRN"]);
                         else
                             nurse.MRN = 0;
-                        if (dbReader["Discharge"] != DBNull.Value)
-                            nurse.Discharge = Convert.ToBoolean(dbReader["Discharge"]);
+                        if (dbReader["NHSNumber"] != DBNull.Value)
+                            nurse.NHSNumber = Convert.ToString(dbReader["NHSNumber"]);
                         else
-                            nurse.Discharge = false;
+                            nurse.NHSNumber = "";
+                        if (dbReader["ActivityStatusID"] != DBNull.Value)
+                            nurse.ActivityStatusID = Convert.ToInt32(dbReader["ActivityStatusID"]);
+                        else
+                            nurse.ActivityStatusID = 0;
+                        if (dbReader["ActivityStatusID"] != DBNull.Value)
+                            nurse.PathwayEventID = Convert.ToInt32(dbReader["ActivityStatusID"]);
+                        else
+                            nurse.ActivityStatusID = 0;
+                        if (dbReader["Discharged"] != DBNull.Value)
+                            nurse.Discharged = Convert.ToBoolean(dbReader["Discharged"]);
+                        else
+                            nurse.Discharged = false;
+                        if (dbReader["NotRequired"] != DBNull.Value)
+                            nurse.NotRequired = Convert.ToBoolean(dbReader["NotRequired"]);
+                        else
+                            nurse.NotRequired = false;
                         if (dbReader["CreatedDate"] != DBNull.Value)
                             nurse.CreatedDate = Convert.ToDateTime(dbReader["CreatedDate"]).ToString("dd/MM/yyyy HH:mm");
                         else
@@ -18663,6 +19033,10 @@ namespace NHS.Data
                             nurse.UpdatedDate = Convert.ToDateTime(dbReader["CreatedDate"]).ToString("dd/MM/yyyy HH:mm");
                         else
                             nurse.UpdatedDate = "";
+                        if (dbReader["DischargedDate"] != DBNull.Value)
+                            nurse.DischargedDate = Convert.ToDateTime(dbReader["DischargedDate"]).ToString("dd/MM/yyyy HH:mm");
+                        else
+                            nurse.DischargedDate = "";
                         if (dbReader["UpdatedBy"] != DBNull.Value)
                             nurse.UpdatedBy = Convert.ToString(dbReader["UpdatedBy"]);
                         else
@@ -18671,10 +19045,18 @@ namespace NHS.Data
                             nurse.CreatedBy = Convert.ToString(dbReader["CreatedBy"]);
                         else
                             nurse.CreatedBy = "";
+                        if (dbReader["DischargedBy"] != DBNull.Value)
+                            nurse.DischargedBy = Convert.ToString(dbReader["DischargedBy"]);
+                        else
+                            nurse.DischargedBy = "";
                         if (dbReader["Comments"] != DBNull.Value)
                             nurse.Comments = Convert.ToString(dbReader["Comments"]);
                         else
                             nurse.Comments = "";
+                        if (dbReader["DischargeComments"] != DBNull.Value)
+                            nurse.DischargeComments = Convert.ToString(dbReader["DischargeComments"]);
+                        else
+                            nurse.DischargeComments = "";
                     }
                     if (dbReader.NextResult())
                     {
@@ -18716,7 +19098,7 @@ namespace NHS.Data
             List<clsAppointments> appointments = new List<clsAppointments>();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlCommand dbCmd = new SqlCommand("usp_GetPostOpDieticianByID", connection);
+                SqlCommand dbCmd = new SqlCommand("usp_GetBariartricPostOpDieticianByID", connection);
                 connection.Open();
                 try
                 {
@@ -18735,6 +19117,10 @@ namespace NHS.Data
                             nurse.Patient_ID = Convert.ToInt32(dbReader["Patient_ID"]);
                         else
                             nurse.Patient_ID = 0;
+                        if (dbReader["NHSNumber"] != DBNull.Value)
+                            nurse.NHSNumber = Convert.ToString(dbReader["NHSNumber"]);
+                        else
+                            nurse.NHSNumber = "";
                         if (dbReader["PatientName"] != DBNull.Value)
                             nurse.PatientName = Convert.ToString(dbReader["PatientName"]);
                         else
@@ -18743,14 +19129,30 @@ namespace NHS.Data
                             nurse.MRN = Convert.ToInt32(dbReader["MRN"]);
                         else
                             nurse.MRN = 0;
-                        if (dbReader["Discharge"] != DBNull.Value)
-                            nurse.Discharge = Convert.ToBoolean(dbReader["Discharge"]);
+                        if (dbReader["ActivityStatusID"] != DBNull.Value)
+                            nurse.ActivityStatusID = Convert.ToInt32(dbReader["ActivityStatusID"]);
                         else
-                            nurse.Discharge = false;
+                            nurse.ActivityStatusID = 0;
+                        if (dbReader["PathwayEventID"] != DBNull.Value)
+                            nurse.PathwayEventID = Convert.ToInt32(dbReader["PathwayEventID"]);
+                        else
+                            nurse.PathwayEventID = 0;
+                        if (dbReader["Discharged"] != DBNull.Value)
+                            nurse.Discharged = Convert.ToBoolean(dbReader["Discharged"]);
+                        else
+                            nurse.Discharged = false;
+                        if (dbReader["NotRequired"] != DBNull.Value)
+                            nurse.NotRequired = Convert.ToBoolean(dbReader["NotRequired"]);
+                        else
+                            nurse.NotRequired = false;
                         if (dbReader["CreatedDate"] != DBNull.Value)
                             nurse.CreatedDate = Convert.ToDateTime(dbReader["CreatedDate"]).ToString("dd/MM/yyyy HH:mm");
                         else
                             nurse.CreatedDate = "";
+                        if (dbReader["DischargedDate"] != DBNull.Value)
+                            nurse.DischargedDate = Convert.ToDateTime(dbReader["DischargedDate"]).ToString("dd/MM/yyyy HH:mm");
+                        else
+                            nurse.DischargedDate = "";
                         if (dbReader["UpdatedDate"] != DBNull.Value)
                             nurse.UpdatedDate = Convert.ToDateTime(dbReader["CreatedDate"]).ToString("dd/MM/yyyy HH:mm");
                         else
@@ -18759,6 +19161,10 @@ namespace NHS.Data
                             nurse.UpdatedBy = Convert.ToString(dbReader["UpdatedBy"]);
                         else
                             nurse.UpdatedBy = "";
+                        if (dbReader["DischargedBy"] != DBNull.Value)
+                            nurse.DischargedBy = Convert.ToString(dbReader["DischargedBy"]);
+                        else
+                            nurse.DischargedBy = "";
                         if (dbReader["CreatedBy"] != DBNull.Value)
                             nurse.CreatedBy = Convert.ToString(dbReader["CreatedBy"]);
                         else
@@ -18767,6 +19173,10 @@ namespace NHS.Data
                             nurse.Comments = Convert.ToString(dbReader["Comments"]);
                         else
                             nurse.Comments = "";
+                        if (dbReader["DischargeComments"] != DBNull.Value)
+                            nurse.DischargeComments = Convert.ToString(dbReader["DischargeComments"]);
+                        else
+                            nurse.DischargeComments = "";
                     }
                     if (dbReader.NextResult())
                     {
@@ -18808,7 +19218,7 @@ namespace NHS.Data
             List<clsAppointments> appointments = new List<clsAppointments>();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlCommand dbCmd = new SqlCommand("usp_GetGroupSessionsByID", connection);
+                SqlCommand dbCmd = new SqlCommand("usp_GetBariatricGroupSessionsByID", connection);
                 connection.Open();
                 try
                 {
@@ -18831,10 +19241,22 @@ namespace NHS.Data
                             nurse.PatientName = Convert.ToString(dbReader["PatientName"]);
                         else
                             nurse.PatientName = "";
+                        if (dbReader["NHSNumber"] != DBNull.Value)
+                            nurse.NHSNumber = Convert.ToString(dbReader["NHSNumber"]);
+                        else
+                            nurse.NHSNumber = "";
                         if (dbReader["MRN"] != DBNull.Value)
                             nurse.MRN = Convert.ToInt32(dbReader["MRN"]);
                         else
                             nurse.MRN = 0;
+                        if (dbReader["ActivityStatusID"] != DBNull.Value)
+                            nurse.ActivityStatusID = Convert.ToInt32(dbReader["ActivityStatusID"]);
+                        else
+                            nurse.ActivityStatusID = 0;
+                        if (dbReader["PathwayEventID"] != DBNull.Value)
+                            nurse.PathwayEventID = Convert.ToInt32(dbReader["PathwayEventID"]);
+                        else
+                            nurse.PathwayEventID = 0;
                         if (dbReader["Group1Comments"] != DBNull.Value)
                             nurse.Group1Comments = Convert.ToString(dbReader["Group1Comments"]);
                         else
@@ -18855,22 +19277,14 @@ namespace NHS.Data
                             nurse.RepeatSession = Convert.ToBoolean(dbReader["RepeatSession"]);
                         else
                             nurse.RepeatSession = false;
-                        if (dbReader["RepeatSession1"] != DBNull.Value)
-                            nurse.RepeatSession1 = Convert.ToBoolean(dbReader["RepeatSession1"]);
+                        if (dbReader["RepeatSessionName"] != DBNull.Value)
+                            nurse.RepeatSessionName = Convert.ToString(dbReader["RepeatSessionName"]);
                         else
-                            nurse.RepeatSession1 = false;
-                        if (dbReader["RepeatSession2"] != DBNull.Value)
-                            nurse.RepeatSession2 = Convert.ToBoolean(dbReader["RepeatSession2"]);
+                            nurse.RepeatSessionName = "";
+                        if (dbReader["NotRequired"] != DBNull.Value)
+                            nurse.NotRequired = Convert.ToBoolean(dbReader["NotRequired"]);
                         else
-                            nurse.RepeatSession2 = false;
-                        if (dbReader["RepeatSession3"] != DBNull.Value)
-                            nurse.RepeatSession3 = Convert.ToBoolean(dbReader["RepeatSession3"]);
-                        else
-                            nurse.RepeatSession3 = false;
-                        if (dbReader["RepeatSession4"] != DBNull.Value)
-                            nurse.RepeatSession4 = Convert.ToBoolean(dbReader["RepeatSession4"]);
-                        else
-                            nurse.RepeatSession4 = false;
+                            nurse.NotRequired = false;                        
                         if (dbReader["VirtualMDTReferral"] != DBNull.Value)
                             nurse.VirtualMDTReferral = Convert.ToBoolean(dbReader["VirtualMDTReferral"]);
                         else
@@ -18887,6 +19301,14 @@ namespace NHS.Data
                             nurse.DischargeComments = Convert.ToString(dbReader["DischargeComments"]);
                         else
                             nurse.DischargeComments = "";
+                        if (dbReader["DischargedDate"] != DBNull.Value)
+                            nurse.DischargedDate = Convert.ToDateTime(dbReader["DischargedDate"]).ToString("dd/MM/yyyy HH:mm");
+                        else
+                            nurse.DischargedDate = "";
+                        if (dbReader["DischargedBy"] != DBNull.Value)
+                            nurse.DischargedBy = Convert.ToString(dbReader["DischargedBy"]);
+                        else
+                            nurse.DischargedBy = "";
                         if (dbReader["CreatedDate"] != DBNull.Value)
                             nurse.CreatedDate = Convert.ToDateTime(dbReader["CreatedDate"]).ToString("dd/MM/yyyy HH:mm");
                         else

@@ -1054,6 +1054,7 @@
     <Content Include="Views\Home\PostOpMedical.cshtml" />
     <Content Include="Views\Home\PostOpDietician.cshtml" />
     <Content Include="Views\Shared\_BariatricsPageControl.cshtml" />
+    <Content Include="Views\Home\PsychologyAssess.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

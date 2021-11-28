@@ -15,6 +15,12 @@ namespace NHS.Common
     {
         public int ID { get; set; }
 
+        public bool NotRequired { get; set; }
+
+        public int ActivityStatusID { get; set; }
+
+        public int PathwayEventID { get; set; }
+    
         public int Patient_ID { get; set; }
 
         public string PatientName { get; set; }
@@ -30,8 +36,17 @@ namespace NHS.Common
         public string CreatedBy { get; set; }
 
         public string Comments { get; set; }
+        public string NHSNumber { get; set; }
 
         public bool SurgeryCompleted { get; set; }
+
+        public bool Discharged { get; set; }
+
+        public string DischargeComments { get; set; }
+
+        public string DischargedDate { get; set; }
+
+        public string DischargedBy { get; set; }
 
         public List<clsAppointments> PastAppointments { get; set; }
     }
@@ -40,7 +55,22 @@ namespace NHS.Common
     {
         public int ID { get; set; }
 
+        public int ActivityStatusID { get; set; }
+
+        public int PathwayEventID { get; set; }
+
+        public bool Discharged { get; set; }
+
+        public bool NotRequired { get; set; }
+
+        public string DischargeComments { get; set; }
+
+        public string DischargedBy { get; set; }
+
+        public string DischargedDate { get; set; }
+
         public int Patient_ID { get; set; }
+        public string NHSNumber { get; set; }
 
         public string PatientName { get; set; }
 
@@ -56,7 +86,6 @@ namespace NHS.Common
 
         public string Comments { get; set; }
 
-        public bool Discharge { get; set; }
 
         public List<clsAppointments> PastAppointments { get; set; }
     }
@@ -65,7 +94,22 @@ namespace NHS.Common
     {
         public int ID { get; set; }
 
+        public int ActivityStatusID { get; set; }
+
+        public int PathwayEventID { get; set; }
+
+        public bool Discharged { get; set; }
+
+        public bool NotRequired { get; set; }
+
+        public string DischargedBy { get; set; }
+
+        public string DischargedDate { get; set; }
+
+        public string DischargeComments { get; set; }
+
         public int Patient_ID { get; set; }
+        public string NHSNumber { get; set; }
 
         public string PatientName { get; set; }
 
@@ -90,7 +134,22 @@ namespace NHS.Common
     {
         public int ID { get; set; }
 
+        public int ActivityStatusID { get; set; }
+
+        public int PathwayEventID { get; set; }
+
+        public bool Discharged { get; set; }
+
+        public bool NotRequired { get; set; }
+
+        public string DischargeComments { get; set; }
+
+        public string DischargedBy { get; set; }
+
+        public string DischargedDate { get; set; }
+
         public int Patient_ID { get; set; }
+        public string NHSNumber { get; set; }
 
         public string PatientName { get; set; }
 
@@ -119,6 +178,19 @@ namespace NHS.Common
     {
         public int ID { get; set; }
 
+        public int ActivityStatusID { get; set; }
+        public string NHSNumber { get; set; }
+
+        public int PathwayEventID { get; set; }
+
+        public bool Discharged { get; set; }
+
+        public bool NotRequired { get; set; }
+
+        public string DischargedBy { get; set; }
+
+        public string DischargedDate { get; set; }
+
         public int Patient_ID { get; set; }
 
         public string PatientName { get; set; }
@@ -143,14 +215,30 @@ namespace NHS.Common
 
         public bool RebookVMMDT { get; set; }
 
-        public bool Discharge { get; set; }
+        public string DischargeComments { get; set; }
 
         public List<clsAppointments> PastAppointments { get; set; }
     }
 
-        public class clsNurseAssessment
+    public class clsNurseAssessment
     {
         public int ID { get; set; }
+
+        public int ActivityStatusID { get; set; }
+
+        public int PathwayEventID { get; set; }
+
+        public string NHSNumber { get; set; }
+
+        public bool NotRequired { get; set; }
+
+        public bool Discharged { get; set; }
+
+        public string DischargedDate { get; set; }
+
+        public string DischargedBy { get; set; }
+
+        public string DischargeComments { get; set; }
 
         public string PatientName { get; set; }
 
@@ -178,6 +266,22 @@ namespace NHS.Common
     public class clsMedicalMDT
     {
         public int ID { get; set; }
+
+        public int ActivityStatusID { get; set; }
+
+        public int PathwayEventID { get; set; }
+
+        public string NHSNumber { get; set; }
+
+        public bool Discharged { get; set; }
+
+        public string DischargeComments { get; set; }
+
+        public string DischargedBy { get; set; }
+
+        public string DischargedDate { get; set; }
+
+        public bool NotRequired { get; set; }
 
         public string PatientName { get; set; }
 
@@ -212,9 +316,64 @@ namespace NHS.Common
         public List<clsAppointments> PastAppointments { get; set; }
     }
 
+    public class clsPsychologyAssess
+    {
+        public int ID { get; set; }
+
+        public int ActivityStatusID { get; set; }
+
+        public int PathwayEventID { get; set; }
+
+        public string NHSNumber { get; set; }
+
+        public bool Discharged { get; set; }
+
+        public string DischargeComments { get; set; }
+
+        public string DischargedBy { get; set; }
+
+        public string DischargedDate { get; set; }
+
+        public bool NotRequired { get; set; }
+
+        public string PatientName { get; set; }
+
+        public string UpdatedDate { get; set; }
+
+        public string UpdatedBy { get; set; }
+
+        public string CreatedDate { get; set; }
+
+        public string CreatedBy { get; set; }
+
+        public string Comments { get; set; }
+
+        public int Patient_ID { get; set; }
+
+        public int MRN { get; set; }
+
+        public List<clsAppointments> PastAppointments { get; set; }
+    }
+
     public class clsGroupSessions
     {
         public int ID { get; set; }
+
+        public int ActivityStatusID { get; set; }
+
+        public int PathwayEventID { get; set; }
+
+        public string NHSNumber { get; set; }
+
+        public bool Discharged { get; set; }
+
+        public string DischargeComments { get; set; }
+
+        public bool NotRequired { get; set; }
+
+        public string DischargedBy { get; set; }
+
+        public string DischargedDate { get; set; }
 
         public string PatientName { get; set; }
 
@@ -240,23 +399,13 @@ namespace NHS.Common
 
         public bool RepeatSession { get; set; }
 
-        public bool RepeatSession1 { get; set; }
-
-        public bool RepeatSession2 { get; set; }
-
-        public bool RepeatSession3 { get; set; }
-
-        public bool RepeatSession4 { get; set; }
+        public string RepeatSessionName { get; set; }
 
         public bool VirtualMDTReferral { get; set; }
 
         public bool IndividualFollowup { get; set; }
 
         public bool ReferToGroupSession { get; set; }
-
-        public bool Discharged { get; set; }
-
-        public string DischargeComments { get; set; }
 
         public int Patient_ID { get; set; }
 

@@ -37,8 +37,27 @@
             <td>
                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr>
-                        <td width="54%" align="left" valign="top">
+                        <td width="34%" align="left" valign="top">
                             <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td>
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td width="100%">
+                                                    @if (Model.NotRequired)
+                                                    {
+                                                        <input type="checkbox" id="NotRequired" name="NotRequired" checked><span>&nbsp;Appointment Not Required</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" id="NotRequired" name="NotRequired"><span>&nbsp;Appointment Not Required</span>
+                                                    }
+                                                </td>
+
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td>
                                         @if (ViewBag.IsReadOnly)
@@ -48,8 +67,7 @@
                                                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                     <tr>
                                                         <td width="40%">Clinic Name</td>
-                                                        <td width="4%">&nbsp;</td>
-                                                        <td width="56%">
+                                                        <td width="60%">
                                                             <span>Test Clinic</span>
                                                         </td>
                                                     </tr>
@@ -63,8 +81,7 @@
                                                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                     <tr>
                                                         <td width="40%">Clinic Name</td>
-                                                        <td width="4%">&nbsp;</td>
-                                                        <td width="56%">
+                                                        <td width="60%">
                                                             <span>Test Clinic</span>
                                                         </td>
                                                     </tr>
@@ -77,134 +94,74 @@
                                     <td>
                                         <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                             <tr>
-                                                <td width="100%">&nbsp;</td>
+                                                <td width="40%">&nbsp;</td>
+                                                <td width="60%">&nbsp;</td>
                                             </tr>
                                         </table>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>
-                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                            <tr>
-                                                <td width="100%"><b>Other Outcome</b></td>
-                                            </tr>
-                                        </table>
+                                    <td width="40%">Activity Status</td>
+                                    <td width="60%">
+                                        <select style="font-size:12px;  margin:0 0 0 0;" class="form-control" id="ddlActivityStatus" name="ddlActivityStatus">
+                                            @if (Model.ActivityStatusID == 0)
+                                            {
+                                                <option selected value="0">
+                                                    All Activity Status
+                                                </option>
+                                            }
+                                            else
+                                            {
+                                                <option value="0">
+                                                    All Activity Status
+                                                </option>
+                                            }
+                                            @foreach (var item in ViewBag.ActivityStatus)
+                                            {
+                                                if (item.ID == Model.ActivityStatusID)
+                                                {
+                                                    <option selected value="@item.ID">@item.ActivityStatus</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.ID">@item.ActivityStatus</option>
+                                                }
+                                            }
+                                        </select>
+
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>
-                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                            <tr>
-                                                <td>
-                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                        <tr>
-                                                            <td width="100%">Session 1 Comments</td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                        <tr>
-                                                            <td>
-                                                                @if (ViewBag.IsReadOnly)
-                                                                {
-                                                                    @Html.TextAreaFor(model => model.Group1Comments, 5, 50, new { @class = "form-control", @readonly = true })
-                                                                }
-                                                                else
-                                                                {
-                                                                    @Html.TextAreaFor(model => model.Group1Comments, 5, 50, new { @class = "form-control" })
-                                                                }
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                        <tr>
-                                                            <td width="100%">Session 2 Comments</td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                        <tr>
-                                                            <td>
-                                                                @if (ViewBag.IsReadOnly)
-                                                                {
-                                                                    @Html.TextAreaFor(model => model.Group2Comments, 5, 50, new { @class = "form-control", @readonly = true })
-                                                                }
-                                                                else
-                                                                {
-                                                                    @Html.TextAreaFor(model => model.Group2Comments, 5, 50, new { @class = "form-control" })
-                                                                }
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                        <tr>
-                                                            <td width="100%">Session 3 Comments</td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                        <tr>
-                                                            <td>
-                                                                @if (ViewBag.IsReadOnly)
-                                                                {
-                                                                    @Html.TextAreaFor(model => model.Group3Comments, 5, 50, new { @class = "form-control", @readonly = true })
-                                                                }
-                                                                else
-                                                                {
-                                                                    @Html.TextAreaFor(model => model.Group3Comments, 5, 50, new { @class = "form-control" })
-                                                                }
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                        <tr>
-                                                            <td width="100%">Session 4 Comments</td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                        <tr>
-                                                            <td>
-                                                                @if (ViewBag.IsReadOnly)
-                                                                {
-                                                                    @Html.TextAreaFor(model => model.Group4Comments, 5, 50, new { @class = "form-control", @readonly = true })
-                                                                }
-                                                                else
-                                                                {
-                                                                    @Html.TextAreaFor(model => model.Group4Comments, 5, 50, new { @class = "form-control" })
-                                                                }
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        </table>
+                                    <td width="40%">Pathway Event</td>
+                                    <td width="60%">
+                                        <select style="font-size:12px;  margin:0 0 0 0;" class="form-control" id="ddlPathwayEvent" name="ddlPathwayEvent">
+                                            @if (Model.PathwayEventID == 0)
+                                            {
+                                                <option selected value="0">
+                                                    All Pathway Events
+                                                </option>
+                                            }
+                                            else
+                                            {
+                                                <option value="0">
+                                                    All Pathway Events
+                                                </option>
+                                            }
+                                            @foreach (var item in ViewBag.PathwayEvents)
+                                            {
+                                                if (item.ID == Model.PathwayEventID)
+                                                {
+                                                    <option selected value="@item.ID">@item.PathwayEvent</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.ID">@item.PathwayEvent</option>
+                                                }
+                                            }
+                                        </select>
+
                                     </td>
-                                </tr>
+                                </tr>                                
                             </table>
                         </td>
                         <td width="4%" align="left" valign="top">&nbsp;</td>
@@ -214,6 +171,10 @@
                                     <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
                                         <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#4F81BD; padding:2px 5px;  font-size:14px" width="40%"><b>MRN</b></td>
                                         <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#4F81BD; padding:2px 5px;  font-size:14px">@Model.MRN </td>
+                                    </tr>
+                                    <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#4F81BD; padding:2px 5px;  font-size:14px" width="40%"><b>NHS Number</b></td>
+                                        <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#4F81BD; padding:2px 5px;  font-size:14px">@Model.NHSNumber </td>
                                     </tr>
                                     <tr style="border-collapse:separate;border:solid black 1px;border-radius:6px; -moz-border-radius:6px; border-color:#a9d7cc">
                                         <td style="border-left:solid black 1px; border-top:solid black 1px; border-color:#4F81BD; padding:2px 5px;  font-size:14px"><b>Patient Name</b></td>
@@ -228,28 +189,111 @@
             </td>
         </tr>
         <tr>
+            <td width="40%">Group Session 1 Comments :</td>
+            <td width="60%">&nbsp;</td>
+        </tr>
+        <tr>
+            <td width="100%">
+                @if (ViewBag.IsReadOnly)
+                {
+                    @Html.TextAreaFor(model => model.Group1Comments, 5, 100, new { @class = "form-control", @readonly = true })
+                }
+                else
+                {
+                    @Html.TextAreaFor(model => model.Group1Comments, 5, 100, new { @class = "form-control" })
+                }
+            </td>
+        </tr>
+
+        <tr>
             <td>
                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr>
-                        <td width="40%">Repeat Group Session </td>
-                        <td width="4%">&nbsp;</td>
-                        <td width="56%">
+                        <td>Group Session 2 Comments :</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @if (ViewBag.IsReadOnly)
+                            {
+                                @Html.TextAreaFor(model => model.Group2Comments, 5, 50, new { @class = "form-control", @readonly = true })
+                            }
+                            else
+                            {
+                                @Html.TextAreaFor(model => model.Group2Comments, 5, 50, new { @class = "form-control" })
+                            }
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td>Group Session 3 Comments :</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @if (ViewBag.IsReadOnly)
+                            {
+                                @Html.TextAreaFor(model => model.Group3Comments, 5, 50, new { @class = "form-control", @readonly = true })
+                            }
+                            else
+                            {
+                                @Html.TextAreaFor(model => model.Group3Comments, 5, 50, new { @class = "form-control" })
+                            }
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td>Group Session 4 Comments :</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @if (ViewBag.IsReadOnly)
+                            {
+                                @Html.TextAreaFor(model => model.Group4Comments, 5, 50, new { @class = "form-control", @readonly = true })
+                            }
+                            else
+                            {
+                                @Html.TextAreaFor(model => model.Group4Comments, 5, 50, new { @class = "form-control" })
+                            }
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td width="40%"><b>Other Outcome</b></td>
+            <td width="40%">&nbsp;</td>
+        </tr>
+        <tr>
+            <td>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">                    
+                    <tr>
+                        <td width="30%">Repeat Session?</td>
+                        <td width="60%">
                             @if (ViewBag.IsReadOnly)
                             {
                                 if (Model.ID == 0)
                                 {
                                     <input type="radio" disabled id="RepeatSession" name="RepeatSession" value="Yes"><span> Yes </span>
-                                    <input type="radio" disabled id="RepeatSession" name="RepeatSession" value="No"><span> No </span>
+                                    <input type="radio" disabled id="RepeatSession" name="RepeatSession" value="Yes"><span> Yes </span>
                                 }
                                 else if (Model.RepeatSession == true)
                                 {
                                     <input type="radio" disabled id="RepeatSession" checked name="RepeatSession" value="Yes"><span> Yes </span>
-                                    <input type="radio" disabled id="RepeatSession" name="RepeatSession" value="No"><span> No </span>
+                                    <input type="radio" disabled id="RepeatSession" name="RepeatSession" value="Yes"><span> Yes </span>
                                 }
                                 else
                                 {
                                     <input type="radio" disabled id="RepeatSession" name="RepeatSession" value="Yes"><span> Yes </span>
-                                    <input type="radio" disabled id="RepeatSession" checked name="RepeatSession" value="No"><span> No </span>
+                                    <input type="radio" disabled id="RepeatSession" checked name="RepeatSession" value="Yes"><span> Yes </span>
                                 }
                             }
                             else
@@ -261,8 +305,8 @@
                                 }
                                 else if (Model.RepeatSession == true)
                                 {
-                                    <input type="radio" id="RepeatSession" checked name="RepeatSession" value="Yes"><span> Yes </span>
-                                    <input type="radio" id="RepeatSession" name="RepeatSession" value="No"><span> No </span>
+                                    <input type="radio" id="AgreementReceived" checked name="RepeatSession" value="Yes"><span> Yes </span>
+                                    <input type="radio" id="AgreementReceived" name="RepeatSession" value="No"><span> No </span>
                                 }
                                 else
                                 {
@@ -272,375 +316,60 @@
                             }
                         </td>
                     </tr>
-
                 </table>
-            </td>
+            </td>            
         </tr>
         <tr>
             <td>
-                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <table width="40%" border="0" cellspacing="0" cellpadding="0">
                     <tr>
-                        <td width="100%">&nbsp;</td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @if (Model.RepeatSession == true)
-                {
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0" id="tblSession1">
-                        <tr>
-                            <td width="40%">Session 1 </td>
-                            <td width="4%">&nbsp;</td>
-                            <td width="56%">
-                                @if (ViewBag.IsReadOnly)
+                        <td width="30%">Select Session</td>
+                        <td width="30%">
+                            <select style="font-size:12px;  margin:0 0 0 0;" class="form-control" id="ddlRepeatSessionName" name="ddlRepeatSessionName">
+                                @if (Model.RepeatSessionName == "")
                                 {
-                                    if (Model.ID == 0)
-                                    {
-                                        <input type="radio" disabled id="RepeatSession1" name="RepeatSession1" value="Yes"><span id="RepeatSession1Y"> Yes </span>
-                                        <input type="radio" disabled id="RepeatSession1" name="RepeatSession1" value="No"><span id="RepeatSession1N"> No </span>
-                                    }
-                                    else if (Model.RepeatSession1 == true)
-                                    {
-                                        <input type="radio" disabled id="RepeatSession1" checked name="RepeatSession1" value="Yes"><span id="RepeatSession1Y"> Yes </span>
-                                        <input type="radio" disabled id="RepeatSession1" name="RepeatSession1" value="No"><span id="RepeatSession1N"> No </span>
-                                    }
-                                    else
-                                    {
-                                        <input type="radio" disabled id="RepeatSession1" name="RepeatSession1" value="Yes"><span id="RepeatSession1Y"> Yes </span>
-                                        <input type="radio" disabled id="RepeatSession1" checked name="RepeatSession1" value="No"><span id="RepeatSession1N"> No </span>
-                                    }
+                                    <option selected value="">Select Session</option>
                                 }
                                 else
                                 {
-                                    if (Model.ID == 0)
-                                    {
-                                        <input type="radio" id="RepeatSession1" name="RepeatSession1" value="Yes"><span id="RepeatSession1Y"> Yes </span>
-                                        <input type="radio" id="RepeatSession1" name="RepeatSession1" value="No"><span id="RepeatSession1N"> No </span>
-                                    }
-                                    else if (Model.RepeatSession1 == true)
-                                    {
-                                        <input type="radio" id="RepeatSession1" checked name="RepeatSession1" value="Yes"><span id="RepeatSession1Y"> Yes </span>
-                                        <input type="radio" id="RepeatSession1" name="RepeatSession1" value="No"><span id="RepeatSession1N"> No </span>
-                                    }
-                                    else
-                                    {
-                                        <input type="radio" id="RepeatSession1" name="RepeatSession1" value="Yes"><span id="RepeatSession1Y"> Yes </span>
-                                        <input type="radio" id="RepeatSession1" checked name="RepeatSession1" value="No"><span id="RepeatSession1N"> No </span>
-                                    }
+                                    <option value="">Select Session</option>
                                 }
-                            </td>
-                        </tr>
+                                @if (Model.RepeatSessionName == "Session 1")
+                                {
+                                    <option selected value="Session 1">Session 1</option>
+                                }
+                                else
+                                {
+                                    <option value="Session 1">Session 1</option>
+                                }
+                                @if (Model.RepeatSessionName == "Session 2")
+                                {
+                                    <option selected value="Session 2">Session 2</option>
+                                }
+                                else
+                                {
+                                    <option value="Session 2">Session 2</option>
+                                }
+                                @if (Model.RepeatSessionName == "Session 3")
+                                {
+                                    <option selected value="Session 3">Session 3</option>
+                                }
+                                else
+                                {
+                                    <option value="Session 3">Session 3</option>
+                                }
+                                @if (Model.RepeatSessionName == "Session 4")
+                                {
+                                    <option selected value="Session 4">Session 4</option>
+                                }
+                                else
+                                {
+                                    <option value="Session 4">Session 4</option>
+                                }
+                            </select>
 
-                    </table>
-                }
-                else
-                {
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0" id="tblSession1" style="display:none">
-                        <tr>
-                            <td width="40%">Session 1 </td>
-                            <td width="4%">&nbsp;</td>
-                            <td width="56%">
-                                @if (ViewBag.IsReadOnly)
-                                {
-                                    if (Model.ID == 0)
-                                    {
-                                        <input type="radio" disabled id="RepeatSession1" name="RepeatSession1" value="Yes"><span id="RepeatSession1Y"> Yes </span>
-                                        <input type="radio" disabled id="RepeatSession1" name="RepeatSession1" value="No"><span id="RepeatSession1N"> No </span>
-                                    }
-                                    else if (Model.RepeatSession1 == true)
-                                    {
-                                        <input type="radio" disabled id="RepeatSession1" checked name="RepeatSession1" value="Yes"><span id="RepeatSession1Y"> Yes </span>
-                                        <input type="radio" disabled id="RepeatSession1" name="RepeatSession1" value="No"><span id="RepeatSession1N"> No </span>
-                                    }
-                                    else
-                                    {
-                                        <input type="radio" disabled id="RepeatSession1" name="RepeatSession1" value="Yes"><span id="RepeatSession1Y"> Yes </span>
-                                        <input type="radio" disabled id="RepeatSession1" checked name="RepeatSession1" value="No"><span id="RepeatSession1N"> No </span>
-                                    }
-                                }
-                                else
-                                {
-                                    if (Model.ID == 0)
-                                    {
-                                        <input type="radio" id="RepeatSession1" name="RepeatSession1" value="Yes"><span id="RepeatSession1Y"> Yes </span>
-                                        <input type="radio" id="RepeatSession1" name="RepeatSession1" value="No"><span id="RepeatSession1N"> No </span>
-                                    }
-                                    else if (Model.RepeatSession1 == true)
-                                    {
-                                        <input type="radio" id="RepeatSession1" checked name="RepeatSession1" value="Yes"><span id="RepeatSession1Y"> Yes </span>
-                                        <input type="radio" id="RepeatSession1" name="RepeatSession1" value="No"><span id="RepeatSession1N"> No </span>
-                                    }
-                                    else
-                                    {
-                                        <input type="radio" id="RepeatSession1" name="RepeatSession1" value="Yes"><span id="RepeatSession1Y"> Yes </span>
-                                        <input type="radio" id="RepeatSession1" checked name="RepeatSession1" value="No"><span id="RepeatSession1N"> No </span>
-                                    }
-                                }
-                            </td>
-                        </tr>
-
-                    </table>
-                }
-                
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <table width="100%" border="0" cellspacing="0" cellpadding="0" id="tblSession2">
-                    <tr>
-                        <td width="40%">Session 2 </td>
-                        <td width="4%">&nbsp;</td>
-                        <td width="56%">
-                            @if (ViewBag.IsReadOnly)
-                            {
-                                if (Model.ID == 0)
-                                {
-                                    <input type="radio" disabled id="RepeatSession2" name="RepeatSession2" value="Yes"><span id="RepeatSession11Y"> Yes </span>
-                                    <input type="radio" disabled id="RepeatSession2" name="RepeatSession2" value="No"><span id="RepeatSession11N"> No </span>
-                                }
-                                else if (Model.RepeatSession2 == true)
-                                {
-                                    <input type="radio" disabled id="RepeatSession2" checked name="RepeatSession2" value="Yes"><span id="RepeatSession11Y"> Yes </span>
-                                    <input type="radio" disabled id="RepeatSession2" name="RepeatSession2" value="No"><span id="RepeatSession11N"> No </span>
-                                }
-                                else
-                                {
-                                    <input type="radio" disabled id="RepeatSession2" name="RepeatSession2" value="Yes"><span id="RepeatSession11Y"> Yes </span>
-                                    <input type="radio" disabled id="RepeatSession2" checked name="RepeatSession2" value="No"><span id="RepeatSession11N"> No </span>
-                                }
-                            }
-                            else
-                            {
-                                if (Model.ID == 0)
-                                {
-                                    <input type="radio" id="RepeatSession2" name="RepeatSession2" value="Yes"><span id="RepeatSession11Y"> Yes </span>
-                                    <input type="radio" id="RepeatSession2" name="RepeatSession2" value="No"><span id="RepeatSession11N"> No </span>
-                                }
-                                else if (Model.RepeatSession2 == true)
-                                {
-                                    <input type="radio" id="RepeatSession2" checked name="RepeatSession2" value="Yes"><span id="RepeatSession11Y"> Yes </span>
-                                    <input type="radio" id="RepeatSession2" name="RepeatSession2" value="No"><span id="RepeatSession11N"> No </span>
-                                }
-                                else
-                                {
-                                    <input type="radio" id="RepeatSession2" name="RepeatSession2" value="Yes"><span id="RepeatSession11Y"> Yes </span>
-                                    <input type="radio" id="RepeatSession1" checked name="RepeatSession2" value="No"><span id="RepeatSession11N"> No </span>
-                                }
-                            }
                         </td>
                     </tr>
-
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @if (Model.RepeatSession == true)
-                {
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0" id="tblSession3">
-                        <tr>
-                            <td width="40%">Session 3 </td>
-                            <td width="4%">&nbsp;</td>
-                            <td width="56%">
-                                @if (ViewBag.IsReadOnly)
-                                {
-                                    if (Model.ID == 0)
-                                    {
-                                        <input type="radio" disabled id="RepeatSession3" name="RepeatSession3" value="Yes"><span id="RepeatSession21Y"> Yes </span>
-                                        <input type="radio" disabled id="RepeatSession3" name="RepeatSession3" value="No"><span id="RepeatSession21N"> No </span>
-                                    }
-                                    else if (Model.RepeatSession3 == true)
-                                    {
-                                        <input type="radio" disabled id="RepeatSession3" checked name="RepeatSession3" value="Yes"><span id="RepeatSession21Y"> Yes </span>
-                                        <input type="radio" disabled id="RepeatSession3" name="RepeatSession3" value="No"><span id="RepeatSession21N"> No </span>
-                                    }
-                                    else
-                                    {
-                                        <input type="radio" disabled id="RepeatSession3" name="RepeatSession3" value="Yes"><span id="RepeatSession21Y"> Yes </span>
-                                        <input type="radio" disabled id="RepeatSession3" checked name="RepeatSession3" value="No"><span id="RepeatSession21N"> No </span>
-                                    }
-                                }
-                                else
-                                {
-                                    if (Model.ID == 0)
-                                    {
-                                        <input type="radio" id="RepeatSession3" name="RepeatSession3" value="Yes"><span id="RepeatSession21Y"> Yes </span>
-                                        <input type="radio" id="RepeatSession3" name="RepeatSession3" value="No"><span id="RepeatSession21N"> No </span>
-                                    }
-                                    else if (Model.RepeatSession3 == true)
-                                    {
-                                        <input type="radio" id="RepeatSession3" checked name="RepeatSession3" value="Yes"><span id="RepeatSession21Y"> Yes </span>
-                                        <input type="radio" id="RepeatSession3" name="RepeatSession3" value="No"><span id="RepeatSession21N"> No </span>
-                                    }
-                                    else
-                                    {
-                                        <input type="radio" id="RepeatSession3" name="RepeatSession3" value="Yes"><span id="RepeatSession21Y"> Yes </span>
-                                        <input type="radio" id="RepeatSession3" checked name="RepeatSession3" value="No"><span id="RepeatSession21N"> No </span>
-                                    }
-                                }
-                            </td>
-                        </tr>
-
-                    </table>
-                }
-                else
-                {
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0" id="tblSession3" style="display:none">
-                        <tr>
-                            <td width="40%">Session 3 </td>
-                            <td width="4%">&nbsp;</td>
-                            <td width="56%">
-                                @if (ViewBag.IsReadOnly)
-                                {
-                                    if (Model.ID == 0)
-                                    {
-                                        <input type="radio" disabled id="RepeatSession3" name="RepeatSession3" value="Yes"><span id="RepeatSession21Y"> Yes </span>
-                                        <input type="radio" disabled id="RepeatSession3" name="RepeatSession3" value="No"><span id="RepeatSession21N"> No </span>
-                                    }
-                                    else if (Model.RepeatSession3 == true)
-                                    {
-                                        <input type="radio" disabled id="RepeatSession3" checked name="RepeatSession3" value="Yes"><span id="RepeatSession21Y"> Yes </span>
-                                        <input type="radio" disabled id="RepeatSession3" name="RepeatSession3" value="No"><span id="RepeatSession21N"> No </span>
-                                    }
-                                    else
-                                    {
-                                        <input type="radio" disabled id="RepeatSession3" name="RepeatSession3" value="Yes"><span id="RepeatSession21Y"> Yes </span>
-                                        <input type="radio" disabled id="RepeatSession3" checked name="RepeatSession3" value="No"><span id="RepeatSession21N"> No </span>
-                                    }
-                                }
-                                else
-                                {
-                                    if (Model.ID == 0)
-                                    {
-                                        <input type="radio" id="RepeatSession3" name="RepeatSession3" value="Yes"><span id="RepeatSession21Y"> Yes </span>
-                                        <input type="radio" id="RepeatSession3" name="RepeatSession3" value="No"><span id="RepeatSession21N"> No </span>
-                                    }
-                                    else if (Model.RepeatSession3 == true)
-                                    {
-                                        <input type="radio" id="RepeatSession3" checked name="RepeatSession3" value="Yes"><span id="RepeatSession21Y"> Yes </span>
-                                        <input type="radio" id="RepeatSession3" name="RepeatSession3" value="No"><span id="RepeatSession21N"> No </span>
-                                    }
-                                    else
-                                    {
-                                        <input type="radio" id="RepeatSession3" name="RepeatSession3" value="Yes"><span id="RepeatSession21Y"> Yes </span>
-                                        <input type="radio" id="RepeatSession3" checked name="RepeatSession3" value="No"><span id="RepeatSession21N"> No </span>
-                                    }
-                                }
-                            </td>
-                        </tr>
-
-                    </table>
-                }
-                
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @if (Model.RepeatSession == true)
-                {
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0" id="tblSession4">
-                        <tr>
-                            <td width="40%">Session 4 </td>
-                            <td width="4%">&nbsp;</td>
-                            <td width="56%">
-                                @if (ViewBag.IsReadOnly)
-                                {
-                                    if (Model.ID == 0)
-                                    {
-                                        <input type="radio" disabled id="RepeatSession4" name="RepeatSession4" value="Yes"><span id="RepeatSession31Y"> Yes </span>
-                                        <input type="radio" disabled id="RepeatSession4" name="RepeatSession4" value="No"><span id="RepeatSession31N"> No </span>
-                                    }
-                                    else if (Model.RepeatSession4 == true)
-                                    {
-                                        <input type="radio" disabled id="RepeatSession4" checked name="RepeatSession4" value="Yes"><span id="RepeatSession31Y"> Yes </span>
-                                        <input type="radio" disabled id="RepeatSession4" name="RepeatSession4" value="No"><span id="RepeatSession31N"> No </span>
-                                    }
-                                    else
-                                    {
-                                        <input type="radio" disabled id="RepeatSession4" name="RepeatSession4" value="Yes"><span id="RepeatSession31Y"> Yes </span>
-                                        <input type="radio" disabled id="RepeatSession4" checked name="RepeatSession4" value="No"><span id="RepeatSession31N"> No </span>
-                                    }
-                                }
-                                else
-                                {
-                                    if (Model.ID == 0)
-                                    {
-                                        <input type="radio" id="RepeatSession4" name="RepeatSession4" value="Yes"><span id="RepeatSession31Y"> Yes </span>
-                                        <input type="radio" id="RepeatSession4" name="RepeatSession4" value="No"><span id="RepeatSession31N"> No </span>
-                                    }
-                                    else if (Model.RepeatSession4 == true)
-                                    {
-                                        <input type="radio" id="RepeatSession4" checked name="RepeatSession4" value="Yes"><span id="RepeatSession31Y"> Yes </span>
-                                        <input type="radio" id="RepeatSession4" name="RepeatSession4" value="No"><span id="RepeatSession31N"> No </span>
-                                    }
-                                    else
-                                    {
-                                        <input type="radio" id="RepeatSession4" name="RepeatSession4" value="Yes"><span id="RepeatSession31Y"> Yes </span>
-                                        <input type="radio" id="RepeatSession4" checked name="RepeatSession4" value="No"><span id="RepeatSession31N"> No </span>
-                                    }
-                                }
-                            </td>
-                        </tr>
-
-                    </table>
-                }
-                else
-                {  <table width="100%" border="0" cellspacing="0" cellpadding="0" id="tblSession4" style="display:none">
-                    <tr>
-                        <td width="40%">Session 4 </td>
-                        <td width="4%">&nbsp;</td>
-                        <td width="56%">
-                            @if (ViewBag.IsReadOnly)
-                            {
-                                if (Model.ID == 0)
-                                {
-                                    <input type="radio" disabled id="RepeatSession4" name="RepeatSession4" value="Yes"><span id="RepeatSession31Y"> Yes </span>
-                                    <input type="radio" disabled id="RepeatSession4" name="RepeatSession4" value="No"><span id="RepeatSession31N"> No </span>
-                                }
-                                else if (Model.RepeatSession4 == true)
-                                {
-                                    <input type="radio" disabled id="RepeatSession4" checked name="RepeatSession4" value="Yes"><span id="RepeatSession31Y"> Yes </span>
-                                    <input type="radio" disabled id="RepeatSession4" name="RepeatSession4" value="No"><span id="RepeatSession31N"> No </span>
-                                }
-                                else
-                                {
-                                    <input type="radio" disabled id="RepeatSession4" name="RepeatSession4" value="Yes"><span id="RepeatSession31Y"> Yes </span>
-                                    <input type="radio" disabled id="RepeatSession4" checked name="RepeatSession4" value="No"><span id="RepeatSession31N"> No </span>
-                                }
-                            }
-                            else
-                            {
-                                if (Model.ID == 0)
-                                {
-                                    <input type="radio" id="RepeatSession4" name="RepeatSession4" value="Yes"><span id="RepeatSession31Y"> Yes </span>
-                                    <input type="radio" id="RepeatSession4" name="RepeatSession4" value="No"><span id="RepeatSession31N"> No </span>
-                                }
-                                else if (Model.RepeatSession4 == true)
-                                {
-                                    <input type="radio" id="RepeatSession4" checked name="RepeatSession4" value="Yes"><span id="RepeatSession31Y"> Yes </span>
-                                    <input type="radio" id="RepeatSession4" name="RepeatSession4" value="No"><span id="RepeatSession31N"> No </span>
-                                }
-                                else
-                                {
-                                    <input type="radio" id="RepeatSession4" name="RepeatSession4" value="Yes"><span id="RepeatSession31Y"> Yes </span>
-                                    <input type="radio" id="RepeatSession4" checked name="RepeatSession4" value="No"><span id="RepeatSession31N"> No </span>
-                                }
-                            }
-                        </td>
-                    </tr>
-
-                </table>}
-               
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                    <tr>
-                        <td width="100%">&nbsp;</td>
-                    </tr>
                 </table>
             </td>
         </tr>
@@ -648,9 +377,8 @@
             <td>
                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr>
-                        <td width="40%">Individual Followup </td>
-                        <td width="4%">&nbsp;</td>
-                        <td width="56%">
+                        <td width="30%">Individual Follow up?</td>
+                        <td width="60%">
                             @if (ViewBag.IsReadOnly)
                             {
                                 if (Model.ID == 0)
@@ -676,7 +404,7 @@
                                     <input type="radio" id="IndividualFollowup" name="IndividualFollowup" value="Yes"><span> Yes </span>
                                     <input type="radio" id="IndividualFollowup" name="IndividualFollowup" value="No"><span> No </span>
                                 }
-                                else if (Model.IndividualFollowup == true)
+                                else if (Model.RepeatSession == true)
                                 {
                                     <input type="radio" id="IndividualFollowup" checked name="IndividualFollowup" value="Yes"><span> Yes </span>
                                     <input type="radio" id="IndividualFollowup" name="IndividualFollowup" value="No"><span> No </span>
@@ -689,7 +417,6 @@
                             }
                         </td>
                     </tr>
-
                 </table>
             </td>
         </tr>
@@ -697,9 +424,8 @@
             <td>
                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr>
-                        <td width="40%">Refer to Virtual medical MDT review appointment </td>
-                        <td width="4%">&nbsp;</td>
-                        <td width="56%">
+                        <td width="30%">Refer to Virtual medical MDT review appointment?</td>
+                        <td width="60%">
                             @if (ViewBag.IsReadOnly)
                             {
                                 if (Model.ID == 0)
@@ -738,313 +464,304 @@
                             }
                         </td>
                     </tr>
-
                 </table>
             </td>
-        </tr>
-        <tr>
-            <td>
-                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        </tr>           
+
                     <tr>
-                        <td width="40%">Discharged </td>
-                        <td width="4%">&nbsp;</td>
-                        <td width="56%">
-                            @if (ViewBag.IsReadOnly)
-                            {
-                                if (Model.ID == 0)
-                                {
-                                    <input type="radio" disabled id="Discharged" name="Discharged" value="Yes"><span> Yes </span>
-                                    <input type="radio" disabled id="Discharged" name="Discharged" value="No"><span> No </span>
-                                }
-                                else if (Model.Discharged == true)
-                                {
-                                    <input type="radio" disabled id="Discharged" checked name="Discharged" value="Yes"><span> Yes </span>
-                                    <input type="radio" disabled id="Discharged" name="Discharged" value="No"><span> No </span>
-                                }
-                                else
-                                {
-                                    <input type="radio" disabled id="Discharged" name="Discharged" value="Yes"><span> Yes </span>
-                                    <input type="radio" disabled id="Discharged" checked name="Discharged" value="No"><span> No </span>
-                                }
-                            }
-                            else
-                            {
-                                if (Model.ID == 0)
-                                {
-                                    <input type="radio" id="Discharged" name="Discharged" value="Yes"><span> Yes </span>
-                                    <input type="radio" id="Discharged" name="Discharged" value="No"><span> No </span>
-                                }
-                                else if (Model.Discharged == true)
-                                {
-                                    <input type="radio" id="Discharged" checked name="Discharged" value="Yes"><span> Yes </span>
-                                    <input type="radio" id="Discharged" name="Discharged" value="No"><span> No </span>
-                                }
-                                else
-                                {
-                                    <input type="radio" id="Discharged" name="Discharged" value="Yes"><span> Yes </span>
-                                    <input type="radio" id="Discharged" checked name="Discharged" value="No"><span> No </span>
-                                }
-                            }
+                        <td>
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td>Comments :</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @if (ViewBag.IsReadOnly)
+                                        {
+                                            @Html.TextAreaFor(model => model.Comments, 5, 50, new { @class = "form-control", @readonly = true })
+                                        }
+                                        else
+                                        {
+                                            @Html.TextAreaFor(model => model.Comments, 5, 50, new { @class = "form-control" })
+                                        }
+                                    </td>
+                                </tr>
+                            </table>
                         </td>
                     </tr>
-
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr>
-                        <td width="100%">&nbsp;</td>
+                        <td>
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    @if (string.IsNullOrEmpty(Model.UpdatedBy) && !string.IsNullOrEmpty(Model.CreatedBy))
+                                    {
+
+                                        <td><span><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Created By:</b>&nbsp;</span></td>
+                                        <td><span><b><i>@Model.CreatedBy</i></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+                                        <td><span><b>Created Date:</b>&nbsp;</span></td>
+                                        <td><span><b><i>@Model.CreatedDate</i></b></span></td>
+
+                                    }
+                                </tr>
+                            </table>
+                        </td>
                     </tr>
-                </table>
-            </td>
-        </tr>
-        @if (Model.Discharged == true)
-        {
-            <tr>
-                <td>
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0" id="tblDischargeCommentsLbl">
-                        <tr>
-                            <td width="100%">Discharge Comments</td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <table width="50%" border="0" cellspacing="0" id="tblDischargeComments" cellpadding="0">
+                    <tr>
+                        <td>
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    @if (!string.IsNullOrEmpty(Model.UpdatedBy))
+                                    {
+
+                                        <td><span><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Updated By:</b>&nbsp;</span></td>
+                                        <td><span><b><i>@Model.UpdatedBy</i></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+                                        <td><span><b>Updated Date:</b>&nbsp;</span></td>
+                                        <td><span><b><i>@Model.UpdatedDate</i></b></span></td>
+
+                                    }
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td width="100%">
+                                        @if (Model.Discharged)
+                                        {
+                                            <input type="checkbox" id="Discharged" name="Discharged" checked><span>&nbsp;Discharge?</span>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" id="Discharged" name="Discharged"><span>&nbsp;Discharge?</span>
+                                        }
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    @if (string.IsNullOrEmpty(Model.DischargedBy))
+                    {
                         <tr>
                             <td>
-                                @if (ViewBag.IsReadOnly)
-                                {
-                                    @Html.TextAreaFor(model => model.DischargeComments, 5, 100, new { @class = "form-control", @readonly = true })
-                                }
-                                else
-                                {
-                                    @Html.TextAreaFor(model => model.DischargeComments, 5, 100, new { @class = "form-control" })
-                                }
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td><span id="DischargeCommentsLbl" style="display:none;">Dicharge Comments :</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            @if (ViewBag.IsReadOnly)
+                                            {
+                                                @Html.TextAreaFor(model => model.Comments, 5, 50, new { @class = "form-control", style = "display: none;", @readonly = true, @id = "DischargeComments" })
+                                            }
+                                            else
+                                            {
+                                                @Html.TextAreaFor(model => model.Comments, 5, 50, new { @class = "form-control", style = "display: none;", @id = "DischargeComments" })
+                                            }
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
                         </tr>
-                    </table>
-                </td>
-            </tr>
-        }
-        else
-        {
-        <tr>
-            <td>
-                <table width="100%" border="0" cellspacing="0" cellpadding="0" id="tblDischargeCommentsLbl" style="display:none">
-                    <tr>
-                        <td width="100%">Discharge Comments</td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <table width="50%" border="0" cellspacing="0" id="tblDischargeComments" cellpadding="0" style="display:none">
-                    <tr>
-                        <td>
-                            @if (ViewBag.IsReadOnly)
-                            {
-                                @Html.TextAreaFor(model => model.DischargeComments, 5, 50, new { @class = "form-control", @readonly = true })
-                            }
-                            else
-                            {
-                                @Html.TextAreaFor(model => model.DischargeComments, 5, 50, new { @class = "form-control" })
-                            }
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        }
-        <tr>
-            <td>
-                <table width="100%" border="0" cellspacing="0" cellpadding="0" id="tblCommentsLbl">
-                    <tr>
-                        <td width="100%">&nbsp;</td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <table width="100%" border="0" cellspacing="0" cellpadding="0" id="tblCommentsLbl">
-                    <tr>
-                        <td width="100%">Comments</td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                    <tr>
-                        <td>
-                            @if (ViewBag.IsReadOnly)
-                            {
-                                @Html.TextAreaFor(model => model.Comments, 5, 50, new { @class = "form-control", @readonly = true })
-                            }
-                            else
-                            {
-                                @Html.TextAreaFor(model => model.Comments, 5, 50, new { @class = "form-control" })
-                            }
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
-    if (string.IsNullOrEmpty(Model.UpdatedBy) && !string.IsNullOrEmpty(Model.CreatedBy))
-    {
-        <div class="row">
-            <div class="col-md-12">
-                <div class="row_bar">
-                    <span><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Updated By:</b>&nbsp;</span>
-                    <span><b><i>@Model.CreatedBy</i></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    <span><b>Updated Date:</b>&nbsp;</span>
-                    <span><b><i>@Model.CreatedDate</i></b></span>
-                </div>
-            </div>
-        </div>
-    }
-    else if (!string.IsNullOrEmpty(Model.UpdatedBy) && !string.IsNullOrEmpty(Model.CreatedBy))
-    {
-        <div class="row">
-            <div class="col-md-12">
-                <div class="row_bar">
-                    <span><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Updated By:</b>&nbsp;</span>
-                    <span><b><i>@Model.UpdatedBy</i></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    <span><b>Updated Date:</b>&nbsp;</span>
-                    <span><b><i>@Model.UpdatedDate</i></b></span>
-                </div>
-            </div>
-        </div>
-    }
-
-    <div class="pull-right">
-        @if (ViewBag.IsReadOnly)
-        {
-            <button id="BtnNext" disabled="" type="submit" name="BtnNext" class="btn btn-primary btn-lg" style="background-color:#4F81BD !important; color:white !important">Save</button>
-                        <button id="btnSave" disabled="" name="btnSave" class="btn btn-primary btn-lg" style="background-color:#4F81BD !important; color:white !important">Exit</button>
-        }
-        else
-        {
-            <button id="BtnNext" type="submit" name="BtnNext" class="btn btn-primary btn-lg" style="background-color:#4F81BD !important; color:white !important">Save</button>
-                        <span id="btnSave" name="btnSave" class="btn btn-primary btn-lg" style="background-color:#4F81BD !important; color:white !important">Exit</span>
-        }
-    </div>
-}
-<br /><br />
-
-<h2 style="font-size: 17px; margin-bottom: 20px; color: #4F81BD; font-weight: 600;">Appointments History</h2>
-<div class="row">
-    <div class="col-md-12">
-        <div style="width:98%;">
-            <table class="stripe row-border order-column" style="overflow:auto;" id="tblPatientDetails">
-                <thead>
-                    <tr bgcolor="#4F81BD" style="color:white;  font-size:11px;">
-                        <th align="left" width="30%" style="">Appointment Date</th>
-                        <th align="left" width="70%" style="">Outcome</th>
-                    </tr>
-                </thead>
-                <tbody style="font-size:11px;padding:0px;">
-                    @if (Model.PastAppointments.Count > 0)
-                    {
-                        foreach (var item in Model.PastAppointments)
-                        {
-                            <tr class="Entries">
-                                <td align="left" width="30%" style="">@item.AppointmentDate</td>
-                                <td align="left" width="70%" style="">@item.Outcome</td>
-                            </tr>
-                        }
                     }
                     else
                     {
                         <tr>
-                            <td colspan="12" class="text-center" align="center">No Records Found.</td>
+                            <td>
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td><span id="DischargeCommentsLbl">Dicharge Comments :</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            @if (ViewBag.IsReadOnly)
+                                            {
+                                                @Html.TextAreaFor(model => model.DischargeComments, 5, 50, new { @class = "form-control", @readonly = true, @id = "DischargeComments" })
+                                            }
+                                            else
+                                            {
+                                                @Html.TextAreaFor(model => model.DischargeComments, 5, 50, new { @class = "form-control", @id = "DischargeComments" })
+                                            }
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
                         </tr>
                     }
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="modelClose1">
-    <div class="modal-dialog modal-md">
-        <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Message</h4>
-                <button type="button" class="close" data-dismiss="modal">×</button>
-            </div>
-            <!-- Modal body -->
-            <div class="modal-body">
-
-                <div class="form-section" style="text-align:left">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="row_bar">
-                                <div>Do you want to exit without saving your changes?</div>
-                            </div>
+                </table>
+                if (!string.IsNullOrEmpty(Model.DischargedBy))
+                {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row_bar">
+                            <span id="DischargeByLbl"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Discharged By:</b>&nbsp;</span>
+                            <span id="DischargeByVal"><b><i>@Model.DischargedBy</i></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <span id="DischargeDateLbl"><b>Discharged Date:</b>&nbsp;</span>
+                            <span id="DischargeDateVal"><b><i>@Model.DischargedDate</i></b></span>
                         </div>
+                    </div>
+                </div>
+                }
+
+                <div class="pull-right">
+                    @if (ViewBag.IsReadOnly)
+                    {
+                        <button id="BtnNext" disabled="" type="submit" name="BtnNext" class="btn btn-primary btn-lg" style="background-color:#4F81BD !important; color:white !important">Save</button>
+                        <button id="btnSave" disabled="" name="btnSave" class="btn btn-primary btn-lg" style="background-color:#4F81BD !important; color:white !important">Exit</button>
+                    }
+                    else
+                    {
+                        <button id="BtnNext" type="submit" name="BtnNext" class="btn btn-primary btn-lg" style="background-color:#4F81BD !important; color:white !important">Save</button>
+                        <span id="btnSave" name="btnSave" class="btn btn-primary btn-lg" style="background-color:#4F81BD !important; color:white !important">Exit</span>
+                    }
+                </div>
+                }
+                <br /><br />
+
+                <h2 style="font-size: 17px; margin-bottom: 20px; color: #4F81BD; font-weight: 600;">Appointments History</h2>
+@if (Model.PastAppointments != null)
+{
+                <div class="row">
+                    <div class="col-md-12">
+                        <div style="width:98%;">
+                            <table class="stripe row-border order-column" style="overflow:auto;" id="tblPatientDetails">
+                                <thead>
+                                    <tr bgcolor="#4F81BD" style="color:white;  font-size:11px;">
+                                        <th align="left" width="30%" style="">Appointment Date</th>
+                                        <th align="left" width="70%" style="">Outcome</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="font-size:11px;padding:0px;">
+                                    
+                                        @if (Model.PastAppointments.Count > 0)
+                                        {
+                                            foreach (var item in Model.PastAppointments)
+                                            {
+                                                <tr class="Entries">
+                                                    <td align="left" width="30%" style="">@item.AppointmentDate</td>
+                                                    <td align="left" width="70%" style="">@item.Outcome</td>
+                                                </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td colspan="14" class="text-center" align="center">No Records Found.</td>
+                                            </tr>
+                                        }                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+}
+                <div class="modal fade" id="modelClose1">
+                    <div class="modal-dialog modal-md">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Message</h4>
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="modal-body">
+
+                                <div class="form-section" style="text-align:left">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="row_bar">
+                                                <div>Do you want to exit without saving your changes?</div>
+                                            </div>
+                                        </div>
 
 
-                        @*<div class="col-md-12">
-                                <div class="row_bar">
-                                    <div><input type="checkbox" id="QAPReview" name="QAPReview" checked disabled="disabled"><span>Review Completed?</span>?</div>
+                                        @*<div class="col-md-12">
+                                            <div class="row_bar">
+                                                <div><input type="checkbox" id="QAPReview" name="QAPReview" checked disabled="disabled"><span>Review Completed?</span>?</div>
+                                            </div>
+                                        </div>*@
+                                        <br />
+                                        <br />
+                                        <div class="col-md-4">
+                                            <button type="button" class="btn btn-primary btn-block" id="btnModelClose1" style="background-color:#4F81BD !important; color:white !important" data-dismiss="modal" formmethod="post" onclick="location.href='@Url.Action("BariatricsDashboard", "Home", new { id = 0, isReset = false })'">Yes</button>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button type="submit" class="btn btn-primary btn-block" style="background-color:#4F81BD !important; color:white !important" name="btnCloseYes" id="btnCloseYes">No</button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>*@
-                        <br />
-                        <br />
-                        <div class="col-md-4">
-                            <button type="button" class="btn btn-primary btn-block" id="btnModelClose1" style="background-color:#4F81BD !important; color:white !important" data-dismiss="modal" formmethod="post" onclick="location.href='@Url.Action("BariatricsDashboard", "Home", new { id = 0, isReset = false })'">Yes</button>
-                        </div>
-                        <div class="col-md-4">
-                            <button type="submit" class="btn btn-primary btn-block" style="background-color:#4F81BD !important; color:white !important" name="btnCloseYes" id="btnCloseYes">No</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="modelCloseNext">
-    <div class="modal-dialog modal-md">
-        <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Message</h4>
-                <button type="button" class="close" data-dismiss="modal">×</button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                <div class="form-section" style="text-align:left">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="row_bar">
-                                <div>Do you want to exit without saving your changes?</div>
                             </div>
                         </div>
-                        <br />
-                        <br />
-                        <div class="col-md-4">
-                            <button type="button" class="btn btn-primary btn-block" style="background-color:#4F81BD !important; color:white !important" id="btnModelClose2" data-dismiss="modal" formmethod="post" onclick="location.href='@Url.Action("BariatricsDashboard", "Home", new { id = 0, isReset = false })'">Yes</button>
-                        </div>
-                        <div class="col-md-4">
-                            <button type="submit" class="btn btn-primary btn-block" style="background-color:#4F81BD !important; color:white !important" name="btnCloseYes2" id="btnCloseYes2">No</button>
-                        </div>
-
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-<script>
+                <div class="modal fade" id="modelCloseNext">
+                    <div class="modal-dialog modal-md">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Message</h4>
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <div class="form-section" style="text-align:left">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="row_bar">
+                                                <div>Do you want to exit without saving your changes?</div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="col-md-4">
+                                            <button type="button" class="btn btn-primary btn-block" style="background-color:#4F81BD !important; color:white !important" id="btnModelClose2" data-dismiss="modal" formmethod="post" onclick="location.href='@Url.Action("BariatricsDashboard", "Home", new { id = 0, isReset = false })'">Yes</button>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button type="submit" class="btn btn-primary btn-block" style="background-color:#4F81BD !important; color:white !important" name="btnCloseYes2" id="btnCloseYes2">No</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="modelDischarge">
+                    <div class="modal-dialog modal-md">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Discharge?</h4>
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <div class="form-section" style="text-align:left">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="row_bar">
+                                                <div>Are you sure you want to discharge the patient?</div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="col-md-4">
+                                            <button type="button" class="btn btn-primary btn-block" style="background-color:#4F81BD !important; color:white !important" name="btnModelDischarge1" id="btnModelDischarge1">Yes</button>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button type="submit" class="btn btn-primary btn-block" style="background-color:#4F81BD !important; color:white !important" name="btnModelDischarge2" id="btnModelDischarge2">No</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script>
                     $(document).ready(function () {
                         //$('#dvPatientDetailsCimment').hide();
                         $("#myBtnProcedures").click(function () {
@@ -1056,49 +773,77 @@
                         $("#btnClose1").click(function () {
                             $("#modelClose1").modal();
                         });
+                        $("#Discharged").click(function () {
+                            if ($(this).is(':checked')) {
+                                $("#modelDischarge").modal();
+                            }
+                            else {
+                                $("#DischargeComments").css("display", "none");
+                                $("#DischargeCommentsLbl").css("display", "none");
+                                $("#DischargeByLbl").css("display", "none");
+                                $("#DischargeByVal").css("display", "none");
+                                $("#DischargeDateVal").css("display", "none");
+                                $("#DischargeDateLbl").css("display", "none");
+                            }
+                        });
                         //$("#BtnNext").click(function (event) {
                         //    if (!confirm('Are you sure that you want to submit the form'))
                         //        event.preventDefault();
                         //});
                     });
-</script>
-<script type="text/javascript">
+                </script>
+                <script type="text/javascript">
                     $(function () {
                         $("#btnModelClose1").click(function () {
                             window.location.href = "@Url.Action("BariatricsDashboard", "Home", new { id = 0, isReset = false })";
                         });
                     });
-</script>
-<script>
+                </script>
+                <script>
                     $(document).ready(function () {
                         $("#btnCloseYes").click(function () {
                             $("#modelClose1").modal('hide');
+                        });
+                        $("#btnModelDischarge1").click(function () {
+                            $("#modelDischarge").modal('hide');
+                            $("#DischargeComments").css("display", "block");
+                            $("#DischargeCommentsLbl").css("display", "block");
+                        });
+                        $("#btnModelDischarge2").click(function () {
+                            $("#modelDischarge").modal('hide');
+                            $('#Discharged').prop('checked', false);
+                            $("#DischargeComments").css("display", "none");
+                            $("#DischargeCommentsLbl").css("display", "none");
+                            $("#DischargeByLbl").css("display", "none");
+                            $("#DischargeByVal").css("display", "none");
+                            $("#DischargeDateVal").css("display", "none");
+                            $("#DischargeDateLbl").css("display", "none");
                         });
                         $("#btnSave").click(function () {
                             $("#modelCloseNext").modal();
                         });
                     });
-</script>
-<script>
-    $(document).ready(function () {
-        $('#tblPatientDetails').DataTable(
-            {
-                "ordering": true,
-                "paging": true,
-                "searching": true,
-                "pageLength": 10,
-                "order": [[0, "desc"]],
-                "aoColumns": [
-                    { "sName": "AppointmentDate", "sTitle": "Appointment Date", "bSortable": "true" },
-                    { "sName": "Outcome", "sTitle": "Outcome", "bSortable": "true" }
-                ],
-                "lengthMenu": [
-                    [10, 20, 50, 100, -1],
-                    ['10 rows', '20 rows', '50 rows', '100 rows', 'Show all']]
-            });
-    });
-</script>
-<script>
+                </script>
+                <script>
+                    $(document).ready(function () {
+                        $('#tblPatientDetails').DataTable(
+                            {
+                                "ordering": true,
+                                "paging": true,
+                                "searching": true,
+                                "pageLength": 10,
+                                "order": [[0, "desc"]],
+                                "aoColumns": [
+                                    { "sName": "AppointmentDate", "sTitle": "Appointment Date", "bSortable": "true" },
+                                    { "sName": "Outcome", "sTitle": "Outcome", "bSortable": "true" }
+                                ],
+                                "lengthMenu": [
+                                    [10, 20, 50, 100, -1],
+                                    ['10 rows', '20 rows', '50 rows', '100 rows', 'Show all']]
+                            });
+                    });
+                </script>
+                <script>
                     $(document).ready(function () {
                         $("#btnCloseYes").click(function () {
                             $("#modelClose1").modal('hide');
@@ -1107,39 +852,5 @@
                             $("#modelCloseNext").modal('hide');
                         });
                     });
-</script>
-<script>
-    $(document).ready(function () {
-        $("input[name$='RepeatSession']").click(function () {
-            var radioVal = $("input[name='RepeatSession']:checked").val();
-            if (radioVal == "Yes") {
-                    $("#tblSession1").css("display", "block");
-                    $("#tblSession2").css("display", "block");
-                    $("#tblSession3").css("display", "block");
-                    $("#tblSession4").css("display", "block");
-                }
-                else {
-                    $("#tblSession1").css("display", "none");
-                    $("#tblSession2").css("display", "none");
-                    $("#tblSession3").css("display", "none");
-                    $("#tblSession4").css("display", "none");
-                }
-            });
-        });
-</script>
-<script>
-        $(document).ready(function () {
-            $("input[name$='Discharged']").click(function () {
-                var radioVal = $("input[name='Discharged']:checked").val();
-                if (radioVal == "Yes") {                    
-                    $("#tblDischargeCommentsLbl").css("display", "block");
-                    $("#tblDischargeComments").css("display", "block");
-                }
-                else {
-                    $("#tblDischargeComments").css("display", "none");
-                    $("#tblDischargeCommentsLbl").css("display", "none");
-                }
-            });
-        });
-</script>
+                </script>
 

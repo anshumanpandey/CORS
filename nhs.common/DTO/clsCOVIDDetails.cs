@@ -293,6 +293,8 @@ namespace NHS.Common.DTO
 
         public string Group3 { get; set; }
 
+        public bool Discharged { get; set; }
+
         public string Group4 { get; set; }
 
         public string MDTVirtual { get; set; }
@@ -304,13 +306,31 @@ namespace NHS.Common.DTO
         public string PostOPMed { get; set; }
 
         public string PostOPDiet { get; set; }
+
+        public int Dischargedpreop { get; set; }
+
+        public int Presurgerypostopmed { get; set; }
+
+        public int PostopdietCount { get; set; }
+
+        public int Active { get; set; }
+
+        public int AgreementOverdue { get; set; }
+
+        public int Incompletegroupsession { get; set; }
+
+        public int Nosurgerydate { get; set; }
+
+        public int AwaitingSurgery { get; set; }
+
+        public int Pendingpostdietappt { get; set; }
     }
 
-    public class PathwayStatuses
+    public class ActivityStatuses
     {
         public int ID { get; set; }
 
-        public string PathwayStatus { get; set; }
+        public string ActivityStatus { get; set; }
     }
 
     public class PathwayEvents
